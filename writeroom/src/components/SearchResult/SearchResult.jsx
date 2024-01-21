@@ -1,24 +1,33 @@
 import * as S from "./SearchResult.style"
 import { BsPersonCircle } from "react-icons/bs";
-import { ReactComponent as Logo } from "../../assets/logo.svg"
-const SearchResult = () => {
+import { ReactComponent as ProjectImg } from "../../assets/writeRoomLogo.svg"
+const SearchResult = ({text}) => {
     return(
         <S.Container>
             <S.Title>
-                <Logo/>
-                <p>글쓰기 연습을 위한 공간</p>
+                <ProjectImg/>
+                <p>{text}</p>
             </S.Title>
             <S.Contents>
-              <S.Wrapper>
-                <S.InnerWrapper>
-                    <BsPersonCircle color={"#696969"} size={40}/>
-                    <div>
-                        <p>제리</p>
-                        <p>2024.02.01</p>
-                    </div>
+                <S.Wrapper>
+                    <S.InnerWrapper>
+                        <BsPersonCircle color={"#696969"} size={40}/>
+                        <div>
+                            <p>제리</p>
+                            <p>2024.02.01</p>
+                        </div>
                         <button>음악</button>
-                </S.InnerWrapper>
-              </S.Wrapper>
+                    </S.InnerWrapper>
+                    <S.PathButton>이동</S.PathButton>
+                </S.Wrapper>
+                <S.TextBox>
+                    <h1>노래 플레이리스트</h1>
+                    <S.TextWrapper>
+                        <h2>No Pain</h2>
+                        <h2>|</h2>
+                        <p>이 노래는 이별의 아픔과 함께 흐르는 감정이 담겨 있어, 때로는 마음을 추스리고 울릴 때가 있다. 강렬한 목소리가 ·•• test test test test test test test test</p>
+                    </S.TextWrapper>
+                </S.TextBox>
             </S.Contents>
         </S.Container>
     )

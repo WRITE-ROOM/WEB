@@ -10,11 +10,6 @@ export const StyledButton = styled.button`
   height: 25px;
   background: none;
   border-radius: 10px;
-  border: 2px solid;
-  div {
-
-    padding-top: 5px;
-  }
 `;
 
 

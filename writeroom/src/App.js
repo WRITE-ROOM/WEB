@@ -1,5 +1,3 @@
-import logo from './logo.svg';
-import './App.css';
 import RecTopic from './components/RecTopic/RecTopic';
 import RecTopicClose from './components/RecTopicClose/RecTopicClose';
 import { useState } from 'react';
