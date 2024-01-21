@@ -1,12 +1,12 @@
 import * as S from "./SearchResult.style"
 import { BsPersonCircle } from "react-icons/bs";
 import { ReactComponent as ProjectImg } from "../../assets/writeRoomLogo.svg"
-const SearchResult = () => {
+const SearchResult = ({text}) => {
     return(
         <S.Container>
             <S.Title>
                 <ProjectImg/>
-                <p>글쓰기 연습을 위한 공간</p>
+                <p>{text}</p>
             </S.Title>
             <S.Contents>
                 <S.Wrapper>

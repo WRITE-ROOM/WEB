@@ -6,10 +6,14 @@ import { BsPersonFill } from "react-icons/bs";
 import { HiOutlineAdjustments } from "react-icons/hi";
 import SearchToggle from "../SearchToggle/SearchToggle";
 import SearchResult from "../SearchResult/SearchResult";
+import InfiniteScroll from "react-infinite-scroll-component";
+
 const SearchBox = () => {
   const [isMemberToggleOpen, setIsMemberToggleOpen] = useState(false);
   const [isRangeToggleOpen, setIsRangeToggleOpen] = useState(false);
   const [search, setSearch] = useState('');
+  const [isData, setData] = useState([]);
+
   const testMemberArray = ['박지환', '홍수민', '장영주','박지환', '홍수민', '장영주','박지환', '홍수민', '장영주'];
   const searchRange = ['제목', '내용', '태그'];
 
@@ -24,6 +28,16 @@ const SearchBox = () => {
   const handleRangeToggle = () => {
     setIsRangeToggleOpen(!isRangeToggleOpen);
   }
+  const fetchMoreData = async () => {
+    try {
+      await new Promise (resolve => setTimeout(resolve, 2000));
+      const additionalData = ['새로운 제목1', '새로운 제목2'];
+      setData(prevData => [...prevData, ...additionalData]);
+    }
+    catch (error) {
+      console.error("error 났다!:", error);
+    }
+  }
 
   return (
     <S.Background>
@@ -32,12 +46,12 @@ const SearchBox = () => {
             <S.IconWrapper>
                 <IoSearchOutline size="30" color="grey" />
             </S.IconWrapper>
-          <input
-            type="text"
-            value={search}
-            onChange={onChange}
-            placeholder="태그나 노트를 검색해보세요"
-          />
+            <input
+              type="text"
+              value={search}
+              onChange={onChange}
+              placeholder="태그나 노트를 검색해보세요"
+            />
           <S.IconWrapper>
               <AiOutlineClose size="30" color="grey" />
           </S.IconWrapper>
@@ -74,7 +88,14 @@ const SearchBox = () => {
               />
             </S.ButtonWrapper>
           </S.FilterWrapper>
-          <SearchResult/>
+          <InfiniteScroll
+              dataLength={isData.length}
+              next={fetchMoreData}
+              hasMore={true}
+              >{isData.map((text, index) => (
+                <SearchResult text={text} key={index}/>
+              ))}
+          </InfiniteScroll>
         </S.ResultBox>
       </S.Container>
     </S.Background>

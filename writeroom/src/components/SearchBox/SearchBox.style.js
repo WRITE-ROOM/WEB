@@ -35,7 +35,7 @@ export const InputWrapper = styled.div`
       border: none;
       height:92%;
       width:100%;
-      /* border-bottom: 2px solid gray; */
+
     }
 `;
 
@@ -48,6 +48,8 @@ export const ResultBox = styled.div`
     flex-direction: column;
     align-items: center;
     border-top: solid 1px ;
+    max-height: 100%;
+    overflow-y: auto;
 
 `
 export const FilterWrapper = styled.div`
@@ -72,7 +74,8 @@ export const MemberBox = styled.div`
   background-color: white;
   border: solid;
   border-radius: 10px;
-  height: auto;
+  height: 110px;
+  overflow-y: auto; // 자식이 부모보다 클 때 스크롤 생성
   margin-top: 10px;
   div {
     border-bottom: 1px solid;
