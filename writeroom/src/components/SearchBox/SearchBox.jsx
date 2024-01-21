@@ -10,7 +10,7 @@ const SearchBox = () => {
   const [isMemberToggleOpen, setIsMemberToggleOpen] = useState(false);
   const [isRangeToggleOpen, setIsRangeToggleOpen] = useState(false);
   const [search, setSearch] = useState('');
-  const testMemberArray = ['박지환', '홍수민', '장영주'];
+  const testMemberArray = ['박지환', '홍수민', '장영주','박지환', '홍수민', '장영주','박지환', '홍수민', '장영주'];
   const searchRange = ['제목', '내용', '태그'];
 
   const onChange = (event) => {
@@ -29,14 +29,18 @@ const SearchBox = () => {
     <S.Background>
       <S.Container>
         <S.InputWrapper>
-          <IoSearchOutline size="30" color="grey" />
+            <S.IconWrapper>
+                <IoSearchOutline size="30" color="grey" />
+            </S.IconWrapper>
           <input
             type="text"
             value={search}
             onChange={onChange}
             placeholder="태그나 노트를 검색해보세요"
           />
-          <AiOutlineClose size="30" color="grey" />
+          <S.IconWrapper>
+              <AiOutlineClose size="30" color="grey" />
+          </S.IconWrapper>
         </S.InputWrapper>
         <S.ResultBox>
           <S.FilterWrapper>

@@ -69,8 +69,16 @@ export const ButtonWrapper = styled.div`
 
 export const MemberBox = styled.div`
   width: 80px;
+  background-color: white;
   border: solid;
   border-radius: 10px;
   height: auto;
   margin-top: 10px;
+  div {
+    border-bottom: 1px solid;
+    padding: 10px;
+  }
+`
+export const IconWrapper = styled.div`
+  cursor: pointer;
 `
