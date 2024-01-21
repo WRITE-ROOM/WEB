@@ -3,6 +3,8 @@ import './App.css';
 import RecTopic from './components/RecTopic/RecTopic';
 import RecTopicClose from './components/RecTopicClose/RecTopicClose';
 import { useState } from 'react';
+import SearchBox from "./components/SearchBox/SearchBox";
+
 
 
 function App() {
@@ -17,6 +19,7 @@ function App() {
       {isSNBOpen ? 
       <RecTopic onToggle={toggleSNB}></RecTopic>
       : <RecTopicClose onToggle={toggleSNB}> </RecTopicClose>}
+      <SearchBox />
     </div>
   );
 }
