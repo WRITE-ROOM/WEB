@@ -1,23 +1,22 @@
 import logo from './logo.svg';
 import './App.css';
+import RecTopic from './components/RecTopic/RecTopic';
+import RecTopicClose from './components/RecTopicClose/RecTopicClose';
+import { useState } from 'react';
+
 
 function App() {
+  const [isSNBOpen, setIsSNBOpen] = useState(false);
+
+  const toggleSNB = () => {
+    setIsSNBOpen((prev) => !prev);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {isSNBOpen ? 
+      <RecTopic onToggle={toggleSNB}></RecTopic>
+      : <RecTopicClose onToggle={toggleSNB}> </RecTopicClose>}
     </div>
   );
 }
