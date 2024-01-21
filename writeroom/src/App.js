@@ -1,9 +1,10 @@
-import RecTopic from './components/RecTopic/RecTopic';
-import RecTopicClose from './components/RecTopicClose/RecTopicClose';
-import { useState } from 'react';
+import RecTopic from "./components/RecTopic/RecTopic";
+import RecTopicClose from "./components/RecTopicClose/RecTopicClose";
+import { useState } from "react";
 import SearchBox from "./components/SearchBox/SearchBox";
-
-
+import Header from "./components/Header/Header.jsx";
+import NewNoteButton from "./components/FloatingButton/NewNoteButton.jsx";
+import NewRoomButton from "./components/FloatingButton/NewRoomButton.jsx";
 
 function App() {
   const [isSNBOpen, setIsSNBOpen] = useState(false);
@@ -14,10 +15,16 @@ function App() {
 
   return (
     <div className="App">
-      {isSNBOpen ? 
-      <RecTopic onToggle={toggleSNB}></RecTopic>
-      : <RecTopicClose onToggle={toggleSNB}> </RecTopicClose>}
+      <Header />
+      {isSNBOpen ? (
+        <RecTopic onToggle={toggleSNB}></RecTopic>
+      ) : (
+        <RecTopicClose onToggle={toggleSNB}> </RecTopicClose>
+      )}
       <SearchBox />
+
+      <NewRoomButton />
+      <NewNoteButton />
     </div>
   );
 }
