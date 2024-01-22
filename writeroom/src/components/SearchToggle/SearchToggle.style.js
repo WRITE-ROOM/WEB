@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-
 export const StyledButton = styled.button`
   position: relative;
   cursor: pointer;
@@ -11,5 +10,3 @@ export const StyledButton = styled.button`
   background: none;
   border-radius: 10px;
 `;
-
-
