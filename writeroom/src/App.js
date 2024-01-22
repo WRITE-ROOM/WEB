@@ -21,6 +21,7 @@ function App() {
       ) : (
         <RecTopicClose onToggle={toggleSNB}> </RecTopicClose>
       )}
+
       <SearchBox />
 
       <NewRoomButton />
