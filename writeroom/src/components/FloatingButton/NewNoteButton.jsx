@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import NewNoteLogo from "../../assets/NewNoteLogo.png";
-import { FloatingButton, Message } from "./FloatingButton.style";
+import { FloatingButton } from "./FloatingButton.style";
+import ToolTip from "../ToolTip/ToolTip";
 
 const NewNoteButton = () => {
+  const [isTooltipVisible, setTooltipVisible] = useState(false);
   return (
-    <FloatingButton>
+    <FloatingButton
+      onMouseEnter={() => setTooltipVisible(true)}
+      onMouseLeave={() => setTooltipVisible(false)}
+    >
       <img src={NewNoteLogo} alt="NewNoteLogo" />
 
-      <Message>
-        <p>새로운 글쓰기</p>
-      </Message>
+      {isTooltipVisible && <ToolTip message="새로운 글쓰기" />}
     </FloatingButton>
   );
 };
