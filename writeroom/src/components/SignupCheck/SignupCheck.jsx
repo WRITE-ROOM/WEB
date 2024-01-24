@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import * as S from './SignupCheck.style'
-import { IoCheckboxSharp } from "react-icons/io5";
+import { RiCheckboxBlankFill } from "react-icons/ri";
+import { RiCheckboxFill } from "react-icons/ri";
+
 
 export default function SignupCheck() {
 
@@ -13,9 +15,9 @@ export default function SignupCheck() {
 		return (
 			<div>
 				{isCheck ? (
-					<IoCheckboxSharp size="25px" color="rgba(181, 169, 148, 1)" onClick={handleCheck} />
+					<RiCheckboxFill size="25px" color="rgba(181, 169, 148, 1)" onClick={handleCheck} />
 				) : (
-					<S.CheckBox onClick={handleCheck}/>
+					<RiCheckboxBlankFill size="25px" color="rgba(229, 229, 229, 1)" onClick={handleCheck}/>
 				)}
 			</div>
 		);

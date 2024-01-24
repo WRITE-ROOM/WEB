@@ -5,7 +5,7 @@ export default function SignupButton() {
 	return (
 		<div>
 			<S.SignupButton>
-				<button>회원가입</button>
+				<button>가입하기</button>
 			</S.SignupButton>
 		</div>
   )
