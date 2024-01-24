@@ -1,17 +1,4 @@
-* {
-  margin: 0;
-}
-
 body {
   width: 1440px;
   height: 1024px;
-}
-
-ul {
-  list-style-type: none;
-}
-
-a {
-  text-decoration: none;
-  color: black;
 }
