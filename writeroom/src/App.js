@@ -16,6 +16,7 @@ function App() {
   return (
     <div className="App">
       <Header />
+
       {isSNBOpen ? (
         <RecTopic onToggle={toggleSNB}></RecTopic>
       ) : (
