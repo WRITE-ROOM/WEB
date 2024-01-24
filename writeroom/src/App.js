@@ -5,7 +5,6 @@ import SearchBox from "./components/SearchBox/SearchBox";
 import Header from "./components/Header/Header.jsx";
 import NewNoteButton from "./components/FloatingButton/NewNoteButton.jsx";
 import NewRoomButton from "./components/FloatingButton/NewRoomButton.jsx";
-import Write from "./pages/Write.jsx";
 
 function App() {
   const [isSNBOpen, setIsSNBOpen] = useState(false);

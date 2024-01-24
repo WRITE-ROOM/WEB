@@ -3,10 +3,14 @@ import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "./customToolbar.css";
 
-const Editor = () => {
+const Editor = ({ content, setContent }) => {
   var Font = Quill.import("attributors/class/font");
   Font.whitelist = ["pretendard", "nanum", "batang"];
   Quill.register(Font, true);
+
+  const handleChange = (value) => {
+    setContent(value);
+  };
 
   const modules = {
     toolbar: {
@@ -42,7 +46,13 @@ const Editor = () => {
 
   return (
     <>
-      <ReactQuill theme="snow" modules={modules} formats={formats} />
+      <ReactQuill
+        theme="snow"
+        modules={modules}
+        formats={formats}
+        value={content}
+        onChange={handleChange}
+      />
     </>
   );
 };

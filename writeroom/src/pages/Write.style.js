@@ -11,12 +11,20 @@ export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   text-align: center;
+  z-index: 100;
+  padding: 16px 20px;
+  box-sizing: border-box;
 `;
 
 export const Left = styled.div`
   width: 33%;
   display: flex;
   justify-content: left;
+`;
+
+export const Template = styled.div`
+  width: 100px;
+  position: relative;
 `;
 
 export const Center = styled.div`
@@ -27,13 +35,16 @@ export const Right = styled.div`
   width: 33%;
   display: flex;
   justify-content: right;
-  gap: 30px;
+  gap: 10px;
+
+  div {
+    width: 80px;
+  }
 `;
 
 export const Top = styled.div`
   width: 100%;
   height: 300px;
-  background-color: #fff;
 
   position: relative;
   color: #fff;

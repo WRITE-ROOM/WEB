@@ -18,6 +18,9 @@ export const DropdownContainer = styled.div`
   right: 0px;
   top: ${(props) => (props.top ? props.top : "58px")};
 
+  z-index: 1000;
+  font-size: 14px;
+
   ul {
     padding: 0;
 
@@ -31,7 +34,8 @@ export const DropdownContainer = styled.div`
         background-color: #eaeaea;
       }
 
-      a {
+      a,
+      p {
         width: 100%;
         height: 100%;
         display: flex;
