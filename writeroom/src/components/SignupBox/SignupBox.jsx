@@ -5,11 +5,14 @@ import SignupInput from '../SignupInput/SignupInput'
 import SignupCheck from '../SignupCheck/SignupCheck'
 import SignupButton from '../SignupButton/SignupButton'
 import SignupSocial from '../SignupSocial/SignupSocial'
+import Header from '../Header/Header'
 
 
 export default function SignupBox() {
   let navigate = useNavigate()
   return (
+    <div>
+    <Header/>
     <S.App>
 			<S.Container>
 				<S.Title>회원가입</S.Title>
@@ -26,5 +29,6 @@ export default function SignupBox() {
         </S.IsLogin>
 			</S.Container>
     </S.App>
+    </div>
   )
 }

@@ -6,9 +6,7 @@ export const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
-	padding: 60px 0 40px 0;
-
-	// border: 1.23px solid black;
+	padding: 40px 0 40px 0;
 `
 
 export const CheckList = styled.div`
