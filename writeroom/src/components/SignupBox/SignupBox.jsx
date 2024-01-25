@@ -6,9 +6,13 @@ import SignupCheck from '../SignupCheck/SignupCheck'
 import SignupButton from '../SignupButton/SignupButton'
 import SignupSocial from '../SignupSocial/SignupSocial'
 import Header from '../Header/Header'
+import { useDispatch, useSelector } from 'react-redux';
+
 
 
 export default function SignupBox() {
+  let user = useSelector((state) => state.user);
+
   let navigate = useNavigate()
   return (
     <div>
