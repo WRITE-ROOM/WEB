@@ -38,6 +38,7 @@ export const Tools = styled.div`
 
   display: flex;
   justify-content: right;
+
   gap: 10px;
 `;
 
