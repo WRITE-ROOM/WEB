@@ -1,4 +1,4 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 export const user = createSlice({
   name: 'user',
@@ -7,8 +7,11 @@ export const user = createSlice({
 		setUserId(state, action) {
 			state.userId = action.payload
 		},
+		setUserName(state, action) {
+			state.userName = action.payload
+		},
 		setUserPw(state, action) {
-			state.userId = action.payload
+			state.userPw = action.payload
 		},
 	}
 })

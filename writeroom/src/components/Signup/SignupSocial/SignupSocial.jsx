@@ -1,8 +1,8 @@
 import React from 'react'
 import * as S from './SignupSocial.style'
-import Google from '../../assets/google.png'
-import Kakao from '../../assets/kakao.png'
-import Naver from '../../assets/naver.png'
+import Google from '../../../assets/google.png'
+import Kakao from '../../../assets/kakao.png'
+import Naver from '../../../assets/naver.png'
 
 export default function SignupSocial() {
   return (
