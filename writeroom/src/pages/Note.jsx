@@ -1,6 +1,9 @@
 import React, { useState } from "react";
-import { BiBookmark, BiCog, BiDotsHorizontalRounded } from "react-icons/bi";
+import { BiDotsHorizontalRounded } from "react-icons/bi";
 import * as N from "./Note.style";
+import EmojiContainer from "../components/Emoji/EmojiContainer";
+import Setting from "../components/Setting/Setting";
+import Bookmark from "../components/Bookmark/Bookmark";
 
 const Note = () => {
   const data = {
@@ -19,12 +22,8 @@ const Note = () => {
         <N.CoverImage />
 
         <N.Tools>
-          <div className="bookmark">
-            <BiBookmark size={22} color="white" />
-          </div>
-          <div className="setting">
-            <BiCog size={22} color="white" />
-          </div>
+          <Bookmark defaultColor="white" />
+          <Setting />
         </N.Tools>
 
         <N.NoteInfo>
@@ -37,11 +36,10 @@ const Note = () => {
             <p className="writer">by.{data.username}</p>
           </N.Upper>
 
-          <hr />
+          <N.StyledHr color="white" />
 
           <N.Lower>
             <p>{data.subtitle}</p>
-
             <N.TagContainer>
               <ul>
                 {data.tags.slice(0, 4).map((tag, index) => (
@@ -60,7 +58,6 @@ const Note = () => {
                 </N.Tag>
               </ul>
             </N.TagContainer>
-
             {showTags && (
               <N.HiddenTag>
                 {data.tags.slice(4).map((tag, index) => (
@@ -76,9 +73,7 @@ const Note = () => {
 
       <N.StyledHr color="#E5E5E5" />
 
-      <div className="NoteFooter">
-        <div className="emoji">이모지</div>
-      </div>
+      <EmojiContainer />
     </N.Container>
   );
 };
