@@ -72,8 +72,10 @@ const Note = () => {
         </N.NoteInfo>
       </N.Header>
 
-      <div className="NoteContent">내용</div>
-      <hr />
+      <N.Content>내용</N.Content>
+
+      <N.StyledHr color="#E5E5E5" />
+
       <div className="NoteFooter">
         <div className="emoji">이모지</div>
       </div>

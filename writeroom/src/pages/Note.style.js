@@ -124,3 +124,15 @@ export const HiddenTag = styled.ul`
     margin-bottom: 6px;
   }
 `;
+
+export const Content = styled.div`
+  height: 500px;
+  color: black;
+  padding: 24px;
+`;
+
+export const StyledHr = styled.hr`
+  height: 1px;
+  border: none;
+  color: ${(props) => (props.color ? props.color : "black")};
+`;
