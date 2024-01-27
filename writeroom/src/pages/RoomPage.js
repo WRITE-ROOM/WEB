@@ -11,11 +11,14 @@ import * as S from "./RoomPage.style.js";
 const RoomPage = () => {
   const [isRoomSDBOpen, setIsRoomSDBOpen] = useState(false);
   const [isSNBOpen, setIsSNBOpen] = useState(false);
+  const [progress, setProgress] = useState(20);
 
+  const handleProgress = () => {
+    setProgress(90);
+  };
   const toggleSNB = () => {
     setIsSNBOpen((prev) => !prev);
   };
-  const [progress, setProgress] = useState(20);
 
   const handleRoomSDB = () => {
     setIsRoomSDBOpen((prev) => !prev);
