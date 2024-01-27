@@ -30,7 +30,7 @@ const RoomPage = () => {
           handleRoomSDB={handleRoomSDB}
           isOpen={isRoomSDBOpen}
         />
-        <RoomMain openRoomSDB={isRoomSDBOpen} />
+        <RoomMain openRoomSDB={isRoomSDBOpen} openSNB={isSNBOpen} />
         {isSNBOpen ? (
           <RecTopic onToggle={toggleSNB}></RecTopic>
         ) : (
