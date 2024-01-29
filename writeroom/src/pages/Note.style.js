@@ -38,7 +38,6 @@ export const Tools = styled.div`
 
   display: flex;
   justify-content: right;
-
   gap: 10px;
 `;
 
@@ -74,6 +73,7 @@ export const Upper = styled.div`
 
   h1 {
     font-size: 22px;
+    font-weight: 700;
   }
 `;
 

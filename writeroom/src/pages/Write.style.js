@@ -6,13 +6,14 @@ export const Container = styled.div`
 
 export const Header = styled.div`
   width: 100%;
-  height: 56px;
-  background-color: #eee;
+  height: 58px;
+  background-color: #fff;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   text-align: center;
   z-index: 100;
-  padding: 16px 20px;
+  padding: 0 20px;
   box-sizing: border-box;
 `;
 
@@ -20,11 +21,50 @@ export const Left = styled.div`
   width: 33%;
   display: flex;
   justify-content: left;
+  gap: 20px;
 `;
 
 export const Template = styled.div`
-  width: 100px;
+  width: 124px;
   position: relative;
+`;
+
+export const SpellCheck = styled.div`
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+
+  p {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`;
+
+export const Counter = styled.div`
+  width: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    position: relative;
+    font-size: 16px;
+    font-weight: 300;
+    color: #9d8870;
+  }
+`;
+
+export const CounterDetail = styled.div`
+  p {
+    font-size: 14px;
+    color: #000;
+    text-align: left;
+    line-height: 24px;
+  }
+
+  span {
+    color: #9d8870;
+  }
 `;
 
 export const Center = styled.div`
@@ -44,15 +84,14 @@ export const Right = styled.div`
 
 export const Top = styled.div`
   width: 100%;
-  height: 300px;
-
+  height: 25vw;
   position: relative;
-  color: #fff;
 
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
-
-  display: flex;
-  justify-content: space-between;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.05),
+    rgba(0, 0, 0, 0.5)
+  );
 `;
 
 export const CoverImage = styled.div`
@@ -68,10 +107,32 @@ export const CoverImage = styled.div`
   z-index: -1;
 `;
 
+export const ImageControl = styled.div`
+  width: 100%;
+  height: 70%;
+  padding: 40px 24px;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: right;
+  gap: 10px;
+
+  button {
+    display: block;
+    border: none;
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    cursor: pointer;
+    color: #fff;
+  }
+`;
+
 export const TitleContainer = styled.div`
-  width: 800px;
-  padding-left: 200px;
-  padding-top: 140px;
+  width: 100%;
+  height: 30%;
+  padding: 24px;
+  padding-bottom: 0;
   box-sizing: border-box;
 
   input {
@@ -79,15 +140,18 @@ export const TitleContainer = styled.div`
     width: 100%;
     background-color: transparent;
     color: white;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 
     &#titleInput {
-      font-size: 30px;
-      border-bottom: 1px solid #fff;
+      height: 26px;
+      font-size: 22px;
+      font-weight: 700;
     }
 
     &#subtitleInput {
-      font-size: 16px;
+      height: 18px;
+      font-size: 14px;
+      font-weight: 300;
     }
 
     &:focus {
@@ -100,19 +164,31 @@ export const TitleContainer = styled.div`
   }
 `;
 
-export const ImageControl = styled.div`
-  color: black;
-  width: 100px;
-  padding-top: 50px;
+export const StyledHr = styled.hr`
+  height: 1px;
+  border: none;
+  border-top: 1px solid white;
+  margin-bottom: 5px;
+`;
 
-  button {
-    display: block;
-    border: none;
-    width: 24px;
-    height: 24px;
-    background-color: transparent;
-    margin-bottom: 16px;
-    cursor: pointer;
-    color: #fff;
-  }
+// 버튼
+// width, padding, background-color, color, font-size, font-weight, border
+export const StyledButton = styled.button`
+  width: ${(props) => (props.width ? props.width : "124px")};
+
+  padding: ${(props) => (props.padding ? props.padding : "9px 0")};
+
+  background-color: ${(props) =>
+    props.backgroundColor ? props.backgroundColor : "#f2f2f2"};
+
+  color: ${(props) => (props.color ? props.color : "black")};
+
+  font-size: ${(props) => (props.fontSize ? props.fontSize : "16px")};
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : "500")};
+
+  border: ${(props) => (props.border ? props.border : "none")};
+
+  border-radius: 10px;
+
+  cursor: pointer;
 `;

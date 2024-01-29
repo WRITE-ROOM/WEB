@@ -9,8 +9,8 @@ export const DropdownContainer = styled.div`
   width: ${(props) => (props.width ? props.width : "100px")};
   background-color: #fff;
 
-  padding: 16px 4px;
-  // padding: ${(props) => (props.padding ? props.padding : "16px")}
+  padding: ${(props) => (props.padding ? props.padding : "16px 4px")};
+
   box-sizing: border-box;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
@@ -47,10 +47,23 @@ export const DropdownContainer = styled.div`
   }
 `;
 
+export const DropdownTitle = styled.div`
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 8px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 export const SimpleContainer = styled.div`
   width: ${(props) => (props.width ? props.width : "100px")};
   height: ${(props) => (props.height ? props.height : "100px")};
   background-color: #fff;
+
   padding: ${(props) => (props.padding ? props.padding : "16px")};
   box-sizing: border-box;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
@@ -59,4 +72,7 @@ export const SimpleContainer = styled.div`
 
   position: absolute;
   top: ${(props) => (props.top ? props.top : "20px")};
+  // left: ${(props) => (props.left ? props.left : "0px")};
+
+  z-index: 1000;
 `;

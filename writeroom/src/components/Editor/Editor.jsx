@@ -31,6 +31,7 @@ const Editor = ({ content, setContent }) => {
     "size",
     "header",
     "color",
+    "align",
     "background",
     "bold",
     "italic",

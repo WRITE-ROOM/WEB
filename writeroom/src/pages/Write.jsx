@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import * as W from "./Write.style";
 import { BiImageAlt, BiSolidTrashAlt } from "react-icons/bi";
 import Editor from "../components/Editor/Editor";
-import { DropdownContainer } from "../components/Header/Dropdown.style";
+import * as D from "../components/Header/Dropdown.style";
+import { FiInfo, FiTrash, FiImage } from "react-icons/fi";
+import SpellCheck from "../components/SpellCheck/SpellCheck";
 
 const Write = () => {
   const [title, setTitle] = useState("");
@@ -63,26 +65,49 @@ const Write = () => {
 
   const stripHtmlTags = (html) => {
     const doc = new DOMParser().parseFromString(html, "text/html");
-    return doc.body.textContent || "";
+    const textContent = doc.body.textContent || "";
+
+    // 줄바꿈
+    // const doc = html.replace(/<\/[^>]+>/g, "\n");
+    // const text = new DOMParser().parseFromString(doc, "text/html");
+    // const textContent = text.body.textContent || "";
+
+    return textContent;
   };
 
-  const stripHtmlTagsWithoutSpace = (html) => {
+  const stripHtmlTagsNoSpace = (html) => {
     const doc = new DOMParser().parseFromString(html, "text/html");
     return doc.body.textContent.replace(/\s/g, "") || "";
   };
 
   const characterCount = stripHtmlTags(content).length;
-  const characterCountWithoutSpace = stripHtmlTagsWithoutSpace(content).length;
+  const characterCountNoSpace = stripHtmlTagsNoSpace(content).length;
 
   return (
     <W.Container>
       <W.Header>
         <W.Left>
+          {/* 템플릿 */}
           <W.Template>
-            <button onClick={handleTemplateMenu}>템플릿</button>
+            <W.StyledButton
+              border="1px solid #e5e5e5"
+              onClick={handleTemplateMenu}
+            >
+              템플릿
+            </W.StyledButton>
+
             {showTemplate && (
-              <DropdownContainer top="40px">
-                OREO 템플릿
+              <D.DropdownContainer
+                width="100%"
+                listWidth="88px"
+                padding="12px"
+                top="40px"
+              >
+                <D.DropdownTitle>
+                  OREO 템플릿
+                  <FiInfo color="#939393" />
+                </D.DropdownTitle>
+
                 <ul>
                   <li onClick={TemplateO1}>
                     <p>O</p>
@@ -97,18 +122,15 @@ const Write = () => {
                     <p>O</p>
                   </li>
                 </ul>
-              </DropdownContainer>
+              </D.DropdownContainer>
             )}
           </W.Template>
-        </W.Left>
 
-        <W.Center>
-          <div className="selectRoom">룸</div>
-        </W.Center>
+          {/* 맞춤법 검사 */}
+          <SpellCheck content={stripHtmlTags(content)} />
 
-        <W.Right>
-          <div className="grammar">맞춤법</div>
-          <div className="count">
+          {/* 글자수 */}
+          <W.Counter>
             <p
               onMouseEnter={() => {
                 setShowCountDetail(true);
@@ -118,21 +140,49 @@ const Write = () => {
               }}
             >
               {characterCount}자
+              {showCountDetail && (
+                <D.SimpleContainer width="150px" height="80px" top="30px">
+                  <W.CounterDetail>
+                    <p>
+                      공백 포함 <span>{characterCount}자</span>
+                    </p>
+                    <p>
+                      공백 미포함 <span>{characterCountNoSpace}자</span>
+                    </p>
+                  </W.CounterDetail>
+                </D.SimpleContainer>
+              )}
             </p>
-            {showCountDetail && (
-              <div className="countDetail">
-                <p>공백 포함 : {characterCount}</p>
-                <p>공백 제외 : {characterCountWithoutSpace}</p>
-              </div>
-            )}
-          </div>
-          <div className="save">저장</div>
+          </W.Counter>
+        </W.Left>
+
+        {/* 룸 */}
+        <W.Center>
+          <W.StyledButton width="320px" border="1px solid #e5e5e5">
+            룸
+          </W.StyledButton>
+        </W.Center>
+
+        <W.Right>
+          <W.StyledButton backgroundColor="#B5A994" color="white">
+            저장
+          </W.StyledButton>
         </W.Right>
       </W.Header>
 
       <W.Top>
         {/* 대표 이미지 */}
         <W.CoverImage />
+
+        {/* 이미지 업로드/삭제 */}
+        <W.ImageControl>
+          <button>
+            <FiImage size={22} />
+          </button>
+          <button>
+            <FiTrash size={22} />
+          </button>
+        </W.ImageControl>
 
         {/* 제목 설정 영역 */}
         <W.TitleContainer>
@@ -146,6 +196,8 @@ const Write = () => {
             />
           </label>
 
+          <W.StyledHr />
+
           <label htmlFor="subtitleInput">
             <input
               type="text"
@@ -156,16 +208,6 @@ const Write = () => {
             />
           </label>
         </W.TitleContainer>
-
-        {/* 이미지 업로드/삭제 */}
-        <W.ImageControl>
-          <button>
-            <BiImageAlt size={24} />
-          </button>
-          <button>
-            <BiSolidTrashAlt size={24} />
-          </button>
-        </W.ImageControl>
       </W.Top>
 
       {/* 글 작성 영역 */}
