@@ -95,7 +95,10 @@ export const TagContainer = styled.div`
 `;
 
 export const Tag = styled.li`
-  width: 40px;
+  // width: 40px;
+  min-width: 20px;
+  padding: ${(props) => (props.X ? "0px 6px 0px 10px" : "0px 10px")};
+
   height: 20px;
   background-color: #fff;
 
@@ -107,22 +110,24 @@ export const Tag = styled.li`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 4px;
 
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+
+  span {
+    display: flex;
+    align-items: center;
+    color: #939393;
+    cursor: pointer;
+  }
 `;
 
 export const HiddenTag = styled.ul`
-  width: 80px;
-  background-color: #fff;
-  position: absolute;
-  right: 0;
-  top: 30px;
-  padding: 10px 10px 4px 10px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: block !important;
 
   li {
     margin-bottom: 6px;
+    padding: 0 10px;
   }
 `;
 
