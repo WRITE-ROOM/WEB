@@ -61,7 +61,7 @@ export const DropdownTitle = styled.div`
 
 export const SimpleContainer = styled.div`
   width: ${(props) => (props.width ? props.width : "100px")};
-  height: ${(props) => (props.height ? props.height : "100px")};
+  height: ${(props) => (props.height ? props.height : "")};
   background-color: #fff;
 
   padding: ${(props) => (props.padding ? props.padding : "16px")};

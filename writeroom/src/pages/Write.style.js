@@ -69,6 +69,7 @@ export const CounterDetail = styled.div`
 
 export const Center = styled.div`
   width: 33%;
+  text-align: center;
 `;
 
 export const Right = styled.div`

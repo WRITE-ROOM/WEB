@@ -5,6 +5,8 @@ import * as D from "../components/Header/Dropdown.style";
 import { FiInfo, FiTrash, FiImage } from "react-icons/fi";
 import SpellCheck from "../components/SpellCheck/SpellCheck";
 import WriteFooter from "../components/WriteFooter/WriteFooter";
+import SelectRoomModal from "../components/WriteSelectModal/SelectRoomModal/SelectRoomModal";
+import SelectCategoryModal from "../components/WriteSelectModal/SelectCategoryModal/SelectCategoryModal";
 
 const Write = () => {
   const [title, setTitle] = useState("");
@@ -13,6 +15,9 @@ const Write = () => {
   const [showTemplate, setShowTemplate] = useState(false);
   const [content, setContent] = useState("");
   const [showCountDetail, setShowCountDetail] = useState(false);
+
+  const [selectedRoom, setSelectedRoom] = useState(null);
+  const [currentModal, setCurrentModal] = useState("Room");
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -159,8 +164,21 @@ const Write = () => {
         {/* 룸 */}
         <W.Center>
           <W.StyledButton width="320px" border="1px solid #e5e5e5">
-            룸
+            {selectedRoom ? selectedRoom : "룸"}
           </W.StyledButton>
+
+          {currentModal === "Room" && (
+            <SelectRoomModal
+              setSelectedRoom={setSelectedRoom}
+              setCurrentModal={setCurrentModal}
+            />
+          )}
+          {currentModal === "Category" && (
+            <SelectCategoryModal
+              selectedRoom={selectedRoom}
+              setCurrentModal={setCurrentModal}
+            />
+          )}
         </W.Center>
 
         <W.Right>
