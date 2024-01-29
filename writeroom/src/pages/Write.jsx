@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import * as W from "./Write.style";
-import { BiImageAlt, BiSolidTrashAlt } from "react-icons/bi";
 import Editor from "../components/Editor/Editor";
 import * as D from "../components/Header/Dropdown.style";
 import { FiInfo, FiTrash, FiImage } from "react-icons/fi";
 import SpellCheck from "../components/SpellCheck/SpellCheck";
+import WriteFooter from "../components/WriteFooter/WriteFooter";
 
 const Write = () => {
   const [title, setTitle] = useState("");
@@ -213,10 +213,7 @@ const Write = () => {
       {/* 글 작성 영역 */}
       <Editor content={content} setContent={setContent} />
 
-      <div className="Footer">
-        <div className="tag"></div>
-        <div className="createTag"></div>
-      </div>
+      <WriteFooter></WriteFooter>
     </W.Container>
   );
 };

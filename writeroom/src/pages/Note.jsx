@@ -4,6 +4,7 @@ import * as N from "./Note.style";
 import EmojiContainer from "../components/Emoji/EmojiContainer";
 import Setting from "../components/Setting/Setting";
 import Bookmark from "../components/Bookmark/Bookmark";
+import * as D from "../components/Header/Dropdown.style";
 
 const Note = () => {
   const data = {
@@ -55,16 +56,22 @@ const Note = () => {
                   }}
                 >
                   <BiDotsHorizontalRounded size={20} />
+                  {showTags && (
+                    <D.SimpleContainer
+                      width="70px"
+                      height="120px"
+                      padding="8px"
+                    >
+                      <N.HiddenTag>
+                        {data.tags.slice(4).map((tag, index) => (
+                          <N.Tag key={index}>{tag}</N.Tag>
+                        ))}
+                      </N.HiddenTag>
+                    </D.SimpleContainer>
+                  )}
                 </N.Tag>
               </ul>
             </N.TagContainer>
-            {showTags && (
-              <N.HiddenTag>
-                {data.tags.slice(4).map((tag, index) => (
-                  <N.Tag key={index}>{tag}</N.Tag>
-                ))}
-              </N.HiddenTag>
-            )}
           </N.Lower>
         </N.NoteInfo>
       </N.Header>
