@@ -174,7 +174,7 @@ const Write = () => {
             $border="1px solid #e5e5e5"
             onClick={handleCurrentModal}
           >
-            {selectedRoom ? selectedRoom : "룸"}
+            {selectedRoom ? selectedRoom : "룸을 선택해주세요"}
 
             <span>{selectedCategory ? ` - ` + selectedCategory : ""}</span>
           </W.StyledButton>
