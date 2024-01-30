@@ -97,7 +97,7 @@ export const TagContainer = styled.div`
 export const Tag = styled.li`
   // width: 40px;
   min-width: 20px;
-  padding: ${(props) => (props.X ? "0px 6px 0px 10px" : "0px 10px")};
+  padding: ${(props) => (props.$X ? "0px 6px 0px 10px" : "0px 10px")};
 
   height: 20px;
   background-color: #fff;
@@ -140,5 +140,5 @@ export const Content = styled.div`
 export const StyledHr = styled.hr`
   height: 1px;
   border: none;
-  color: ${(props) => (props.color ? props.color : "black")};
+  color: ${(props) => (props.$color ? props.$color : "black")};
 `;

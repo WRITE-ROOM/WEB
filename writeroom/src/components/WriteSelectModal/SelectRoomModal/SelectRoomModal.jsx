@@ -4,7 +4,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { FiPlus } from "react-icons/fi";
 import * as M from "./SelectRoomModal.style";
 
-const SelectRoomModal = ({ setSelectedRoom, setCurrentModal }) => {
+const SelectRoomModal = (props) => {
   const RoomData = [
     {
       id: 1,
@@ -24,21 +24,25 @@ const SelectRoomModal = ({ setSelectedRoom, setCurrentModal }) => {
   ];
 
   const handleSelectedRoom = (name) => {
-    setSelectedRoom(name);
-    setCurrentModal("Category");
+    props.setSelectedRoom(name);
+    props.setSelectedCategory(null);
+    props.setCurrentModal("Category");
   };
 
   return (
     <M.Container>
       <SimpleContainer
-        width="320px"
-        height="178px"
-        top="0"
-        padding="24px 24px 12px 24px"
+        $width="320px"
+        $height="178px"
+        $top="0"
+        $padding="24px 24px 12px 24px"
       >
         <M.Rooms>
           {RoomData.map((room, index) => (
-            <M.Room onClick={() => handleSelectedRoom(room.roomname)}>
+            <M.Room
+              key={index}
+              onClick={() => handleSelectedRoom(room.roomname)}
+            >
               {room.roomname}
             </M.Room>
           ))}

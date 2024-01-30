@@ -15,10 +15,10 @@ const SpellCheckResult = ({ content, showResult, setShowResult }) => {
 
           <div className="buttons">
             <StyledButton
-              backgroundColor="#fff"
-              border="1px solid #e5e5e5"
+              $backgroundColor="#fff"
+              $border="1px solid #e5e5e5"
               fontWeight="300"
-              width="210px"
+              $width="210px"
               onClick={() => {
                 setShowResult(false);
               }}
@@ -27,10 +27,10 @@ const SpellCheckResult = ({ content, showResult, setShowResult }) => {
             </StyledButton>
 
             <StyledButton
-              backgroundColor="#B5A994"
+              $backgroundColor="#B5A994"
               fontWeight="300"
-              width="200px"
-              color="white"
+              $width="200px"
+              $color="white"
               onClick={() => {
                 setShowResult(false);
               }}

@@ -58,9 +58,9 @@ const Note = () => {
                   <BiDotsHorizontalRounded size={20} />
                   {showTags && (
                     <D.SimpleContainer
-                      width="70px"
-                      height="120px"
-                      padding="8px"
+                      $width="70px"
+                      $height="120px"
+                      $padding="8px"
                     >
                       <N.HiddenTag>
                         {data.tags.slice(4).map((tag, index) => (

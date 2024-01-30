@@ -33,4 +33,5 @@ export const CreateCategory = styled.div`
   gap: 4px;
   font-size: 14px;
   font-weight: 300;
+  padding-left: 12px;
 `;

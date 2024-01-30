@@ -175,21 +175,25 @@ export const StyledHr = styled.hr`
 // 버튼
 // width, padding, background-color, color, font-size, font-weight, border
 export const StyledButton = styled.button`
-  width: ${(props) => (props.width ? props.width : "124px")};
+  width: ${(props) => (props.$width ? props.$width : "124px")};
 
-  padding: ${(props) => (props.padding ? props.padding : "9px 0")};
+  padding: ${(props) => (props.$padding ? props.$padding : "9px 0")};
 
   background-color: ${(props) =>
-    props.backgroundColor ? props.backgroundColor : "#f2f2f2"};
+    props.$backgroundColor ? props.$backgroundColor : "#f2f2f2"};
 
-  color: ${(props) => (props.color ? props.color : "black")};
+  color: ${(props) => (props.$color ? props.$color : "black")};
 
   font-size: ${(props) => (props.fontSize ? props.fontSize : "16px")};
   font-weight: ${(props) => (props.fontWeight ? props.fontWeight : "500")};
 
-  border: ${(props) => (props.border ? props.border : "none")};
+  border: ${(props) => (props.$border ? props.$border : "none")};
 
   border-radius: 10px;
 
   cursor: pointer;
+
+  span {
+    font-weight: 300;
+  }
 `;
