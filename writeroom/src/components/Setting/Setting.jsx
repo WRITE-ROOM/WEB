@@ -17,7 +17,7 @@ const Setting = () => {
       </S.SettingButton>
 
       {showSettingMenu && (
-        <DropdownContainer top="30px">
+        <DropdownContainer $top="30px">
           <ul>
             <li>
               <p>수정하기</p>

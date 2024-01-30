@@ -60,10 +60,10 @@ const EmojiContainer = () => {
       {/* 버튼 클릭 시 이모지 리스트 띄우기 */}
       {showEmojiList && (
         <SimpleContainer
-          width="180px"
-          height="75px"
-          top="45px"
-          padding="12px 16px"
+          $width="180px"
+          $height="75px"
+          $top="45px"
+          $padding="12px 16px"
         >
           <p>이모지 종류</p>
           <E.EmojiList>

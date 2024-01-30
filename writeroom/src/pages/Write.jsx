@@ -5,6 +5,8 @@ import * as D from "../components/Header/Dropdown.style";
 import { FiInfo, FiTrash, FiImage } from "react-icons/fi";
 import SpellCheck from "../components/SpellCheck/SpellCheck";
 import WriteFooter from "../components/WriteFooter/WriteFooter";
+import SelectRoomModal from "../components/WriteSelectModal/SelectRoomModal/SelectRoomModal";
+import SelectCategoryModal from "../components/WriteSelectModal/SelectCategoryModal/SelectCategoryModal";
 
 const Write = () => {
   const [title, setTitle] = useState("");
@@ -13,6 +15,11 @@ const Write = () => {
   const [showTemplate, setShowTemplate] = useState(false);
   const [content, setContent] = useState("");
   const [showCountDetail, setShowCountDetail] = useState(false);
+
+  // 룸, 카테고리 선택
+  const [currentModal, setCurrentModal] = useState(null);
+  const [selectedRoom, setSelectedRoom] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -24,6 +31,10 @@ const Write = () => {
 
   const handleTemplateMenu = () => {
     setShowTemplate(!showTemplate);
+  };
+
+  const handleCurrentModal = () => {
+    currentModal ? setCurrentModal(null) : setCurrentModal("Room");
   };
 
   const TemplateO1 = () => {
@@ -90,7 +101,7 @@ const Write = () => {
           {/* 템플릿 */}
           <W.Template>
             <W.StyledButton
-              border="1px solid #e5e5e5"
+              $border="1px solid #e5e5e5"
               onClick={handleTemplateMenu}
             >
               템플릿
@@ -98,10 +109,10 @@ const Write = () => {
 
             {showTemplate && (
               <D.DropdownContainer
-                width="100%"
+                $width="100%"
+                $padding="12px"
+                $top="40px"
                 listWidth="88px"
-                padding="12px"
-                top="40px"
               >
                 <D.DropdownTitle>
                   OREO 템플릿
@@ -141,7 +152,7 @@ const Write = () => {
             >
               {characterCount}자
               {showCountDetail && (
-                <D.SimpleContainer width="150px" height="80px" top="30px">
+                <D.SimpleContainer $width="150px" $height="80px" $top="30px">
                   <W.CounterDetail>
                     <p>
                       공백 포함 <span>{characterCount}자</span>
@@ -158,13 +169,35 @@ const Write = () => {
 
         {/* 룸 */}
         <W.Center>
-          <W.StyledButton width="320px" border="1px solid #e5e5e5">
-            룸
+          <W.StyledButton
+            $width="320px"
+            $border="1px solid #e5e5e5"
+            onClick={handleCurrentModal}
+          >
+            {selectedRoom ? selectedRoom : "룸을 선택해주세요"}
+
+            <span>{selectedCategory ? ` - ` + selectedCategory : ""}</span>
           </W.StyledButton>
+
+          {currentModal === "Room" && (
+            <SelectRoomModal
+              setSelectedRoom={setSelectedRoom}
+              setCurrentModal={setCurrentModal}
+              setSelectedCategory={setSelectedCategory}
+            />
+          )}
+          {currentModal === "Category" && (
+            <SelectCategoryModal
+              selectedRoom={selectedRoom}
+              setCurrentModal={setCurrentModal}
+              setSelectedCategory={setSelectedCategory}
+              selectedCategory={selectedCategory}
+            />
+          )}
         </W.Center>
 
         <W.Right>
-          <W.StyledButton backgroundColor="#B5A994" color="white">
+          <W.StyledButton $backgroundColor="#B5A994" $color="white">
             저장
           </W.StyledButton>
         </W.Right>

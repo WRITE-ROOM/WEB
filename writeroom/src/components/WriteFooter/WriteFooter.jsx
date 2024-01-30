@@ -38,7 +38,7 @@ const WriteFooter = () => {
       <TagContainer>
         <ul>
           {tags.map((tag, index) => (
-            <Tag X={true}>
+            <Tag key={index} $X={true}>
               {tag}
               <F.DeleteTag onClick={() => DeleteTag(index)}>
                 <IoClose size={16} />
