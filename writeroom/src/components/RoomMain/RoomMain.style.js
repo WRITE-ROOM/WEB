@@ -51,9 +51,12 @@ export const NoteList = styled.div`
 
 export const TopBox = styled.div`
   display: flex;
+  flex-direction: row;
   align-items: center;
+  height: 30px;
   p {
-    margin-left: 800px;
+    margin-left: ${({ openRoomSDB, openSNB }) =>
+      openRoomSDB || openSNB ? "600px" : "800px"};
   }
 `;
 

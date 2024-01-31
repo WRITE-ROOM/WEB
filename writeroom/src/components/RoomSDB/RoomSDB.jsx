@@ -53,7 +53,7 @@ const RoomSDB = ({ percent, isOpen, handleRoomSDB }) => {
           </S.BasicBox>
         </S.Container>
       ) : (
-        <MdKeyboardDoubleArrowRight onClick={handleRoomSDB} />
+        <MdKeyboardDoubleArrowRight size={20} onClick={handleRoomSDB} />
       )}
     </div>
   );

@@ -4,9 +4,9 @@ import { BiDotsVerticalRounded } from "react-icons/bi";
 import { FaBookmark } from "react-icons/fa";
 import { FaRegBookmark } from "react-icons/fa";
 
-const RoomNoteBox = () => {
+const RoomNoteBox = ({ openRoomSDB, openSNB }) => {
   return (
-    <S.Container>
+    <S.Container openRoomSDB={openRoomSDB} openSNB={openSNB}>
       <S.ContentsBox>
         <BsPersonCircle size={35} />
         <S.NameBox>
@@ -30,6 +30,7 @@ const RoomNoteBox = () => {
           </p>
         </S.TextBox>
       </S.ContentsBox>
+      <S.NoteImg src="https://images.unsplash.com/photo-1682687220777-2c60708d6889?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"></S.NoteImg>
     </S.Container>
   );
 };

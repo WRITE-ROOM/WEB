@@ -3,15 +3,17 @@ import styled from "styled-components";
 export const Container = styled.div`
   margin-top: 20px;
   border: solid gainsboro;
-  width: 100%;
+  width: ${({ openRoomSDB, openSNB }) =>
+    openRoomSDB || openSNB ? "75%" : "100%"};
   border-radius: 10px;
   height: 200px;
+  display: flex;
   /* background-color: red; */
 `;
 
 export const ContentsBox = styled.div`
-  width: 60%;
-  padding: 20px;
+  width: 100%;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -55,4 +57,9 @@ export const TextBox = styled.div`
     font-weight: bolder;
     font-size: 16px;
   }
+`;
+
+export const NoteImg = styled.img`
+  /* width: 100%;
+  height: 100%; */
 `;
