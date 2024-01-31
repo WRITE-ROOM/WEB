@@ -26,7 +26,7 @@ const RoomPage = () => {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <S.Wrapper>
         <RoomSDB
           percent={progress}
