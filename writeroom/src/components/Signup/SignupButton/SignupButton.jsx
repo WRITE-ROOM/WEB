@@ -3,7 +3,7 @@ import * as S from './SignupButton.style'
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserId } from '../../../redux/user';
 
-export default function SignupButton() {
+export default function SignupButton({onClick}) {
 	let user = useSelector((state) => state.user);
 	let dispatch = useDispatch()
 
@@ -11,8 +11,7 @@ export default function SignupButton() {
 		<div>
 			<S.SignupButton>
 				<button
-				onClick={() => {
-				}}>가입하기</button>
+				onClick={onClick}>가입하기</button>
 			</S.SignupButton>
 		</div>
   )

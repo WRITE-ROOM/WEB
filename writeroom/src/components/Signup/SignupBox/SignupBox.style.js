@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const App = styled.div`
-	width: 1400px;
+	width: 100%;
 	height: 900px;
 	display: flex;
 	flex-direction: column;
