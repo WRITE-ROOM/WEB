@@ -5,6 +5,7 @@ import EmojiContainer from "../components/Emoji/EmojiContainer";
 import Setting from "../components/Setting/Setting";
 import Bookmark from "../components/Bookmark/Bookmark";
 import * as D from "../components/Header/Dropdown.style";
+import NewNoteButton from "../components/FloatingButton/NewNoteButton";
 
 const Note = () => {
   const data = {
@@ -79,6 +80,8 @@ const Note = () => {
       <N.Content>내용</N.Content>
 
       <N.StyledHr color="#E5E5E5" />
+
+      <NewNoteButton />
 
       <EmojiContainer />
     </N.Container>

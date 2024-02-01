@@ -8,6 +8,8 @@ import WriteFooter from "../components/WriteFooter/WriteFooter";
 import SelectRoomModal from "../components/WriteSelectModal/SelectRoomModal/SelectRoomModal";
 import SelectCategoryModal from "../components/WriteSelectModal/SelectCategoryModal/SelectCategoryModal";
 
+import ChallengeAchieved from "../components/ChallengeAchieved/ChallengeAchieved";
+
 const Write = () => {
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
@@ -20,6 +22,9 @@ const Write = () => {
   const [currentModal, setCurrentModal] = useState(null);
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
+
+  // 챌린지 팝업
+  const [challengeAchieved, setChallengeAchieved] = useState(false);
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -197,7 +202,13 @@ const Write = () => {
         </W.Center>
 
         <W.Right>
-          <W.StyledButton $backgroundColor="#B5A994" $color="white">
+          <W.StyledButton
+            $backgroundColor="#B5A994"
+            $color="white"
+            onClick={() => {
+              setChallengeAchieved(true);
+            }}
+          >
             저장
           </W.StyledButton>
         </W.Right>
@@ -247,6 +258,8 @@ const Write = () => {
       <Editor content={content} setContent={setContent} />
 
       <WriteFooter></WriteFooter>
+
+      {challengeAchieved && <ChallengeAchieved />}
     </W.Container>
   );
 };

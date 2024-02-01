@@ -10,6 +10,8 @@ import Redirect from './pages/KakaoRedirect';
 import Main from './pages/Main';
 import RoomPage from "./pages/RoomPage.js";
 import Header from './components/Header/Header.jsx';
+import Write from "./pages/Write.jsx";
+import Note from "./pages/Note.jsx";
 
 function App() {
   const [isSNBOpen, setIsSNBOpen] = useState(false);
@@ -23,6 +25,8 @@ function App() {
     <Header />
     <Routes>
       <Route path="/room" element={<RoomPage />}></Route>
+      <Route path="/write" element={<Write />} />
+      <Route path="/note" element={<Note />} />
       <Route path='/signup' element={<Signup/>} />
       <Route path='/login' element={<Login/>} />    
       <Route path="/oauth" element={<Redirect/>} />
@@ -36,7 +40,6 @@ function App() {
         <RecTopicClose onToggle={toggleSNB}> </RecTopicClose>
       )}
     </div>
-
   );
 }
 
