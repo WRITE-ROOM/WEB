@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import * as S from "./NewRoomImg.style"
+import React, { useState } from "react";
+import * as S from "./NewRoomImg.style";
 import { PiImageSquareLight } from "react-icons/pi";
 
 export default function NewRoomImg(onImageUpload) {
@@ -12,7 +12,7 @@ export default function NewRoomImg(onImageUpload) {
       setImage(reader.result);
     };
     if (file) {
-      reader.readAsDataURL(file); 
+      reader.readAsDataURL(file);
       console.log(file.name); // file.name을 서버에 전송해야함
     }
   };
@@ -21,17 +21,17 @@ export default function NewRoomImg(onImageUpload) {
     <S.Container>
       <S.Picture>
         {image ? (
-          <label htmlFor="input-file"> 
+          <label htmlFor="input-file">
             <img src={image} alt="Uploaded" />
           </label>
-          ) : (
-          <label for="input-file"> 
+        ) : (
+          <label for="input-file">
             <p>룸 이미지 추가</p>
-            <PiImageSquareLight size='20' color='white'/>
+            <PiImageSquareLight size="20" color="white" />
           </label>
         )}
-        <input type="file" id="input-file" onChange={handleImageChange}/>
+        <input type="file" id="input-file" onChange={handleImageChange} />
       </S.Picture>
     </S.Container>
-  )
+  );
 }
