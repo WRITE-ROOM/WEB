@@ -51,7 +51,11 @@
     font-family: "KoPubWorldBatang";
 }
 
-
 .quill {
-    width: 800px;
+    width: 100%;
+}
+
+.ql-editor {
+    height: 100%;
+    min-height: 195px;
 }

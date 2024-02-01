@@ -8,28 +8,27 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Redirect from './pages/KakaoRedirect';
 import Main from './pages/Main';
+import RoomPage from "./pages/RoomPage.js";
 
 function App() {
-  const [isSNBOpen, setIsSNBOpen] = useState(false);
-
-  const toggleSNB = () => {
-    setIsSNBOpen((prev) => !prev);
-  };
-
   return (
-    <div className="App">
-      <Routes>
-        <Route path='/signup' element={<Signup/>} />
-        <Route path='/login' element={<Login/>} />    
-        <Route path="/oauth" element={<Redirect/>} />
-        <Route path="/main" element={<Main/>} />
-      </Routes>
+    <Header />
+    <Routes>
+      <Route path="/room" element={<RoomPage />}></Route>
+      <Route path='/signup' element={<Signup/>} />
+      <Route path='/login' element={<Login/>} />    
+      <Route path="/oauth" element={<Redirect/>} />
+      <Route path="/main" element={<Main/>} />
+    </Routes>
 
-      {/* {isSNBOpen ? 
-      <RecTopic onToggle={toggleSNB}></RecTopic>
-      : <RecTopicClose onToggle={toggleSNB}> </RecTopicClose>}
-      <SearchBox /> */}
+    <div className="App">
+      {isSNBOpen ? (
+        <RecTopic onToggle={toggleSNB}></RecTopic>
+      ) : (
+        <RecTopicClose onToggle={toggleSNB}> </RecTopicClose>
+      )}
     </div>
+
   );
 }
 

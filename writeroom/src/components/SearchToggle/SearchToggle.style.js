@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-
 export const StyledButton = styled.button`
   position: relative;
   cursor: pointer;
@@ -16,5 +15,3 @@ export const StyledButton = styled.button`
     padding-top: 5px;
   }
 `;
-
-
