@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BiDotsHorizontalRounded } from "react-icons/bi";
+import { MdMoreHoriz } from "react-icons/md";
 import * as N from "./Note.style";
 import EmojiContainer from "../components/Emoji/EmojiContainer";
 import Setting from "../components/Setting/Setting";
@@ -56,7 +56,7 @@ const Note = () => {
                     setShowTags(false);
                   }}
                 >
-                  <BiDotsHorizontalRounded size={20} />
+                  <MdMoreHoriz size={20} />
                   {showTags && (
                     <D.SimpleContainer
                       $width="70px"

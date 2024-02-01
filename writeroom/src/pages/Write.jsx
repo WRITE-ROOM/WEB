@@ -10,6 +10,8 @@ import SelectCategoryModal from "../components/WriteSelectModal/SelectCategoryMo
 
 import ChallengeAchieved from "../components/ChallengeAchieved/ChallengeAchieved";
 
+import NewRoomImg from "../components/Main/NewRoomModal/NewRoomImg/NewRoomImg";
+
 const Write = () => {
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
@@ -98,6 +100,24 @@ const Write = () => {
 
   const characterCount = stripHtmlTags(content).length;
   const characterCountNoSpace = stripHtmlTagsNoSpace(content).length;
+
+  const [image, setImage] = useState(null);
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImage(reader.result);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+      console.log(file.name);
+    }
+  };
+
+  const handleDeleteImage = () => {
+    setImage(null);
+  };
 
   return (
     <W.Container>
@@ -216,16 +236,27 @@ const Write = () => {
 
       <W.Top>
         {/* 대표 이미지 */}
-        <W.CoverImage />
+        <W.CoverImage img={image} />
 
         {/* 이미지 업로드/삭제 */}
         <W.ImageControl>
-          <button>
-            <FiImage size={22} />
-          </button>
-          <button>
-            <FiTrash size={22} />
-          </button>
+          <W.HandleCoverImg>
+            <label htmlFor="input-img">
+              <input type="file" id="input-img" onChange={handleImageChange} />
+              <FiImage size={22} />
+            </label>
+          </W.HandleCoverImg>
+
+          <W.HandleCoverImg>
+            <label htmlFor="delete-img">
+              <input
+                type="button"
+                id="delete-img"
+                onClick={handleDeleteImage}
+              />
+              <FiTrash size={22} />
+            </label>
+          </W.HandleCoverImg>
         </W.ImageControl>
 
         {/* 제목 설정 영역 */}
