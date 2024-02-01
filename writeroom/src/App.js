@@ -9,9 +9,17 @@ import Login from './pages/Login';
 import Redirect from './pages/KakaoRedirect';
 import Main from './pages/Main';
 import RoomPage from "./pages/RoomPage.js";
+import Header from './components/Header/Header.jsx';
 
 function App() {
+  const [isSNBOpen, setIsSNBOpen] = useState(false);
+
+  const toggleSNB = () => {
+    setIsSNBOpen((prev) => !prev);
+  };
+
   return (
+    <div className="App">
     <Header />
     <Routes>
       <Route path="/room" element={<RoomPage />}></Route>
@@ -21,7 +29,7 @@ function App() {
       <Route path="/main" element={<Main/>} />
     </Routes>
 
-    <div className="App">
+    
       {isSNBOpen ? (
         <RecTopic onToggle={toggleSNB}></RecTopic>
       ) : (
