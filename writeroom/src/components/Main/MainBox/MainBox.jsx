@@ -29,7 +29,6 @@ export default function MainBox() {
 
   return (
 		<div>
-		<Header/>
 			<S.App>
 				<h1>나의 룸 목록</h1>
 				<S.Container with_SNB={isSNBOpen}>
