@@ -4,17 +4,14 @@ export const user = createSlice({
   name: 'user',
 	initialState: {userId : '', userName : '', userPw : ''},
 	reducers : {
-		setUserId(state, action) {
-			state.userId = action.payload
-		},
-		setUserName(state, action) {
-			state.userName = action.payload
-		},
-		setUserPw(state, action) {
-			state.userPw = action.payload
-		},
+		addUser(state, action) {
+			const { userId, userName, userPw } = action.payload;
+			state.userId = userId;
+			state.userName = userName;
+			state.userPw = userPw;
+		}
 	}
 })
 
-export const {setUserId, setLang, setImage} = user.actions
+export const {addUser} = user.actions
 export default user.reducer
