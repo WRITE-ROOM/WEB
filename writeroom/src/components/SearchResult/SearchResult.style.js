@@ -16,13 +16,14 @@ export const Title = styled.div`
 
 export const Contents = styled.div`
   width: 100%;
-  height: 180px;
+  height: 150px;
   border: grey solid 1px;
   margin-top: 10px;
   border-radius: 15px;
 `;
 export const Wrapper = styled.div`
   display: flex;
+  padding: 0px 20px;
   align-items: center;
   justify-content: space-between;
   width: 100%;

@@ -1,5 +1,6 @@
 import * as S from "./SearchResult.style";
 import { BsPersonCircle } from "react-icons/bs";
+
 import { ReactComponent as ProjectImg } from "../../assets/writeRoomLogo.svg";
 const SearchResult = ({ text }) => {
   return (
