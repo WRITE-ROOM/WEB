@@ -5,6 +5,9 @@ import { useState } from 'react';
 import SearchBox from "./components/SearchBox/SearchBox";
 import {Routes, Route} from 'react-router-dom'
 import Signup from './pages/Signup';
+import Login from './pages/Login';
+import Redirect from './pages/KakaoRedirect';
+import Main from './pages/Main';
 
 function App() {
   const [isSNBOpen, setIsSNBOpen] = useState(false);
@@ -16,7 +19,10 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path='/signup' element={<Signup/>}></Route>      
+        <Route path='/signup' element={<Signup/>} />
+        <Route path='/login' element={<Login/>} />    
+        <Route path="/oauth" element={<Redirect/>} />
+        <Route path="/main" element={<Main/>} />
       </Routes>
 
       {/* {isSNBOpen ? 
