@@ -28,7 +28,6 @@ const WriteFooter = () => {
     dispatch(deleteTag(index));
   };
 
-  console.log(tags);
   return (
     <F.Container>
       {/* 태그 추가 */}

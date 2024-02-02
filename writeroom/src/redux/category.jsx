@@ -1,0 +1,32 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialCategory = [
+  {
+    id: 1,
+    roomname: "스포츠에 대한 고찰",
+    category: ["전체 노트", "카테고리1", "카테고리2", "카테고리3"],
+  },
+  {
+    id: 2,
+    roomname: "룸이름",
+    category: ["전체 노트", "카테고리4", "카테고리5"],
+  },
+  {
+    id: 3,
+    roomname: "룸이름2",
+    category: ["전체 노트", "카테고리6", "카테고리7", "카테고리8"],
+  },
+];
+
+const categorySlice = createSlice({
+  name: "category",
+  initialState: initialCategory,
+  reducers: {
+    setCategory: (state, action) => {
+      return action.payload;
+    },
+  },
+});
+
+export const { setCategory } = categorySlice.actions;
+export default categorySlice.reducer;

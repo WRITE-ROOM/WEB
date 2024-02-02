@@ -4,31 +4,22 @@ import { IoIosArrowDown } from "react-icons/io";
 import { FiPlus } from "react-icons/fi";
 import * as M from "./SelectRoomModal.style";
 
-const SelectRoomModal = (props) => {
-  const RoomData = [
-    {
-      id: 1,
-      roomname: "스포츠에 대한 고찰",
-      category: ["전체", "카테고리", "카테고리", "카테고리"],
-    },
-    {
-      id: 2,
-      roomname: "룸이름",
-      category: ["전체", "카테고리", "카테고리"],
-    },
-    {
-      id: 3,
-      roomname: "룸이름",
-      category: ["전체", "카테고리", "카테고리", "카테고리"],
-    },
-  ];
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setSelectedCategory,
+  setCurrentModal,
+  setSelectedRoom,
+} from "../../../redux/selectModal";
+
+const SelectRoomModal = () => {
+  const dispatch = useDispatch();
+  const categories = useSelector((state) => state.category);
 
   const handleSelectedRoom = (name) => {
-    props.setSelectedRoom(name);
-    props.setSelectedCategory(null);
-    props.setCurrentModal("Category");
+    dispatch(setSelectedRoom(name));
+    dispatch(setSelectedCategory(null));
+    dispatch(setCurrentModal("Category"));
   };
-
   return (
     <M.Container>
       <SimpleContainer
@@ -38,7 +29,7 @@ const SelectRoomModal = (props) => {
         $padding="24px 24px 12px 24px"
       >
         <M.Rooms>
-          {RoomData.map((room, index) => (
+          {categories.map((room, index) => (
             <M.Room
               key={index}
               onClick={() => handleSelectedRoom(room.roomname)}

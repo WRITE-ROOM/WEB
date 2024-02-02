@@ -4,27 +4,27 @@ import { SimpleContainer } from "../../Header/Dropdown.style";
 import { IoIosArrowBack } from "react-icons/io";
 import { FiPlus } from "react-icons/fi";
 
-const SelectCategoryModal = (props) => {
-  const RoomData = [
-    {
-      id: 1,
-      roomname: "스포츠에 대한 고찰",
-      category: ["전체 노트", "카테고리1", "카테고리2", "카테고리3"],
-    },
-    {
-      id: 2,
-      roomname: "룸이름",
-      category: ["전체 노트", "카테고리4", "카테고리5"],
-    },
-    {
-      id: 3,
-      roomname: "룸이름",
-      category: ["전체 노트", "카테고리6", "카테고리7", "카테고리8"],
-    },
-  ];
+import {
+  setSelectedCategory,
+  setCurrentModal,
+} from "../../../redux/selectModal";
+import { useDispatch, useSelector } from "react-redux";
 
-  const handleSelectedCategory = (c) => {
-    props.setSelectedCategory(c);
+const SelectCategoryModal = () => {
+  const dispatch = useDispatch();
+  const categories = useSelector((state) => state.category);
+  const selectedRoom = useSelector((state) => state.selectModal.selectedRoom);
+  const selectedCategory = useSelector(
+    (state) => state.selectModal.selectedCategory
+  );
+
+  // 선택된 룸의 카테고리 리스트들
+  const selectedRoomCategories = categories.find(
+    (room) => room.roomname === selectedRoom
+  ).category;
+
+  const handleSelectedCategory = (category) => {
+    dispatch(setSelectedCategory(category));
   };
 
   return (
@@ -34,19 +34,17 @@ const SelectCategoryModal = (props) => {
           <IoIosArrowBack
             size={18}
             onClick={() => {
-              props.setCurrentModal("Room");
+              dispatch(setCurrentModal("Room"));
             }}
           />
         </M.Back>
         <M.CategoryContainer>
-          {RoomData.filter(
-            (room) => room.roomname === props.selectedRoom
-          )[0].category.map((category, index) => (
+          {selectedRoomCategories.map((category, index) => (
             <li
               key={index}
               onClick={() => handleSelectedCategory(category)}
               style={{
-                color: props.selectedCategory === category ? "#9D8870" : "#000",
+                color: selectedCategory === category ? "#9D8870" : "#000",
               }}
             >
               {category}
