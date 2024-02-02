@@ -7,8 +7,8 @@ export const room = createSlice({
     },
     reducers: {
       setRoom(state, action) {
-        const { roomTitle, updatedAt } = action.payload;
-        state.room.push({ roomTitle, updatedAt }); // 새로운 방 정보를 배열에 추가
+        const { roomTitle, updatedAt, roomImg } = action.payload;
+        state.room.push({ roomTitle, updatedAt, roomImg }); // 새로운 방 정보를 배열에 추가
       },
       resetRoom(state) {
         state.room = [];
@@ -16,7 +16,7 @@ export const room = createSlice({
     },
   });
 
-export const {setRoom} = room.actions;
+export const {setRoom, resetRoom} = room.actions;
 export default room.reducer;
 
 //임시 redux
