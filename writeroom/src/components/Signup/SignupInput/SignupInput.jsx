@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import * as S from './SignupInput.style'
 import SignupButton from '../SignupButton/SignupButton';
 import { useDispatch } from 'react-redux';
-import { addUser } from '../../../redux/user';
+import { setUser } from '../../../redux/user';
 
 export default function SignupInput() {
 	const [name, setName] = useState('');
@@ -35,7 +35,7 @@ export default function SignupInput() {
 		setPwErr(password === '');
 
 		if (!isNameErr && !isEmailErr && !isPwErr && isPasswordValid && isPwMatch)
-			dispatch(addUser({
+			dispatch(setUser({
 				userName: name,
 				userId: email,
 				userPw: password

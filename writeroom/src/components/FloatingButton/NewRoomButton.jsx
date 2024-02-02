@@ -3,7 +3,7 @@ import { FloatingButton } from "./FloatingButton.style";
 import NewRoomLogo from "../../assets/NewRoomLogo.png";
 import ToolTip from "../ToolTip/ToolTip";
 
-const NewRoomButton = () => {
+const NewRoomButton = ({onClick}) => {
   // 호버 시 ToolTip 열기/닫기
   const [isTooltipVisible, setTooltipVisible] = useState(false);
 
@@ -12,6 +12,7 @@ const NewRoomButton = () => {
       $right="130px"
       onMouseEnter={() => setTooltipVisible(true)}
       onMouseLeave={() => setTooltipVisible(false)}
+      onClick={onClick}
     >
       <img src={NewRoomLogo} alt="NewRoomLogo" />
 

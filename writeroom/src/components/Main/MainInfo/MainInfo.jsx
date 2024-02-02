@@ -3,7 +3,7 @@ import * as S from "./MainInfo.style"
 import MainUser from '../MainUser/MainUser';
 import MainMenuModal from '../MainMenuModal/MainMenuModal';
 
-export default function MainInfo() {
+export default function MainInfo({room}) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const handleOpenModal = () => {
@@ -13,8 +13,8 @@ export default function MainInfo() {
     <div>
       <S.Container>
 				<S.Left>
-					<S.RoomName>룸 이dasdfadfasdas </S.RoomName>
-					<S.editTime>01.07 편집</S.editTime>
+					<S.RoomName>{room.roomTitle}</S.RoomName>
+					<S.editTime>{room.updatedAt} 편집</S.editTime>
 				</S.Left>
 				<S.Right>
 					<MainUser/>

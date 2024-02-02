@@ -34,11 +34,11 @@ function App() {
     </Routes>
 
     
-      {isSNBOpen ? (
+      {/* {isSNBOpen ? (
         <RecTopic onToggle={toggleSNB}></RecTopic>
       ) : (
         <RecTopicClose onToggle={toggleSNB}> </RecTopicClose>
-      )}
+      )} */}
     </div>
   );
 }

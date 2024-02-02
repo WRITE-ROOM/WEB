@@ -18,7 +18,7 @@ return (
 	<S.ModalBackground>
 		<S.Modal>
 			<S.Top>
-				<p>신규 룸 만들기</p>
+				<p>룸 초대하기</p>
 				<S.closeBtn size='20' onClick={onClose}/>
 			</S.Top>
 			<S.RoomName>
