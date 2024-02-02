@@ -3,11 +3,14 @@ import { TagContainer, Tag } from "../../pages/Note.style";
 import { IoClose } from "react-icons/io5";
 import { FiPlus } from "react-icons/fi";
 import * as F from "./WriteFooter.style";
+import { useSelector, useDispatch } from "react-redux";
+import { addTag, deleteTag } from "../../redux/tag";
 
 const WriteFooter = () => {
   const [showTagInput, setShowTagInput] = useState(false);
-  const [tags, setTags] = useState(["음악", "음악2", "음악"]);
   const [newTag, setNewTag] = useState("");
+  const tags = useSelector((state) => state.tag);
+  const dispatch = useDispatch();
 
   const handleTagInput = (e) => {
     setNewTag(e.target.value);
@@ -15,18 +18,17 @@ const WriteFooter = () => {
 
   const CreateNewTag = (e) => {
     if (e.key === "Enter" && newTag.trim() !== "") {
-      setTags([...tags, newTag]);
+      dispatch(addTag({ tagId: tags.length, tagName: newTag }));
       setNewTag("");
       e.target.value = "";
     }
   };
 
   const DeleteTag = (index) => {
-    const updatedTags = [...tags];
-    updatedTags.splice(index, 1);
-    setTags(updatedTags);
+    dispatch(deleteTag(index));
   };
 
+  console.log(tags);
   return (
     <F.Container>
       {/* 태그 추가 */}
@@ -39,7 +41,7 @@ const WriteFooter = () => {
         <ul>
           {tags.map((tag, index) => (
             <Tag key={index} $X={true}>
-              {tag}
+              {tag.tagName}
               <F.DeleteTag onClick={() => DeleteTag(index)}>
                 <IoClose size={16} />
               </F.DeleteTag>
