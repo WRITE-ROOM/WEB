@@ -33,11 +33,12 @@ function App() {
         <Route path="/main" element={<Main />} />
       </Routes>
 
-      {isSNBOpen ? (
+
+      {/* {isSNBOpen ? (
         <RecTopic onToggle={toggleSNB}></RecTopic>
       ) : (
         <RecTopicClose onToggle={toggleSNB}> </RecTopicClose>
-      )}
+      )} */}
     </div>
   );
 }
