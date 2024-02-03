@@ -3,9 +3,9 @@ import styled from "styled-components";
 export const Container = styled.div`
   margin-top: 20px;
   border: solid gainsboro;
-
   width: ${({ openSNB, openRoomSNB }) =>
-    openSNB && openRoomSNB ? "75%" : openSNB ? "75%" : "100%"};
+    openSNB && openRoomSNB ? "60%" : openSNB ? "75%" : "100%"};
+
   border-radius: 10px;
   height: 200px;
   display: flex;
@@ -14,7 +14,6 @@ export const Container = styled.div`
 export const UserIconWrapper = styled.div`
   position: absolute;
   margin-bottom: 120px;
-
 `;
 
 export const ContentsBox = styled.div`
@@ -46,7 +45,6 @@ export const CategoryWrapper = styled.div`
     padding: 3px 9px;
     color: #b5a995;
     border-radius: 15px;
-
     background: none;
     border: gainsboro 2px solid;
   }
@@ -59,7 +57,7 @@ export const TextBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: ${({ openRoomSNB }) => (openRoomSNB ? "100%" : "100%")};
+  width: ${({ openRoomSNB }) => (openRoomSNB ? "500px" : "700px")};
 
   h1 {
     margin-top: 10px;
@@ -78,6 +76,11 @@ export const TextBox = styled.div`
   }
 `;
 
+export const NoteImg = styled.img`
+  width: ${({ openSNB, openRoomSNB }) =>
+    openSNB && openRoomSNB ? "35%" : openSNB ? "75%" : "500px"};
+`;
+
 export const IconWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -86,8 +89,8 @@ export const IconWrapper = styled.div`
 `;
 
 export const IconButton = styled.button`
-  background-color: white;
   border: none;
+  background-color: white;
   cursor: pointer;
 `;
 
@@ -120,5 +123,4 @@ export const Button = styled.button`
   font-size: 16px;
   border: none;
   cursor: pointer;
-
 `;

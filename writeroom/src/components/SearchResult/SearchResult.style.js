@@ -66,14 +66,14 @@ export const TextBox = styled.div`
   h1 {
     padding-left: 10px;
     padding-top: 10px;
-    font-size: larger;
+    font-size: 25px;
     font-weight: bold;
   }
 `;
 
 export const TextWrapper = styled.div`
   padding: 0px 10px;
-  width: 98%;
+  width: 800px;
   display: flex;
   margin-bottom: 10px;
   gap: 10px;
@@ -82,7 +82,13 @@ export const TextWrapper = styled.div`
     font-weight: bold;
     white-space: nowrap;
   }
-  p {
+
+  span {
+    width: 600px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-all;
     font-size: 14px;
   }
 `;

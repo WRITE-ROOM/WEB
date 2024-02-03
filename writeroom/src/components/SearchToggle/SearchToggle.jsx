@@ -7,7 +7,7 @@ const SearchToggle = ({ icon, label, onClick, isOpen, content }) => {
       {icon}
       {label}
       <IoIosArrowDown />
-      {isOpen && <div>{content}</div>}
+      {isOpen && <S.EditDropdownContainer>{content}</S.EditDropdownContainer>}
     </S.StyledButton>
   );
 };

@@ -40,6 +40,11 @@ export const InputWrapper = styled.div`
     width: 100%;
   }
 `;
+export const Line = styled.div`
+  border-top: 1px solid;
+  width: 100%;
+
+`;
 
 export const ResultBox = styled.div`
   height: 100%;
@@ -49,9 +54,10 @@ export const ResultBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-top: solid 1px;
-  max-height: 100%;
+  padding-left: 60px;
   overflow-y: auto;
+  max-height: 100%;
+
 `;
 export const FilterWrapper = styled.div`
   margin-top: 20px;
@@ -59,8 +65,10 @@ export const FilterWrapper = styled.div`
   color: grey;
   align-items: center;
   justify-content: space-between;
-  width: 90%;
+
+  width: 95%;
   height: 5%;
+  margin-left: 50px;
 `;
 export const ButtonWrapper = styled.div`
   display: flex;

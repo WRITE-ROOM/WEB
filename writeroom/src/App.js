@@ -10,8 +10,10 @@ import Redirect from "./pages/KakaoRedirect";
 import Main from "./pages/Main";
 import RoomPage from "./pages/RoomPage.js";
 import Header from "./components/Header/Header.jsx";
+
 import Write from "./pages/Write.jsx";
 import Note from "./pages/Note.jsx";
+
 
 function App() {
   const [isSNBOpen, setIsSNBOpen] = useState(false);
@@ -38,7 +40,9 @@ function App() {
         <RecTopic onToggle={toggleSNB}></RecTopic>
       ) : (
         <RecTopicClose onToggle={toggleSNB}> </RecTopicClose>
+
       )} */}
+>>>>>>> main
     </div>
   );
 }
