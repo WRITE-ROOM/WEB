@@ -1,11 +1,10 @@
 import RoomSNB from "../components/RoomSNB/RoomSNB.jsx";
 import RoomMain from "../components/RoomMain/RoomMain.jsx";
-import RecTopic from "../components/RecTopic/RecTopic";
-import RecTopicClose from "../components/RecTopicClose/RecTopicClose";
+import RecTopic from "../components/RecTopic/RecTopic.jsx";
+import RecTopicClose from "../components/RecTopicClose/RecTopicClose.jsx";
 import { useState } from "react";
 import NewNoteButton from "../components/FloatingButton/NewNoteButton.jsx";
 import NewRoomButton from "../components/FloatingButton/NewRoomButton.jsx";
-import Header from "../components/Header/Header.jsx";
 import * as S from "./RoomPage.style.js";
 
 const RoomPage = () => {
