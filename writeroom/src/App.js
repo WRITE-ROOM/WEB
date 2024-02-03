@@ -1,8 +1,3 @@
-import logo from "./logo.svg";
-import RecTopic from "./components/RecTopic/RecTopic";
-import RecTopicClose from "./components/RecTopicClose/RecTopicClose";
-import { useState } from "react";
-import SearchBox from "./components/SearchBox/SearchBox";
 import { Routes, Route } from "react-router-dom";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
@@ -14,19 +9,12 @@ import Header from "./components/Header/Header.jsx";
 import Write from "./pages/Write.jsx";
 import Note from "./pages/Note.jsx";
 
-
 function App() {
-  const [isSNBOpen, setIsSNBOpen] = useState(false);
-
-  const toggleSNB = () => {
-    setIsSNBOpen((prev) => !prev);
-  };
-
   return (
     <div className="App">
       <Header />
       <Routes>
-        <Route path="/room" element={<RoomPage />}></Route>
+        <Route path="/room" element={<RoomPage />} />
         <Route path="/write" element={<Write />} />
         <Route path="/note" element={<Note />} />
         <Route path="/signup" element={<Signup />} />
@@ -34,15 +22,6 @@ function App() {
         <Route path="/oauth" element={<Redirect />} />
         <Route path="/main" element={<Main />} />
       </Routes>
-
-
-      {/* {isSNBOpen ? (
-        <RecTopic onToggle={toggleSNB}></RecTopic>
-      ) : (
-        <RecTopicClose onToggle={toggleSNB}> </RecTopicClose>
-
-      )} */}
->>>>>>> main
     </div>
   );
 }
