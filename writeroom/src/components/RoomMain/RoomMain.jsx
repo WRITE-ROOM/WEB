@@ -4,6 +4,7 @@ import TagSearchBox from "../TagSearchBox/TagSearchBox";
 import ImageRoomNoteBox from "../ImageRoomNoteBox/ImageRoomNoteBox";
 import Pagination from "react-js-pagination";
 import { useState } from "react";
+
 const RoomMain = ({ openRoomSNB, openSNB }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 2;
