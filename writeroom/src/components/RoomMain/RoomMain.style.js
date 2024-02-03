@@ -9,10 +9,12 @@ export const Container = styled.div`
 `;
 
 export const ImgContainer = styled.img`
+
   width: 100%;
   height: 70%;
   object-fit: inherit;
   // RoomSDB 또는 SNB 열렸을 때
+
   ${({ openRoomSNB }) =>
     openRoomSNB &&
     `
@@ -25,10 +27,10 @@ export const ImgContainer = styled.img`
     `
     margin-right: 20%;
     width: 75%;
-    height: 70%; 
-    
+    height: 70%;    
   `}
   // RoomSDB SNB 둘다 열렸을 때
+
 
   ${({ openRoomSNB, openSNB }) =>
     openRoomSNB &&
@@ -53,11 +55,13 @@ export const NoteList = styled.div`
 
 export const TopBox = styled.div`
   display: flex;
+
   align-items: center;
   height: 30px;
   p {
     margin-left: ${({ openRoomSNB, openSNB }) =>
       openRoomSNB || openSNB ? "400px" : "800px"};
+
   }
 `;
 
@@ -77,6 +81,7 @@ export const SearchWrapper = styled.div`
     border: none;
   }
 `;
+
 
 export const PaginationBox = styled.div`
   .pagination {
@@ -121,3 +126,4 @@ export const PaginationBox = styled.div`
     color: black;
   }
 `;
+

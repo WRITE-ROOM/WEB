@@ -7,8 +7,12 @@ export const Container = styled.div`
 
 export const Header = styled.div`
   width: 100%;
-  height: 25vw;
+  aspect-ratio: 4 / 1;
   position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   background: linear-gradient(
     to bottom,
@@ -32,8 +36,7 @@ export const CoverImage = styled.div`
 
 export const Tools = styled.div`
   width: 100%;
-  height: 70%;
-  padding: 40px 24px;
+  padding: 40px 24px 0 24px;
   box-sizing: border-box;
 
   display: flex;
@@ -43,9 +46,7 @@ export const Tools = styled.div`
 
 export const NoteInfo = styled.div`
   width: 100%;
-  height: 30%;
-  padding: 24px;
-  padding-bottom: 0;
+  padding: 0 24px;
   box-sizing: border-box;
 
   p {
@@ -82,7 +83,7 @@ export const Lower = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-  margin-top: 10px;
+  margin: 10px 0;
 `;
 
 export const TagContainer = styled.div`
@@ -132,7 +133,7 @@ export const HiddenTag = styled.ul`
 `;
 
 export const Content = styled.div`
-  height: 500px;
+  height: 400px;
   color: black;
   padding: 24px;
 `;

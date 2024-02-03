@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   margin-top: 20px;
   border: solid gainsboro;
+
   width: ${({ openSNB, openRoomSNB }) =>
     openSNB && openRoomSNB ? "75%" : openSNB ? "75%" : "100%"};
   border-radius: 10px;
@@ -13,6 +14,7 @@ export const Container = styled.div`
 export const UserIconWrapper = styled.div`
   position: absolute;
   margin-bottom: 120px;
+
 `;
 
 export const ContentsBox = styled.div`
@@ -44,6 +46,7 @@ export const CategoryWrapper = styled.div`
     padding: 3px 9px;
     color: #b5a995;
     border-radius: 15px;
+
     background: none;
     border: gainsboro 2px solid;
   }
@@ -117,4 +120,5 @@ export const Button = styled.button`
   font-size: 16px;
   border: none;
   cursor: pointer;
+
 `;

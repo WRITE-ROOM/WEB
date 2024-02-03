@@ -6,8 +6,7 @@ import { BsPersonFill } from "react-icons/bs";
 import { HiOutlineAdjustments } from "react-icons/hi";
 import SearchToggle from "../SearchToggle/SearchToggle";
 import SearchResult from "../SearchResult/SearchResult";
-import InfiniteScroll from "react-infinite-scroll-component";
-
+import InfiniteScroll from "react-infinite-scroll"
 const SearchBox = () => {
   const [isMemberToggleOpen, setIsMemberToggleOpen] = useState(false);
   const [isRangeToggleOpen, setIsRangeToggleOpen] = useState(false);
@@ -103,6 +102,7 @@ const SearchBox = () => {
           </S.ButtonWrapper>
         </S.FilterWrapper>
         <S.ResultBox id="infiniteScrollTarget">
+
           <InfiniteScroll
             dataLength={isData.length}
             next={fetchMoreData}

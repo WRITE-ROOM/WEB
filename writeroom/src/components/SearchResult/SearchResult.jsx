@@ -1,4 +1,5 @@
 import * as S from "./SearchResult.style";
+
 import { HiMiniUserCircle } from "react-icons/hi2";
 import { ReactComponent as ProjectImg } from "../../assets/writeRoomLogo.svg";
 const SearchResult = ({ text }) => {
@@ -36,5 +37,6 @@ const SearchResult = ({ text }) => {
     </S.Container>
   );
 };
+
 
 export default SearchResult;

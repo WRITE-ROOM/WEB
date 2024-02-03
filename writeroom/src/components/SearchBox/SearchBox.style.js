@@ -43,6 +43,7 @@ export const InputWrapper = styled.div`
 export const Line = styled.div`
   border-top: 1px solid;
   width: 100%;
+
 `;
 
 export const ResultBox = styled.div`
@@ -56,6 +57,7 @@ export const ResultBox = styled.div`
   padding-left: 60px;
   overflow-y: auto;
   max-height: 100%;
+
 `;
 export const FilterWrapper = styled.div`
   margin-top: 20px;
@@ -63,6 +65,7 @@ export const FilterWrapper = styled.div`
   color: grey;
   align-items: center;
   justify-content: space-between;
+
   width: 95%;
   height: 5%;
   margin-left: 50px;
@@ -75,12 +78,11 @@ export const ButtonWrapper = styled.div`
 
 export const MemberBox = styled.div`
   width: 80px;
-  background-color: white;
   border: solid;
   border-radius: 10px;
-  height: 110px;
-  overflow-y: auto; // 자식이 부모보다 클 때 스크롤 생성
+  height: auto;
   margin-top: 10px;
+
   div {
     border-bottom: 1px solid;
     padding: 10px;

@@ -1,4 +1,5 @@
 import * as S from "./RoomNoteBox.style";
+
 import Bookmark from "../Bookmark/Bookmark";
 import { HiMiniUserCircle } from "react-icons/hi2";
 import { BiDotsVerticalRounded } from "react-icons/bi";
@@ -42,11 +43,13 @@ const RoomNoteBox = ({ openRoomSNB, openSNB, note }) => {
               </S.ToggleBox>
             )}
           </S.IconWrapper>
+
         </S.NameBox>
         <S.CategoryWrapper>
           <p>2024.02.01</p>
           <button>음악</button>
         </S.CategoryWrapper>
+
         <S.TextBox openRoomSNB={openRoomSNB} openSNB={openSNB}>
           <h1>노래 플레이리스트</h1>
           <p>
@@ -55,6 +58,7 @@ const RoomNoteBox = ({ openRoomSNB, openSNB, note }) => {
           </p>
         </S.TextBox>
       </S.ContentsBox>
+
     </S.Container>
   );
 };

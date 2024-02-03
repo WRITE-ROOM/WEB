@@ -85,8 +85,12 @@ export const Right = styled.div`
 
 export const Top = styled.div`
   width: 100%;
-  height: 25vw;
+  aspect-ratio: 4 / 1;
   position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   background: linear-gradient(
     to bottom,
@@ -102,7 +106,7 @@ export const CoverImage = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  background-image: url(https://media.istockphoto.com/id/1431937796/vector/multicolor-of-stain-splash-watercolor-background.jpg?s=612x612&w=0&k=20&c=TP7AHbr-XISL22Z2oUIIW9dpzhH8v-dvR6d41RBPCF0=);
+  background-image: url(${(props) => (props.img ? props.img : "")});
 
   position: absolute;
   z-index: -1;
@@ -110,28 +114,36 @@ export const CoverImage = styled.div`
 
 export const ImageControl = styled.div`
   width: 100%;
-  height: 70%;
-  padding: 40px 24px;
+  padding: 40px 24px 0 24px;
   box-sizing: border-box;
 
   display: flex;
   justify-content: right;
   gap: 10px;
+`;
 
-  button {
-    display: block;
-    border: none;
+export const HandleCoverImg = styled.div`
+  width: 24px;
+  height: 24px;
+  color: #fff;
+
+  label {
     width: 24px;
     height: 24px;
-    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
-    color: #fff;
+  }
+
+  input {
+    display: none;
   }
 `;
 
 export const TitleContainer = styled.div`
   width: 100%;
-  height: 30%;
+
   padding: 24px;
   padding-bottom: 0;
   box-sizing: border-box;
@@ -150,9 +162,10 @@ export const TitleContainer = styled.div`
     }
 
     &#subtitleInput {
-      height: 18px;
+      height: 30px;
       font-size: 14px;
       font-weight: 300;
+      margin: 10px 0;
     }
 
     &:focus {
@@ -169,7 +182,6 @@ export const StyledHr = styled.hr`
   height: 1px;
   border: none;
   border-top: 1px solid white;
-  margin-bottom: 5px;
 `;
 
 // 버튼
