@@ -6,6 +6,7 @@ import {useNavigate} from "react-router-dom"
 import CancelModal from './CancelModal/CancelModal';
 
 export default function Account() {
+    const [image, setImage] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     let navigate = useNavigate();
@@ -16,6 +17,17 @@ export default function Account() {
     const closeModal = () => {
         setIsModalOpen(false);
     };
+    const handleImageChange = (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+            setImage(reader.result);
+            };
+            reader.readAsDataURL(file);
+            console.log(file.name); 
+        }
+      };
 
   return (
     <div>
@@ -28,7 +40,20 @@ export default function Account() {
             </S.Top>
             <S.Title>프로필</S.Title>
             <S.ProfileBox>
-                <HiMiniUserCircle size='200px' color="rgba(229, 229, 229, 1)"/>
+                {image ? (
+                    <label htmlFor="input-file">
+                        <img src={image} alt="Uploaded" />
+                    </label>
+                    ) : (
+                        <label htmlFor="input-file">
+                            <HiMiniUserCircle 
+                            style={{cursor: 'pointer'}}size='200px' color="rgba(229, 229, 229, 1)"
+                            onClick={handleImageChange}/>
+                        </label>
+                    )
+                }
+                <input style={{display:'none'}}type="file" id="input-file" onChange={handleImageChange} />
+                
                 <S.ProfileRight>
                     <p>사용자 이름</p>
                     <input placeholder='필수 입력 항목입니다'></input>

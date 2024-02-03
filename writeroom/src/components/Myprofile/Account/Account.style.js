@@ -50,6 +50,17 @@ export const ProfileBox = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+
+    label {
+        width: 161px;
+        height: 161px;
+    }
+    img {
+        width: 161px;
+        height: 161px;
+        object-fit: cover;
+        cursor: pointer;
+    }
 `
 export const ProfileLeft = styled.div`
     width: 161px;

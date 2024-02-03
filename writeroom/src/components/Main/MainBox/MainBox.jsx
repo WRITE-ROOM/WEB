@@ -45,8 +45,8 @@ export default function MainBox() {
 		console.log('서버 전달이다.', res.data)
 		const rooms = res.data.result;
 		rooms.forEach(roomData => {
-			const { roomTitle, updatedAt, roomImg } = roomData;
-			dispatch(setRoom({ roomTitle, updatedAt, roomImg }));
+			const { userId, roomTitle, updatedAt, roomImg } = roomData;
+			dispatch(setRoom({ userId, roomTitle, updatedAt, roomImg }));
 		});
 		console.log('redux 보는 거다', store.getState().room.room);
 	} catch (error) {
