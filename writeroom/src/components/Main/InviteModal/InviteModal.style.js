@@ -11,6 +11,18 @@ export const ModalBackground = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	h5 {
+		width: 340px;
+		margin: 0;
+		font-family: Noto Sans;
+		font-size: 10px;
+		font-weight: 500;
+		line-height: 19px;
+		letter-spacing: 0em;
+		text-align: left;
+		color: red;
+	}
 `
 export const Modal = styled.div`
 	width: 380px;
@@ -60,23 +72,23 @@ export const RoomName = styled.div`
 	border: 1px solid rgba(229, 229, 229, 1);
 	border-radius: 10px;
 	p {
-        width: 300px;
+		width: 300px;
 		height: 17.57px;
-        margin: 5px 0 0 15px;
-        font-family: Noto Sans;
-        font-size: 14px;
-        font-weight: 500;
+		margin: 5px 0 0 15px;
+		font-family: Noto Sans;
+		font-size: 14px;
+		font-weight: 500;
 		color: rgba(147, 147, 147, 1);
 	}
-    h6 {
-        width: 300px;
+	h6 {
+		width: 300px;
 		height: 17.57px;
-        margin: 11px 0 0 15px;
-        font-family: Pretendard;
-        font-size: 14px;
-        font-weight: 300;
-    }		
-  }
+		margin: 11px 0 0 15px;
+		font-family: Pretendard;
+		font-size: 14px;
+		font-weight: 300;
+	}		
+}
 `
 export const CopyBtn = styled.div`
 	width: 362px;

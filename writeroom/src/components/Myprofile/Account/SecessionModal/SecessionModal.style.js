@@ -13,48 +13,20 @@ export const ModalBackground = styled.div`
 	align-items: center;
 `
 export const Modal = styled.div`
-	width: 400px;
+	width: 476px;
 	height: 248px;
-	padding: 10px;
+	// padding: 10px;
 	display: flex;
 	flex-direction: column;
-	align-items: flex-end;
-	justify-content: space-between;
+	align-items: center;
+	justify-content: space-around;
 	border-radius: 10px;
 	background: white;
 	z-index: 99;
 `
-export const Top = styled.div`
-	width; 400px;
-	height: 40px;
-    // align-items: flex-end;
-	p {
-		width: 345px;
-		height: 24px;
-		font-family: Pretendard;
-		font-size: 20px;
-		font-weight: 600;
-		line-height: 24px;
-		letter-spacing: 0em;
-		text-align: left;
-	}
-
-	button {
-		width: 15px;
-		height: 15px;
-		background: red;
-		cursor: pointer;
-	}
-`
-
-export const closeBtn = styled(IoClose)`
-	cursor: pointer;
-`
-
-
 export const Info = styled.div`
     position: relative;
-    bottom: 20px;
+    top: 20px;
     width: 400px;
     height: 100px;
     display: flex;
@@ -66,12 +38,16 @@ export const Info = styled.div`
         font-family: Pretendard;
         font-size: 20px;
         font-weight: 600;        
-        margin: 10px 0;
+        margin: 0;
     }
     p {
+        width: 395px;
+        height: 19px;
+        margin-top: 20px;
         font-family: Pretendard;
-        font-size: 16px;
-        font-weight: 300;      
+        font-size: 14px;
+        font-weight: 300;
+        text-align: center;
     }
 `
 
@@ -82,42 +58,39 @@ export const BtnBox = styled.div`
     align-items: center;
 	justify-content: space-around;
 `
-export const DeleteBtn = styled.div`
+export const CancelBtn = styled.div`
 	width: 171px;
 	height: 45px;
 	display: flex;
 	align-items: center;
     justify-content: center;
 	border-radius: 10px;
-    background: rgba(229, 229, 229, 1);
+    background: rgba(242, 242, 242, 1);
+    border: 1px solid rgba(229, 229, 229, 1);
 	cursor: pointer;
 
 	p {
 		width: 60px;
 		margin-left: 15px;
-		font-family: Pretendard;
+        font-family: Pretendard;
         font-size: 16px;
         font-weight: 300;
+        text-align: center;
 	}
 `
-export const SaveBtn = styled.div`
+export const SecessionBtn = styled.div`
     width: 171px;
 	height: 45px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	border-radius: 10px;
-    background: rgba(181, 169, 148, 1);
-    color: white;
+    border: 1px solid rgba(229, 229, 229, 1);
 	cursor: pointer;
     p {
-		width: 60px;
-		margin-left: 15px;
-		font-family: Pretendard;
-		font-size: 16px;
-		font-weight: 300;
-		color: white;
+        font-family: Pretendard;
+        font-size: 16px;
+        font-weight: 300;      
 	}
 
 `
-

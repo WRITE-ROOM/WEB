@@ -4,19 +4,29 @@ import MyprofileSNB from '../MyprofileSNB/MyprofileSNB';
 import { HiMiniUserCircle } from "react-icons/hi2";
 import {useNavigate} from "react-router-dom"
 import CancelModal from './CancelModal/CancelModal';
+import SecessionModal from './SecessionModal/SecessionModal';
 
 export default function Account() {
     const [image, setImage] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+    const [isSecessionModalOpen, setIsSecessionModalOpen] = useState(false);
 
     let navigate = useNavigate();
-    const openModal = () => {
-        setIsModalOpen(true);
+    const openCancelModal = () => {
+        setIsCancelModalOpen(true);
     };
 
-    const closeModal = () => {
-        setIsModalOpen(false);
+    const closeCancelModal = () => {
+        setIsCancelModalOpen(false);
     };
+    const openSecessionModal = () => {
+        setIsSecessionModalOpen(true);
+    };
+
+    const closeSecessionModal = () => {
+        setIsSecessionModalOpen(false);
+    };
+
     const handleImageChange = (e) => {
         const file = e.target.files && e.target.files[0];
         if (file) {
@@ -36,7 +46,7 @@ export default function Account() {
         <S.Info>
             <S.Top>
                 <p>계정 설정</p>
-                <S.CloseBtn size='30' onClick={openModal}/>
+                <S.CloseBtn size='30' onClick={openCancelModal}/>
             </S.Top>
             <S.Title>프로필</S.Title>
             <S.ProfileBox>
@@ -77,11 +87,12 @@ export default function Account() {
             <S.Line/>
             <S.Bottom>
                 <button>로그아웃</button>
-                <p>탈퇴하기</p>
+                <p onClick={openSecessionModal}>탈퇴하기</p>
             </S.Bottom>
         </S.Info>
     </S.Container>
-    <CancelModal isOpen={isModalOpen} onClose={closeModal}/>
+    <CancelModal isOpen={isCancelModalOpen} onClose={closeCancelModal}/>
+    <SecessionModal isOpen={isSecessionModalOpen} onClose={closeSecessionModal}/>
     </div>
   )
 }
