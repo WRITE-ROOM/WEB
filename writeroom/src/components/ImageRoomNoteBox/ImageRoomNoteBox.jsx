@@ -1,12 +1,10 @@
-import * as S from "./RoomNoteBox.style";
-
+import * as S from "./ImageRoomNoteBox.style";
 import Bookmark from "../Bookmark/Bookmark";
 import { HiMiniUserCircle } from "react-icons/hi2";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { useState } from "react";
 import RoomModal from "../RoomModal/RoomModal";
-
-const RoomNoteBox = ({ openRoomSNB, openSNB, note }) => {
+const ImageRoomNoteBox = ({ openRoomSNB, openSNB, note }) => {
   const [isClick, setIsClick] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const handleClick = () => {
@@ -15,7 +13,6 @@ const RoomNoteBox = ({ openRoomSNB, openSNB, note }) => {
   const handleModal = () => {
     setOpenModal(!openModal);
   };
-
   return (
     <S.Container openRoomSNB={openRoomSNB} openSNB={openSNB}>
       <S.ContentsBox>
@@ -43,13 +40,11 @@ const RoomNoteBox = ({ openRoomSNB, openSNB, note }) => {
               </S.ToggleBox>
             )}
           </S.IconWrapper>
-
         </S.NameBox>
         <S.CategoryWrapper>
           <p>2024.02.01</p>
           <button>음악</button>
         </S.CategoryWrapper>
-
         <S.TextBox openRoomSNB={openRoomSNB} openSNB={openSNB}>
           <h1>노래 플레이리스트</h1>
           <p>
@@ -58,9 +53,13 @@ const RoomNoteBox = ({ openRoomSNB, openSNB, note }) => {
           </p>
         </S.TextBox>
       </S.ContentsBox>
-
+      <S.NoteImg
+        openRoomSNB={openRoomSNB}
+        openSNB={openSNB}
+        src="https://images.unsplash.com/photo-1682687220777-2c60708d6889?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      ></S.NoteImg>
     </S.Container>
   );
 };
 
-export default RoomNoteBox;
+export default ImageRoomNoteBox;

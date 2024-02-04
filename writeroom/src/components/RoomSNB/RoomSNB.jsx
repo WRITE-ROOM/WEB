@@ -1,16 +1,17 @@
-import * as S from "./RoomSDB.style";
+import * as S from "./RoomSNB.style";
 import { GoGear } from "react-icons/go";
+import { GoPlusCircle } from "react-icons/go";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
 } from "react-icons/md";
 import { BsPersonCircle } from "react-icons/bs";
+import { BiDotsVerticalRounded } from "react-icons/bi";
 import ProgressBar from "../ProgressBar/ProgressBar";
 
 import { CategoryToggle } from "../CategoryToggle/CategoryToggle";
-import { BiDotsVerticalRounded } from "react-icons/bi";
 
-const RoomSDB = ({ percent, isOpen, handleRoomSDB }) => {
+const RoomSNB = ({ percent, isOpen, handleRoomSNB }) => {
   const nameArr = ["지환", "수민", "영주"];
 
   return (
@@ -20,7 +21,7 @@ const RoomSDB = ({ percent, isOpen, handleRoomSDB }) => {
           <S.TitleBox>
             <h2>스포츠에 대한 고찰</h2>
             <S.IconsBox>
-              <MdKeyboardDoubleArrowLeft onClick={handleRoomSDB} />
+              <MdKeyboardDoubleArrowLeft onClick={handleRoomSNB} />
               <GoGear />
             </S.IconsBox>
           </S.TitleBox>
@@ -33,10 +34,10 @@ const RoomSDB = ({ percent, isOpen, handleRoomSDB }) => {
                 <p>(3시간전)</p>
               </S.Member>
             ))}
-            <S.Member>
-              <BsPersonCircle size={30} />
+            <S.Plus>
+              <GoPlusCircle size={30} />
               <h2>초대하기</h2>
-            </S.Member>
+            </S.Plus>
           </S.BasicBox>
           <S.BasicBox>
             <h2>챌린지</h2>
@@ -53,10 +54,10 @@ const RoomSDB = ({ percent, isOpen, handleRoomSDB }) => {
           </S.BasicBox>
         </S.Container>
       ) : (
-        <MdKeyboardDoubleArrowRight size={20} onClick={handleRoomSDB} />
+        <MdKeyboardDoubleArrowRight size={20} onClick={handleRoomSNB} />
       )}
     </div>
   );
 };
 
-export default RoomSDB;
+export default RoomSNB;

@@ -3,18 +3,20 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
   height: 100%;
 `;
 
 export const ImgContainer = styled.img`
-  position: relative;
+
   width: 100%;
   height: 70%;
   object-fit: inherit;
   // RoomSDB 또는 SNB 열렸을 때
-  ${({ openRoomSDB }) =>
-    openRoomSDB &&
+
+  ${({ openRoomSNB }) =>
+    openRoomSNB &&
     `
     width: 100%;
     height: 70%; 
@@ -23,16 +25,18 @@ export const ImgContainer = styled.img`
   ${({ openSNB }) =>
     openSNB &&
     `
+    margin-right: 20%;
     width: 75%;
-    height: 70%; 
-    
+    height: 70%;    
   `}
   // RoomSDB SNB 둘다 열렸을 때
 
-  ${({ openRoomSDB, openSNB }) =>
-    openRoomSDB &&
+
+  ${({ openRoomSNB, openSNB }) =>
+    openRoomSNB &&
     openSNB &&
     `
+    margin-right: 30%;
     width: 69%;
   `}
 `;
@@ -51,12 +55,13 @@ export const NoteList = styled.div`
 
 export const TopBox = styled.div`
   display: flex;
-  flex-direction: row;
+
   align-items: center;
   height: 30px;
   p {
-    margin-left: ${({ openRoomSDB, openSNB }) =>
-      openRoomSDB || openSNB ? "600px" : "800px"};
+    margin-left: ${({ openRoomSNB, openSNB }) =>
+      openRoomSNB || openSNB ? "400px" : "800px"};
+
   }
 `;
 
@@ -76,3 +81,49 @@ export const SearchWrapper = styled.div`
     border: none;
   }
 `;
+
+
+export const PaginationBox = styled.div`
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+  }
+  ul.pagination li {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+  }
+  ul.pagination li:first-child {
+    border-radius: 5px 0 0 5px;
+  }
+  ul.pagination li:last-child {
+    border-radius: 0 5px 5px 0;
+  }
+  ul.pagination li a {
+    text-decoration: none;
+    color: black;
+    font-size: 1rem;
+  }
+  ul.pagination li.active a {
+    color: white;
+  }
+  ul.pagination li.active {
+    background-color: black;
+  }
+  ul.pagination li a:hover,
+  ul.pagination li a.active {
+    color: black;
+  }
+`;
+

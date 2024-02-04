@@ -1,8 +1,7 @@
 import styled from 'styled-components'
 
 export const App = styled.div`
-	width: 1280px;
-	height: 832px;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	// align-items: center;
@@ -21,7 +20,7 @@ export const App = styled.div`
 `
 
 export const Container = styled.div`
-	width: 100vw;
+	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -47,5 +46,6 @@ export const Picture = styled.div`
 		width: 290px;
 		height: 220px;
 		border-radius : 10px 10px 0 0;
+		object-fit: cover;
 	}
 `
