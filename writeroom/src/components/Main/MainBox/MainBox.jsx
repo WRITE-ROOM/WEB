@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {setUser} from '../../../redux/user'
 import { resetRoom, setRoom } from '../../../redux/room';
 import { store } from '../../../redux/store';
+import InviteModal from '../InviteModal/InviteModal';
 
 export default function MainBox() {
 	const [isSNBOpen, setIsSNBOpen] = useState(false);
@@ -39,14 +40,13 @@ export default function MainBox() {
   const fetchRoomList = async () => {
 	try {
 		const params = {page: 0};
-		//   아 나 바보다 API 명세서 그대로 따라가면 되는 거였음 ㅋㅋㅋ
-		const res = await axios.get(`/rooms/${1}`, { params });
+		const res = await axios.get(`/rooms/${2}`, { params });
 		dispatch(resetRoom())
 		console.log('서버 전달이다.', res.data)
 		const rooms = res.data.result;
 		rooms.forEach(roomData => {
-			const { userId, roomTitle, updatedAt, roomImg } = roomData;
-			dispatch(setRoom({ userId, roomTitle, updatedAt, roomImg }));
+			const { userId, roomId, roomTitle, updatedAt, roomImg } = roomData;
+			dispatch(setRoom({ userId, roomId, roomTitle, updatedAt, roomImg }));
 		});
 		console.log('redux 보는 거다', store.getState().room.room);
 	} catch (error) {
@@ -64,11 +64,11 @@ export default function MainBox() {
 				<h1>나의 룸 목록</h1>
 				<S.Container with_SNB={isSNBOpen}>
 				{rooms.map((room, index) => (
-					<S.Room key={index}>
+					<S.Room key={index} >
 						<S.Picture onClick={() => {navigate('/room')}}>
 						<img src={room.roomImg} alt='' />
 						</S.Picture>
-						<MainInfo room={room}/>
+						<MainInfo room={room} roomIndex={index}/>
 					</S.Room>
 				))}
 				</S.Container>
@@ -78,6 +78,7 @@ export default function MainBox() {
 				<RecTopic onToggle={toggleSNB}></RecTopic>
 				: <RecTopicClose onToggle={toggleSNB}> </RecTopicClose>}
 			</S.App>
+
 		</div>
   )
 }

@@ -3,7 +3,7 @@ import * as S from "./MainInfo.style"
 import MainUser from '../MainUser/MainUser';
 import MainMenuModal from '../MainMenuModal/MainMenuModal';
 
-export default function MainInfo({room}) {
+export default function MainInfo({room, roomIndex}) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const handleOpenModal = () => {
@@ -22,7 +22,7 @@ export default function MainInfo({room}) {
 					<S.Menu onClick={handleOpenModal}/>
 				</S.Right>
 			</S.Container>
-					{isModalOpen ? <MainMenuModal/> : null}
+					{isModalOpen ? <MainMenuModal roomIndex={roomIndex}/> : null}
     </div>
   )
 }
