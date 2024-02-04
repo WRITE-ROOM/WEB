@@ -4,8 +4,9 @@ import Login from "./pages/Login";
 import Redirect from "./pages/KakaoRedirect";
 import Main from "./pages/Main";
 import RoomPage from "./pages/RoomPage.jsx";
-import Header from "./components/Header/Header.jsx";
 import RoomSetting from "./pages/RoomSetting.jsx";
+import RoomMember from "./pages/RoomMember.jsx";
+import Header from "./components/Header/Header.jsx";
 import Write from "./pages/Write.jsx";
 import Note from "./pages/Note.jsx";
 
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/room" element={<RoomPage />} />
         <Route path="/room/setting" element={<RoomSetting />} />
+        <Route path="/room/member" element={<RoomMember />} />
         <Route path="/write" element={<Write />} />
         <Route path="/note" element={<Note />} />
         <Route path="/signup" element={<Signup />} />

@@ -6,7 +6,9 @@ const RoomSettingNavbar = ({ title }) => {
       <h1>{title}</h1>
       <S.ButtonWrapper>
         <S.SaveButton>저장하기</S.SaveButton>
-        <IoClose size={40} />
+        <div>
+          <IoClose size={40} />
+        </div>
       </S.ButtonWrapper>
     </S.Container>
   );

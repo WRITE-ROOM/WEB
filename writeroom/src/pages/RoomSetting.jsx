@@ -19,7 +19,6 @@ export const RoomSetting = () => {
       <RoomSettingSNB />
       <S.Contents>
         <RoomSettingNavbar title="룸 관리" />
-
         <S.ImgBox src="https://images.unsplash.com/photo-1682687220777-2c60708d6889?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"></S.ImgBox>
         <S.DeleteImgButton>
           <IoClose size={30} />
