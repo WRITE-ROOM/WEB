@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as W from "./Write.style";
 import * as D from "../components/Header/Dropdown.style";
 import { FiInfo, FiTrash, FiImage } from "react-icons/fi";
 
-import Editor from "../components/Editor/Editor";
-import SpellCheck from "../components/SpellCheck/SpellCheck";
-import WriteFooter from "../components/WriteFooter/WriteFooter";
-import SelectRoomModal from "../components/WriteSelectModal/SelectRoomModal/SelectRoomModal";
-import SelectCategoryModal from "../components/WriteSelectModal/SelectCategoryModal/SelectCategoryModal";
-import ChallengeAchieved from "../components/ChallengeAchieved/ChallengeAchieved";
+import Editor from "../components/Write/Editor/Editor";
+import SpellCheck from "../components/Write/SpellCheck/SpellCheck";
+import WriteFooter from "../components/Write/WriteFooter/WriteFooter";
+import SelectRoomModal from "../components/Write/WriteSelectModal/SelectRoomModal/SelectRoomModal";
+import SelectCategoryModal from "../components/Write/WriteSelectModal/SelectCategoryModal/SelectCategoryModal";
+import ChallengeAchieved from "../components/Write/ChallengeAchieved/ChallengeAchieved";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentModal } from "../redux/selectModal";
 import { addNote } from "../redux/note";
+
+import { resetRoom, setRoom } from "../redux/room";
+import axios from "axios";
 
 const Write = () => {
   const dispatch = useDispatch();
@@ -143,6 +146,28 @@ const Write = () => {
       })
     );
   };
+
+  const fetchRoomList = async () => {
+    try {
+      const params = { page: 0 };
+      const res = await axios.get(`/rooms/${1}`, { params });
+
+      dispatch(resetRoom());
+      const rooms = res.data.result;
+      rooms.forEach((roomData) => {
+        const { roomTitle, updatedAt, roomImg } = roomData;
+        dispatch(setRoom({ roomTitle, updatedAt, roomImg }));
+      });
+
+      console.log("룸 목록", rooms);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchRoomList();
+  }, []);
 
   return (
     <W.Container>

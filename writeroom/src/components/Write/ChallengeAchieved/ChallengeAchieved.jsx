@@ -1,7 +1,6 @@
 import React from "react";
-import { SimpleContainer } from "../Header/Dropdown.style";
 import * as C from "./ChallengeAchieved.style";
-import { StyledButton } from "../../pages/Write.style";
+import { StyledButton } from "../../../pages/Write.style";
 import { useNavigate } from "react-router-dom";
 
 const ChallengeAchieved = () => {

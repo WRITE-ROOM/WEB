@@ -9,17 +9,17 @@ export const Container = styled.div`
 
 export const Rooms = styled.div`
   display: flex;
-  gap: 16px;
+  flex-direction: column;
+  gap: 8px;
 `;
 
 export const Room = styled.button`
-  width: 80px;
-  height: 80px;
+  width: 100%;
+  height: 30px;
   background-color: #b5a994;
   border-radius: 10px;
 
   display: flex;
-  justify-content: center;
   align-items: center;
 
   padding: 12px;
@@ -33,7 +33,7 @@ export const Room = styled.button`
 
 export const ShowMore = styled.div`
   height: 20px;
-  margin-top: 12px;
+  margin-top: 8px;
 `;
 
 export const CreateRoom = styled.div`

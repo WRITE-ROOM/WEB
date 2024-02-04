@@ -5,7 +5,7 @@ const selectModalSlice = createSlice({
   initialState: {
     selectedRoom: {
       roomname: "",
-      categoryList: [],
+      // categoryList: [],
     },
     selectedCategory: null,
     currentModal: null,

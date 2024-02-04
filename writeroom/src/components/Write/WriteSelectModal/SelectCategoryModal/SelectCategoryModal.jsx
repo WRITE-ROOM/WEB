@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import * as M from "./SelectCategoryModal.style";
-import { SimpleContainer } from "../../Header/Dropdown.style";
+import { SimpleContainer } from "../../../Header/Dropdown.style";
 import { IoIosArrowBack } from "react-icons/io";
 import { FiPlus } from "react-icons/fi";
 
 import {
   setSelectedCategory,
   setCurrentModal,
-} from "../../../redux/selectModal";
+} from "../../../../redux/selectModal";
 import { useDispatch, useSelector } from "react-redux";
 
 const SelectCategoryModal = () => {

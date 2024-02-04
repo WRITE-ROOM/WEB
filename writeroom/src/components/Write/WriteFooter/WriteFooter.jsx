@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { TagContainer, Tag } from "../../pages/Note.style";
+import { TagContainer, Tag } from "../../../pages/Note.style";
 import { IoClose } from "react-icons/io5";
 import { FiPlus } from "react-icons/fi";
 import * as F from "./WriteFooter.style";
 import { useSelector, useDispatch } from "react-redux";
-import { addTag, deleteTag } from "../../redux/tag";
+import { addTag, deleteTag } from "../../../redux/tag";
 
 const WriteFooter = () => {
   const dispatch = useDispatch();
