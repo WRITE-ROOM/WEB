@@ -12,19 +12,18 @@ import { useDispatch, useSelector } from "react-redux";
 
 const SelectCategoryModal = () => {
   const dispatch = useDispatch();
-  const categories = useSelector((state) => state.category);
-  const selectedRoom = useSelector((state) => state.selectModal.selectedRoom);
+
+  const categories = useSelector(
+    (state) => state.selectModal.selectedRoom.categoryList
+  );
   const selectedCategory = useSelector(
     (state) => state.selectModal.selectedCategory
   );
 
   // 선택된 룸의 카테고리 리스트들
-  const selectedRoomCategories = categories.find(
-    (room) => room.roomname === selectedRoom
-  ).category;
 
-  const handleSelectedCategory = (category) => {
-    dispatch(setSelectedCategory(category));
+  const handleSelectedCategory = (categoryName) => {
+    dispatch(setSelectedCategory(categoryName));
   };
 
   return (
@@ -39,15 +38,18 @@ const SelectCategoryModal = () => {
           />
         </M.Back>
         <M.CategoryContainer>
-          {selectedRoomCategories.map((category, index) => (
+          {categories.map((category, index) => (
             <li
               key={index}
-              onClick={() => handleSelectedCategory(category)}
+              onClick={() => handleSelectedCategory(category.categoryName)}
               style={{
-                color: selectedCategory === category ? "#9D8870" : "#000",
+                color:
+                  selectedCategory === category.categoryName
+                    ? "#9D8870"
+                    : "#000",
               }}
             >
-              {category}
+              {category.categoryName}
             </li>
           ))}
         </M.CategoryContainer>
