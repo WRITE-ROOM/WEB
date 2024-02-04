@@ -3,18 +3,21 @@ import { createSlice } from "@reduxjs/toolkit";
 const selectModalSlice = createSlice({
   name: "selectModal",
   initialState: {
-    selectedRoom: null,
+    selectedRoom: {
+      roomname: "",
+      categoryList: [],
+    },
     selectedCategory: null,
     currentModal: null,
   },
   reducers: {
-    setSelectedRoom: (state, action) => {
+    setSelectedRoom(state, action) {
       state.selectedRoom = action.payload;
     },
-    setSelectedCategory: (state, action) => {
+    setSelectedCategory(state, action) {
       state.selectedCategory = action.payload;
     },
-    setCurrentModal: (state, action) => {
+    setCurrentModal(state, action) {
       state.currentModal = action.payload;
     },
   },

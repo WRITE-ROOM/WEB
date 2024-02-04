@@ -3,6 +3,7 @@ import { user } from "./user";
 import tagSlice from "./tag";
 import selectModalSlice from "./selectModal";
 import categorySlice from "./category";
+import noteSlice from "./note";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     tag: tagSlice,
     selectModal: selectModalSlice,
     category: categorySlice,
+    note: noteSlice,
   },
 });

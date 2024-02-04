@@ -7,10 +7,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { addTag, deleteTag } from "../../redux/tag";
 
 const WriteFooter = () => {
+  const dispatch = useDispatch();
+
   const [showTagInput, setShowTagInput] = useState(false);
   const [newTag, setNewTag] = useState("");
+
+  // tag 데이터
   const tags = useSelector((state) => state.tag);
-  const dispatch = useDispatch();
 
   const handleTagInput = (e) => {
     setNewTag(e.target.value);

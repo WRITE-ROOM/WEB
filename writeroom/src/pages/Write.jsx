@@ -12,6 +12,7 @@ import ChallengeAchieved from "../components/ChallengeAchieved/ChallengeAchieved
 
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentModal } from "../redux/selectModal";
+import { addNote } from "../redux/note";
 
 const Write = () => {
   const dispatch = useDispatch();
@@ -126,6 +127,25 @@ const Write = () => {
     setImage(null);
   };
 
+  const tags = useSelector((state) => state.tag);
+  const saveNote = () => {
+    dispatch(
+      addNote({
+        title: title,
+        subtitle: subtitle,
+        noteId: 1,
+        coverImg: image,
+        content: content,
+        achieve: true,
+        tags: tags,
+        createAt: "s",
+        updatedAt: "s",
+      })
+    );
+  };
+  const noteData = useSelector((state) => state.note);
+  console.log(noteData);
+
   return (
     <W.Container>
       <W.Header>
@@ -206,7 +226,9 @@ const Write = () => {
             $border="1px solid #e5e5e5"
             onClick={handleCurrentModal}
           >
-            {selectedRoom ? selectedRoom : "룸을 선택해주세요"}
+            {selectedRoom.roomname
+              ? selectedRoom.roomname
+              : "룸을 선택해주세요"}
 
             <span>{selectedCategory ? ` - ` + selectedCategory : ""}</span>
           </W.StyledButton>
@@ -215,13 +237,12 @@ const Write = () => {
           {currentModal === "Category" && <SelectCategoryModal />}
         </W.Center>
 
+        {/* 저장 */}
         <W.Right>
           <W.StyledButton
+            onClick={saveNote}
             $backgroundColor="#B5A994"
             $color="white"
-            onClick={() => {
-              setChallengeAchieved(true);
-            }}
           >
             저장
           </W.StyledButton>

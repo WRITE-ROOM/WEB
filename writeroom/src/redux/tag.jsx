@@ -3,14 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const tagSlice = createSlice({
   name: "tag",
   initialState: [
-    { tagId: 0, tagName: "음악" },
-    { tagId: 1, tagName: "노래" },
+    // { tagId: 0, tagName: "음악" },
   ],
   reducers: {
-    addTag: (state, action) => {
+    addTag(state, action) {
       state.push(action.payload);
     },
-    deleteTag: (state, action) => {
+    deleteTag(state, action) {
       state.splice(action.payload, 1);
     },
   },
