@@ -11,8 +11,11 @@ const Note = () => {
   const data = {
     title: "노래 플레이리스트",
     subtitle: "음악 듣기는 왜 좋을까?",
+    noteId: "1",
     username: "제리",
     date: "2024.02.01",
+    coverImg: "#fff",
+    achieve: true,
     tags: ["음악", "음악", "음악", "음악", "음악", "태그1", "태그2", "태그3"],
   };
 
