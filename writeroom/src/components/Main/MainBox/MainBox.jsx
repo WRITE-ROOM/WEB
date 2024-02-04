@@ -65,9 +65,7 @@ export default function MainBox() {
 				<S.Container with_SNB={isSNBOpen}>
 				{rooms.map((room, index) => (
 					<S.Room key={index}>
-						<S.Picture onClick={() => {
-							navigate('/room')
-							console.log(room.roomImg)}}>
+						<S.Picture onClick={() => {navigate('/room')}}>
 						<img src={room.roomImg} alt='' />
 						</S.Picture>
 						<MainInfo room={room}/>
