@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import * as W from "./Write.style";
-import Editor from "../components/Editor/Editor";
 import * as D from "../components/Header/Dropdown.style";
 import { FiInfo, FiTrash, FiImage } from "react-icons/fi";
+
+import Editor from "../components/Editor/Editor";
 import SpellCheck from "../components/SpellCheck/SpellCheck";
 import WriteFooter from "../components/WriteFooter/WriteFooter";
 import SelectRoomModal from "../components/WriteSelectModal/SelectRoomModal/SelectRoomModal";
 import SelectCategoryModal from "../components/WriteSelectModal/SelectCategoryModal/SelectCategoryModal";
-
 import ChallengeAchieved from "../components/ChallengeAchieved/ChallengeAchieved";
 
-import NewRoomImg from "../components/Main/NewRoomModal/NewRoomImg/NewRoomImg";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentModal } from "../redux/selectModal";
+import { addNote } from "../redux/note";
 
 const Write = () => {
+  const dispatch = useDispatch();
+
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
 
@@ -21,9 +25,11 @@ const Write = () => {
   const [showCountDetail, setShowCountDetail] = useState(false);
 
   // 룸, 카테고리 선택
-  const [currentModal, setCurrentModal] = useState(null);
-  const [selectedRoom, setSelectedRoom] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const currentModal = useSelector((state) => state.selectModal.currentModal);
+  const selectedRoom = useSelector((state) => state.selectModal.selectedRoom);
+  const selectedCategory = useSelector(
+    (state) => state.selectModal.selectedCategory
+  );
 
   // 챌린지 팝업
   const [challengeAchieved, setChallengeAchieved] = useState(false);
@@ -41,7 +47,9 @@ const Write = () => {
   };
 
   const handleCurrentModal = () => {
-    currentModal ? setCurrentModal(null) : setCurrentModal("Room");
+    currentModal
+      ? dispatch(setCurrentModal(null))
+      : dispatch(setCurrentModal("Room"));
   };
 
   const TemplateO1 = () => {
@@ -117,6 +125,23 @@ const Write = () => {
 
   const handleDeleteImage = () => {
     setImage(null);
+  };
+
+  const tags = useSelector((state) => state.tag);
+  const saveNote = () => {
+    dispatch(
+      addNote({
+        title: title,
+        subtitle: subtitle,
+        noteId: 1,
+        coverImg: image,
+        content: content,
+        achieve: true,
+        tags: tags,
+        createAt: "",
+        updatedAt: "",
+      })
+    );
   };
 
   return (
@@ -199,35 +224,23 @@ const Write = () => {
             $border="1px solid #e5e5e5"
             onClick={handleCurrentModal}
           >
-            {selectedRoom ? selectedRoom : "룸을 선택해주세요"}
+            {selectedRoom.roomname
+              ? selectedRoom.roomname
+              : "룸을 선택해주세요"}
 
             <span>{selectedCategory ? ` - ` + selectedCategory : ""}</span>
           </W.StyledButton>
 
-          {currentModal === "Room" && (
-            <SelectRoomModal
-              setSelectedRoom={setSelectedRoom}
-              setCurrentModal={setCurrentModal}
-              setSelectedCategory={setSelectedCategory}
-            />
-          )}
-          {currentModal === "Category" && (
-            <SelectCategoryModal
-              selectedRoom={selectedRoom}
-              setCurrentModal={setCurrentModal}
-              setSelectedCategory={setSelectedCategory}
-              selectedCategory={selectedCategory}
-            />
-          )}
+          {currentModal === "Room" && <SelectRoomModal />}
+          {currentModal === "Category" && <SelectCategoryModal />}
         </W.Center>
 
+        {/* 저장 */}
         <W.Right>
           <W.StyledButton
+            onClick={saveNote}
             $backgroundColor="#B5A994"
             $color="white"
-            onClick={() => {
-              setChallengeAchieved(true);
-            }}
           >
             저장
           </W.StyledButton>

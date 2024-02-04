@@ -30,13 +30,13 @@ export const IconsBox = styled.div`
 `;
 
 export const BasicBox = styled.div`
-  margin-top: 20px;
+  margin: 20px;
   display: flex;
   border-bottom: gainsboro 3px solid;
   flex-direction: column;
   justify-content: flex-start;
   width: 100%;
-  height: 220px;
+  height: auto;
   p {
     font-size: large;
   }
@@ -58,6 +58,22 @@ export const Member = styled.div`
   }
 `;
 
+export const Plus = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  cursor: pointer;
+
+  h2 {
+    font-size: 20px;
+    color: #b5a995;
+    padding-left: 20px;
+  }
+
+  p {
+    font-size: 13px;
+  }
+`;
 export const CategoryWrapper = styled.div`
   display: flex;
   justify-content: space-between;

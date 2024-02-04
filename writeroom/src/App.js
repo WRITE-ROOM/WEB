@@ -1,14 +1,11 @@
-import logo from "./logo.svg";
-import RecTopic from "./components/RecTopic/RecTopic";
-import RecTopicClose from "./components/RecTopicClose/RecTopicClose";
-import { useState } from "react";
-import SearchBox from "./components/SearchBox/SearchBox";
 import { Routes, Route } from "react-router-dom";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Redirect from "./pages/KakaoRedirect";
 import Main from "./pages/Main";
-import RoomPage from "./pages/RoomPage.js";
+import RoomPage from "./pages/RoomPage.jsx";
+import RoomSetting from "./pages/RoomSetting.jsx";
+import RoomMember from "./pages/RoomMember.jsx";
 import Header from "./components/Header/Header.jsx";
 import Write from "./pages/Write.jsx";
 import Note from "./pages/Note.jsx";
@@ -18,18 +15,14 @@ import MyProfile from "./pages/Myprofile.jsx"
 import MyprofilePw from "./pages/MyprofilePw.jsx";
 
 function App() {
-  const [isSNBOpen, setIsSNBOpen] = useState(false);
-
-  const toggleSNB = () => {
-    setIsSNBOpen((prev) => !prev);
-  };
-
   return (
     <div className="App">
       <Header />
       <Routes>
-        <Route path="/room" element={<RoomPage />}></Route>
-        <Route path="/room/:roomId" element={<RoomPage />}></Route>
+        <Route path="/room" element={<RoomPage />} />
+        <Route path="/room/setting" element={<RoomSetting />} />
+        <Route path="/room/member" element={<RoomMember />} />
+
         <Route path="/write" element={<Write />} />
         <Route path="/note" element={<Note />} />
         <Route path="/signup" element={<Signup />} />
@@ -43,13 +36,6 @@ function App() {
         {/* <Route path="/myprofile/bookmark" component={BookmarkPage} />
         <Route path="/myprofile/none" component={NonePage} /> */}
       </Routes>
-
-
-      {/* {isSNBOpen ? (
-        <RecTopic onToggle={toggleSNB}></RecTopic>
-      ) : (
-        <RecTopicClose onToggle={toggleSNB}> </RecTopicClose>
-      )} */}
     </div>
   );
 }
