@@ -8,7 +8,7 @@ export const App = styled.div`
 	// justify-content: center;
 
 	h1 {
-		margin-left: 30px;
+		margin-left: 30px;  
 		font-family: Pretendard;
 		font-size: 24px;
 		font-weight: 200;
