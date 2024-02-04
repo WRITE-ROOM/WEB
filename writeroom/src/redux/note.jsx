@@ -15,7 +15,6 @@ const noteSlice = createSlice({
   },
   reducers: {
     addNote(state, action) {
-      console.log("payload");
       const {
         title,
         subtitle,

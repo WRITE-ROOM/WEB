@@ -138,13 +138,11 @@ const Write = () => {
         content: content,
         achieve: true,
         tags: tags,
-        createAt: "s",
-        updatedAt: "s",
+        createAt: "",
+        updatedAt: "",
       })
     );
   };
-  const noteData = useSelector((state) => state.note);
-  console.log(noteData);
 
   return (
     <W.Container>
