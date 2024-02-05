@@ -12,9 +12,10 @@ import ChallengeAchieved from "../components/Write/ChallengeAchieved/ChallengeAc
 
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentModal } from "../redux/selectModal";
-import { addNote } from "../redux/note";
-
+import { addNote, resetNote } from "../redux/note";
 import { resetRoom, setRoom } from "../redux/room";
+import { resetTag } from "../redux/tag";
+
 import axios from "axios";
 
 const Write = () => {
@@ -130,23 +131,6 @@ const Write = () => {
     setImage(null);
   };
 
-  const tags = useSelector((state) => state.tag);
-  const saveNote = () => {
-    dispatch(
-      addNote({
-        title: title,
-        subtitle: subtitle,
-        noteId: 1,
-        coverImg: image,
-        content: content,
-        achieve: true,
-        tags: tags,
-        createAt: "",
-        updatedAt: "",
-      })
-    );
-  };
-
   const fetchRoomList = async () => {
     try {
       const params = { page: 0 };
@@ -166,8 +150,32 @@ const Write = () => {
   };
 
   useEffect(() => {
+    // dispatch(resetNote());
+    dispatch(resetTag());
     fetchRoomList();
   }, []);
+
+  const tags = useSelector((state) => state.tag);
+  console.log(tags);
+
+  const saveNote = () => {
+    dispatch(
+      addNote({
+        noteTitle: title,
+        noteSubtitle: subtitle,
+        noteId: "1",
+        noteImg: image,
+        noteContent: content,
+        writer: "제리",
+        achieve: false,
+        tags: tags,
+        createdAt: "2024.02.05",
+        updatedAt: "",
+      })
+    );
+
+    setChallengeAchieved(true);
+  };
 
   return (
     <W.Container>
@@ -326,7 +334,7 @@ const Write = () => {
       {/* 글 작성 영역 */}
       <Editor content={content} setContent={setContent} />
 
-      <WriteFooter></WriteFooter>
+      <WriteFooter />
 
       {challengeAchieved && <ChallengeAchieved />}
     </W.Container>

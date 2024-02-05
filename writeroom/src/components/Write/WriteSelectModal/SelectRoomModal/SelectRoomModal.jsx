@@ -10,6 +10,7 @@ import {
   setCurrentModal,
   setSelectedRoom,
 } from "../../../../redux/selectModal";
+import NewRoomModal from "../../../Main/NewRoomModal/NewRoomModal";
 
 const SelectRoomModal = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,15 @@ const SelectRoomModal = () => {
   const rooms = useSelector((state) => state.room.room);
 
   const [showMoreRoom, setShowMoreRoom] = useState(false);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   console.log(rooms);
   return (
@@ -46,10 +56,12 @@ const SelectRoomModal = () => {
           <IoIosArrowDown />
         </M.ShowMore>
 
-        <M.CreateRoom>
+        <M.CreateRoom onClick={openModal}>
           <FiPlus size={18} />
           <p>룸 추가하기</p>
         </M.CreateRoom>
+
+        <NewRoomModal isOpen={isModalOpen} onClose={closeModal} />
       </SimpleContainer>
     </M.Container>
   );

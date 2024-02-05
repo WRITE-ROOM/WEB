@@ -4,7 +4,7 @@ import { IoClose } from "react-icons/io5";
 import { FiPlus } from "react-icons/fi";
 import * as F from "./WriteFooter.style";
 import { useSelector, useDispatch } from "react-redux";
-import { addTag, deleteTag } from "../../../redux/tag";
+import { addTag, deleteTag, resetTag } from "../../../redux/tag";
 
 const WriteFooter = () => {
   const dispatch = useDispatch();
@@ -25,6 +25,7 @@ const WriteFooter = () => {
       setNewTag("");
       e.target.value = "";
     }
+    // console.log(tags);
   };
 
   const DeleteTag = (index) => {
