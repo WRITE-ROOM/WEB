@@ -6,7 +6,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 export default function NewRoomModal({ isOpen, onClose }) {
-  const [roomName, setRoomName] = useState("");
+  const [roomName, setRoomName] = useState("제목 없음");
   const user = useSelector((state) => state.user);
   const userId = user.userId;
 
@@ -20,6 +20,7 @@ export default function NewRoomModal({ isOpen, onClose }) {
         },
       });
       console.log(res.data);
+      console.log('사진 업로드 됨')
     } catch (error) {
       console.error(error);
     }
@@ -31,7 +32,8 @@ export default function NewRoomModal({ isOpen, onClose }) {
       user: userId,
     };
     try {
-      const res = await axios.post(`/rooms/${userId}`, roomInfo);
+      // 회원가입, 로그인 API 구현되면, 1 -> userId로 바꿀 예정
+      const res = await axios.post(`/rooms/${1}`, roomInfo);
       console.log(res.data);
     } catch (error) {
       console.error(error);
@@ -55,6 +57,7 @@ export default function NewRoomModal({ isOpen, onClose }) {
           <p>룸 이름</p>
           <input
             placeholder="룸 이름을 작성해주세요."
+            value={roomName} 
             onChange={(e) => {
               setRoomName(e.target.value);
             }}

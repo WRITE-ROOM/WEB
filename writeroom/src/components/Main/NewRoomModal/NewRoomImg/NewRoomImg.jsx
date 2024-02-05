@@ -25,7 +25,7 @@ export default function NewRoomImg(onImageUpload) {
             <img src={image} alt="Uploaded" />
           </label>
         ) : (
-          <label for="input-file">
+          <label htmlFor="input-file">
             <p>룸 이미지 추가</p>
             <PiImageSquareLight size="20" color="white" />
           </label>
