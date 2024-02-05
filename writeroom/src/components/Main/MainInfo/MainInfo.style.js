@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 import { MdMoreHoriz } from "react-icons/md";
+import { HiMiniUserCircle } from "react-icons/hi2";
+
 
 export const Container = styled.div`
     width: 290px;
@@ -22,6 +24,7 @@ export const Left = styled.div`
 `
 
 export const Right = styled.div`
+    position: relative;
     width: 90px;
     height: 32px;
     display: flex;
@@ -41,7 +44,7 @@ export const RoomName = styled.p`
     
 `
 export const editTime = styled.p`
-    width: 70px;
+    width: 100px;
     height: 16px;
     display: flex;
     align-items: center;
@@ -54,9 +57,7 @@ export const editTime = styled.p`
     
 `
 
-export const Users = styled.div`
-    width: 16px;
-    height: 16px;
+export const Users = styled(HiMiniUserCircle)`
 `
 export const Menu = styled(MdMoreHoriz)`
 	cursor: pointer;

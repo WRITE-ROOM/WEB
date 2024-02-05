@@ -1,14 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as S from "./MainInfo.style"
-import MainUser from '../MainUser/MainUser';
 import MainMenuModal from '../MainMenuModal/MainMenuModal';
+import { HiMiniUserCircle } from "react-icons/hi2";
+import { useSelector } from 'react-redux';
+
 
 export default function MainInfo({room, roomIndex}) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
+  const rooms = useSelector((state) => state.room.room);
+  const userList = rooms[roomIndex].userRoomList;
 
 	const handleOpenModal = () => {
 		setIsModalOpen(!isModalOpen);
 	}
+
   return (
     <div>
       <S.Container>
@@ -17,7 +22,9 @@ export default function MainInfo({room, roomIndex}) {
 					<S.editTime>{room.updatedAt} 편집</S.editTime>
 				</S.Left>
 				<S.Right>
-					<MainUser/>
+              <S.Users size="20" color="rgba(181, 169, 148, 1)"/>
+              <S.Users size="20" color="rgba(181, 169, 148, 1)"/>
+              <S.Users size="20" color="rgba(181, 169, 148, 1)"/>
 					{/* MainUser는 room redux 안에 있는 totalMember를 활용하여 map으로 표현할 예정 */}
 					<S.Menu onClick={handleOpenModal}/>
 				</S.Right>

@@ -1,25 +1,21 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as S from "./MainBox.style"
 import RecTopic from '../../RecTopic/RecTopic';
 import RecTopicClose from '../../RecTopicClose/RecTopicClose';
-import Header from '../../Header/Header';
 import MainInfo from '../MainInfo/MainInfo';
-import writeRoomImg from '../../../assets/writeRoomImg.png'
 import NewNoteButton from '../../FloatingButton/NewNoteButton'
 import NewRoomButton from '../../FloatingButton/NewRoomButton'
 import NewRoomModal from '../NewRoomModal/NewRoomModal';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import {setUser} from '../../../redux/user'
 import { resetRoom, setRoom } from '../../../redux/room';
 import { store } from '../../../redux/store';
-import InviteModal from '../InviteModal/InviteModal';
 
 export default function MainBox() {
 	const [isSNBOpen, setIsSNBOpen] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	
+
 	const user = useSelector((state) => state.user);
 	const userId = user.userId;
 	const rooms = useSelector((state) => state.room.room);
@@ -40,13 +36,13 @@ export default function MainBox() {
   const fetchRoomList = async () => {
 	try {
 		const params = {page: 0};
-		const res = await axios.get(`/rooms/${2}`, { params });
+		const res = await axios.get(`/rooms/${1}`, { params });
 		dispatch(resetRoom())
 		console.log('서버 전달이다.', res.data)
 		const rooms = res.data.result;
 		rooms.forEach(roomData => {
-			const { userId, roomId, roomTitle, updatedAt, roomImg } = roomData;
-			dispatch(setRoom({ userId, roomId, roomTitle, updatedAt, roomImg }));
+			const { userId, roomId, roomTitle, updatedAt, roomImg, userRoomList } = roomData;
+			dispatch(setRoom({ userId, roomId, roomTitle, updatedAt, roomImg, userRoomList }));
 		});
 		console.log('redux 보는 거다', store.getState().room.room);
 	} catch (error) {
