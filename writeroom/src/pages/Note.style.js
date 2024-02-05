@@ -136,6 +136,10 @@ export const Content = styled.div`
   height: 400px;
   color: black;
   padding: 24px;
+
+  ol {
+    padding-left: 24px;
+  }
 `;
 
 export const StyledHr = styled.hr`

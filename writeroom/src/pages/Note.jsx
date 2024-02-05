@@ -11,19 +11,27 @@ import { addNote } from "../redux/note";
 
 const Note = () => {
   const dispatch = useDispatch();
-  // const mock = {
-  //   noteTitle: "노래 플레이리스트",
-  //   noteSubtitle: "음악 듣기는 왜 좋을까?",
-  //   noteId: "1",
-  //   noteImg:
-  //     "https://png.pngtree.com/background/20230528/original/pngtree-retro-game-consoles-sitting-next-to-various-gaming-devices-picture-image_2776441.jpg",
-  //   noteContent: "<p>내용</p>",
-  //   writer: "제리",
-  //   achieve: false,
-  //   tags: ["음악", "음악", "음악", "음악", "음악", "태그1", "태그2", "태그3"],
-  //   createdAt: "2024.02.01",
-  //   updatedAt: "",
-  // };
+  const mock = {
+    noteTitle: "노래 플레이리스트",
+    noteSubtitle: "음악 듣기는 왜 좋을까?",
+    noteId: "1",
+    noteImg:
+      "https://png.pngtree.com/background/20230528/original/pngtree-retro-game-consoles-sitting-next-to-various-gaming-devices-picture-image_2776441.jpg",
+    noteContent: "<p>내용</p>",
+    writer: "제리",
+    achieve: false,
+    tags: [
+      { tagId: "1", tagName: "음악" },
+      { tagId: "2", tagName: "음악" },
+      { tagId: "3", tagName: "음악" },
+      { tagId: "4", tagName: "음악" },
+      { tagId: "5", tagName: "음악" },
+      { tagId: "6", tagName: "음악" },
+      { tagId: "7", tagName: "음악" },
+    ],
+    createdAt: "2024.02.01",
+    updatedAt: "",
+  };
 
   // note의 정보 조회하는 api 연결 -> addNote
   const data = useSelector((state) => state.note);
@@ -31,9 +39,9 @@ const Note = () => {
 
   const [showTags, setShowTags] = useState(false);
 
-  // useEffect(() => {
-  //   dispatch(addNote(mock));
-  // }, []);
+  useEffect(() => {
+    dispatch(addNote(mock));
+  }, []);
   return (
     <N.Container>
       <N.Header>
