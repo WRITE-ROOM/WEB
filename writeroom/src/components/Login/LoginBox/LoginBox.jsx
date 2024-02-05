@@ -3,7 +3,7 @@ import * as S from './LoginBox.style'
 import LoginSocial from '../LoginSocial/LoginSocial'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setLogin } from '../../../redux/user'
 
 export default function LoginBox() {
@@ -13,22 +13,39 @@ export default function LoginBox() {
   let navigate = useNavigate();
   let dispatch = useDispatch();
 
+  const user = useSelector((state => state.user))
+  const accessToken = user.accessToken;
+
+  function saveLocalStorage(token, id) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('id', id);
+  }
+
   const postUser = async() => {
     try {
       console.log('이메일: ', email)
       console.log('비밀번호: ', pw)
-      const res = await axios.post(`/auth/signIn`, {email: email, password: pw})
+      const res = await axios.post(`/auth/signIn`, {email: email, password: pw}, {
+        headers: {
+          'Content-Type': 'application/json', 
+        }
+      })
       console.log(res.data);
+      let receivedToken = res.data.result.accessToken
+      let receivedId = res.data.result.userId
       dispatch(setLogin({
-        userId: res.data.result.userId,
-        accessToken: res.data.result.AccessToken
+        userId: receivedId,
+        accessToken: receivedToken
       }
-
       ))
+      axios.defaults.headers.common['Authorization'] = `Bearer ${receivedToken}`;
+
+      saveLocalStorage(receivedToken, receivedId);
+      navigate('/main');
     } catch(error) {
       console.log(error);
     }
-    navigate('/main');
+    
   }
 
   return (
