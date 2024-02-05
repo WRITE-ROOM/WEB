@@ -7,8 +7,8 @@ export const room = createSlice({
     },
     reducers: {
       setRoom(state, action) {
-        const { roomId, roomTitle, updatedAt, roomImg } = action.payload;
-        state.room.push({ roomId, roomTitle, updatedAt, roomImg }); // 새로운 방 정보를 배열에 추가
+        const { roomId, roomTitle, updatedAt, roomImg, userRoomList } = action.payload;
+        state.room.push({ roomId, roomTitle, updatedAt, roomImg, userRoomList}); // 새로운 방 정보를 배열에 추가
       },
       resetRoom(state) {
         state.room = [];
