@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const user = createSlice({
   name: 'user',
 	initialState: {
-		userId : '', userName : '', userEmail: '', userPw : '', AccessToken: '',
+		userId : '', userName : '', userEmail: '', userPw : '', accessToken: '',
 		joinType: '', profileImg: '', createdAt: '', updatedAt: ''
 	},
 	reducers : {
@@ -12,12 +12,14 @@ export const user = createSlice({
 			state.userName = userName;
 			state.userEmail = userEmail;
 			state.userPw = userPw;
-			// state.joinType = joinType;
-			// const userData = action.payload;
-			// return { ...state, ...userData };
 		},
+		setLogin(state, action) {
+			const {userId, accessToken} = action.payload;
+			state.userId = userId;
+			state.accessToken = accessToken;
+		}
 	}
 })
 
-export const {setUser} = user.actions;
+export const {setUser, setLogin} = user.actions;
 export default user.reducer

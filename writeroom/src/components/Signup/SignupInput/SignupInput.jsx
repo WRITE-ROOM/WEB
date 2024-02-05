@@ -24,34 +24,17 @@ export default function SignupInput() {
   let navigate = useNavigate();
 	let dispatch = useDispatch();
 
-  // const fetchRoomList = async () => {
-  //   try {
-  //     const params = {page: 0};
-  //     const res = await axios.get(`/rooms/${1}`, { params });
-  //     dispatch(resetRoom())
-  //     console.log('서버 전달이다.', res.data)
-  //     const rooms = res.data.result;
-  //     rooms.forEach(roomData => {
-  //       const { userId, roomId, roomTitle, updatedAt, roomImg, userRoomList } = roomData;
-  //       dispatch(setRoom({ userId, roomId, roomTitle, updatedAt, roomImg, userRoomList }));
-  //     });
-  //     console.log('redux 보는 거다', store.getState().room.room);
-  //   } catch (error) {
-  //         console.error(error);
-  //     }
-  //   }
-
-    const postUser = async() => {
-      
-      try {
-        if (nameRegex.test(name) && emailRegex.test(email) && passwordRegex.test(password) && isPwMatch) {
-          const res = await axios.post(`/auth/signUp`, {nickname: name, email: email, password: password});
-          console.log(res.data)
-        }
-      } catch(error) {
-        console.log(error);
+  const postUser = async() => {
+    
+    try {
+      if (nameRegex.test(name) && emailRegex.test(email) && passwordRegex.test(password) && isPwMatch) {
+        const res = await axios.post(`/auth/signUp`, {nickname: name, email: email, password: password});
+        console.log(res.data)
       }
+    } catch(error) {
+      console.log(error);
     }
+  }
 	
   const handleSignupClick = async () => {
     setNameErr(nameRegex.test(name));
