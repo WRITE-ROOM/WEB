@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router-dom';
 export default function MyprofileSNB() {
     let navigate = useNavigate();
   return (
-    <S.SNB onClick={() => {navigate('/myprofile/account')}}>
-        <S.Box>
+    <S.SNB>
+        <S.Box onClick={() => {navigate('/myprofile/account')}}>
             <p>계정 설정</p>
         </S.Box>
-        <S.Box>
+        <S.Box onClick={() => {navigate('/myprofile/bookmark')}}>
             <p>북마크</p>
         </S.Box>
         <S.Box>
