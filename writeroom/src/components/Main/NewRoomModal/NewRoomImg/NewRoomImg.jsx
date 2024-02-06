@@ -2,27 +2,25 @@ import React, { useState } from "react";
 import * as S from "./NewRoomImg.style";
 import { PiImageSquareLight } from "react-icons/pi";
 
-export default function NewRoomImg(onImageUpload) {
-  const [image, setImage] = useState(null);
+export default function NewRoomImg(props) {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.onloadend = () => {
-      setImage(reader.result);
+      props.setImage(reader.result);
     };
     if (file) {
       reader.readAsDataURL(file);
-      console.log(file.name); // file.name을 서버에 전송해야함
     }
   };
 
   return (
     <S.Container>
       <S.Picture>
-        {image ? (
+        {props.image ? (
           <label htmlFor="input-file">
-            <img src={image} alt="Uploaded" />
+            <img src={props.image} alt="Uploaded" />
           </label>
         ) : (
           <label htmlFor="input-file">

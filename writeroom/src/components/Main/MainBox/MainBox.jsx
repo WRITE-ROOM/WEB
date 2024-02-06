@@ -11,14 +11,17 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetRoom, setRoom } from '../../../redux/room';
 import { store } from '../../../redux/store';
+import { selectRoomIds } from '../../../redux/room';
+
 
 export default function MainBox() {
 	const [isSNBOpen, setIsSNBOpen] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const roomIdList = useSelector(selectRoomIds);
 
 	const user = useSelector((state) => state.user);
 	const userId = user.userId;
-	// const receivedToken = user.accessToken;
+	const receivedToken = user.accessToken;
 	const rooms = useSelector((state) => state.room.room);
 	
 	let navigate = useNavigate();
@@ -33,11 +36,14 @@ export default function MainBox() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  const receivedToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo";
-  const fetchRoomList = async () => {
+  
+	const fetchRoomList = async () => {
+		// const receivedToken = localStorage.getItem('token')
+		const receivedToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo"
+
 	try {
 		const page = 0;
-		console.log(receivedToken)
+		// console.log(receivedToken)
 		console.log(`/rooms/myRoomList?page=${page}`)
 		const res = await axios.get(`/rooms/myRoomList?page=${page}`, { 
 			headers: {
@@ -68,7 +74,7 @@ export default function MainBox() {
 				<S.Container with_SNB={isSNBOpen}>
 				{rooms.map((room, index) => (
 					<S.Room key={index} >
-						<S.Picture onClick={() => {navigate('/room')}}>
+						<S.Picture onClick={() => {navigate(`/room/${roomIdList[index]}`)}}>
 						<img src={room.roomImg} alt='' />
 						</S.Picture>
 						<MainInfo room={room} roomIndex={index}/>

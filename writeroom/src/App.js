@@ -21,6 +21,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/room" element={<RoomPage />} />
+        <Route path="/room/:roomId" element={<RoomPage />} />
         <Route path="/room/setting" element={<RoomSetting />} />
         <Route path="/room/member" element={<RoomMember />} />
 
