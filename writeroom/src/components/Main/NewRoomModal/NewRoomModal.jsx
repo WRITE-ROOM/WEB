@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import * as S from "./NewRoomModal.style";
 import * as R from "./NewRoomImg/NewRoomImg.style";
 import { FiCopy } from "react-icons/fi";
-import NewRoomImg from "./NewRoomImg/NewRoomImg";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -103,8 +102,6 @@ export default function NewRoomModal({ isOpen, onClose }) {
           <FiCopy color="white" />
           <p>룸 만들기</p>
         </S.MakeBtn>
-        <button onClick={() => {console.log(image)
-        console.log(imageName)}}>임시버튼</button>
       </S.Modal>
     </S.ModalBackground>
   );
