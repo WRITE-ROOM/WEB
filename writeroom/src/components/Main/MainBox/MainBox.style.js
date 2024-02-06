@@ -30,7 +30,7 @@ export const Container = styled.div`
 `
 export const Room = styled.div`
 	width: 290px;
-	height: 252px;
+	height: 259px;
 	border: 1px black solid;
 	border-radius: 10px;
 	margin: 24px;

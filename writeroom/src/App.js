@@ -13,6 +13,7 @@ import Note from "./pages/Note.jsx";
 import MyprofileAccount from './pages/MyprofileAccount.jsx'
 import MyProfile from "./pages/Myprofile.jsx"
 import MyprofilePw from "./pages/MyprofilePw.jsx";
+import MyBookmarkPage from "./pages/MyBookmarkPage.jsx";
 
 function App() {
   return (
@@ -33,8 +34,8 @@ function App() {
         <Route path="/myprofile/account" element={<MyProfile/>} />
         <Route path="/myprofile/account/email" element={<MyprofileAccount/>} />
         <Route path="/myprofile/account/pw" element={<MyprofilePw/>} />
-        {/* <Route path="/myprofile/bookmark" component={BookmarkPage} />
-        <Route path="/myprofile/none" component={NonePage} /> */}
+        <Route path="/myprofile/bookmark" element={<MyBookmarkPage/>} />
+        {/* <Route path="/myprofile/none" component={NonePage} /> */}
       </Routes>
     </div>
   );
