@@ -15,7 +15,7 @@ import { setCurrentModal } from "../redux/selectModal";
 import { addNote, resetNote } from "../redux/note";
 import { resetRoom, setRoom } from "../redux/room";
 import { resetTag } from "../redux/tag";
-
+import { setCategory, createCategory } from "../redux/category";
 import axios from "axios";
 
 const Write = () => {
@@ -131,16 +131,26 @@ const Write = () => {
     setImage(null);
   };
 
+  const accessToken = localStorage.getItem("token");
   const fetchRoomList = async () => {
     try {
       const params = { page: 0 };
-      const res = await axios.get(`/rooms/${1}`, { params });
+      const res = await axios.get("/rooms/myRoomList", {
+        params,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
       dispatch(resetRoom());
       const rooms = res.data.result;
+
       rooms.forEach((roomData) => {
-        const { roomTitle, updatedAt, roomImg } = roomData;
-        dispatch(setRoom({ roomTitle, updatedAt, roomImg }));
+        const { roomId, roomTitle, updatedAt, roomImg, userRoomList } =
+          roomData;
+        dispatch(
+          setRoom({ roomId, roomTitle, updatedAt, roomImg, userRoomList })
+        );
       });
 
       console.log("룸 목록", rooms);
@@ -149,14 +159,34 @@ const Write = () => {
     }
   };
 
+  const roomId = useSelector((state) => state.selectModal.selectedRoom.roomId);
+  const fetchCategoryList = async () => {
+    try {
+      const res = await axios.get(`/categorys/category/${roomId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      // 해당 룸의 카테고리 리스트로 category redux 설정
+      dispatch(setCategory(res.data.result.categoryList));
+
+      console.log(res.data.result.categoryList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     // dispatch(resetNote());
     dispatch(resetTag());
     fetchRoomList();
-  }, []);
+    if (roomId) {
+      fetchCategoryList();
+    }
+  }, [roomId, accessToken]);
 
   const tags = useSelector((state) => state.tag);
-  console.log(tags);
 
   const saveNote = () => {
     dispatch(
@@ -260,8 +290,11 @@ const Write = () => {
             {selectedRoom.roomname
               ? selectedRoom.roomname
               : "룸을 선택해주세요"}
-
-            <span>{selectedCategory ? ` - ` + selectedCategory : ""}</span>
+            <span>
+              {selectedCategory.categoryName
+                ? ` - ` + selectedCategory.categoryName
+                : ""}
+            </span>
           </W.StyledButton>
 
           {currentModal === "Room" && <SelectRoomModal />}

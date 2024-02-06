@@ -9,20 +9,14 @@ import {
   setSelectedCategory,
   setCurrentModal,
   setSelectedRoom,
+  resetSelectedCategory,
 } from "../../../../redux/selectModal";
 import NewRoomModal from "../../../Main/NewRoomModal/NewRoomModal";
+import axios from "axios";
+import { setCategory, createCategory } from "../../../../redux/category";
 
 const SelectRoomModal = () => {
   const dispatch = useDispatch();
-
-  const handleSelectedRoom = (room) => {
-    dispatch(setSelectedRoom({ roomname: room.roomTitle }));
-    dispatch(setSelectedCategory(null));
-    dispatch(setCurrentModal("Category"));
-  };
-
-  const rooms = useSelector((state) => state.room.room);
-
   const [showMoreRoom, setShowMoreRoom] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,7 +28,47 @@ const SelectRoomModal = () => {
     setIsModalOpen(false);
   };
 
-  console.log(rooms);
+  const rooms = useSelector((state) => state.room.room);
+
+  // 선택된 룸의 카테고리 리스트들
+  const roomId = useSelector((state) => state.selectModal.selectedRoom.roomId);
+  const accessToken = localStorage.getItem("token");
+
+  const handleSelectedRoom = (room) => {
+    dispatch(
+      setSelectedRoom({ roomId: room.roomId, roomname: room.roomTitle })
+    );
+    dispatch(resetSelectedCategory());
+    dispatch(setCurrentModal("Category"));
+    // fetchCategoryList();
+  };
+
+  // const fetchCategoryList = async () => {
+  //   try {
+  //     const res = await axios.get(`/categorys/category/${roomId}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${accessToken}`,
+  //       },
+  //     });
+
+  //     // 해당 룸의 카테고리 리스트로 category redux 설정
+  //     dispatch(setCategory(res.data.result.categoryList));
+
+  //     console.log(roomId);
+  //     console.log(res.data.result.categoryList);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const categoryList = useSelector((state) => state.category.categoryList);
+
+  // useEffect(() => {
+  //   if (roomId) {
+  //     fetchCategoryList();
+  //   }
+  // }, [roomId]);
+
   return (
     <M.Container>
       <SimpleContainer $width="320px" $top="0" $padding="16px 16px 8px 16px">

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as M from "./SelectCategoryModal.style";
 import { SimpleContainer } from "../../../Header/Dropdown.style";
 import { IoIosArrowBack } from "react-icons/io";
 import { FiPlus } from "react-icons/fi";
+import CreateCategory from "../../CreateCategory/CreateCategory";
 
 import {
   setSelectedCategory,
@@ -13,17 +14,22 @@ import { useDispatch, useSelector } from "react-redux";
 const SelectCategoryModal = () => {
   const dispatch = useDispatch();
 
-  const categories = useSelector(
-    (state) => state.selectModal.selectedRoom.categoryList
-  );
+  // 선택한 룸의 카테고리 리스트
+  const categories = useSelector((state) => state.category.categoryList);
+
+  // 선택된 카테고리
   const selectedCategory = useSelector(
     (state) => state.selectModal.selectedCategory
   );
 
-  // 선택된 룸의 카테고리 리스트들
-
-  const handleSelectedCategory = (categoryName) => {
-    dispatch(setSelectedCategory(categoryName));
+  // 카테고리 선택하기
+  const handleSelectedCategory = (category) => {
+    dispatch(
+      setSelectedCategory({
+        categoryName: category.categoryName,
+        categoryId: category.categoryId,
+      })
+    );
   };
 
   return (
@@ -38,26 +44,24 @@ const SelectCategoryModal = () => {
           />
         </M.Back>
         <M.CategoryContainer>
-          {categories.map((category, index) => (
-            <li
-              key={index}
-              onClick={() => handleSelectedCategory(category.categoryName)}
-              style={{
-                color:
-                  selectedCategory === category.categoryName
-                    ? "#9D8870"
-                    : "#000",
-              }}
-            >
-              {category.categoryName}
-            </li>
-          ))}
+          {categories &&
+            categories.map((category, index) => (
+              <li
+                key={index}
+                onClick={() => handleSelectedCategory(category)}
+                style={{
+                  color:
+                    category.categoryId === selectedCategory.categoryId
+                      ? "#9D8870"
+                      : "#000",
+                }}
+              >
+                {category.categoryName}
+              </li>
+            ))}
         </M.CategoryContainer>
 
-        <M.CreateCategory>
-          <FiPlus size={18} />
-          <p>카테고리 추가하기</p>
-        </M.CreateCategory>
+        <CreateCategory />
       </SimpleContainer>
     </M.Container>
   );
