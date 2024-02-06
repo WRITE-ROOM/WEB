@@ -11,6 +11,7 @@ export const ModalBackground = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	z-index: 100;
 
 	h5 {
 		width: 340px;
@@ -34,7 +35,7 @@ export const Modal = styled.div`
 	justify-content: space-between;
 	border-radius: 10px;
 	background: white;
-	z-index: 99;
+	z-index: 101;
 `
 export const Top = styled.div`
 	width; 400px;
