@@ -22,9 +22,11 @@ export default function MainInfo({room, roomIndex}) {
 					<S.editTime>{room.updatedAt} 편집</S.editTime>
 				</S.Left>
 				<S.Right>
-              <S.Users size="20" color="rgba(181, 169, 148, 1)"/>
-              <S.Users size="20" color="rgba(181, 169, 148, 1)"/>
-              <S.Users size="20" color="rgba(181, 169, 148, 1)"/>
+					<div style={{display: 'flex'}}>
+            <S.Users size="18" color="rgba(181, 169, 148, 1)"/>
+            <S.Users size="18" color="rgba(181, 169, 148, 1)"/>
+            <S.Users size="18" color="rgba(181, 169, 148, 1)"/>
+					</div>
 					{/* MainUser는 room redux 안에 있는 totalMember를 활용하여 map으로 표현할 예정 */}
 					<S.Menu onClick={handleOpenModal}/>
 				</S.Right>

@@ -14,7 +14,7 @@ export default function NewRoomModal({ isOpen, onClose }) {
     const formData = new FormData();
     formData.append("image", file);
     try {
-      const res = await axios.post(`/rooms/${userId}`, formData, {
+      const res = await axios.post(`/rooms/createRoom`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -25,15 +25,19 @@ export default function NewRoomModal({ isOpen, onClose }) {
       console.error(error);
     }
   };
-
+  
+  const receivedToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo";
   const fetchRoomInfo = async () => {
     const roomInfo = {
       name: roomName,
       user: userId,
     };
     try {
-      // 회원가입, 로그인 API 구현되면, 1 -> userId로 바꿀 예정
-      const res = await axios.post(`/rooms/${1}`, roomInfo);
+      const res = await axios.post(`/rooms/createRoom`, roomInfo, { 
+        headers: {
+          'Authorization': `Bearer ${receivedToken}`
+          },
+       });
       console.log(res.data);
     } catch (error) {
       console.error(error);
