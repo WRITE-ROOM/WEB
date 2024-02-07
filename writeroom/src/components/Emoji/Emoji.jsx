@@ -1,5 +1,4 @@
 import React from "react";
-
 import * as E from "./Emoji.style";
 
 const Emoji = ({ emoji }) => {
