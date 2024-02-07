@@ -35,7 +35,7 @@ const Note = () => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log(res.data);
+      // console.log(res.data);
       dispatch(addNote(res.data.result));
     } catch (error) {
       console.log(error);

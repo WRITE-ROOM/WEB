@@ -27,6 +27,7 @@ const Write = () => {
   const [showTemplate, setShowTemplate] = useState(false);
   const [content, setContent] = useState("");
   const [showCountDetail, setShowCountDetail] = useState(false);
+  const [image, setImage] = useState(null);
 
   // 룸, 카테고리 선택
   const currentModal = useSelector((state) => state.selectModal.currentModal);
@@ -113,8 +114,6 @@ const Write = () => {
   const characterCount = stripHtmlTags(content).length;
   const characterCountNoSpace = stripHtmlTagsNoSpace(content).length;
 
-  const [image, setImage] = useState(null);
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -131,7 +130,10 @@ const Write = () => {
     setImage(null);
   };
 
-  const accessToken = localStorage.getItem("token");
+  // const accessToken = localStorage.getItem("token");
+  const accessToken =
+    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo";
+
   const fetchRoomList = async () => {
     try {
       const params = { page: 0 };
@@ -177,34 +179,58 @@ const Write = () => {
     }
   };
 
+  const postNote = async () => {
+    const formData = new FormData();
+
+    // 보낼 데이터
+    const requestData = {
+      noteTitle: title,
+      noteSubTitle: subtitle,
+      noteContent: content,
+      letterCount: characterCount,
+      noteTagList: tags.map((tag) => tag.tagName),
+      categoryId: selectedCategory.categoryId,
+    };
+
+    formData.append("request", JSON.stringify(requestData));
+    if (image) {
+      formData.append("noteImg", image, image.name);
+    }
+
+    try {
+      const res = await axios.post(`/rooms/${roomId}/notes`, formData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(res.data);
+      console.log("formData", formData.get("request"));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     // dispatch(resetNote());
+    const fetchData = async () => {
+      await fetchRoomList();
+      if (roomId) {
+        fetchCategoryList();
+      }
+    };
     dispatch(resetTag());
-    fetchRoomList();
-    if (roomId) {
-      fetchCategoryList();
-    }
+    fetchData();
+    // fetchRoomList();
   }, [roomId, accessToken]);
 
   const tags = useSelector((state) => state.tag);
 
-  const saveNote = () => {
-    dispatch(
-      addNote({
-        noteTitle: title,
-        noteSubtitle: subtitle,
-        noteId: "1",
-        noteImg: image,
-        noteContent: content,
-        writer: "제리",
-        achieve: false,
-        tags: tags,
-        createdAt: "2024.02.05",
-        updatedAt: "",
-      })
-    );
+  console.log(tags);
 
-    setChallengeAchieved(true);
+  const saveNote = () => {
+    postNote();
+    // setChallengeAchieved(true);
   };
 
   return (

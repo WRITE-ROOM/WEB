@@ -44,6 +44,12 @@ const ImageRoomNoteBox = ({ note, roomId }) => {
     navigate(`/rooms/${roomId}/notes/${noteId}`);
     addNote(note);
   };
+
+  const stripHtmlTags = () => {
+    const doc = new DOMParser().parseFromString(noteContent, "text/html");
+    const textContent = doc.body.textContent || "";
+    return textContent;
+  };
   return (
     <S.Container onClick={() => handleSelectNote()}>
       <S.ContentsBox>
@@ -84,8 +90,8 @@ const ImageRoomNoteBox = ({ note, roomId }) => {
           <p>
             <span>{noteSubtitle}</span>
             {noteContent && noteContent.length < maxLength
-              ? noteContent
-              : noteContent.slice(0, maxLength) + "..."}
+              ? stripHtmlTags()
+              : stripHtmlTags().slice(0, maxLength) + "..."}
           </p>
         </S.TextBox>
       </S.ContentsBox>
