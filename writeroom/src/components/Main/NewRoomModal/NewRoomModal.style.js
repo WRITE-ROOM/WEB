@@ -2,28 +2,30 @@ import styled from "styled-components";
 import { IoClose } from "react-icons/io5";
 
 export const ModalBackground = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 100;
+`
 export const Modal = styled.div`
-  width: 380px;
-  height: 283px;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 10px;
-  background: white;
-  z-index: 99;
-`;
+	width: 380px;
+	height: 283px;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	border-radius: 10px;
+	background: white;
+	z-index: 101;
+`
+
 export const Top = styled.div`
 	width; 400px;
 	height: 40px;

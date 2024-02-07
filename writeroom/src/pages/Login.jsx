@@ -5,7 +5,7 @@ import Header from "../components/Header/Header";
 export default function Login() {
   return (
     <div>
-      <LoginBox />
+      <LoginBox/>
     </div>
   );
 }

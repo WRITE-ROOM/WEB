@@ -23,6 +23,7 @@ export const Container = styled.div`
 		width: 362px;
 		height: 108px;
 		border-radius: 10px;
+		object-fit: cover;
 	}
 `
 export const Picture = styled.div`
@@ -55,5 +56,6 @@ export const Picture = styled.div`
 	img {
 		width: 362px;
 		height: 108px;
+		object-fit: cover;
 	}
 `

@@ -58,18 +58,21 @@ export const IsLogin = styled.div`
     text-align: left;
   }
 
-  button {
-    width: 60px;
-    height: 22px;
-    border: none;
-    background: none;
-    color: black;
-    cursor: pointer;
-    font-family: Pretendard;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 22px;
-    letter-spacing: 0em;
-    text-align: left;
-  }
-`;
+
+	button {
+		width: 60px;
+		height: 22px;
+		border: none;
+		background: none;
+		color: black;
+		cursor: pointer;
+		font-family: Pretendard;
+		font-size: 18px;
+		font-weight: 500;
+		line-height: 22px;
+		letter-spacing: 0em;
+		text-align: left;
+		
+	}
+`
+

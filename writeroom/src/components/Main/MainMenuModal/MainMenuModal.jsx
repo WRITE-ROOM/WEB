@@ -2,19 +2,16 @@ import React, { useEffect, useState } from 'react'
 import * as S from "./MainMenuModal.style"
 import { useNavigate } from 'react-router-dom'
 import InviteModal from '../InviteModal/InviteModal';
+import axios from 'axios';
 
-export default function MainMenuModal() {
+export default function MainMenuModal({roomIndex}) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isMenuVisible, setIsMenuVisible] = useState(true);
 
 
 	let navigate = useNavigate();
 
-  const RoomManagementClick = () => {
-    navigate('/룸관리URL');
-  };
-
-	const openModal = () => {
+	const openModal = async() => {
     setIsModalOpen(true);
 		setIsMenuVisible(false);
   };
@@ -22,6 +19,7 @@ export default function MainMenuModal() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
   return (
     <div>
         {isMenuVisible && (
@@ -30,7 +28,7 @@ export default function MainMenuModal() {
           <button onClick={() => navigate('/룸관리URL')}>룸 관리</button>
         </S.Modal>
       )}
-				<InviteModal isOpen={isModalOpen} onClose={closeModal}></InviteModal>
+				<InviteModal isOpen={isModalOpen} onClose={closeModal} roomIndex={roomIndex}></InviteModal>
     </div>
   )
 }
