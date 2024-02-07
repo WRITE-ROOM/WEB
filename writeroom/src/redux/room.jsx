@@ -1,9 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 export const room = createSlice({
-    name: 'room',
-    initialState: {
-      room: [], // 각 방의 정보를 배열로 관리
+  name: "room",
+  initialState: {
+    room: [], // 각 방의 정보를 배열로 관리
+  },
+  reducers: {
+    setRoom(state, action) {
+      const { roomId, roomTitle, updatedAt, roomImg, userRoomList } =
+        action.payload;
+      state.room.push({ roomId, roomTitle, updatedAt, roomImg, userRoomList }); // 새로운 방 정보를 배열에 추가
     },
     reducers: {
       setRoom(state, action) {
@@ -14,7 +20,8 @@ export const room = createSlice({
         state.room = [];
       },
     },
-  });
+  },
+});
 
 const selectRoomState = state => state.room;
 export const selectRoomIds = state => selectRoomState(state).room.map(room => room.roomId);

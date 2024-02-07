@@ -29,6 +29,7 @@ export default function MainBox() {
 	const toggleSNB = () => {
 		setIsSNBOpen((prev) => !prev);
 	};
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -61,11 +62,11 @@ export default function MainBox() {
 	} catch (error) {
         console.error(error);
     }
-  }
+  };
 
   useEffect(() => {
-	fetchRoomList();
-  }, [])
+    fetchRoomList();
+  }, []);
 
   return (
 		<div>

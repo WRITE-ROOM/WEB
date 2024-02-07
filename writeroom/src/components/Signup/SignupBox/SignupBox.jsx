@@ -7,7 +7,7 @@ import SignupSocial from '../SignupSocial/SignupSocial'
 import Header from '../../Header/Header'
 
 export default function SignupBox() {
-  let navigate = useNavigate()
+  let navigate = useNavigate();
 
   return (
     <div>
@@ -27,5 +27,5 @@ export default function SignupBox() {
 			</S.Container>
     </S.App>
     </div>
-  )
+  );
 }

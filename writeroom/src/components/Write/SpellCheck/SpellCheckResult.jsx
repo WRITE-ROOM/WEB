@@ -1,5 +1,5 @@
 import React from "react";
-import { StyledButton } from "../../pages/Write.style";
+import { StyledButton } from "../../../pages/Write.style";
 import * as S from "./SpellCheckResult.style";
 
 const SpellCheckResult = ({ content, showResult, setShowResult }) => {

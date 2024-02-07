@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react'
 import * as S from './LoginBox.style'
 import LoginSocial from '../LoginSocial/LoginSocial'
@@ -5,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLogin } from '../../../redux/user'
+
 
 export default function LoginBox() {
   const [email, setEmail] = useState();
@@ -48,9 +50,10 @@ export default function LoginBox() {
     
   }
 
+
   return (
     <S.App>
-			<S.Container>
+      <S.Container>
         <S.Title>로그인</S.Title>
         <S.InputInfo>
           <input placeholder='이메일'
@@ -67,9 +70,15 @@ export default function LoginBox() {
         <LoginSocial/>
         <S.IsSignup>
           <p>계정이 없으신가요?</p>
-          <button onClick={() => {navigate('/signup')}}>회원가입</button>
+          <button
+            onClick={() => {
+              navigate("/signup");
+            }}
+          >
+            회원가입
+          </button>
         </S.IsSignup>
       </S.Container>
-		</S.App>
-  )
+    </S.App>
+  );
 }
