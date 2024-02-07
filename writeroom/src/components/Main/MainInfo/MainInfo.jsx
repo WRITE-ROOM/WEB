@@ -14,11 +14,15 @@ export default function MainInfo({room, roomIndex}) {
 		setIsModalOpen(!isModalOpen);
 	}
 
+  const truncateTitle = (title) => {
+    const maxLength = 18;
+    return title.length > maxLength ? title.substring(0, maxLength) + "..." : title;
+  };
   return (
     <div>
       <S.Container>
 				<S.Left>
-					<S.RoomName>{room.roomTitle}</S.RoomName>
+					<S.RoomName>{truncateTitle(room.roomTitle)}</S.RoomName>
 					<S.editTime>{room.updatedAt} 편집</S.editTime>
 				</S.Left>
 				<S.Right>

@@ -43,7 +43,7 @@ export default function MainBox() {
 		const receivedToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo"
 
 	try {
-		const page = 0;
+		const page = 1;
 		// console.log(receivedToken)
 		console.log(`/rooms/myRoomList?page=${page}`)
 		const res = await axios.get(`/rooms/myRoomList?page=${page}`, { 
