@@ -3,11 +3,21 @@ import * as S from "./RoomMain.style";
 import TagSearchBox from "../TagSearchBox/TagSearchBox";
 import ImageRoomNoteBox from "../ImageRoomNoteBox/ImageRoomNoteBox";
 import Pagination from "react-js-pagination";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { setNoteList } from "../../redux/noteList";
+import { useDispatch, useSelector } from "react-redux";
+import { setRoom } from "../../redux/room";
+import { resetNote } from "../../redux/note";
 
 const RoomMain = ({ openRoomSNB, openSNB }) => {
+  const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 2;
+
+  const [roomTitle, setRoomTitle] = useState("");
+  const [roomIntro, setRoomIntro] = useState("");
 
   const text = [
     `이 노래는 이별의 아픔과 함께 흐르는
@@ -33,6 +43,37 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
     setCurrentPage(page);
   };
 
+  const accessToken =
+    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo";
+
+  // const roomId = 13;
+  const { roomId } = useParams();
+
+  const fetchNoteList = async () => {
+    try {
+      const params = { page: 0 };
+      const res = await axios.get(`/rooms/${roomId}/list`, {
+        params,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      resetNote();
+      setRoomTitle(res.data.result.roomTitle);
+      setRoomIntro(res.data.result.roomIntroduction);
+      dispatch(setNoteList(res.data.result.noteList));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const noteList = useSelector((state) => state.noteList);
+
+  useEffect(() => {
+    fetchNoteList();
+  }, []);
+  console.log("noteLIST", noteList);
+
   return (
     <S.Container>
       <S.ImgContainer
@@ -42,29 +83,34 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
         // 테스트 이미지 링크
       />
       <S.NoteList>
-        <h2>처음부터 완벽하게 쓰려는 생각을 버리고 그냥 써라</h2>
+        <h2>{roomIntro}</h2>
 
         <S.TopBox openRoomSNB={openRoomSNB} openSNB={openSNB}>
-          <h1>스포츠에 대한 고찰</h1>
+          <h1>{roomTitle}</h1>
           <TagSearchBox />
-          <p>100개의 노트</p>
+          {/* <p>{noteList.length}개의 노트</p> */}
         </S.TopBox>
-        {currentItems.map((note, index) => (
+
+        {noteList.map((note, index) => (
+          <ImageRoomNoteBox key={index} note={note} roomId={roomId} />
+        ))}
+
+        {/* {currentItems.map((note, index) => (
           <ImageRoomNoteBox
             key={index}
             openRoomSNB={openRoomSNB}
             openSNB={openSNB}
             note={note} // 각 노트에 대한 데이터 전달
           />
-        ))}
-        {currentItems.map((note, index) => (
+        ))} */}
+        {/* {currentItems.map((note, index) => (
           <RoomNoteBox
             key={index}
             openRoomSNB={openRoomSNB}
             openSNB={openSNB}
             note={note} // 각 노트에 대한 데이터 전달
           />
-        ))}
+        ))} */}
       </S.NoteList>
       <S.PaginationBox>
         <Pagination

@@ -1,10 +1,20 @@
 import React, { useState } from "react";
 import { BiCog } from "react-icons/bi";
+import { BiDotsVerticalRounded } from "react-icons/bi";
 import { DropdownContainer } from "../Header/Dropdown.style";
 import * as S from "./Setting.style";
+import RoomModal from "../RoomModal/RoomModal";
 
-const Setting = () => {
+const Setting = ({ type, action }) => {
   const [showSettingMenu, setShowSettingMenu] = useState(false);
+
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleDelete = () => {
+    if (action === "deleteNote") {
+      setOpenModal(!openModal);
+    }
+  };
 
   return (
     <S.Container>
@@ -13,7 +23,11 @@ const Setting = () => {
           setShowSettingMenu(!showSettingMenu);
         }}
       >
-        <BiCog size={22} color="white" />
+        {type === "config" ? (
+          <BiCog size={22} color="#fff" />
+        ) : (
+          <BiDotsVerticalRounded size={22} color="#000" />
+        )}
       </S.SettingButton>
 
       {showSettingMenu && (
@@ -22,11 +36,18 @@ const Setting = () => {
             <li>
               <p>수정하기</p>
             </li>
-            <li>
+            <li onClick={handleDelete}>
               <p>삭제하기</p>
             </li>
           </ul>
         </DropdownContainer>
+      )}
+
+      {openModal && (
+        <RoomModal
+          title1="내가 관리하고 있는 룸이에요."
+          title2="정말 룸을 삭제하시겠어요?"
+        />
       )}
     </S.Container>
   );

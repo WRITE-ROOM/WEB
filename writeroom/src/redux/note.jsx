@@ -3,9 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const noteSlice = createSlice({
   name: "note",
   initialState: {
-    noteTitle: "제목",
-    noteSubtitle: "부제목",
-    noteId: "",
+    noteTitle: "",
+    noteSubtitle: "",
+    noteId: null,
     noteImg: "",
     noteContent: "",
     writer: "",
