@@ -82,7 +82,7 @@ const ImageRoomNoteBox = ({ note, roomId }) => {
             <Bookmark />
             <Setting
               type="dots"
-              action="deleteNote"
+              // action="deleteNote"
               noteId={noteId}
               roomId={roomId}
             />

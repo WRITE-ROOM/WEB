@@ -4,26 +4,47 @@ import { BiDotsVerticalRounded } from "react-icons/bi";
 import { DropdownContainer } from "../Header/Dropdown.style";
 import * as S from "./Setting.style";
 import RoomModal from "../RoomModal/RoomModal";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import DeleteNoteModal from "../DeleteNoteModal/DeleteNoteModal";
 
-const Setting = ({ type, action, noteId, roomId }) => {
+const Setting = ({ type, noteId, roomId }) => {
+  const navigate = useNavigate();
   const [showSettingMenu, setShowSettingMenu] = useState(false);
 
   const [openModal, setOpenModal] = useState(false);
 
-  const handleDelete = () => {
-    if (action === "deleteNote") {
-      setOpenModal(!openModal);
-    }
+  // const accessToken =
+  //   "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo";
+
+  // const deleteNote = async () => {
+  //   try {
+  //     const res = await axios.delete(`/notes/${noteId}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${accessToken}`,
+  //       },
+  //     });
+  //     console.log(res.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const handleDeleteModal = () => {
+    setShowSettingMenu(!showSettingMenu);
+    setOpenModal(!openModal);
+
+    // deleteNote();
+    // navigate(`/rooms/${roomId}`);
   };
 
   const handleClick = (e) => {
-    e.stopPropagation();
     setShowSettingMenu(!showSettingMenu);
   };
 
   return (
-    <S.Container onClick={handleClick}>
-      <S.SettingButton>
+    <S.Container onClick={(e) => e.stopPropagation()}>
+      <S.SettingButton onClick={handleClick}>
         {type === "config" ? (
           <BiCog size={22} color="#fff" />
         ) : (
@@ -37,7 +58,7 @@ const Setting = ({ type, action, noteId, roomId }) => {
             <li>
               <p>수정하기</p>
             </li>
-            <li onClick={handleDelete}>
+            <li onClick={handleDeleteModal}>
               <p>삭제하기</p>
             </li>
           </ul>
@@ -45,9 +66,10 @@ const Setting = ({ type, action, noteId, roomId }) => {
       )}
 
       {openModal && (
-        <RoomModal
-          title1="내가 관리하고 있는 룸이에요."
-          title2="정말 룸을 삭제하시겠어요?"
+        <DeleteNoteModal
+          noteId={noteId}
+          roomId={roomId}
+          setOpenModal={setOpenModal}
         />
       )}
     </S.Container>
