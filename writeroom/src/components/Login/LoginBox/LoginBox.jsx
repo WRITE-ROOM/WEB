@@ -16,7 +16,6 @@ export default function LoginBox() {
   let dispatch = useDispatch();
 
   const user = useSelector((state => state.user))
-  const accessToken = user.accessToken;
 
   function saveLocalStorage(token, id) {
     localStorage.setItem('token', token);
@@ -40,7 +39,7 @@ export default function LoginBox() {
         accessToken: receivedToken
       }
       ))
-      axios.defaults.headers.common['Authorization'] = `Bearer ${receivedToken}`;
+      // axios.defaults.headers.common['Authorization'] = `Bearer ${receivedToken}`;
 
       saveLocalStorage(receivedToken, receivedId);
       navigate('/main');
@@ -65,7 +64,7 @@ export default function LoginBox() {
         </S.InputInfo>
         <S.LoginButton>
           <button
-          onClick={postUser}>로그인</button>
+          onClick={() => {postUser()}}>로그인</button>
         </S.LoginButton>
         <LoginSocial/>
         <S.IsSignup>
