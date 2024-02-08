@@ -19,4 +19,5 @@ export const FloatingButton = styled.div`
   img {
     width: 29px;
   }
+  z-index: 200;
 `;

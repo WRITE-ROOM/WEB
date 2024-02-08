@@ -10,7 +10,7 @@ const MyProfileMenu = () => {
           <a href="/myprofile/account">계정설정</a>
         </li>
         <li>
-          <a href="/">북마크</a>
+          <a href="/myprofile/bookmark">북마크</a>
         </li>
         <li>
           <a href="/">로그아웃</a>

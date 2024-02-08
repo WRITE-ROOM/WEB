@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaRegBookmark } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa";
 import { IoMdRefresh } from "react-icons/io";
 import { IoSearchOutline } from "react-icons/io5";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import * as S from "./RecTopic.style";
+import axios from "axios";
 
 export default function RecTopic({ onToggle }) {
   let [inputWord, setInputWord] = useState("");
   let [displayKeyword, setDisplayKeyword] = useState(false);
   let [displayVoca, setDisplayVoca] = useState(false);
-  // let [isBookmarked, setIsBookmarked] = useState(false)
+  const [topics, setTopics] = useState([]);
+  // const receivedToken = localStorage.getItem('token')
+  const receivedToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo"
 
   const handleKeyPressKeyword = (e) => {
     if (e.key === "Enter") {
@@ -22,6 +25,26 @@ export default function RecTopic({ onToggle }) {
       setDisplayVoca(true);
     }
   };
+
+  const getTopics = async() => {
+    try {
+      const res = await axios.get(`/search/topics`, { 
+        headers: {
+          'Authorization': `Bearer ${receivedToken}`
+          },
+      })
+      const vocas = res.data.result.map(item => item.voca);
+      setTopics(prevList => [...prevList, ...vocas]);
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getTopics()
+  }, [])
+
   const RecWord = ({ word }) => {
     const [isBookmarked, setIsBookmarked] = useState(false);
 
@@ -59,11 +82,11 @@ export default function RecTopic({ onToggle }) {
             </button>
           </S.Top>
           <S.RecBottom>
-            <RecWord word="첫 눈이 오면" />
-            <RecWord word="공통되는 부분" />
-            <RecWord word="연예인 vs 배우" />
-            <RecWord word="코딩 공부란" />
-            <RecWord word="애정에 관하여" />
+            <RecWord word={topics[0]} />
+            <RecWord word={topics[1]} />
+            <RecWord word={topics[2]} />
+            <RecWord word={topics[3]} />
+            <RecWord word={topics[4]} />
           </S.RecBottom>
         </S.Wrapper>
 
