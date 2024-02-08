@@ -18,7 +18,7 @@ const DeleteNoteModal = ({ noteId, roomId, setOpenModal }) => {
       });
       console.log(res.data);
       setOpenModal(false);
-      //   navigate(`/rooms/${roomId}`);
+      navigate(`/rooms/${roomId}`);
       window.location.reload();
     } catch (error) {
       console.log(error);
