@@ -5,7 +5,7 @@ import { DropdownContainer } from "../Header/Dropdown.style";
 import * as S from "./Setting.style";
 import RoomModal from "../RoomModal/RoomModal";
 
-const Setting = ({ type, action }) => {
+const Setting = ({ type, action, noteId, roomId }) => {
   const [showSettingMenu, setShowSettingMenu] = useState(false);
 
   const [openModal, setOpenModal] = useState(false);
@@ -16,13 +16,14 @@ const Setting = ({ type, action }) => {
     }
   };
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+    setShowSettingMenu(!showSettingMenu);
+  };
+
   return (
-    <S.Container>
-      <S.SettingButton
-        onClick={() => {
-          setShowSettingMenu(!showSettingMenu);
-        }}
-      >
+    <S.Container onClick={handleClick}>
+      <S.SettingButton>
         {type === "config" ? (
           <BiCog size={22} color="#fff" />
         ) : (

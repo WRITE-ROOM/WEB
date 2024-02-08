@@ -14,6 +14,7 @@ import { useParams } from "react-router-dom";
 
 const Note = () => {
   const dispatch = useDispatch();
+  window.scrollTo(0, 0);
 
   // note의 정보 조회하는 api 연결 -> addNote
   const note = useSelector((state) => state.note);
@@ -35,7 +36,7 @@ const Note = () => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      // console.log(res.data);
+      console.log(res.data.result);
       dispatch(addNote(res.data.result));
     } catch (error) {
       console.log(error);
@@ -59,26 +60,26 @@ const Note = () => {
         <N.NoteInfo>
           <N.Upper>
             <div>
-              <h1 className="title">{note.noteTitle}</h1>
-              <p className="date">{note.createdAt}</p>
+              <h1>{note.noteTitle}</h1>
+              <p>{note.createdAt.split("T")[0]}</p>
             </div>
 
-            <p className="writer">by.{note.writer}</p>
+            <p>by.{note.writer}</p>
           </N.Upper>
 
           <N.StyledHr color="white" />
 
           <N.Lower>
-            <p>{note.noteSubtitle}</p>
+            <p>{note.noteSubTitle}</p>
             <N.TagContainer>
               <ul>
-                {note.tags &&
-                  note.tags
+                {note.tagList &&
+                  note.tagList
                     .slice(0, 4)
                     .map((tag, index) => (
                       <N.Tag key={index}>{tag.tagName}</N.Tag>
                     ))}
-                {note.tags && note.tags.length > 4 && (
+                {note.tagList && note.tagList.length > 4 && (
                   <N.Tag
                     className="showMoreTag"
                     onMouseEnter={() => {
@@ -92,7 +93,7 @@ const Note = () => {
                     {showTags && (
                       <D.SimpleContainer $width="70px" $padding="8px">
                         <N.HiddenTag>
-                          {note.tags.slice(4).map((tag, index) => (
+                          {note.tagList.slice(4).map((tag, index) => (
                             <N.Tag key={index}>{tag.tagName}</N.Tag>
                           ))}
                         </N.HiddenTag>

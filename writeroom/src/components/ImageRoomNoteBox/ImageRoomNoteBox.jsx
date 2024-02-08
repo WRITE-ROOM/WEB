@@ -40,7 +40,6 @@ const ImageRoomNoteBox = ({ note, roomId }) => {
   }
 
   const handleSelectNote = () => {
-    console.log(noteId);
     navigate(`/rooms/${roomId}/notes/${noteId}`);
     addNote(note);
   };
@@ -65,13 +64,13 @@ const ImageRoomNoteBox = ({ note, roomId }) => {
               <S.Writer>{writer}</S.Writer>
 
               <S.Info>
-                <S.Date>{createdAt}</S.Date>
+                <S.Date>{createdAt.split("T")[0]}</S.Date>
 
                 <TagContainer>
                   <ul>
                     {tagList &&
                       tagList.map((tag, index) => {
-                        return <Tag>{tag.tagName}</Tag>;
+                        return <Tag key={index}>{tag.tagName}</Tag>;
                       })}
                   </ul>
                 </TagContainer>
@@ -81,7 +80,12 @@ const ImageRoomNoteBox = ({ note, roomId }) => {
 
           <S.Right>
             <Bookmark />
-            <Setting type="dots" action="deleteNote" />
+            <Setting
+              type="dots"
+              action="deleteNote"
+              noteId={noteId}
+              roomId={roomId}
+            />
           </S.Right>
         </S.Top>
 

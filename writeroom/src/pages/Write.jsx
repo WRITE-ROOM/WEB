@@ -17,9 +17,11 @@ import { resetRoom, setRoom } from "../redux/room";
 import { resetTag } from "../redux/tag";
 import { setCategory, createCategory } from "../redux/category";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Write = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
@@ -28,6 +30,7 @@ const Write = () => {
   const [content, setContent] = useState("");
   const [showCountDetail, setShowCountDetail] = useState(false);
   const [image, setImage] = useState(null);
+  // const [noteId, setNoteId] = useState(null);
 
   // 룸, 카테고리 선택
   const currentModal = useSelector((state) => state.selectModal.currentModal);
@@ -206,6 +209,8 @@ const Write = () => {
       });
       console.log(res.data);
       console.log("formData", formData.get("request"));
+
+      // setNoteId(res.data.result.noteId);
     } catch (error) {
       console.log(error);
     }
@@ -230,7 +235,9 @@ const Write = () => {
 
   const saveNote = () => {
     postNote();
+    // navigate(`/rooms/${roomId}/notes/${noteId}`);
     // setChallengeAchieved(true);
+    navigate(`/rooms/${roomId}`);
   };
 
   return (

@@ -4,13 +4,13 @@ const noteSlice = createSlice({
   name: "note",
   initialState: {
     noteTitle: "",
-    noteSubtitle: "",
+    noteSubTitle: "",
     noteId: null,
     noteImg: "",
     noteContent: "",
     writer: "",
     achieve: false,
-    tags: [],
+    tagList: [],
     createdAt: "",
     updatedAt: "",
   },
@@ -18,36 +18,36 @@ const noteSlice = createSlice({
     addNote(state, action) {
       const {
         noteTitle,
-        noteSubtitle,
+        noteSubTitle,
         noteId,
         noteImg,
         noteContent,
         writer,
         achieve,
-        tags,
+        tagList,
         createdAt,
         updatedAt,
       } = action.payload;
 
       state.noteTitle = noteTitle;
-      state.noteSubtitle = noteSubtitle;
+      state.noteSubTitle = noteSubTitle;
       state.noteId = noteId;
       state.noteImg = noteImg;
       state.noteContent = noteContent;
       state.writer = writer;
       state.achieve = achieve;
-      state.tags = tags;
+      state.tagList = tagList;
       state.createdAt = createdAt;
       state.updatedAt = updatedAt;
     },
     resetNote(state) {
       state.noteTitle = "";
-      state.noteSubtitle = "";
+      state.noteSubTitle = "";
       state.noteId = "";
       state.noteImg = "";
       state.noteContent = "";
       state.achieve = "";
-      state.tags = [];
+      state.tagList = [];
       state.createdAt = "";
       state.updatedAt = "";
     },
