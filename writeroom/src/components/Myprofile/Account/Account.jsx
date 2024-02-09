@@ -152,6 +152,7 @@ return (
               onChange={(e) => {setName(e.target.value)}}
               >
               </input>
+              <h5>{name.length}/50</h5>
             <button onClick={patchUserInfo}>저장하기</button>
             {isSave && <p>저장되었습니다!</p>}
           </S.ProfileRight>

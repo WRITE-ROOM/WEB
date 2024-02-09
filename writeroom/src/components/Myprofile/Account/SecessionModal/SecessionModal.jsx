@@ -17,13 +17,13 @@ export default function SecessionModal({isOpen, onClose}) {
 			<S.ModalBackground>
 				<S.Modal>
 					<S.Info>
-							<h2>아직 관리하고 있는 룸이 남아있어요!</h2>
-							<h2>정말 탈퇴하시겠어요?</h2>
-							<p>※ 탈퇴 시 활동했던 기록이 모두 사라지고 재열람이 불가능합니다. ※</p>
+            <h2>아직 관리하고 있는 룸이 남아있어요!</h2>
+            <h2>정말 탈퇴하시겠어요?</h2>
+            <p>※ 탈퇴 시 활동했던 기록이 모두 사라지고 재열람이 불가능합니다. ※</p>
 					</S.Info>
 					<S.BtnBox>
-							<S.CancelBtn onClick={onClose}>취소할래요</S.CancelBtn>
-							<S.SecessionBtn onClick={openAlert}>탈퇴할래요</S.SecessionBtn>
+            <S.CancelBtn onClick={onClose}>취소할래요</S.CancelBtn>
+            <S.SecessionBtn onClick={openAlert}>탈퇴할래요</S.SecessionBtn>
 					</S.BtnBox>
 				</S.Modal>
 			</S.ModalBackground>

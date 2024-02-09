@@ -87,6 +87,16 @@ export const ProfileRight = styled.div`
         font-size: 20px;
         font-weight: 400;
     }
+    h5 {
+        position: absolute;
+        top: 285px;
+        left: 1225px;
+        font-family: Pretendard;
+        font-size: 13px;
+        font-weight: 300;
+        color: rgba(147, 147, 147, 1);
+        text-decoration: underline;
+    }
     input {
         padding-left: 10px;
         font-family: Pretendard;
