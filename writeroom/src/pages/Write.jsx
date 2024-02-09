@@ -9,13 +9,12 @@ import WriteFooter from "../components/Write/WriteFooter/WriteFooter";
 import SelectRoomModal from "../components/Write/WriteSelectModal/SelectRoomModal/SelectRoomModal";
 import SelectCategoryModal from "../components/Write/WriteSelectModal/SelectCategoryModal/SelectCategoryModal";
 import ChallengeAchieved from "../components/Write/ChallengeAchieved/ChallengeAchieved";
+import Template from "../components/Write/Template/Template";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentModal } from "../redux/selectModal";
-import { addNote, resetNote } from "../redux/note";
 import { resetRoom, setRoom } from "../redux/room";
-import { resetTag } from "../redux/tag";
-import { setCategory, createCategory } from "../redux/category";
+import { setCategory } from "../redux/category";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -57,9 +56,9 @@ const Write = () => {
     setSubtitle(event.target.value);
   };
 
-  const handleTemplateMenu = () => {
-    setShowTemplate(!showTemplate);
-  };
+  // const handleTemplateMenu = () => {
+  //   setShowTemplate(!showTemplate);
+  // };
 
   const handleCurrentModal = () => {
     currentModal
@@ -67,42 +66,42 @@ const Write = () => {
       : dispatch(setCurrentModal("Room"));
   };
 
-  const TemplateO1 = () => {
-    const oreo = `
-    <h1>Opinion</h1>
-    <p>글에서 주장하고자 하는 의견을 작성하시오</p>
-    `.trim();
+  // const TemplateO1 = () => {
+  //   const oreo = `
+  //   <h1>Opinion</h1>
+  //   <p>글에서 주장하고자 하는 의견을 작성하시오</p>
+  //   `.trim();
 
-    setContent(content + oreo);
-  };
+  //   setContent(content + oreo);
+  // };
 
-  const TemplateR = () => {
-    const oreo = `
-    <h1>Reason</h1>
-    <p>주장한 의견에 대하여 이유와 근거를 작성하시오</p>
-    `.trim();
+  // const TemplateR = () => {
+  //   const oreo = `
+  //   <h1>Reason</h1>
+  //   <p>주장한 의견에 대하여 이유와 근거를 작성하시오</p>
+  //   `.trim();
 
-    setContent(content + oreo);
-  };
+  //   setContent(content + oreo);
+  // };
 
-  const TemplateE = () => {
-    const oreo = `
-    <h1>Example</h1>
-    <p>독자들이 글을 쉽게 이해할 수 있도록 사례를 들어 설명하시오</p>
-    `.trim();
+  // const TemplateE = () => {
+  //   const oreo = `
+  //   <h1>Example</h1>
+  //   <p>독자들이 글을 쉽게 이해할 수 있도록 사례를 들어 설명하시오</p>
+  //   `.trim();
 
-    setContent(content + oreo);
-  };
+  //   setContent(content + oreo);
+  // };
 
-  const TemplateO2 = () => {
-    const oreo = `
-    <h1>Opinion</h1>
-    <p>글 내용에 가장 중요한 내용을 요약하여 주장하고자 한 의견을 강조하고 제안하시오
-    </p>
-    `.trim();
+  // const TemplateO2 = () => {
+  //   const oreo = `
+  //   <h1>Opinion</h1>
+  //   <p>글 내용에 가장 중요한 내용을 요약하여 주장하고자 한 의견을 강조하고 제안하시오
+  //   </p>
+  //   `.trim();
 
-    setContent(content + oreo);
-  };
+  //   setContent(content + oreo);
+  // };
 
   const stripHtmlTags = (html) => {
     const doc = new DOMParser().parseFromString(html, "text/html");
@@ -268,7 +267,8 @@ const Write = () => {
       <W.Header>
         <W.Left>
           {/* 템플릿 */}
-          <W.Template>
+          <Template content={content} setContent={setContent} />
+          {/* <W.Template>
             <W.StyledButton
               $border="1px solid #e5e5e5"
               onClick={handleTemplateMenu}
@@ -304,7 +304,7 @@ const Write = () => {
                 </ul>
               </D.DropdownContainer>
             )}
-          </W.Template>
+          </W.Template> */}
 
           {/* 맞춤법 검사 */}
           <SpellCheck content={stripHtmlTags(content)} />

@@ -80,13 +80,7 @@ const ImageRoomNoteBox = ({ note, roomId }) => {
 
           <S.Right>
             <Bookmark />
-            <Setting
-              type="dots"
-              // action="deleteNote"
-              // noteId={noteId}
-              note={note}
-              roomId={roomId}
-            />
+            <Setting type="dots" note={note} roomId={roomId} />
           </S.Right>
         </S.Top>
 

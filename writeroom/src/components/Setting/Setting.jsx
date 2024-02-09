@@ -33,8 +33,6 @@ const Setting = ({ type, note, roomId }) => {
     dispatch(setTag(note.tagList));
     dispatch(updateMode());
     navigate("/write");
-    console.log("note", note);
-    console.log("tagList", note.tagList);
   };
 
   return (
