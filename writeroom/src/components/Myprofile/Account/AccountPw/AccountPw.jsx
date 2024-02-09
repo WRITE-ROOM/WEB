@@ -25,9 +25,11 @@ export default function AccountPw() {
             'Authorization': `Bearer ${receivedToken}`
           },
         })
-        console.log(res.data)
+        console.log(res.data);
+        window.alert('비밀번호가 변경되었습니다!');
+        navigate('/myprofile/account')
       } catch(error) {
-        if (error.response.data.code === "USER4003")
+        if (error.response.data.code === "USER4003") 
           setIsPwMatch(false);
         console.log(error)
       }
