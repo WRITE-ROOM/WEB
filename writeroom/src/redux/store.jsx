@@ -6,6 +6,7 @@ import selectModalSlice from "./selectModal";
 import categorySlice from "./category";
 import noteSlice from "./note";
 import noteListSlice from "./noteList";
+import writeModeSlice from "./writeMode";
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
     category: categorySlice,
     note: noteSlice,
     noteList: noteListSlice,
+    writeMode: writeModeSlice,
   },
 });

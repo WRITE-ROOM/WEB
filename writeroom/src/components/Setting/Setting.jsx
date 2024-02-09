@@ -4,12 +4,20 @@ import { BiDotsVerticalRounded } from "react-icons/bi";
 import { DropdownContainer } from "../Header/Dropdown.style";
 import * as S from "./Setting.style";
 import DeleteNoteModal from "../DeleteNoteModal/DeleteNoteModal";
+import { addNote } from "../../redux/note";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setTag } from "../../redux/tag";
+import { updateMode } from "../../redux/writeMode";
 
-const Setting = ({ type, noteId, roomId }) => {
+const Setting = ({ type, note, roomId }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [showSettingMenu, setShowSettingMenu] = useState(false);
 
   const [openModal, setOpenModal] = useState(false);
 
+  // 노트 삭제 모달 띄우기
   const handleDeleteModal = () => {
     setShowSettingMenu(!showSettingMenu);
     setOpenModal(!openModal);
@@ -17,6 +25,16 @@ const Setting = ({ type, noteId, roomId }) => {
 
   const handleClick = (e) => {
     setShowSettingMenu(!showSettingMenu);
+  };
+
+  // 노트 수정
+  const handleUpdateNote = () => {
+    dispatch(addNote(note));
+    dispatch(setTag(note.tagList));
+    dispatch(updateMode());
+    navigate("/write");
+    console.log("note", note);
+    console.log("tagList", note.tagList);
   };
 
   return (
@@ -32,7 +50,7 @@ const Setting = ({ type, noteId, roomId }) => {
       {showSettingMenu && (
         <DropdownContainer $top="30px">
           <ul>
-            <li>
+            <li onClick={handleUpdateNote}>
               <p>수정하기</p>
             </li>
             <li onClick={handleDeleteModal}>
@@ -44,7 +62,7 @@ const Setting = ({ type, noteId, roomId }) => {
 
       {openModal && (
         <DeleteNoteModal
-          noteId={noteId}
+          noteId={note.noteId}
           roomId={roomId}
           setOpenModal={setOpenModal}
         />

@@ -20,16 +20,21 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Write = () => {
+  // 수정 데이터 다 받아와야하는데 noteSubTitle 때문에 부제목이 안옴, 태그도 안옴
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [title, setTitle] = useState("");
-  const [subtitle, setSubtitle] = useState("");
+  const note = useSelector((state) => state.note);
+
+  const tags = useSelector((state) => state.tag);
+
+  const [title, setTitle] = useState(note.noteTitle);
+  const [subtitle, setSubtitle] = useState(note.noteSubTitle);
 
   const [showTemplate, setShowTemplate] = useState(false);
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState(note.noteContent);
   const [showCountDetail, setShowCountDetail] = useState(false);
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(note.noteImg);
   // const [noteId, setNoteId] = useState(null);
 
   // 룸, 카테고리 선택
@@ -38,6 +43,8 @@ const Write = () => {
   const selectedCategory = useSelector(
     (state) => state.selectModal.selectedCategory
   );
+
+  const mode = useSelector((state) => state.writeMode.mode);
 
   // 챌린지 팝업
   const [challengeAchieved, setChallengeAchieved] = useState(false);
@@ -182,24 +189,24 @@ const Write = () => {
     }
   };
 
+  const formData = new FormData();
+
+  // 보낼 데이터
+  const requestData = {
+    noteTitle: title,
+    noteSubTitle: subtitle,
+    noteContent: content,
+    letterCount: characterCount,
+    noteTagList: tags.map((tag) => tag.tagName),
+    categoryId: selectedCategory.categoryId,
+  };
+
+  formData.append("request", JSON.stringify(requestData));
+  if (image) {
+    formData.append("noteImg", image, image.name);
+  }
+
   const postNote = async () => {
-    const formData = new FormData();
-
-    // 보낼 데이터
-    const requestData = {
-      noteTitle: title,
-      noteSubTitle: subtitle,
-      noteContent: content,
-      letterCount: characterCount,
-      noteTagList: tags.map((tag) => tag.tagName),
-      categoryId: selectedCategory.categoryId,
-    };
-
-    formData.append("request", JSON.stringify(requestData));
-    if (image) {
-      formData.append("noteImg", image, image.name);
-    }
-
     try {
       const res = await axios.post(`/rooms/${roomId}/notes`, formData, {
         headers: {
@@ -216,6 +223,20 @@ const Write = () => {
     }
   };
 
+  const putNote = async () => {
+    try {
+      const res = await axios.put(`/notes/${note.noteId}`, formData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     // dispatch(resetNote());
     const fetchData = async () => {
@@ -224,20 +245,22 @@ const Write = () => {
         fetchCategoryList();
       }
     };
-    dispatch(resetTag());
+
     fetchData();
     // fetchRoomList();
   }, [roomId, accessToken]);
 
-  const tags = useSelector((state) => state.tag);
-
-  console.log(tags);
-
   const saveNote = () => {
     postNote();
-    // navigate(`/rooms/${roomId}/notes/${noteId}`);
     // setChallengeAchieved(true);
-    navigate(`/rooms/${roomId}`);
+    navigate(`/rooms/${selectedRoom.roomId}`);
+    window.location.reload();
+  };
+
+  const updateNote = () => {
+    putNote();
+    navigate(`/rooms/${selectedRoom.roomId}/notes/${note.noteId}`);
+    window.location.reload();
   };
 
   return (
@@ -336,13 +359,23 @@ const Write = () => {
 
         {/* 저장 */}
         <W.Right>
-          <W.StyledButton
-            onClick={saveNote}
-            $backgroundColor="#B5A994"
-            $color="white"
-          >
-            저장
-          </W.StyledButton>
+          {mode === "write" ? (
+            <W.StyledButton
+              onClick={saveNote}
+              $backgroundColor="#B5A994"
+              $color="white"
+            >
+              저장
+            </W.StyledButton>
+          ) : (
+            <W.StyledButton
+              onClick={updateNote}
+              $backgroundColor="#B5A994"
+              $color="white"
+            >
+              저장
+            </W.StyledButton>
+          )}
         </W.Right>
       </W.Header>
 
