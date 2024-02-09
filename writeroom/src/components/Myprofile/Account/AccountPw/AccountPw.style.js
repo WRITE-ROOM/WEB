@@ -12,10 +12,11 @@ export const SaveBtn = styled.button`
     font-weight: 400;
     text-align: center;
     color: white;
+    cursor: pointer;
 `
 
 export const NewPw = styled.div`
-    height: 270px;
+    height: 320px;
     display: flex;
     flex-direction: column;
     margin-left: 90px;
@@ -30,9 +31,7 @@ export const NewPw = styled.div`
         letter-spacing: 0em;
         text-align: left;
     }
-
     input {
-        margin-bottom: 30px;
         padding-left: 10px;
         width: 1044px;
         height: 46px;
@@ -47,13 +46,12 @@ export const NewPw = styled.div`
         font-size: 20px;
         font-weight: 300;       
     }
-
     p {
         font-family: Pretendard;
         font-size: 16px;
-        font-weight: 300;
-        color: rgba(147, 147, 147, 1);
-        margin-top: 14px;
+        font-weight: 400;
+        color: red;
+        margin: 5px 0 20px 0;
     }
 
     button { 
@@ -68,14 +66,5 @@ export const NewPw = styled.div`
         font-weight: 400;
         color: white;
         cursor: pointer;
-    }
-    h6 {
-        width: 1054px;
-        font-family: Pretendard;
-        font-size: 16px;
-        font-weight: 300;
-        color: rgba(147, 147, 147, 1);
-        margin-top: 14px;
-        text-align: center;
     }
 `

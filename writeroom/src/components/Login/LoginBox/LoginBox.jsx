@@ -24,14 +24,11 @@ export default function LoginBox() {
 
   const postUser = async() => {
     try {
-      console.log('이메일: ', email)
-      console.log('비밀번호: ', pw)
       const res = await axios.post(`/auth/signIn`, {email: email, password: pw}, {
         headers: {
           'Content-Type': 'application/json', 
         }
       })
-      console.log(res.data);
       let receivedToken = res.data.result.accessToken;
       let receivedId = res.data.result.userId;
       dispatch(setLogin({
@@ -46,7 +43,6 @@ export default function LoginBox() {
       if (error.response) {
         if (error.response.data.code === "USER4002" || error.response.data.code === "USER4003")
         window.alert('존재하지 않는 아이디거나 비밀번호가 일치하지 않습니다.')
-
       }
       console.log(error);
     }
@@ -63,22 +59,21 @@ export default function LoginBox() {
         </S.InputInfo>
         <S.InputInfo>
           <input placeholder='비밀번호'
+          type='password'
           onChange={(e) => {setPw(e.target.value)}}></input>
         </S.InputInfo>
         <S.LoginButton>
           <button
           onClick={() => {postUser()}}>로그인</button>
         </S.LoginButton>
+        <h5 onClick={() => {navigate("/forgetPwd")}}>비밀번호를 잊으셨나요?</h5>
         <LoginSocial/>
         <S.IsSignup>
           <p>계정이 없으신가요?</p>
           <button
             onClick={() => {
               navigate("/signup");
-            }}
-          >
-            회원가입
-          </button>
+            }}>회원가입</button>
         </S.IsSignup>
       </S.Container>
     </S.App>
