@@ -32,21 +32,24 @@ export default function LoginBox() {
         }
       })
       console.log(res.data);
-      let receivedToken = res.data.result.accessToken
-      let receivedId = res.data.result.userId
+      let receivedToken = res.data.result.accessToken;
+      let receivedId = res.data.result.userId;
       dispatch(setLogin({
         userId: receivedId,
         accessToken: receivedToken
       }
       ))
-      // axios.defaults.headers.common['Authorization'] = `Bearer ${receivedToken}`;
-
       saveLocalStorage(receivedToken, receivedId);
       navigate('/main');
+      
     } catch(error) {
+      if (error.response) {
+        if (error.response.data.code === "USER4002" || error.response.data.code === "USER4003")
+        window.alert('존재하지 않는 아이디거나 비밀번호가 일치하지 않습니다.')
+
+      }
       console.log(error);
     }
-    
   }
 
 
