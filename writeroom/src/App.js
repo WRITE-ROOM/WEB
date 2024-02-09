@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import ForgetPwdPage from "./pages/ForgetPwdPage.jsx";
 import Redirect from "./pages/KakaoRedirect";
 import Main from "./pages/Main";
 import RoomPage from "./pages/RoomPage.jsx";
@@ -9,7 +10,6 @@ import RoomMember from "./pages/RoomMember.jsx";
 import Header from "./components/Header/Header.jsx";
 import Write from "./pages/Write.jsx";
 import Note from "./pages/Note.jsx";
-// import Myprofile from "./pages/Myprofile.jsx";
 import MyprofileAccount from './pages/MyprofileAccount.jsx'
 import MyProfile from "./pages/Myprofile.jsx"
 import MyprofilePw from "./pages/MyprofilePw.jsx";
@@ -29,6 +29,7 @@ function App() {
         <Route path="/note" element={<Note />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/forgetPwd" element={<ForgetPwdPage />} />
         <Route path="/oauth" element={<Redirect />} />
         <Route path="/main" element={<Main />} />
 
