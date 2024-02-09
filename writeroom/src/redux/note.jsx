@@ -6,13 +6,14 @@ const noteSlice = createSlice({
     noteTitle: "",
     noteSubTitle: "",
     noteId: null,
-    noteImg: "",
+    noteCoverImg: "",
     noteContent: "",
     writer: "",
-    achieve: false,
     tagList: [],
     createdAt: "",
     updatedAt: "",
+    categoryName: "",
+    emojiList: { emojiCounts: [] },
   },
   reducers: {
     addNote(state, action) {
@@ -20,37 +21,40 @@ const noteSlice = createSlice({
         noteTitle,
         noteSubTitle,
         noteId,
-        noteImg,
+        noteCoverImg,
         noteContent,
         writer,
-        achieve,
         tagList,
         createdAt,
         updatedAt,
+        categoryName,
+        emojiList,
       } = action.payload;
 
       state.noteTitle = noteTitle;
       state.noteSubTitle = noteSubTitle;
       state.noteId = noteId;
-      state.noteImg = noteImg;
+      state.noteCoverImg = noteCoverImg;
       state.noteContent = noteContent;
       state.writer = writer;
-      state.achieve = achieve;
       state.tagList = tagList;
       state.createdAt = createdAt;
       state.updatedAt = updatedAt;
+      state.categoryName = categoryName;
+      state.emojiList = emojiList;
     },
     resetNote(state) {
       state.noteTitle = "";
       state.noteSubTitle = "";
-      state.noteId = "";
-      state.noteImg = null;
+      state.noteId = null;
+      state.noteCoverImg = "";
       state.noteContent = "";
       state.writer = "";
-      state.achieve = "";
       state.tagList = [];
       state.createdAt = "";
       state.updatedAt = "";
+      state.categoryName = "";
+      state.emojiList = {};
     },
   },
 });

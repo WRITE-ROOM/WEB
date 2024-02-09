@@ -29,7 +29,6 @@ const Note = () => {
   const noteId = useParams().noteId;
   const roomId = useParams().roomId;
 
-  // const noteId = 1;
   const fetchNote = async () => {
     try {
       const res = await axios.get(`/notes/${noteId}`, {
@@ -37,7 +36,7 @@ const Note = () => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log(res.data.result);
+      console.log("note res", res.data.result);
       dispatch(addNote(res.data.result));
     } catch (error) {
       console.log(error);
@@ -51,11 +50,11 @@ const Note = () => {
   return (
     <N.Container>
       <N.Header>
-        <N.CoverImage img={note.noteImg} />
+        <N.CoverImage img={note.noteCoverImg} />
 
         <N.Tools>
           <Bookmark defaultColor="white" />
-          <Setting type="config" note={note} roomId={roomId} />
+          <Setting type="config" note={note} roomId={parseInt(roomId)} />
         </N.Tools>
 
         <N.NoteInfo>

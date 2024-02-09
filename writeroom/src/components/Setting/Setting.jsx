@@ -9,6 +9,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setTag } from "../../redux/tag";
 import { updateMode } from "../../redux/writeMode";
+import {
+  setSelectedRoomId,
+  setSelectedCategoryName,
+} from "../../redux/selectModal";
 
 const Setting = ({ type, note, roomId }) => {
   const navigate = useNavigate();
@@ -32,7 +36,11 @@ const Setting = ({ type, note, roomId }) => {
     dispatch(addNote(note));
     dispatch(setTag(note.tagList));
     dispatch(updateMode());
+    dispatch(setSelectedRoomId(roomId));
+    dispatch(setSelectedCategoryName(note.categoryName));
     navigate("/write");
+    console.log(roomId);
+    console.log(note);
   };
 
   return (

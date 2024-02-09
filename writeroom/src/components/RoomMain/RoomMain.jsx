@@ -62,7 +62,6 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
       setRoomTitle(res.data.result.roomTitle);
       setRoomIntro(res.data.result.roomIntroduction);
       dispatch(setNoteList(res.data.result.noteList));
-      console.log("nono", res.data.result.noteList);
     } catch (error) {
       console.log(error);
     }

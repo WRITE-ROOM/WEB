@@ -3,13 +3,9 @@ import * as T from "./Template.style";
 import * as W from "../../../pages/Write.style";
 import * as D from "../../Header/Dropdown.style";
 import { FiInfo } from "react-icons/fi";
-import { useSelector } from "react-redux";
 
 const Template = ({ content, setContent }) => {
-  const note = useSelector((state) => state.note);
-
   const [showTemplate, setShowTemplate] = useState(false);
-  //   const [content, setContent] = useState(note.noteContent);
 
   const handleTemplateMenu = () => {
     setShowTemplate(!showTemplate);

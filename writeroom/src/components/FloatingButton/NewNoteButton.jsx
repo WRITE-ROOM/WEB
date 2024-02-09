@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import {
   resetSelectedCategory,
   setSelectedRoom,
+  resetSelectedRoom,
 } from "../../redux/selectModal";
 
 const NewNoteButton = () => {
@@ -19,7 +20,7 @@ const NewNoteButton = () => {
   const handleNewNote = () => {
     dispatch(resetNote());
     dispatch(resetTag());
-    dispatch(setSelectedRoom({ roomname: "", roomId: "" }));
+    dispatch(resetSelectedRoom());
     dispatch(resetSelectedCategory());
     navigate("/write");
   };

@@ -36,7 +36,7 @@ const SelectRoomModal = () => {
 
   const handleSelectedRoom = (room) => {
     dispatch(
-      setSelectedRoom({ roomId: room.roomId, roomname: room.roomTitle })
+      setSelectedRoom({ roomTitle: room.roomTitle, roomId: room.roomId })
     );
     dispatch(resetSelectedCategory());
     dispatch(setCurrentModal("Category"));

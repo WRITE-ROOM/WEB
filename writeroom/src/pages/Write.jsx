@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as W from "./Write.style";
 import * as D from "../components/Header/Dropdown.style";
-import { FiInfo, FiTrash, FiImage } from "react-icons/fi";
+import { FiTrash, FiImage } from "react-icons/fi";
 
 import Editor from "../components/Write/Editor/Editor";
 import SpellCheck from "../components/Write/SpellCheck/SpellCheck";
@@ -10,39 +10,44 @@ import SelectRoomModal from "../components/Write/WriteSelectModal/SelectRoomModa
 import SelectCategoryModal from "../components/Write/WriteSelectModal/SelectCategoryModal/SelectCategoryModal";
 import ChallengeAchieved from "../components/Write/ChallengeAchieved/ChallengeAchieved";
 import Template from "../components/Write/Template/Template";
+import Counter from "../components/Write/Counter/Counter";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentModal } from "../redux/selectModal";
+import {
+  setCurrentModal,
+  setSelectedCategory,
+  setSelectedRoom,
+} from "../redux/selectModal";
 import { resetRoom, setRoom } from "../redux/room";
 import { setCategory } from "../redux/category";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import axios from "axios";
+
 const Write = () => {
-  // 수정 데이터 다 받아와야하는데 noteSubTitle 때문에 부제목이 안옴, 태그도 안옴
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const note = useSelector((state) => state.note);
-
   const tags = useSelector((state) => state.tag);
 
   const [title, setTitle] = useState(note.noteTitle);
   const [subtitle, setSubtitle] = useState(note.noteSubTitle);
 
-  const [showTemplate, setShowTemplate] = useState(false);
   const [content, setContent] = useState(note.noteContent);
-  const [showCountDetail, setShowCountDetail] = useState(false);
   const [image, setImage] = useState(note.noteImg);
-  // const [noteId, setNoteId] = useState(null);
+
+  const [count, setCount] = useState(0);
 
   // 룸, 카테고리 선택
   const currentModal = useSelector((state) => state.selectModal.currentModal);
   const selectedRoom = useSelector((state) => state.selectModal.selectedRoom);
+  console.log(selectedRoom);
   const selectedCategory = useSelector(
     (state) => state.selectModal.selectedCategory
   );
 
+  // 글쓰기 모드 : 새 노트 / 수정
   const mode = useSelector((state) => state.writeMode.mode);
 
   // 챌린지 팝업
@@ -56,72 +61,11 @@ const Write = () => {
     setSubtitle(event.target.value);
   };
 
-  // const handleTemplateMenu = () => {
-  //   setShowTemplate(!showTemplate);
-  // };
-
   const handleCurrentModal = () => {
     currentModal
       ? dispatch(setCurrentModal(null))
       : dispatch(setCurrentModal("Room"));
   };
-
-  // const TemplateO1 = () => {
-  //   const oreo = `
-  //   <h1>Opinion</h1>
-  //   <p>글에서 주장하고자 하는 의견을 작성하시오</p>
-  //   `.trim();
-
-  //   setContent(content + oreo);
-  // };
-
-  // const TemplateR = () => {
-  //   const oreo = `
-  //   <h1>Reason</h1>
-  //   <p>주장한 의견에 대하여 이유와 근거를 작성하시오</p>
-  //   `.trim();
-
-  //   setContent(content + oreo);
-  // };
-
-  // const TemplateE = () => {
-  //   const oreo = `
-  //   <h1>Example</h1>
-  //   <p>독자들이 글을 쉽게 이해할 수 있도록 사례를 들어 설명하시오</p>
-  //   `.trim();
-
-  //   setContent(content + oreo);
-  // };
-
-  // const TemplateO2 = () => {
-  //   const oreo = `
-  //   <h1>Opinion</h1>
-  //   <p>글 내용에 가장 중요한 내용을 요약하여 주장하고자 한 의견을 강조하고 제안하시오
-  //   </p>
-  //   `.trim();
-
-  //   setContent(content + oreo);
-  // };
-
-  const stripHtmlTags = (html) => {
-    const doc = new DOMParser().parseFromString(html, "text/html");
-    const textContent = doc.body.textContent || "";
-
-    // 줄바꿈
-    // const doc = html.replace(/<\/[^>]+>/g, "\n");
-    // const text = new DOMParser().parseFromString(doc, "text/html");
-    // const textContent = text.body.textContent || "";
-
-    return textContent;
-  };
-
-  const stripHtmlTagsNoSpace = (html) => {
-    const doc = new DOMParser().parseFromString(html, "text/html");
-    return doc.body.textContent.replace(/\s/g, "") || "";
-  };
-
-  const characterCount = stripHtmlTags(content).length;
-  const characterCountNoSpace = stripHtmlTagsNoSpace(content).length;
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -162,6 +106,12 @@ const Write = () => {
         dispatch(
           setRoom({ roomId, roomTitle, updatedAt, roomImg, userRoomList })
         );
+
+        // selectedRoom.roomId 가 왜 string? == 로 해야 먹힘
+        // 맨처음에 useParams로 받아서 그럼 -> setting으로 넘겨줄 때 parseInt 해줬음
+        if (roomId === selectedRoom.roomId) {
+          dispatch(setSelectedRoom({ roomTitle, roomId }));
+        }
       });
 
       console.log("룸 목록", rooms);
@@ -171,6 +121,7 @@ const Write = () => {
   };
 
   const roomId = useSelector((state) => state.selectModal.selectedRoom.roomId);
+
   const fetchCategoryList = async () => {
     try {
       const res = await axios.get(`/categorys/category/${roomId}`, {
@@ -182,7 +133,25 @@ const Write = () => {
       // 해당 룸의 카테고리 리스트로 category redux 설정
       dispatch(setCategory(res.data.result.categoryList));
 
-      console.log(res.data.result.categoryList);
+      const categoryList = res.data.result.categoryList;
+      console.log(categoryList);
+
+      categoryList.forEach((category) => {
+        console.log("cate", category.categoryId, category.categoryName);
+        console.log("selected Category", selectedCategory);
+
+        // !! 룸 노트 목록 조회에서는 categoryId나 categoryName을 안 줘서 못 불러옴
+        // !! 카테고리 수정은 불가능??
+        if (category.categoryName === selectedCategory.categoryName) {
+          dispatch(
+            setSelectedCategory({
+              categoryName: selectedCategory.categoryName,
+              categoryId: category.categoryId,
+            })
+          );
+          console.log("selected Category2", selectedCategory);
+        }
+      });
     } catch (error) {
       console.log(error);
     }
@@ -195,14 +164,14 @@ const Write = () => {
     noteTitle: title,
     noteSubTitle: subtitle,
     noteContent: content,
-    letterCount: characterCount,
+    letterCount: count,
     noteTagList: tags.map((tag) => tag.tagName),
     categoryId: selectedCategory.categoryId,
   };
 
   formData.append("request", JSON.stringify(requestData));
   if (image) {
-    formData.append("noteImg", image, image.name);
+    formData.append("noteCoverImg", image, image.name);
   }
 
   const postNote = async () => {
@@ -215,8 +184,6 @@ const Write = () => {
       });
       console.log(res.data);
       console.log("formData", formData.get("request"));
-
-      // setNoteId(res.data.result.noteId);
     } catch (error) {
       console.log(error);
     }
@@ -246,7 +213,6 @@ const Write = () => {
     };
 
     fetchData();
-    // fetchRoomList();
   }, [roomId, accessToken]);
 
   const saveNote = () => {
@@ -268,72 +234,12 @@ const Write = () => {
         <W.Left>
           {/* 템플릿 */}
           <Template content={content} setContent={setContent} />
-          {/* <W.Template>
-            <W.StyledButton
-              $border="1px solid #e5e5e5"
-              onClick={handleTemplateMenu}
-            >
-              템플릿
-            </W.StyledButton>
-
-            {showTemplate && (
-              <D.DropdownContainer
-                $width="100%"
-                $padding="12px"
-                $top="40px"
-                listWidth="88px"
-              >
-                <D.DropdownTitle>
-                  OREO 템플릿
-                  <FiInfo color="#939393" />
-                </D.DropdownTitle>
-
-                <ul>
-                  <li onClick={TemplateO1}>
-                    <p>O</p>
-                  </li>
-                  <li onClick={TemplateR}>
-                    <p>R</p>
-                  </li>
-                  <li onClick={TemplateE}>
-                    <p>E</p>
-                  </li>
-                  <li onClick={TemplateO2}>
-                    <p>O</p>
-                  </li>
-                </ul>
-              </D.DropdownContainer>
-            )}
-          </W.Template> */}
 
           {/* 맞춤법 검사 */}
-          <SpellCheck content={stripHtmlTags(content)} />
+          <SpellCheck content={content} />
 
           {/* 글자수 */}
-          <W.Counter>
-            <p
-              onMouseEnter={() => {
-                setShowCountDetail(true);
-              }}
-              onMouseOut={() => {
-                setShowCountDetail(false);
-              }}
-            >
-              {characterCount}자
-              {showCountDetail && (
-                <D.SimpleContainer $width="150px" $height="80px" $top="30px">
-                  <W.CounterDetail>
-                    <p>
-                      공백 포함 <span>{characterCount}자</span>
-                    </p>
-                    <p>
-                      공백 미포함 <span>{characterCountNoSpace}자</span>
-                    </p>
-                  </W.CounterDetail>
-                </D.SimpleContainer>
-              )}
-            </p>
-          </W.Counter>
+          <Counter content={content} count={count} setCount={setCount} />
         </W.Left>
 
         {/* 룸 */}
@@ -343,8 +249,8 @@ const Write = () => {
             $border="1px solid #e5e5e5"
             onClick={handleCurrentModal}
           >
-            {selectedRoom.roomname
-              ? selectedRoom.roomname
+            {selectedRoom.roomTitle
+              ? selectedRoom.roomTitle
               : "룸을 선택해주세요"}
             <span>
               {selectedCategory.categoryName

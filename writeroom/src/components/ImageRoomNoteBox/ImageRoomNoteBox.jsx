@@ -20,7 +20,7 @@ const ImageRoomNoteBox = ({ note, roomId }) => {
     noteSubtitle,
     noteContent,
     writer,
-    noteImg,
+    noteCoverImg,
     createdAt,
     tagList,
     userProfileImg,
@@ -35,7 +35,7 @@ const ImageRoomNoteBox = ({ note, roomId }) => {
 
   const [maxLength, setMaxLength] = useState(100);
 
-  if (noteImg) {
+  if (noteCoverImg) {
     setMaxLength(50);
   }
 
@@ -80,7 +80,7 @@ const ImageRoomNoteBox = ({ note, roomId }) => {
 
           <S.Right>
             <Bookmark />
-            <Setting type="dots" note={note} roomId={roomId} />
+            <Setting type="dots" note={note} roomId={parseInt(roomId)} />
           </S.Right>
         </S.Top>
 
@@ -95,7 +95,7 @@ const ImageRoomNoteBox = ({ note, roomId }) => {
         </S.TextBox>
       </S.ContentsBox>
 
-      {noteImg && <S.NoteImg src={noteImg}></S.NoteImg>}
+      {noteCoverImg && <S.NoteImg src={noteCoverImg}></S.NoteImg>}
     </S.Container>
   );
 };
