@@ -27,7 +27,7 @@ export default function AccountPw() {
         })
         console.log(res.data)
       } catch(error) {
-        if (error.response.code === "USER4003")
+        if (error.response.data.code === "USER4003")
           setIsPwMatch(false);
         console.log(error)
       }

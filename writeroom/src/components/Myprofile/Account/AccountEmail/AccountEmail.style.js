@@ -61,7 +61,7 @@ export const CurrentEmail = styled.div`
     h6 {
         font-family: Pretendard;
         font-size: 16px;
-        font-weight: 300;
+        font-weight: 400;
         color: red;
         margin: 5px 0 20px 0;
     }
