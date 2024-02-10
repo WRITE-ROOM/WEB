@@ -1,18 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as W from "./Write.style";
 import * as D from "../components/Header/Dropdown.style";
 import { FiInfo, FiTrash, FiImage } from "react-icons/fi";
 
-import Editor from "../components/Editor/Editor";
-import SpellCheck from "../components/SpellCheck/SpellCheck";
-import WriteFooter from "../components/WriteFooter/WriteFooter";
-import SelectRoomModal from "../components/WriteSelectModal/SelectRoomModal/SelectRoomModal";
-import SelectCategoryModal from "../components/WriteSelectModal/SelectCategoryModal/SelectCategoryModal";
-import ChallengeAchieved from "../components/ChallengeAchieved/ChallengeAchieved";
+import Editor from "../components/Write/Editor/Editor";
+import SpellCheck from "../components/Write/SpellCheck/SpellCheck";
+import WriteFooter from "../components/Write/WriteFooter/WriteFooter";
+import SelectRoomModal from "../components/Write/WriteSelectModal/SelectRoomModal/SelectRoomModal";
+import SelectCategoryModal from "../components/Write/WriteSelectModal/SelectCategoryModal/SelectCategoryModal";
+import ChallengeAchieved from "../components/Write/ChallengeAchieved/ChallengeAchieved";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentModal } from "../redux/selectModal";
-import { addNote } from "../redux/note";
+import { addNote, resetNote } from "../redux/note";
+import { resetRoom, setRoom } from "../redux/room";
+import { resetTag } from "../redux/tag";
+import { setCategory, createCategory } from "../redux/category";
+import axios from "axios";
 
 const Write = () => {
   const dispatch = useDispatch();
@@ -127,21 +131,80 @@ const Write = () => {
     setImage(null);
   };
 
+  const accessToken = localStorage.getItem("token");
+  const fetchRoomList = async () => {
+    try {
+      const params = { page: 0 };
+      const res = await axios.get("/rooms/myRoomList", {
+        params,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      dispatch(resetRoom());
+      const rooms = res.data.result;
+
+      rooms.forEach((roomData) => {
+        const { roomId, roomTitle, updatedAt, roomImg, userRoomList } =
+          roomData;
+        dispatch(
+          setRoom({ roomId, roomTitle, updatedAt, roomImg, userRoomList })
+        );
+      });
+
+      console.log("룸 목록", rooms);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const roomId = useSelector((state) => state.selectModal.selectedRoom.roomId);
+  const fetchCategoryList = async () => {
+    try {
+      const res = await axios.get(`/categorys/category/${roomId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      // 해당 룸의 카테고리 리스트로 category redux 설정
+      dispatch(setCategory(res.data.result.categoryList));
+
+      console.log(res.data.result.categoryList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    // dispatch(resetNote());
+    dispatch(resetTag());
+    fetchRoomList();
+    if (roomId) {
+      fetchCategoryList();
+    }
+  }, [roomId, accessToken]);
+
   const tags = useSelector((state) => state.tag);
+
   const saveNote = () => {
     dispatch(
       addNote({
-        title: title,
-        subtitle: subtitle,
-        noteId: 1,
-        coverImg: image,
-        content: content,
-        achieve: true,
+        noteTitle: title,
+        noteSubtitle: subtitle,
+        noteId: "1",
+        noteImg: image,
+        noteContent: content,
+        writer: "제리",
+        achieve: false,
         tags: tags,
-        createAt: "",
+        createdAt: "2024.02.05",
         updatedAt: "",
       })
     );
+
+    setChallengeAchieved(true);
   };
 
   return (
@@ -227,8 +290,11 @@ const Write = () => {
             {selectedRoom.roomname
               ? selectedRoom.roomname
               : "룸을 선택해주세요"}
-
-            <span>{selectedCategory ? ` - ` + selectedCategory : ""}</span>
+            <span>
+              {selectedCategory.categoryName
+                ? ` - ` + selectedCategory.categoryName
+                : ""}
+            </span>
           </W.StyledButton>
 
           {currentModal === "Room" && <SelectRoomModal />}
@@ -301,7 +367,7 @@ const Write = () => {
       {/* 글 작성 영역 */}
       <Editor content={content} setContent={setContent} />
 
-      <WriteFooter></WriteFooter>
+      <WriteFooter />
 
       {challengeAchieved && <ChallengeAchieved />}
     </W.Container>

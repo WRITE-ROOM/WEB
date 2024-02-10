@@ -12,11 +12,11 @@ import Emoji from "./Emoji";
 
 const EmojiContainer = () => {
   const initialEmojis = [
-    { index: 1, image: Emoji1, count: 2, added: false },
-    { index: 2, image: Emoji2, count: 1, added: false },
-    { index: 3, image: Emoji3, count: 4, added: false },
+    { index: 1, image: Emoji1, count: 0, added: false },
+    { index: 2, image: Emoji2, count: 0, added: false },
+    { index: 3, image: Emoji3, count: 0, added: false },
     { index: 4, image: Emoji4, count: 0, added: false },
-    { index: 5, image: Emoji5, count: 3, added: false },
+    { index: 5, image: Emoji5, count: 0, added: false },
     { index: 6, image: Emoji6, count: 0, added: false },
   ];
   const [emojis, setEmojis] = useState(initialEmojis);

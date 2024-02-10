@@ -8,7 +8,7 @@ export const App = styled.div`
 	// justify-content: center;
 
 	h1 {
-		margin-left: 30px;
+		margin-left: 30px;  
 		font-family: Pretendard;
 		font-size: 24px;
 		font-weight: 200;
@@ -30,7 +30,7 @@ export const Container = styled.div`
 `
 export const Room = styled.div`
 	width: 290px;
-	height: 252px;
+	height: 259px;
 	border: 1px black solid;
 	border-radius: 10px;
 	margin: 24px;

@@ -3,21 +3,34 @@ import { createSlice } from "@reduxjs/toolkit";
 export const user = createSlice({
   name: 'user',
 	initialState: {
-		userId : '', userName : '', userEmail: '', userPw : '',
+		userId : '', userName : '', userEmail: '', userPw : '', accessToken: '',
 		joinType: '', profileImg: '', createdAt: '', updatedAt: ''
 	},
 	reducers : {
-		setUser(state, action) {
-			// const { userEmail, userName, userPw, joinType} = action.payload;
-			// state.userName = userName;
-			// state.userEmail = userEmail;
-			// state.userPw = userPw;
-			// state.joinType = joinType;
-			const userData = action.payload;
-			return { ...state, ...userData };
+		setUser(state, action) { // 로그인
+			const { userName, userEmail, userPw} = action.payload;
+			state.userName = userName;
+			state.userEmail = userEmail;
+			state.userPw = userPw;
+		},
+		setLogin(state, action) {
+			const {userId, accessToken} = action.payload;
+			state.userId = userId;
+			state.accessToken = accessToken;
+		},
+		setAccount(state, action) { // 계정설정
+			const { userId, userName, profileImg, userEmail} = action.payload;
+			state.userId = userId;
+			state.userName = userName;
+			state.profileImg = profileImg;
+			state.userEmail = userEmail;
+		},
+		setUserEmail(state, action) {
+			const {userEmail} = action.payload;
+			state.userEmail = userEmail;
 		},
 	}
 })
 
-export const {setUser} = user.actions;
+export const {setUser, setLogin, setAccount, setUserEmail} = user.actions;
 export default user.reducer

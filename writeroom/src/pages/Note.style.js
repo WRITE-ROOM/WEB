@@ -28,7 +28,7 @@ export const CoverImage = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  background-image: url(https://media.istockphoto.com/id/1431937796/vector/multicolor-of-stain-splash-watercolor-background.jpg?s=612x612&w=0&k=20&c=TP7AHbr-XISL22Z2oUIIW9dpzhH8v-dvR6d41RBPCF0=);
+  background-image: url(${(props) => props.img});
 
   position: absolute;
   z-index: -1;
@@ -136,6 +136,10 @@ export const Content = styled.div`
   height: 400px;
   color: black;
   padding: 24px;
+
+  ol {
+    padding-left: 24px;
+  }
 `;
 
 export const StyledHr = styled.hr`
