@@ -5,12 +5,15 @@ import MyprofileSNB from '../../MyprofileSNB/MyprofileSNB';
 import { useNavigate } from 'react-router-dom';
 import EmailModal from './EmailModal/EmailModal';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 export default function AccountEmail() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newEmail, setNewEmail] = useState('');
   const user = useSelector((state) => state.user);
   const userEmail = user.userEmail;
+  const receivedToken = localStorage.getItem('token')
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -19,6 +22,22 @@ export default function AccountEmail() {
     setIsModalOpen(false);
   };
   let navigate = useNavigate();
+
+  const patchEmail = async() => {
+    openModal();
+    try {
+      const res = await axios.patch(`/users/email`, {email: newEmail}, 
+      {
+        headers: {
+          'Authorization': `Bearer ${receivedToken}`,
+        }
+      });
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <S.Container>
 			<MyprofileSNB/>
@@ -33,9 +52,9 @@ export default function AccountEmail() {
 					</R.CurrentEmail>
 					<R.NewEmail>
 						<h2>새 이메일 주소</h2>
-						<input placeholder='새 이메일을 입력하세요.'></input>
-						{/* <p>인증 메일 발송 후 인증 메일의 링크를 클릭하면 인증 후 이메일 주소를 변경할 수 있어요!</p> */}
-            <button onClick={openModal}>인증 메일 보내기</button>
+						<input placeholder='새 이메일을 입력하세요.'
+            onChange={(e) => setNewEmail(e.target.value)}></input>
+            <button onClick={patchEmail}>이메일 변경하기</button>
           </R.NewEmail>
 				</S.Info>
         <EmailModal isOpen={isModalOpen} onClose={closeModal}/>
