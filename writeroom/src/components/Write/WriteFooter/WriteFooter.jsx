@@ -14,7 +14,6 @@ const WriteFooter = () => {
 
   // tag 데이터
   const tagList = useSelector((state) => state.tag);
-  console.log("tagList in footer", tagList);
 
   const handleTagInput = (e) => {
     setNewTag(e.target.value);

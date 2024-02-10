@@ -113,7 +113,7 @@ const Note = () => {
 
       <N.StyledHr color="#E5E5E5" />
 
-      <EmojiContainer />
+      <EmojiContainer noteId={noteId} />
       <NewNoteButton />
     </N.Container>
   );

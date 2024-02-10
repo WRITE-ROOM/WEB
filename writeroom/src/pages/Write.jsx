@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import * as W from "./Write.style";
-import * as D from "../components/Header/Dropdown.style";
 import { FiTrash, FiImage } from "react-icons/fi";
 
 import Editor from "../components/Write/Editor/Editor";
@@ -35,14 +34,15 @@ const Write = () => {
   const [subtitle, setSubtitle] = useState(note.noteSubTitle);
 
   const [content, setContent] = useState(note.noteContent);
-  const [image, setImage] = useState(note.noteImg);
-
+  const [image, setImage] = useState(note.noteCoverImg);
+  const [imageName, setImageName] = useState(null);
+  const [imageChanged, setImageChanged] = useState(false);
   const [count, setCount] = useState(0);
 
   // 룸, 카테고리 선택
   const currentModal = useSelector((state) => state.selectModal.currentModal);
   const selectedRoom = useSelector((state) => state.selectModal.selectedRoom);
-  console.log(selectedRoom);
+
   const selectedCategory = useSelector(
     (state) => state.selectModal.selectedCategory
   );
@@ -72,15 +72,18 @@ const Write = () => {
     const reader = new FileReader();
     reader.onloadend = () => {
       setImage(reader.result);
+      console.log(image);
     };
     if (file) {
       reader.readAsDataURL(file);
-      console.log(file.name);
+      setImageName(file.name);
     }
+    setImageChanged(true);
   };
 
   const handleDeleteImage = () => {
     setImage(null);
+    setImageName(null);
   };
 
   // const accessToken = localStorage.getItem("token");
@@ -137,9 +140,6 @@ const Write = () => {
       console.log(categoryList);
 
       categoryList.forEach((category) => {
-        console.log("cate", category.categoryId, category.categoryName);
-        console.log("selected Category", selectedCategory);
-
         // !! 룸 노트 목록 조회에서는 categoryId나 categoryName을 안 줘서 못 불러옴
         // !! 카테고리 수정은 불가능??
         if (category.categoryName === selectedCategory.categoryName) {
@@ -149,7 +149,6 @@ const Write = () => {
               categoryId: category.categoryId,
             })
           );
-          console.log("selected Category2", selectedCategory);
         }
       });
     } catch (error) {
@@ -157,24 +156,42 @@ const Write = () => {
     }
   };
 
-  const formData = new FormData();
+  // const formData = new FormData();
 
-  // 보낼 데이터
-  const requestData = {
-    noteTitle: title,
-    noteSubTitle: subtitle,
-    noteContent: content,
-    letterCount: count,
-    noteTagList: tags.map((tag) => tag.tagName),
-    categoryId: selectedCategory.categoryId,
-  };
+  // // 보낼 데이터
+  // const requestData = {
+  //   noteTitle: title,
+  //   noteSubTitle: subtitle,
+  //   noteContent: content,
+  //   letterCount: count,
+  //   noteTagList: tags.map((tag) => tag.tagName),
+  //   categoryId: selectedCategory.categoryId,
+  // };
 
-  formData.append("request", JSON.stringify(requestData));
-  if (image) {
-    formData.append("noteCoverImg", image, image.name);
-  }
+  // formData.append("request", JSON.stringify(requestData));
 
   const postNote = async () => {
+    const formData = new FormData();
+    if (image) {
+      const decodedImage = await decodeImage(image);
+      const imageExtension = imageName.split(".").pop();
+      const blobImage = new Blob([decodedImage], {
+        type: `image/${imageExtension}`,
+      });
+      formData.append("noteImg", blobImage, imageName);
+    } else {
+      formData.append("noteImg", "null");
+    }
+    const requestData = {
+      noteTitle: title,
+      noteSubTitle: subtitle,
+      noteContent: content,
+      letterCount: count,
+      noteTagList: tags.map((tag) => tag.tagName),
+      categoryId: selectedCategory.categoryId,
+    };
+    formData.append("request", JSON.stringify(requestData));
+
     try {
       const res = await axios.post(`/rooms/${roomId}/notes`, formData, {
         headers: {
@@ -182,14 +199,40 @@ const Write = () => {
           "Content-Type": "multipart/form-data",
         },
       });
+      navigate(`/rooms/${selectedRoom.roomId}`);
       console.log(res.data);
-      console.log("formData", formData.get("request"));
     } catch (error) {
       console.log(error);
     }
   };
 
   const putNote = async () => {
+    // formData.delete("noteImg");
+    const formData = new FormData();
+
+    if (image && imageChanged) {
+      const decodedImage = await decodeImage(image);
+      const imageExtension = imageName.split(".").pop();
+      const blobImage = new Blob([decodedImage], {
+        type: `image/${imageExtension}`,
+      });
+      formData.append("noteImg", blobImage, imageName);
+    } else {
+      console.log("no noteImg");
+      formData.append("noteImg", "null");
+    }
+
+    const requestData = {
+      noteTitle: title,
+      noteSubTitle: subtitle,
+      noteContent: content,
+      letterCount: count,
+      noteTagList: tags.map((tag) => tag.tagName),
+      categoryId: selectedCategory.categoryId,
+    };
+
+    formData.append("request", JSON.stringify(requestData));
+
     try {
       const res = await axios.put(`/notes/${note.noteId}`, formData, {
         headers: {
@@ -197,14 +240,20 @@ const Write = () => {
           "Content-Type": "multipart/form-data",
         },
       });
+      navigate(`/rooms/${selectedRoom.roomId}/notes/${note.noteId}`);
+
       console.log(res.data);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const decodeImage = async (base64Image) => {
+    const blobImage = await fetch(base64Image).then((res) => res.blob());
+    return blobImage;
+  };
+
   useEffect(() => {
-    // dispatch(resetNote());
     const fetchData = async () => {
       await fetchRoomList();
       if (roomId) {
@@ -218,14 +267,10 @@ const Write = () => {
   const saveNote = () => {
     postNote();
     // setChallengeAchieved(true);
-    navigate(`/rooms/${selectedRoom.roomId}`);
-    window.location.reload();
   };
 
   const updateNote = () => {
     putNote();
-    navigate(`/rooms/${selectedRoom.roomId}/notes/${note.noteId}`);
-    window.location.reload();
   };
 
   return (

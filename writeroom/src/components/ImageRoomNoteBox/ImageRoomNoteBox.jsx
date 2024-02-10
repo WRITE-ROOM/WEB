@@ -2,7 +2,7 @@ import * as S from "./ImageRoomNoteBox.style";
 import Bookmark from "../Bookmark/Bookmark";
 import { HiMiniUserCircle } from "react-icons/hi2";
 import { BiDotsVerticalRounded } from "react-icons/bi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RoomModal from "../RoomModal/RoomModal";
 import Setting from "../Setting/Setting";
 import { TagContainer, Tag } from "../../pages/Note.style";
@@ -20,7 +20,7 @@ const ImageRoomNoteBox = ({ note, roomId }) => {
     noteSubtitle,
     noteContent,
     writer,
-    noteCoverImg,
+    noteImg,
     createdAt,
     tagList,
     userProfileImg,
@@ -35,9 +35,9 @@ const ImageRoomNoteBox = ({ note, roomId }) => {
 
   const [maxLength, setMaxLength] = useState(100);
 
-  if (noteCoverImg) {
-    setMaxLength(50);
-  }
+  // if (noteImg) {
+  //   setMaxLength(50);
+  // }
 
   const handleSelectNote = () => {
     navigate(`/rooms/${roomId}/notes/${noteId}`);
@@ -49,6 +49,8 @@ const ImageRoomNoteBox = ({ note, roomId }) => {
     const textContent = doc.body.textContent || "";
     return textContent;
   };
+
+  useEffect(() => {}, []);
   return (
     <S.Container onClick={() => handleSelectNote()}>
       <S.ContentsBox>
@@ -95,7 +97,7 @@ const ImageRoomNoteBox = ({ note, roomId }) => {
         </S.TextBox>
       </S.ContentsBox>
 
-      {noteCoverImg && <S.NoteImg src={noteCoverImg}></S.NoteImg>}
+      {noteImg && <S.NoteImg src={noteImg}></S.NoteImg>}
     </S.Container>
   );
 };
