@@ -8,6 +8,7 @@ export const App = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -15,7 +16,15 @@ export const Container = styled.div`
   width: 394px;
   height: 606.62px;
 
-  // background-color: pink;
+  h5 { 
+    margin-top:  20px;
+    font-family: Pretendard;
+    font-size: 12px;
+    font-weight: 300;
+    text-decoration: underline;
+    color: rgba(147, 147, 147, 1);
+    cursor: pointer;
+  }
 `;
 export const Title = styled.div`
   width: 104px;
