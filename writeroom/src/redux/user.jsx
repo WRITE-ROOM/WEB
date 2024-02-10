@@ -24,9 +24,13 @@ export const user = createSlice({
 			state.userName = userName;
 			state.profileImg = profileImg;
 			state.userEmail = userEmail;
-		}
+		},
+		setUserEmail(state, action) {
+			const {userEmail} = action.payload;
+			state.userEmail = userEmail;
+		},
 	}
 })
 
-export const {setUser, setLogin, setAccount} = user.actions;
+export const {setUser, setLogin, setAccount, setUserEmail} = user.actions;
 export default user.reducer

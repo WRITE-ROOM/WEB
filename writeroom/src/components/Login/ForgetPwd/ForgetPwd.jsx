@@ -1,18 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as S from './ForgetPwd.style'
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserEmail } from '../../../redux/user';
 
 export default function ForgetPwd() {
   const [email, setEmail] = useState('');
   const [isExisted, setIsExisted] = useState(true);
+  const user = useSelector((state) => state.user);
+  const userEmail = user.userEmail;
   const receivedToken = localStorage.getItem('token');
 
+  let dispatch = useDispatch();
+
   const postResetMail = async() => {
+    console.log(email)
+    dispatch(setUserEmail({ email: email }));
+    console.log(userEmail)
     try {
       const res = await axios.post(`/auth/sendResetPwdEmail`, {email: email}, {
         headers: {
           'Authorization': `Bearer ${receivedToken}`
-          },
+          }
       })
       if (res.data.code === "COMMON200")
         setIsExisted(true);
@@ -21,7 +30,12 @@ export default function ForgetPwd() {
         setIsExisted(false);
       console.log(error)
     }
+    console.log(isExisted)
+    console.log('post 후: ', userEmail)
   }
+  useEffect(() => {
+    console.log('useEffect: ', userEmail); // 이제 userEmail은 업데이트 된 값이 됨
+  }, [userEmail]);
   return (
     <S.App>
       <S.Container>
