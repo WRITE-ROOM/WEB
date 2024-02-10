@@ -38,5 +38,4 @@ const SearchResult = ({ text }) => {
   );
 };
 
-
 export default SearchResult;

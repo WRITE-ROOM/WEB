@@ -9,6 +9,8 @@ import RoomMember from "./pages/RoomMember.jsx";
 import Header from "./components/Header/Header.jsx";
 import Write from "./pages/Write.jsx";
 import Note from "./pages/Note.jsx";
+import RoomChallenge from "./pages/RoomChallenge.jsx";
+import RoomCategory from "./pages/RoomCategory.jsx";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path="/room" element={<RoomPage />} />
         <Route path="/room/setting" element={<RoomSetting />} />
         <Route path="/room/member" element={<RoomMember />} />
+        <Route path="/room/challenge" element={<RoomChallenge />} />
+        <Route path="/room/category" element={<RoomCategory />} />
         <Route path="/write" element={<Write />} />
         <Route path="/note" element={<Note />} />
         <Route path="/signup" element={<Signup />} />
