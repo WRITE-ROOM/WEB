@@ -2,7 +2,14 @@ import * as S from "./RoomModalSec.style";
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
 
-const RoomModalSec = ({ title1, title2, description, button1, button2 }) => {
+const RoomModalSec = ({
+  title1,
+  title2,
+  description,
+  description2,
+  button1,
+  button2,
+}) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const handleCloseModal = () => {
@@ -20,6 +27,7 @@ const RoomModalSec = ({ title1, title2, description, button1, button2 }) => {
             <h1>{title1}</h1>
             <h1>{title2}</h1>
             <p>{description}</p>
+            <p>{description2}</p>
             <S.ButtonWrapper>
               <S.FirstButton>{button1}</S.FirstButton>
               <S.SecondButton>{button2}</S.SecondButton>
