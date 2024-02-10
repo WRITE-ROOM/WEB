@@ -14,6 +14,8 @@ import MyprofileAccount from './pages/MyprofileAccount.jsx'
 import MyProfile from "./pages/Myprofile.jsx"
 import MyprofilePw from "./pages/MyprofilePw.jsx";
 import MyBookmarkPage from "./pages/MyBookmarkPage.jsx";
+import ResetPwdPage from "./pages/ResetPwdPage.jsx";
+import MyprofileNone from "./pages/MyprofileNone.jsx";
 
 function App() {
   return (
@@ -30,6 +32,9 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgetPwd" element={<ForgetPwdPage />} />
+        {/* reset/pw/currentEmail : 로그인 시 비밀번호 재설정
+        reset/pw/newEmail : 본인이 아닌 경우 비밀번호 재설정  */}
+        <Route path="/reset/pw/:status" element={<ResetPwdPage />} /> 
         <Route path="/oauth" element={<Redirect />} />
         <Route path="/main" element={<Main />} />
 
@@ -37,7 +42,7 @@ function App() {
         <Route path="/myprofile/account/email" element={<MyprofileAccount/>} />
         <Route path="/myprofile/account/pw" element={<MyprofilePw/>} />
         <Route path="/myprofile/bookmark" element={<MyBookmarkPage/>} />
-        {/* <Route path="/myprofile/none" component={NonePage} /> */}
+        <Route path="/myprofile/none" element={<MyprofileNone/>} />
       </Routes>
     </div>
   );
