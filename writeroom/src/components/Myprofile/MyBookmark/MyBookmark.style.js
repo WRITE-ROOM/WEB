@@ -91,17 +91,12 @@ export const PagenationBox = styled.div`
 	}
 
 	ul.pagination li.active a {
-		color: white;
+		color: rgba(181, 169, 148, 1);
 	}
 
-	ul.pagination li.active {
-		background-color: #337ab7;
-	}
-
-	ul.pagination li a:hover,
-	ul.pagination li a.active {
-		color: blue;
-	}
+	ul.pagination li a:hover {
+		color: rgba(181, 169, 148, 1);
+	},
 
 	.page-selection {
 		width: 48px;
