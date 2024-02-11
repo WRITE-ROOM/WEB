@@ -12,6 +12,7 @@ export const SNB = styled.div`
     // flex-direction: column;    
     box-shadow: 3px 0px 4px 0px rgba(0, 0, 0, 0.07);
     // background: red;
+    z-index: 99;
 `
 
 export const Box = styled.div`

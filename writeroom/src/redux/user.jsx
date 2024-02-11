@@ -7,7 +7,7 @@ export const user = createSlice({
 		joinType: '', profileImg: '', createdAt: '', updatedAt: ''
 	},
 	reducers : {
-		setUser(state, action) {
+		setUser(state, action) { // 로그인
 			const { userName, userEmail, userPw} = action.payload;
 			state.userName = userName;
 			state.userEmail = userEmail;
@@ -17,9 +17,20 @@ export const user = createSlice({
 			const {userId, accessToken} = action.payload;
 			state.userId = userId;
 			state.accessToken = accessToken;
-		}
+		},
+		setAccount(state, action) { // 계정설정
+			const { userId, userName, profileImg, userEmail} = action.payload;
+			state.userId = userId;
+			state.userName = userName;
+			state.profileImg = profileImg;
+			state.userEmail = userEmail;
+		},
+		setUserEmail(state, action) {
+			const {userEmail} = action.payload;
+			state.userEmail = userEmail;
+		},
 	}
 })
 
-export const {setUser, setLogin} = user.actions;
+export const {setUser, setLogin, setAccount, setUserEmail} = user.actions;
 export default user.reducer

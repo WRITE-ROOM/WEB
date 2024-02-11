@@ -35,7 +35,6 @@ export const CurrentEmail = styled.div`
         letter-spacing: 0em;
         text-align: left;
     }
-
     p {
         font-family: Pretendard;
         font-size: 20px;
@@ -58,6 +57,13 @@ export const CurrentEmail = styled.div`
         font-family: Pretendard;
         font-size: 20px;
         font-weight: 300;       
+    }
+    h6 {
+        font-family: Pretendard;
+        font-size: 16px;
+        font-weight: 400;
+        color: red;
+        margin: 5px 0 20px 0;
     }
 
 `

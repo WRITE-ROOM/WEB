@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import * as S from "./NewRoomModal.style";
 import * as R from "./NewRoomImg/NewRoomImg.style";
 import { FiCopy } from "react-icons/fi";
-import NewRoomImg from "./NewRoomImg/NewRoomImg";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -14,11 +13,9 @@ export default function NewRoomModal({ isOpen, onClose }) {
   const [image, setImage] = useState(null);
   const [imageName, setImageName] = useState(null);
   const [roomName, setRoomName] = useState("제목 없음");
-  const user = useSelector((state) => state.user);
-  const userId = user.userId;
 
-  // const receivedToken = localStorage.getItem('token')
-  const receivedToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo"
+  const receivedToken = localStorage.getItem('token')
+  // const receivedToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo"
   
   let navigate = useNavigate();
   const handleImageChange = (e) => {
@@ -32,6 +29,7 @@ export default function NewRoomModal({ isOpen, onClose }) {
       setImageName(file.name);
     }
   };
+
   const fetchRoomInfo = async () => {
     const formData = new FormData();
     if (image === null) {
@@ -45,10 +43,7 @@ export default function NewRoomModal({ isOpen, onClose }) {
       formData.append("roomImg", blobImage, imageName);
     }
     formData.append('request', JSON.stringify({roomTitle: roomName}));
-    for (const pair of formData.entries()) {
-      console.log(pair[0], pair[1]);
-    }
-    try {;
+    try {
       const res = await axios.post(`/rooms/createRoom`, formData, { 
         headers: {
           'Authorization': `Bearer ${receivedToken}`,
@@ -59,6 +54,7 @@ export default function NewRoomModal({ isOpen, onClose }) {
       console.error(error);
     } 
   };
+
   const decodeImage = async (base64Image) => {
     const blobImage = await fetch(base64Image).then((res) => res.blob());
     return blobImage;
@@ -103,8 +99,6 @@ export default function NewRoomModal({ isOpen, onClose }) {
           <FiCopy color="white" />
           <p>룸 만들기</p>
         </S.MakeBtn>
-        <button onClick={() => {console.log(image)
-        console.log(imageName)}}>임시버튼</button>
       </S.Modal>
     </S.ModalBackground>
   );

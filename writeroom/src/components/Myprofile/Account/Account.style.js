@@ -64,7 +64,7 @@ export const ProfileBox = styled.div`
 `
 export const ProfileLeft = styled.div`
     width: 161px;
-    height: 200px;
+    height: 250px;
 
     p {
         font-family: Pretendard;
@@ -74,17 +74,28 @@ export const ProfileLeft = styled.div`
 `
 export const ProfileRight = styled.div`
     // width: 783px;
-    height: 200px;
+    height: 250px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    // justify-content: center;
     margin-left: 70px;
+    margin-top: 70px;
 
-    p {
+    h6 {
         margin: 10px 0;
         font-family: Pretendard;
         font-size: 20px;
         font-weight: 400;
+    }
+    h5 {
+        position: absolute;
+        top: 285px;
+        left: 1225px;
+        font-family: Pretendard;
+        font-size: 13px;
+        font-weight: 300;
+        color: rgba(147, 147, 147, 1);
+        text-decoration: underline;
     }
     input {
         padding-left: 10px;
@@ -114,6 +125,13 @@ export const ProfileRight = styled.div`
         font-size: 20px;
         font-weight: 400;
         cursor: pointer;
+    }
+    p {
+        width: 783px;
+        text-align: center;
+        font-family: Pretendard;
+        font-size: 12px;
+        color: rgba(181, 169, 148, 1);
     }
 `
 

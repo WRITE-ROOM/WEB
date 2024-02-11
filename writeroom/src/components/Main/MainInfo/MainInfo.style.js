@@ -39,7 +39,7 @@ export const RoomName = styled.p`
     font-weight: 700;
 `
 export const editTime = styled.p`
-    width: 70px;
+    width: 200px;
     height: 16px;
     display: flex;
     align-items: center;
