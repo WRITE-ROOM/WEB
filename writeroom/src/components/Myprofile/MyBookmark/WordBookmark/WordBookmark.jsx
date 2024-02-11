@@ -8,9 +8,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addBookmark, deleteBookmark, resetBookmark } from '../../../../redux/bookmark.jsx';
 
 export default function WordBookMark() {
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState();
   const [count, setCount] = useState();
+  const [tmpCount, setTmpCount] = useState();
   const [isBookmarked, setIsBookmarked] = useState([]); //isBookmarked
   const [bookmarkMaterialList, setBookmarkMaterialList] = useState([]); // 북마크한 단어 배열
   const bookmark = useSelector(state => state.bookmark);
@@ -19,7 +20,9 @@ export default function WordBookMark() {
   const receivedToken = localStorage.getItem('token')
 
   let dispatch = useDispatch();
-  
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
   const handleBookmarkChange = (index) => {
     setIsBookmarked(prevBookmarks => {
       const updatedBookmarks = [...prevBookmarks];
@@ -31,18 +34,18 @@ export default function WordBookMark() {
     const receivedToken = localStorage.getItem('token')
     try {
       const Page = page;
-      const res = await axios.get(`/bookmarks/topics?page=${1}`, { 
+      const res = await axios.get(`/bookmarks/topics?page=${page-1}`, { 
         headers: {
           'Authorization': `Bearer ${receivedToken}`
           },
         });
-      console.log(res.data)
       const data = res.data.result;
       dispatch(resetBookmark());
       setBookmarkMaterialList(data.bookmarkMaterialList);  
       setIsBookmarked(Array(data.bookmarkMaterialList.length).fill(true))
       setTotalPage(data.totalPage);
-      setCount(data.listSize);
+      console.log(data.listSize)
+      console.log(res.data)
     } catch (error) {
         console.error(error);
     }
@@ -61,8 +64,6 @@ export default function WordBookMark() {
         content: word
       }
       dispatch(addBookmark(newBookmark));
-      console.log(bookmark);
-      console.log(res.data); 
       window.alert('북마크에 추가했어요.');
     } catch (error) {
       console.log(error);
@@ -79,7 +80,6 @@ export default function WordBookMark() {
           'Authorization': `Bearer ${receivedToken}`,
         }
       });
-      console.log('delete 서버 res: ', res.data);
       const data = res.data.result;
       dispatch(deleteBookmark({bookmarkId : data.bookmarkId}));
       window.alert('북마크에서 해제했어요.');
@@ -101,6 +101,11 @@ export default function WordBookMark() {
   useEffect(() => {
     getWordBookmark();
   }, [page]) 
+
+  useEffect(() => {
+    setCount(bookmarkMaterialList.length * totalPage);
+    console.log(count);
+  }, [bookmarkMaterialList]);
 
   return (
     <S.Container>
@@ -126,12 +131,12 @@ export default function WordBookMark() {
       <R.PagenationBox>
         <Pagination
           activePage={page}
-          itemsCountPerPage={39}
+          itemsCountPerPage={10}
           totalItemsCount={count}
           pageRangeDisplayed={5}
           prevPageText={"<"}
           nextPageText={">"}
-          onChange={() => setPage(prevPage => prevPage + 1)}
+          onChange={handlePageChange}
         />
       </R.PagenationBox>
     </S.Container>
