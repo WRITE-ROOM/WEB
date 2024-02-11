@@ -4,52 +4,22 @@ import { useNavigate } from 'react-router-dom'
 import * as S from "../Account/Account.style"
 import * as R from "./MyBookmark.style"
 import WordBookMark from './WordBookmark/WordBookmark'
-import { FaRegBookmark, FaBookmark } from "react-icons/fa";
-import Pagination from 'react-js-pagination'
-import RoomNoteBox from '../../RoomNoteBox/RoomNoteBox'
 import NoteBookmark from './NoteBookmark/NoteBookmark'
 
 export default function MyBookmark() {
 	const [isBookmarked, setIsBookmarked] = useState(false);
-	const [page, setPage] = useState(0);
+	// const [page, setPage] = useState(0);
   const [index, setIndex] = useState(0);
 
 	const tabArray=[
 	{
-			tabId: 0,
-			tabTitle: '소재',
-			tabCont:(
-				<R.TabInfo>
-				<R.BookContainer>
-					<R.BookmarkBox>
-						<WordBookMark/>
-					</R.BookmarkBox>
-
-					<R.Line/>
-
-					<R.BookmarkBox>
-						<WordBookMark/>
-					</R.BookmarkBox>
-
-					<R.Line/>
-
-					<R.BookmarkBox>
-						<WordBookMark/>
-					</R.BookmarkBox>
-				</R.BookContainer>
-					<R.PagenationBox>
-					<Pagination
-						activePage={page}
-						itemsCountPerPage={2}
-						totalItemsCount={10}
-						pageRangeDisplayed={5}
-						prevPageText={"<"}
-						nextPageText={">"}
-						onChange={() => setPage(prevPage => prevPage + 1)}
-					/>
-					</R.PagenationBox>
-				</R.TabInfo>
-			)
+    tabId: 0,
+    tabTitle: '소재',
+    tabCont:(
+      <R.TabInfo>
+        <WordBookMark/>
+      </R.TabInfo>
+    )
 	},
 	{
 		tabId: 1,

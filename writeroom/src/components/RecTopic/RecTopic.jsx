@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FaRegBookmark } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa";
 import { IoMdRefresh } from "react-icons/io";
@@ -6,24 +6,52 @@ import { IoSearchOutline } from "react-icons/io5";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import * as S from "./RecTopic.style";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { addBookmark, deleteBookmark } from "../../redux/bookmark";
 
 export default function RecTopic({ onToggle }) {
-  let [inputWord, setInputWord] = useState("");
-  let [displayKeyword, setDisplayKeyword] = useState(false);
-  let [displayVoca, setDisplayVoca] = useState(false);
+  const [inputWord, setInputWord] = useState("");
+  const [displayKeyword, setDisplayKeyword] = useState(false);
+  const [displaySynonym, setDisplaySynonym] = useState(false);
   const [topics, setTopics] = useState([]);
-  // const receivedToken = localStorage.getItem('token')
-  const receivedToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo"
+  const [isBookmarked, setIsBookmarked] = useState([false, false, false, false, false]);
+
+  const [keywords, setKeywords] = useState([]);
+  const [searchKeyword, setSearchkeyword] = useState("");
+  const [isKeywordSearchOpen, setIsKeywordSearchOpen] = useState(false);
+
+  const [synonyms, setSynonyms] = useState([]);
+  const [searchSynonym, setSearchSynonym] = useState("");
+  const [isSynonymSearchOpen, setIsSynonymSearchOpen] = useState(false);
+
+  const user = useSelector((state) => state.user);
+  const userId = localStorage.getItem('id');
+  const bookmark = useSelector(state => state.bookmark);
+  const receivedToken = localStorage.getItem('token')
+  // const receivedToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo"
+
+  let dispatch = useDispatch();
 
   const handleKeyPressKeyword = (e) => {
     if (e.key === "Enter") {
-      setDisplayKeyword(true);
+      setIsKeywordSearchOpen(true);
+      setSearchkeyword(inputWord);
     }
   };
-  const handleKeyPressVoca = (e) => {
+
+  const handleKeyPressSynonym = (e) => {
     if (e.key === "Enter") {
-      setDisplayVoca(true);
+      setIsSynonymSearchOpen(true);
+      setSearchSynonym(inputWord);
     }
+  };
+
+  const handleBookmarkChange = (index) => {
+    setIsBookmarked(prevBookmarks => {
+      const updatedBookmarks = [...prevBookmarks];
+      updatedBookmarks[index] = !updatedBookmarks[index];
+      return updatedBookmarks;
+    });
   };
 
   const getTopics = async() => {
@@ -33,11 +61,67 @@ export default function RecTopic({ onToggle }) {
           'Authorization': `Bearer ${receivedToken}`
           },
       })
+      console.log('서버 전달이다: ', res.data)
       const vocas = res.data.result.map(item => item.voca);
-      setTopics(prevList => [...prevList, ...vocas]);
+      // const vocas = res.data.result[0].voca.split(', ');
+      setTopics(vocas);
 
+    } catch (error) {  
+      console.log(error)
+    }
+  }
+  const getKeyword = async() => {
+    console.log('검색한 단어 axios에서 확인: ', searchKeyword)
+
+    try {
+      const Voca = searchKeyword;
+      const res = await axios.get(`/search/similarKeywords?voca=${Voca}`, { 
+        headers: {
+          'Authorization': `Bearer ${receivedToken}`
+          },
+      })
+      // console.log(res.data)
+      const vocas = res.data.result.map(item => item.voca);
+      // const vocas = res.data.result[0].voca.split(', ');
+      setKeywords(vocas);
     } catch (error) {
       console.log(error)
+    }
+  }
+  const getSynonym = async() => {
+    try {
+      const Voca = searchSynonym;
+      const res = await axios.get(`/search/synonyms?voca=${Voca}`, { 
+        headers: {
+          'Authorization': `Bearer ${receivedToken}`
+          },
+      })
+      console.log(res.data)
+      // const vocas = res.data.result.map(item => item.voca);
+      const vocas = res.data.result[0].voca.split(', ');
+      console.log('vocas: ', vocas)
+      setSynonyms(vocas);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+ 
+  // dispatch(addBookmark({bookmarkId : res.data.result.bookmarkId, content: word}))
+  const bookmarkId = 13;
+  const DeleteBookmark = async(word) => {
+    console.log('delete bookmarkId: ', bookmarkId)
+    try {
+      const res = await axios.delete(`/bookmarks/topics/${bookmarkId}`, {
+        headers: {
+          'Authorization': `Bearer ${receivedToken}`,
+        }
+      });
+      console.log('delete 서버 res: ', res.data);
+      const data = res.data.result;
+      dispatch(deleteBookmark({bookmarkId : data.bookmarkId}))
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -45,17 +129,49 @@ export default function RecTopic({ onToggle }) {
     getTopics()
   }, [])
 
-  const RecWord = ({ word }) => {
-    const [isBookmarked, setIsBookmarked] = useState(false);
+  useEffect(() => {
+    if (isKeywordSearchOpen) {
+      getKeyword();
+    }
+  }, [searchKeyword, isKeywordSearchOpen]);
 
+  useEffect(() => {
+    if (isSynonymSearchOpen) {
+      getSynonym();
+    }
+  }, [searchSynonym, isSynonymSearchOpen]);
+
+  const RecWord = ({ word, index, isBookmarked, onBookmarkChange }) => {
     const toggleBookmark = () => {
-      setIsBookmarked((prev) => !prev);
+      onBookmarkChange(index);
+      postBookmarkstatus(word);
     };
+
+    const postBookmarkstatus = async(word) => {
+      try {
+        const res = await axios.post(`/bookmarks/topics`, {content: word, userId: userId}, 
+        {
+          headers: {
+            'Authorization': `Bearer ${receivedToken}`,
+          }
+        });
+        const serverBookmarkId = res.data.result.bookmarkId;
+        const newBookmark = {
+          bookmarkId: serverBookmarkId,
+          content: word
+        }
+        dispatch(addBookmark(newBookmark));
+        console.log(bookmark);
+        console.log(res.data);  
+      } catch (error) {
+        console.log(error);
+      }
+    }
     return (
       <S.RecWord>
         <p>{word}</p>
         {isBookmarked ? (
-          <FaBookmark color="rgba(181, 169, 148, 1)" onClick={toggleBookmark} />
+          <FaBookmark color="rgba(181, 169, 148, 1)"/>
         ) : (
           <FaRegBookmark color="black" onClick={toggleBookmark} />
         )}
@@ -78,15 +194,19 @@ export default function RecTopic({ onToggle }) {
           <S.Top>
             <S.WordTitle>오늘의 소재</S.WordTitle>
             <button>
-              <IoMdRefresh size="30" />
+              <IoMdRefresh size="30" onClick={() => {getTopics()}}/>
             </button>
           </S.Top>
           <S.RecBottom>
-            <RecWord word={topics[0]} />
-            <RecWord word={topics[1]} />
-            <RecWord word={topics[2]} />
-            <RecWord word={topics[3]} />
-            <RecWord word={topics[4]} />
+          {topics.map((word, index) => (
+            <RecWord
+              key={index}
+              word={word}
+              index={index}
+              isBookmarked={isBookmarked[index]}
+              onBookmarkChange={handleBookmarkChange}
+            />
+          ))}
           </S.RecBottom>
         </S.Wrapper>
 
@@ -104,18 +224,18 @@ export default function RecTopic({ onToggle }) {
               onKeyUp={handleKeyPressKeyword}
             ></input>
           </S.WordSearch>
-          {displayKeyword && (
+          {isKeywordSearchOpen && (
             <S.WordBottom>
               <S.BottomWords>
-                <p>산타클로스</p>
-                <p>크리스마스 트리</p>
-                <p>선물</p>
+                <p>{searchKeyword}</p>
+                <p>{keywords[0]}</p>
+                <p>{keywords[1]}</p>
               </S.BottomWords>
               <S.BottomLine />
               <S.BottomWords>
-                <p>눈</p>
-                <p>눈사람</p>
-                <p>Holiday</p>
+                <p>{keywords[2]}</p>
+                <p>{keywords[3]}</p>
+                <p>{keywords[4]}</p>
               </S.BottomWords>
             </S.WordBottom>
           )}
@@ -132,21 +252,21 @@ export default function RecTopic({ onToggle }) {
               onChange={(e) => {
                 setInputWord(e.target.value);
               }}
-              onKeyUp={handleKeyPressVoca}
+              onKeyUp={handleKeyPressSynonym}
             ></input>
           </S.WordSearch>
-          {displayVoca && (
+          {isSynonymSearchOpen && (
             <S.WordBottom>
               <S.BottomWords>
-                <p>열정에 빠지다</p>
-                <p>매료되다</p>
-                <p>빠져들다</p>
+                <p>{searchSynonym}</p>
+                <p>{synonyms[0]}</p>
+                <p>{synonyms[1]}</p>
               </S.BottomWords>
               <S.BottomLine />
               <S.BottomWords>
-                <p>취하다</p>
-                <p>사랑하다</p>
-                <p>열망하다</p>
+                <p>{synonyms[2]}</p>
+                <p>{synonyms[3]}</p>
+                <p>{synonyms[4]}</p>
               </S.BottomWords>
             </S.WordBottom>
           )}

@@ -84,6 +84,7 @@ export const RecWord = styled.div`
 	width: 218px;
 	height: 34px;
 	text-decoration: underline;
+	font-size: 14px;
 `
 export const WordSearch = styled.div`
 	position: relative;

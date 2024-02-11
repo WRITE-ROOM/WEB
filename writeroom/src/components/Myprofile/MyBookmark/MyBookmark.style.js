@@ -59,9 +59,11 @@ export const BookContainer = styled.div`
 export const BookmarkBox = styled.div`
 	width: 400px;
 	height: 500px;
+	display: flex;
 `
 
 export const Line = styled.div`
+	width: 0px;
 	height: 435px;
 	border: 1px solid rgba(229, 229, 229, 1);
 
