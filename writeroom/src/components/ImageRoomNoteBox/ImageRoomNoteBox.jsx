@@ -82,7 +82,12 @@ const ImageRoomNoteBox = ({ note, roomId }) => {
 
           <S.Right>
             <Bookmark />
-            <Setting type="dots" note={note} roomId={parseInt(roomId)} />
+            <Setting
+              type="dots"
+              note={note}
+              roomId={parseInt(roomId)}
+              categoryName={note.categoryContent}
+            />
           </S.Right>
         </S.Top>
 

@@ -14,7 +14,7 @@ import {
   setSelectedCategoryName,
 } from "../../redux/selectModal";
 
-const Setting = ({ type, note, roomId }) => {
+const Setting = ({ type, note, roomId, categoryName }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showSettingMenu, setShowSettingMenu] = useState(false);
@@ -37,7 +37,7 @@ const Setting = ({ type, note, roomId }) => {
     dispatch(setTag(note.tagList));
     dispatch(updateMode());
     dispatch(setSelectedRoomId(roomId));
-    dispatch(setSelectedCategoryName(note.categoryName));
+    dispatch(setSelectedCategoryName(categoryName));
     navigate("/write");
     console.log(roomId);
     console.log(note);

@@ -54,7 +54,12 @@ const Note = () => {
 
         <N.Tools>
           <Bookmark defaultColor="white" />
-          <Setting type="config" note={note} roomId={parseInt(roomId)} />
+          <Setting
+            type="config"
+            note={note}
+            roomId={parseInt(roomId)}
+            categoryName={note.categoryName}
+          />
         </N.Tools>
 
         <N.NoteInfo>
