@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SimpleContainer } from "../Header/Dropdown.style";
 import * as E from "./EmojiContainer.style";
 import AddEmoji from "../../assets/AddEmoji.png";
@@ -9,8 +9,10 @@ import Emoji4 from "../../assets/Emoji1.png";
 import Emoji5 from "../../assets/Emoji1.png";
 import Emoji6 from "../../assets/Emoji1.png";
 import Emoji from "./Emoji";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
-const EmojiContainer = () => {
+const EmojiContainer = ({ noteId }) => {
   const initialEmojis = [
     { index: 1, image: Emoji1, count: 0, added: false },
     { index: 2, image: Emoji2, count: 0, added: false },
@@ -19,7 +21,8 @@ const EmojiContainer = () => {
     { index: 5, image: Emoji5, count: 0, added: false },
     { index: 6, image: Emoji6, count: 0, added: false },
   ];
-  const [emojis, setEmojis] = useState(initialEmojis);
+  // const [emojis, setEmojis] = useState(initialEmojis);
+  const [emojis, setEmojis] = useState(null);
 
   const [showEmojiList, setShowEmojiList] = useState(false);
 
@@ -35,6 +38,47 @@ const EmojiContainer = () => {
       )
     );
   };
+
+  const accessToken =
+    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo";
+
+  // const noteId = useSelector((state) => state.note.noteId);
+  console.log("noteId ", noteId);
+
+  // 이모지 조회
+  const fetchEmojiList = async () => {
+    try {
+      const res = await axios.get(`/Emoji/${noteId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      console.log("Emoji get ", res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // 이모지 남기기
+  const postEmoji = async () => {
+    try {
+      const params = { emojiNum: 6 };
+      const res = await axios.post(`/Emoji/${noteId}`, null, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        params,
+      });
+      console.log("Emoji Post ", res.data);
+    } catch (error) {
+      console.log("post", error);
+    }
+  };
+
+  useEffect(() => {
+    // fetchEmojiList();
+    // postEmoji();
+  }, []);
 
   return (
     <E.Container>

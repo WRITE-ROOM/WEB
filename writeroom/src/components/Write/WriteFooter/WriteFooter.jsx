@@ -13,7 +13,7 @@ const WriteFooter = () => {
   const [newTag, setNewTag] = useState("");
 
   // tag 데이터
-  const tags = useSelector((state) => state.tag);
+  const tagList = useSelector((state) => state.tag);
 
   const handleTagInput = (e) => {
     setNewTag(e.target.value);
@@ -21,11 +21,10 @@ const WriteFooter = () => {
 
   const CreateNewTag = (e) => {
     if (e.key === "Enter" && newTag.trim() !== "") {
-      dispatch(addTag({ tagId: tags.length, tagName: newTag }));
+      dispatch(addTag({ tagId: tagList.length, tagName: newTag }));
       setNewTag("");
       e.target.value = "";
     }
-    // console.log(tags);
   };
 
   const DeleteTag = (index) => {
@@ -42,7 +41,7 @@ const WriteFooter = () => {
       {/* 태그 리스트 */}
       <TagContainer>
         <ul>
-          {tags.map((tag, index) => (
+          {tagList.map((tag, index) => (
             <Tag key={index} $X={true}>
               {tag.tagName}
               <F.DeleteTag onClick={() => DeleteTag(index)}>

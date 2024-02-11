@@ -2,62 +2,107 @@ import * as S from "./ImageRoomNoteBox.style";
 import Bookmark from "../Bookmark/Bookmark";
 import { HiMiniUserCircle } from "react-icons/hi2";
 import { BiDotsVerticalRounded } from "react-icons/bi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RoomModal from "../RoomModal/RoomModal";
-const ImageRoomNoteBox = ({ openRoomSNB, openSNB, note }) => {
+import Setting from "../Setting/Setting";
+import { TagContainer, Tag } from "../../pages/Note.style";
+import { useNavigate } from "react-router-dom";
+import { addNote } from "../../redux/note";
+
+const ImageRoomNoteBox = ({ note, roomId }) => {
+  const navigate = useNavigate();
   const [isClick, setIsClick] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+
+  const {
+    noteId,
+    noteTitle,
+    noteSubtitle,
+    noteContent,
+    writer,
+    noteImg,
+    createdAt,
+    tagList,
+    userProfileImg,
+  } = note;
+
   const handleClick = () => {
     setIsClick(!isClick);
   };
   const handleModal = () => {
     setOpenModal(!openModal);
   };
+
+  const [maxLength, setMaxLength] = useState(100);
+
+  // if (noteImg) {
+  //   setMaxLength(50);
+  // }
+
+  const handleSelectNote = () => {
+    navigate(`/rooms/${roomId}/notes/${noteId}`);
+    addNote(note);
+  };
+
+  const stripHtmlTags = () => {
+    const doc = new DOMParser().parseFromString(noteContent, "text/html");
+    const textContent = doc.body.textContent || "";
+    return textContent;
+  };
+
+  useEffect(() => {}, []);
   return (
-    <S.Container openRoomSNB={openRoomSNB} openSNB={openSNB}>
+    <S.Container onClick={() => handleSelectNote()}>
       <S.ContentsBox>
-        <S.UserIconWrapper>
-          <HiMiniUserCircle size={50} />
-        </S.UserIconWrapper>
-        <S.NameBox openRoomSNB={openRoomSNB}>
-          <p>제리</p>
-          <S.IconWrapper>
-            <Bookmark />
-            <S.IconButton onClick={handleClick}>
-              <BiDotsVerticalRounded size={30} />
-            </S.IconButton>
-            {isClick && (
-              <S.ToggleBox>
-                <p>수정하기</p>
-                <hr />
-                <S.Button onClick={handleModal}>삭제하기</S.Button>
-                {openModal && (
-                  <RoomModal
-                    title1="내가 관리하고 있는 룸이에요."
-                    title2="정말 룸을 삭제하시겠어요?"
-                  />
-                )}
-              </S.ToggleBox>
+        <S.Top>
+          <S.Left>
+            {userProfileImg ? (
+              <img src={userProfileImg} alt="profileImg" />
+            ) : (
+              <HiMiniUserCircle size={46} color="#e5e5e5" />
             )}
-          </S.IconWrapper>
-        </S.NameBox>
-        <S.CategoryWrapper>
-          <p>2024.02.01</p>
-          <button>음악</button>
-        </S.CategoryWrapper>
-        <S.TextBox openRoomSNB={openRoomSNB} openSNB={openSNB}>
-          <h1>노래 플레이리스트</h1>
+
+            <div className="info">
+              <S.Writer>{writer}</S.Writer>
+
+              <S.Info>
+                <S.Date>{createdAt.split("T")[0]}</S.Date>
+
+                <TagContainer>
+                  <ul>
+                    {tagList &&
+                      tagList.map((tag, index) => {
+                        return <Tag key={index}>{tag.tagName}</Tag>;
+                      })}
+                  </ul>
+                </TagContainer>
+              </S.Info>
+            </div>
+          </S.Left>
+
+          <S.Right>
+            <Bookmark />
+            <Setting
+              type="dots"
+              note={note}
+              roomId={parseInt(roomId)}
+              categoryName={note.categoryContent}
+            />
+          </S.Right>
+        </S.Top>
+
+        <S.TextBox>
+          <h1>{noteTitle}</h1>
           <p>
-            <span>Someone Like You | </span>
-            <p>{note}</p>
+            <span>{noteSubtitle}</span>
+            {noteContent && noteContent.length < maxLength
+              ? stripHtmlTags()
+              : stripHtmlTags().slice(0, maxLength) + "..."}
           </p>
         </S.TextBox>
       </S.ContentsBox>
-      <S.NoteImg
-        openRoomSNB={openRoomSNB}
-        openSNB={openSNB}
-        src="https://images.unsplash.com/photo-1682687220777-2c60708d6889?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-      ></S.NoteImg>
+
+      {noteImg && <S.NoteImg src={noteImg}></S.NoteImg>}
     </S.Container>
   );
 };
