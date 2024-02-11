@@ -21,9 +21,17 @@ const EmojiContainer = ({ noteId }) => {
     { index: 5, image: Emoji5, count: 0, added: false },
     { index: 6, image: Emoji6, count: 0, added: false },
   ];
-  // const [emojis, setEmojis] = useState(initialEmojis);
-  const [emojis, setEmojis] = useState(null);
 
+  // 이모지 개수 불러오기
+  const emojiCounts = useSelector((state) => state.note.emojiList.emojiCounts);
+
+  // 불러온 이모지 개수 업데이트
+  const updatedEmojiList = initialEmojis.map((emoji, index) => ({
+    ...emoji,
+    count: emojiCounts[index] || 0,
+  }));
+
+  const [emojis, setEmojis] = useState(updatedEmojiList);
   const [showEmojiList, setShowEmojiList] = useState(false);
 
   const handleAddEmoji = (index) => {
@@ -44,20 +52,6 @@ const EmojiContainer = ({ noteId }) => {
 
   // const noteId = useSelector((state) => state.note.noteId);
   console.log("noteId ", noteId);
-
-  // 이모지 조회
-  const fetchEmojiList = async () => {
-    try {
-      const res = await axios.get(`/Emoji/${noteId}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      console.log("Emoji get ", res);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   // 이모지 남기기
   const postEmoji = async () => {
@@ -83,6 +77,7 @@ const EmojiContainer = ({ noteId }) => {
   return (
     <E.Container>
       {/* 이모지 추가 버튼 */}
+
       <E.AddEmojiButton
         onClick={() => {
           setShowEmojiList(!showEmojiList);
@@ -96,8 +91,8 @@ const EmojiContainer = ({ noteId }) => {
         <ul>
           {emojis &&
             emojis
-              .filter((emoji) => emoji.count > 0)
-              .map((emoji) => <Emoji key={emoji.index} emoji={emoji} />)}
+              .filter((emoji) => emoji.count >= 0)
+              .map((emoji, index) => <Emoji key={index} emoji={emoji} />)}
         </ul>
       </E.AddedEmoji>
 
@@ -112,8 +107,8 @@ const EmojiContainer = ({ noteId }) => {
           <p>이모지 종류</p>
           <E.EmojiList>
             {emojis &&
-              emojis.map((emoji) => (
-                <li onClick={() => handleAddEmoji(emoji.index)}>
+              emojis.map((emoji, index) => (
+                <li key={index} onClick={() => handleAddEmoji(emoji.index)}>
                   <img src={emoji.image} alt={`emoji${emoji.index}`} />
                 </li>
               ))}
