@@ -26,15 +26,14 @@ import MyprofileNone from "./pages/MyprofileNone.jsx";
 function App() {
   return (
     <div className="App">
-      <Header />
+      {/* <Header /> */}
       <Routes>
-
-        <Route path="/room" element={<RoomPage />} />
-        <Route path="/room/:roomId" element={<RoomPage />} />
-        <Route path="/room/setting" element={<RoomSetting />} />
-        <Route path="/room/member" element={<RoomMember />} />
-        <Route path="/room/challenge" element={<RoomChallenge />} />
-        <Route path="/room/category" element={<RoomCategory />} />
+        <Route path="/rooms" element={<RoomPage />} />
+        <Route path="/rooms/:roomId" element={<RoomPage />} />
+        <Route path="/rooms/setting" element={<RoomSetting />} />
+        <Route path="/rooms/member" element={<RoomMember />} />
+        <Route path="/rooms/challenge" element={<RoomChallenge />} />
+        <Route path="/rooms/category" element={<RoomCategory />} />
 
         <Route path="/write" element={<Write />} />
         <Route path="/rooms/:roomId/notes" element={<Note />} />
