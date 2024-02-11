@@ -6,7 +6,7 @@ import { setUserEmail } from '../../../redux/user';
 
 export default function ForgetPwd() {
   const [email, setEmail] = useState('');
-  const [isExisted, setIsExisted] = useState(true);
+  const [isExisted, setIsExisted] = useState(0);
   const user = useSelector((state) => state.user);
   const userEmail = user.userEmail;
   const receivedToken = localStorage.getItem('token');
@@ -18,24 +18,15 @@ export default function ForgetPwd() {
     dispatch(setUserEmail({ email: email }));
     console.log(userEmail)
     try {
-      const res = await axios.post(`/auth/sendResetPwdEmail`, {email: email}, {
-        headers: {
-          'Authorization': `Bearer ${receivedToken}`
-          }
-      })
+      const res = await axios.post(`/auth/sendResetPwdEmail`, {email: email})
       if (res.data.code === "COMMON200")
-        setIsExisted(true);
+        setIsExisted(1);
     } catch(error) {
       if (error.response.data.code === "MEMBER4001")
-        setIsExisted(false);
+        setIsExisted(2);
       console.log(error)
     }
-    console.log(isExisted)
-    console.log('post 후: ', userEmail)
   }
-  useEffect(() => {
-    console.log('useEffect: ', userEmail); // 이제 userEmail은 업데이트 된 값이 됨
-  }, [userEmail]);
   return (
     <S.App>
       <S.Container>
@@ -46,7 +37,8 @@ export default function ForgetPwd() {
           onChange={(e) => {setEmail(e.target.value)}}/>
         <button onClick={postResetMail}>이메일 보내기</button>
         <h6> {"< 이전으로"}</h6>
-        {isExisted ? <h3>인증 메일 전송했어요!</h3> : <h3>존재하지 않는 이메일이예요.</h3>}
+        {isExisted === 1 && <h3>인증 메일을 전송했어요!</h3>}
+        {isExisted === 2 && <h3>존재하지 않는 이메일이예요.</h3>}
       </S.Container>
     </S.App>
   )

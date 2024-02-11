@@ -25,13 +25,16 @@ export default function SignupInput() {
 	let dispatch = useDispatch();
 
   const postUser = async() => {
-    
     try {
       if (nameRegex.test(name) && emailRegex.test(email) && passwordRegex.test(password) && isPwMatch) {
         const res = await axios.post(`/auth/signUp`, {nickname: name, email: email, password: password});
         console.log(res.data)
+        window.alert('라이트룸에 오신 것을 환영합니다! 로그인창으로 이동합니다 :)');
+        navigate('/main')
       }
     } catch(error) {
+      if (error.response.data.code === "USER4004")
+        window.alert('이미 존재하는 이메일입니다.');
       console.log(error);
     }
   }

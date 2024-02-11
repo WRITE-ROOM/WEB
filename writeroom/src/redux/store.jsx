@@ -5,6 +5,7 @@ import tagSlice from "./tag";
 import selectModalSlice from "./selectModal";
 import categorySlice from "./category";
 import noteSlice from "./note";
+import {bookmark} from './bookmark';
 import noteListSlice from "./noteList";
 import writeModeSlice from "./writeMode";
 
@@ -16,6 +17,7 @@ export const store = configureStore({
     selectModal: selectModalSlice,
     category: categorySlice,
     note: noteSlice,
+    bookmark: bookmark.reducer,
     noteList: noteListSlice,
     writeMode: writeModeSlice,
   },

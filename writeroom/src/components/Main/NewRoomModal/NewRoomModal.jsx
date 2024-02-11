@@ -49,7 +49,7 @@ export default function NewRoomModal({ isOpen, onClose }) {
           'Authorization': `Bearer ${receivedToken}`,
           },
        });
-      navigate(`/room/${res.data.result.roomId}`);
+      navigate(`/rooms/${res.data.result.roomId}`);
     } catch (error) {
       console.error(error);
     } 
