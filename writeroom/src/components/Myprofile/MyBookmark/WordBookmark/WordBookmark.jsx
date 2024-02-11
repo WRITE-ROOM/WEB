@@ -41,8 +41,9 @@ export default function WordBookMark() {
         });
       const data = res.data.result;
       dispatch(resetBookmark());
-      setBookmarkMaterialList(data.bookmarkMaterialList);  
-      setIsBookmarked(Array(data.bookmarkMaterialList.length).fill(true))
+      setBookmarkMaterialList(data.bookmarkMaterialList);
+      setIsBookmarked(Array(data.bookmarkMaterialList.length).fill(true));
+      setCount(data.totalElements);
       setTotalPage(data.totalPage);
       console.log(data.listSize)
       console.log(res.data)
@@ -102,24 +103,19 @@ export default function WordBookMark() {
     getWordBookmark();
   }, [page]) 
 
-  useEffect(() => {
-    setCount(bookmarkMaterialList.length * totalPage);
-    console.log(count);
-  }, [bookmarkMaterialList]);
-
   return (
     <S.Container>
       <S.BookContainer>
       {[...Array(3).keys()].map((section, sectionIndex) => (
         <div key={section} style={{display: 'flex'}}>
           <S.TopicBox>
-          {bookmarkMaterialList.slice(sectionIndex * 10, (sectionIndex + 1) * 10).map((word, index) => (
+          {bookmarkMaterialList.slice(sectionIndex * 13, (sectionIndex + 1) * 13).map((word, index) => (
             <S.RecWord key={index}>
               <p>{word.content}</p> 
-              {isBookmarked[sectionIndex * 10 + index] ? (
-                <FaBookmark color="rgba(181, 169, 148, 1)" onClick={() => toggleBookmark({index: sectionIndex * 10 + index, word: word.content})}/>
+              {isBookmarked[sectionIndex * 13 + index] ? (
+                <FaBookmark color="rgba(181, 169, 148, 1)" onClick={() => toggleBookmark({index: sectionIndex * 13 + index, word: word.content})}/>
               ) : (
-                <FaRegBookmark color="black" onClick={() => toggleBookmark({index: sectionIndex * 10 + index, word: word.content})}/>
+                <FaRegBookmark color="black" onClick={() => toggleBookmark({index: sectionIndex * 13 + index, word: word.content})}/>
               )}
             </S.RecWord>
           ))}
@@ -131,7 +127,7 @@ export default function WordBookMark() {
       <R.PagenationBox>
         <Pagination
           activePage={page}
-          itemsCountPerPage={10}
+          itemsCountPerPage={30}
           totalItemsCount={count}
           pageRangeDisplayed={5}
           prevPageText={"<"}
