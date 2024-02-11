@@ -190,6 +190,7 @@ export default function RecTopic({ onToggle }) {
       <S.Left>
         <button onClick={onToggle}>
           <MdKeyboardDoubleArrowRight
+            style={{cursor: "pointer"}}
             color="rgba(147, 147, 147, 1)"
             size="20"
           />
