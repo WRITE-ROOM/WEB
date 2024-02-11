@@ -25,8 +25,8 @@ export default function RecTopic({ onToggle }) {
   const [isSynonymSearchOpen, setIsSynonymSearchOpen] = useState(false);
 
   const user = useSelector((state) => state.user);
-  const userId = localStorage.getItem('id');
   const bookmark = useSelector(state => state.bookmark);
+  const userId = localStorage.getItem('id');
   const receivedToken = localStorage.getItem('token')
   // const receivedToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo"
 
@@ -105,26 +105,6 @@ export default function RecTopic({ onToggle }) {
       console.log(error)
     }
   }
-
- 
-  // dispatch(addBookmark({bookmarkId : res.data.result.bookmarkId, content: word}))
-  const bookmarkId = 13;
-  const DeleteBookmark = async(word) => {
-    console.log('delete bookmarkId: ', bookmarkId)
-    try {
-      const res = await axios.delete(`/bookmarks/topics/${bookmarkId}`, {
-        headers: {
-          'Authorization': `Bearer ${receivedToken}`,
-        }
-      });
-      console.log('delete 서버 res: ', res.data);
-      const data = res.data.result;
-      dispatch(deleteBookmark({bookmarkId : data.bookmarkId}))
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   useEffect(() => {
     getTopics()
   }, [])
@@ -142,9 +122,17 @@ export default function RecTopic({ onToggle }) {
   }, [searchSynonym, isSynonymSearchOpen]);
 
   const RecWord = ({ word, index, isBookmarked, onBookmarkChange }) => {
-    const toggleBookmark = () => {
+    let dispatch = useDispatch();
+    const bookmarks = useSelector((state) => state.bookmark);
+    
+
+    const togglePostBookmark = () => {
       onBookmarkChange(index);
       postBookmarkstatus(word);
+    };
+    const toggleDeleteBookmark = () => {
+      onBookmarkChange(index);
+      DeleteBookmark(word);
     };
 
     const postBookmarkstatus = async(word) => {
@@ -163,17 +151,35 @@ export default function RecTopic({ onToggle }) {
         dispatch(addBookmark(newBookmark));
         console.log(bookmark);
         console.log(res.data);  
+        window.alert('북마크에 추가했어요.');
       } catch (error) {
         console.log(error);
       }
     }
+    const DeleteBookmark = async(word) => {
+      const existingBookmark = bookmarks.find((bookmark) => bookmark.content === word);
+      try {
+        const res = await axios.delete(`/bookmarks/topics/${existingBookmark.bookmarkId}`, {
+          headers: {
+            'Authorization': `Bearer ${receivedToken}`,
+          }
+        });
+        console.log('delete 서버 res: ', res.data);
+        const data = res.data.result;
+        dispatch(deleteBookmark({bookmarkId : data.bookmarkId}));
+        window.alert('북마크에서 해제했어요.');
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    
     return (
       <S.RecWord>
         <p>{word}</p>
         {isBookmarked ? (
-          <FaBookmark color="rgba(181, 169, 148, 1)"/>
+          <FaBookmark color="rgba(181, 169, 148, 1)" onClick={toggleDeleteBookmark}/>
         ) : (
-          <FaRegBookmark color="black" onClick={toggleBookmark} />
+          <FaRegBookmark color="black" onClick={togglePostBookmark} />
         )}
       </S.RecWord>
     );

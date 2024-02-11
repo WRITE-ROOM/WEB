@@ -4,113 +4,75 @@ import * as S from "./WordBookmark.style.js"
 import * as R from "../MyBookmark.style.js"
 import axios from 'axios';
 import Pagination from 'react-js-pagination';
-import { useDispatch } from 'react-redux';
-import { deleteBookmark } from '../../../../redux/bookmark.jsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { addBookmark, deleteBookmark, resetBookmark } from '../../../../redux/bookmark.jsx';
 
 export default function WordBookMark() {
-    // const [isBookmarked, setIsBookmarked] = useState(false);
   const [page, setPage] = useState(0);
   const [totalPage, setTotalPage] = useState();
   const [count, setCount] = useState();
-  const [bookmarkMaterialList, setBookmarkMaterialList] = useState([]);
-  const bookmarkMaterialListSample = [
-    {
-      "id": 0,
-      "content": "string"
-    },
-    {
-      "id": 1,
-      "content": "첫 눈이 오면"
-    }, 
-    {
-      "id": 2,
-      "content": "아 졸리다"
-    },
-    {
-      "id": 3,
-      "content": "북마크 테스트 중"
-    },
-    {
-      "id": 4,
-      "content": "북마크 테스트 중2"
-    },
-    {
-      "id": 5,
-      "content": "북마크 테스트 중3"
-    },
-    {
-      "id": 6,
-      "content": "북마크 테스트 중4"
-    },
-    {
-      "id": 7,
-      "content": "북마크 테스트 중5"
-    },
-    {
-      "id": 8,
-      "content": "북마크 테스트 중4"
-    },
-    {
-      "id": 9,
-      "content": "북마크 테스트 중5"
-    },
-    {
-      "id": 10,
-      "content": "북마크 테스트 중4"
-    },
-    {
-      "id": 11,
-      "content": "북마크 테스트 중5"
-    },
-    {
-      "id": 12,
-      "content": "북마크 테스트 중4"
-    },
-    {
-      "id": 13,
-      "content": "북마크 테스트 중5"
-    }
-  ]
+  const [isBookmarked, setIsBookmarked] = useState([]); //isBookmarked
+  const [bookmarkMaterialList, setBookmarkMaterialList] = useState([]); // 북마크한 단어 배열
+  const bookmark = useSelector(state => state.bookmark);
+
+  const userId = localStorage.getItem('id');
   const receivedToken = localStorage.getItem('token')
 
   let dispatch = useDispatch();
   
-  const toggleBookmark = (index) => {
-    setBookmarkStates((prevStates) => {
-      const newStates = [...prevStates];
-      newStates[index] = !newStates[index];
-      return newStates;
+  const handleBookmarkChange = (index) => {
+    setIsBookmarked(prevBookmarks => {
+      const updatedBookmarks = [...prevBookmarks];
+      updatedBookmarks[index] = !updatedBookmarks[index];
+      return updatedBookmarks;
     });
   };
-  const [bookmarkStates, setBookmarkStates] = useState([]);
-      
-
   const getWordBookmark = async () => {
     const receivedToken = localStorage.getItem('token')
-    // const receivedToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo"
     try {
       const Page = page;
-      const res = await axios.get(`/bookmarks/topics?page=${Page}`, { 
+      const res = await axios.get(`/bookmarks/topics?page=${1}`, { 
         headers: {
           'Authorization': `Bearer ${receivedToken}`
           },
         });
       console.log(res.data)
       const data = res.data.result;
+      dispatch(resetBookmark());
       setBookmarkMaterialList(data.bookmarkMaterialList);  
-      // setBookmarkStates(Array(bookmarkMaterialList.length).fill(true))
-      // console.log(bookmarkStates)
+      setIsBookmarked(Array(data.bookmarkMaterialList.length).fill(true))
       setTotalPage(data.totalPage);
       setCount(data.listSize);
-      console.log(bookmarkMaterialList)
     } catch (error) {
-          console.error(error);
+        console.error(error);
     }
   };
-
-  const bookmarkId = 13;
+  const postBookmarkstatus = async(word) => {
+    try {
+      const res = await axios.post(`/bookmarks/topics`, {content: word, userId: userId}, 
+      {
+        headers: {
+          'Authorization': `Bearer ${receivedToken}`,
+        }
+      });
+      const serverBookmarkId = res.data.result.bookmarkId;
+      const newBookmark = {
+        bookmarkId: serverBookmarkId,
+        content: word
+      }
+      dispatch(addBookmark(newBookmark));
+      console.log(bookmark);
+      console.log(res.data); 
+      window.alert('북마크에 추가했어요.');
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const DeleteBookmark = async(word) => {
-    console.log('delete bookmarkId: ', bookmarkId)
+    console.log('클릭한 단어: ', word)
+    const clickedBookmark = bookmarkMaterialList.find((bookmark) => bookmark.content === word);
+    const bookmarkId = clickedBookmark.id;
+    console.log('클릭한 단어의 id: ', bookmarkId)
     try {
       const res = await axios.delete(`/bookmarks/topics/${bookmarkId}`, {
         headers: {
@@ -119,11 +81,22 @@ export default function WordBookMark() {
       });
       console.log('delete 서버 res: ', res.data);
       const data = res.data.result;
-      dispatch(deleteBookmark({bookmarkId : data.bookmarkId}))
+      dispatch(deleteBookmark({bookmarkId : data.bookmarkId}));
+      window.alert('북마크에서 해제했어요.');
     } catch (error) {
       console.log(error);
     }
   }
+
+  const toggleBookmark = ({index, word}) => {
+    handleBookmarkChange(index);
+    if (isBookmarked[index]) {
+      DeleteBookmark(word);
+    }
+    else {
+      postBookmarkstatus(word);
+    }    
+  };
 
   useEffect(() => {
     getWordBookmark();
@@ -135,10 +108,14 @@ export default function WordBookMark() {
       {[...Array(3).keys()].map((section, sectionIndex) => (
         <div key={section} style={{display: 'flex'}}>
           <S.TopicBox>
-          {bookmarkMaterialList.slice(sectionIndex * 13, (sectionIndex + 1) * 13).map((word, index) => (
+          {bookmarkMaterialList.slice(sectionIndex * 10, (sectionIndex + 1) * 10).map((word, index) => (
             <S.RecWord key={index}>
-              <p>{word.content}</p>
-              <FaBookmark color="rgba(181, 169, 148, 1)" onClick={() => toggleBookmark(sectionIndex * 13 + index)} />
+              <p>{word.content}</p> 
+              {isBookmarked[sectionIndex * 10 + index] ? (
+                <FaBookmark color="rgba(181, 169, 148, 1)" onClick={() => toggleBookmark({index: sectionIndex * 10 + index, word: word.content})}/>
+              ) : (
+                <FaRegBookmark color="black" onClick={() => toggleBookmark({index: sectionIndex * 10 + index, word: word.content})}/>
+              )}
             </S.RecWord>
           ))}
           </S.TopicBox>
@@ -160,3 +137,4 @@ export default function WordBookMark() {
     </S.Container>
     );
   };
+
