@@ -1,23 +1,28 @@
-import React, { useEffect, useState } from 'react'
-import * as S from "./MainBox.style"
-import RecTopic from '../../RecTopic/RecTopic';
-import RecTopicClose from '../../RecTopicClose/RecTopicClose';
-import MainInfo from '../MainInfo/MainInfo';
-import NewNoteButton from '../../FloatingButton/NewNoteButton'
-import NewRoomButton from '../../FloatingButton/NewRoomButton'
-import NewRoomModal from '../NewRoomModal/NewRoomModal';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { resetRoom, setRoom } from '../../../redux/room';
-import { store } from '../../../redux/store';
-import { selectRoomIds } from '../../../redux/room';
-
+import React, { useEffect, useState } from "react";
+import * as S from "./MainBox.style";
+import RecTopic from "../../RecTopic/RecTopic";
+import RecTopicClose from "../../RecTopicClose/RecTopicClose";
+import MainInfo from "../MainInfo/MainInfo";
+import NewNoteButton from "../../FloatingButton/NewNoteButton";
+import NewRoomButton from "../../FloatingButton/NewRoomButton";
+import NewRoomModal from "../NewRoomModal/NewRoomModal";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { resetRoom, setRoom } from "../../../redux/room";
+import { store } from "../../../redux/store";
+import { selectRoomIds } from "../../../redux/room";
 
 export default function MainBox() {
-	const [isSNBOpen, setIsSNBOpen] = useState(false);
-	const [isModalOpen, setIsModalOpen] = useState(false);
-	const roomIdList = useSelector(selectRoomIds);
+  const [isSNBOpen, setIsSNBOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const roomIdList = useSelector(selectRoomIds);
+
+  const user = useSelector((state) => state.user);
+  const userId = user.userId;
+  const receivedToken = user.accessToken;
+  const rooms = useSelector((state) => state.room.room);
+
 
 	const user = useSelector((state) => state.user);
 	// const userId = user.userId;
@@ -30,6 +35,7 @@ export default function MainBox() {
 		setIsSNBOpen((prev) => !prev);
 	};
 
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -37,6 +43,7 @@ export default function MainBox() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
   
 	const fetchRoomList = async () => {
     const userId = localStorage.getItem('id');
@@ -60,6 +67,7 @@ export default function MainBox() {
 		});
 	} catch (error) {
         console.error(error);
+
     }
   };
 
@@ -68,26 +76,31 @@ export default function MainBox() {
   }, []);
 
   return (
-		<div>
-			<S.App>
-				<h1>나의 룸 목록</h1>
-				<S.Container with_SNB={isSNBOpen}>
-				{rooms.map((room, index) => (
-					<S.Room key={index} >
-						<S.Picture onClick={() => {navigate(`/room/${roomIdList[index]}`)}}>
-						<img src={room.roomImg} alt='' />
-						</S.Picture>
-						<MainInfo room={room} roomIndex={index}/>
-					</S.Room>
-				))}
-				</S.Container>
-				<NewNoteButton/> <NewRoomButton onClick={openModal}/>
-				<NewRoomModal isOpen={isModalOpen} onClose={closeModal}/>
-				{isSNBOpen ? 
-				<RecTopic onToggle={toggleSNB}></RecTopic>
-				: <RecTopicClose onToggle={toggleSNB}> </RecTopicClose>}
-			</S.App>
-
-		</div>
-  )
+    <div>
+      <S.App>
+        <h1>나의 룸 목록</h1>
+        <S.Container with_SNB={isSNBOpen}>
+          {rooms.map((room, index) => (
+            <S.Room key={index}>
+              <S.Picture
+                onClick={() => {
+                  navigate(`/rooms/${roomIdList[index]}`);
+                }}
+              >
+                <img src={room.roomImg} alt="" />
+              </S.Picture>
+              <MainInfo room={room} roomIndex={index} />
+            </S.Room>
+          ))}
+        </S.Container>
+        <NewNoteButton /> <NewRoomButton onClick={openModal} />
+        <NewRoomModal isOpen={isModalOpen} onClose={closeModal} />
+        {isSNBOpen ? (
+          <RecTopic onToggle={toggleSNB}></RecTopic>
+        ) : (
+          <RecTopicClose onToggle={toggleSNB}> </RecTopicClose>
+        )}
+      </S.App>
+    </div>
+  );
 }

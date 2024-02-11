@@ -3,53 +3,58 @@ import { createSlice } from "@reduxjs/toolkit";
 const noteSlice = createSlice({
   name: "note",
   initialState: {
-    noteTitle: "제목",
-    noteSubtitle: "부제목",
-    noteId: "",
-    noteImg: "",
+    noteTitle: "",
+    noteSubTitle: "",
+    noteId: null,
+    noteCoverImg: "",
     noteContent: "",
     writer: "",
-    achieve: false,
-    tags: [],
+    tagList: [],
     createdAt: "",
     updatedAt: "",
+    categoryName: "",
+    emojiList: { emojiCounts: [] },
   },
   reducers: {
     addNote(state, action) {
       const {
         noteTitle,
-        noteSubtitle,
+        noteSubTitle,
         noteId,
-        noteImg,
+        noteCoverImg,
         noteContent,
         writer,
-        achieve,
-        tags,
+        tagList,
         createdAt,
         updatedAt,
+        categoryName,
+        emojiList,
       } = action.payload;
 
       state.noteTitle = noteTitle;
-      state.noteSubtitle = noteSubtitle;
+      state.noteSubTitle = noteSubTitle;
       state.noteId = noteId;
-      state.noteImg = noteImg;
+      state.noteCoverImg = noteCoverImg;
       state.noteContent = noteContent;
       state.writer = writer;
-      state.achieve = achieve;
-      state.tags = tags;
+      state.tagList = tagList;
       state.createdAt = createdAt;
       state.updatedAt = updatedAt;
+      state.categoryName = categoryName;
+      state.emojiList = emojiList;
     },
     resetNote(state) {
       state.noteTitle = "";
-      state.noteSubtitle = "";
-      state.noteId = "";
-      state.noteImg = "";
+      state.noteSubTitle = "";
+      state.noteId = null;
+      state.noteCoverImg = "";
       state.noteContent = "";
-      state.achieve = "";
-      state.tags = [];
+      state.writer = "";
+      state.tagList = [];
       state.createdAt = "";
       state.updatedAt = "";
+      state.categoryName = "";
+      state.emojiList = {};
     },
   },
 });

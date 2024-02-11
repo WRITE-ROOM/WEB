@@ -21,7 +21,8 @@ export const Container = styled.div`
   align-items: center;
   border-radius: 10px;
   width: 400px;
-  height: 300px;
+  height: ${(props) => (props.$height ? props.$height : "300px")};
+  color: #000;
   h1 {
     font-size: 20px;
   }

@@ -9,69 +9,82 @@ import NewNoteButton from "../components/FloatingButton/NewNoteButton";
 import { useSelector, useDispatch } from "react-redux";
 import { addNote } from "../redux/note";
 
+import axios from "axios";
+import { useParams } from "react-router-dom";
+
 const Note = () => {
   const dispatch = useDispatch();
-  const mock = {
-    noteTitle: "노래 플레이리스트",
-    noteSubtitle: "음악 듣기는 왜 좋을까?",
-    noteId: "1",
-    noteImg:
-      "https://png.pngtree.com/background/20230528/original/pngtree-retro-game-consoles-sitting-next-to-various-gaming-devices-picture-image_2776441.jpg",
-    noteContent: "<p>내용</p>",
-    writer: "제리",
-    achieve: false,
-    tags: [
-      { tagId: "1", tagName: "음악" },
-      { tagId: "2", tagName: "음악" },
-      { tagId: "3", tagName: "음악" },
-      { tagId: "4", tagName: "음악" },
-      { tagId: "5", tagName: "음악" },
-      { tagId: "6", tagName: "음악" },
-      { tagId: "7", tagName: "음악" },
-    ],
-    createdAt: "2024.02.01",
-    updatedAt: "",
-  };
+  window.scrollTo(0, 0);
 
   // note의 정보 조회하는 api 연결 -> addNote
-  const data = useSelector((state) => state.note);
-  console.log(data);
+  const note = useSelector((state) => state.note);
+  console.log("note", note);
 
   const [showTags, setShowTags] = useState(false);
 
+  // const accessToken = localStorage.getItem("token");
+  const accessToken =
+    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo";
+
+  const noteId = useParams().noteId;
+  const roomId = useParams().roomId;
+
+  const fetchNote = async () => {
+    try {
+      const res = await axios.get(`/notes/${noteId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      console.log("note res", res.data.result);
+      dispatch(addNote(res.data.result));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    dispatch(addNote(mock));
+    fetchNote();
   }, []);
+
   return (
     <N.Container>
       <N.Header>
-        <N.CoverImage img={data.noteImg} />
+        <N.CoverImage img={note.noteCoverImg} />
 
         <N.Tools>
           <Bookmark defaultColor="white" />
-          <Setting />
+          <Setting
+            type="config"
+            note={note}
+            roomId={parseInt(roomId)}
+            categoryName={note.categoryName}
+          />
         </N.Tools>
 
         <N.NoteInfo>
           <N.Upper>
             <div>
-              <h1 className="title">{data.noteTitle}</h1>
-              <p className="date">{data.createdAt}</p>
+              <h1>{note.noteTitle}</h1>
+              <p>{note.createdAt.split("T")[0]}</p>
             </div>
 
-            <p className="writer">by.{data.writer}</p>
+            <p>by.{note.writer}</p>
           </N.Upper>
 
           <N.StyledHr color="white" />
 
           <N.Lower>
-            <p>{data.noteSubtitle}</p>
+            <p>{note.noteSubTitle}</p>
             <N.TagContainer>
               <ul>
-                {data.tags.slice(0, 4).map((tag, index) => (
-                  <N.Tag key={index}>{tag.tagName}</N.Tag>
-                ))}
-                {data.tags.length > 4 && (
+                {note.tagList &&
+                  note.tagList
+                    .slice(0, 4)
+                    .map((tag, index) => (
+                      <N.Tag key={index}>{tag.tagName}</N.Tag>
+                    ))}
+                {note.tagList && note.tagList.length > 4 && (
                   <N.Tag
                     className="showMoreTag"
                     onMouseEnter={() => {
@@ -85,7 +98,7 @@ const Note = () => {
                     {showTags && (
                       <D.SimpleContainer $width="70px" $padding="8px">
                         <N.HiddenTag>
-                          {data.tags.slice(4).map((tag, index) => (
+                          {note.tagList.slice(4).map((tag, index) => (
                             <N.Tag key={index}>{tag.tagName}</N.Tag>
                           ))}
                         </N.HiddenTag>
@@ -100,12 +113,12 @@ const Note = () => {
       </N.Header>
 
       <N.Content
-        dangerouslySetInnerHTML={{ __html: data.noteContent }}
+        dangerouslySetInnerHTML={{ __html: note.noteContent }}
       ></N.Content>
 
       <N.StyledHr color="#E5E5E5" />
 
-      <EmojiContainer />
+      <EmojiContainer noteId={noteId} />
       <NewNoteButton />
     </N.Container>
   );

@@ -3,13 +3,12 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  // align-items: center;
   width: 100%;
   height: 100%;
 `;
 
 export const ImgContainer = styled.img`
-
   width: 100%;
   height: 70%;
   object-fit: inherit;
@@ -61,7 +60,6 @@ export const TopBox = styled.div`
   p {
     margin-left: ${({ openRoomSNB, openSNB }) =>
       openRoomSNB || openSNB ? "400px" : "800px"};
-
   }
 `;
 
@@ -81,7 +79,6 @@ export const SearchWrapper = styled.div`
     border: none;
   }
 `;
-
 
 export const PaginationBox = styled.div`
   .pagination {
@@ -126,4 +123,3 @@ export const PaginationBox = styled.div`
     color: black;
   }
 `;
-

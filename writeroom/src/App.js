@@ -11,6 +11,7 @@ import Header from "./components/Header/Header.jsx";
 import Write from "./pages/Write.jsx";
 import Note from "./pages/Note.jsx";
 
+
 import RoomChallenge from "./pages/RoomChallenge.jsx";
 import RoomCategory from "./pages/RoomCategory.jsx";
 import MyprofileAccount from './pages/MyprofileAccount.jsx'
@@ -21,19 +22,23 @@ import ResetPwdPage from "./pages/ResetPwdPage.jsx";
 import MyprofileNone from "./pages/MyprofileNone.jsx";
 
 
+
 function App() {
   return (
     <div className="App">
       <Header />
       <Routes>
+
         <Route path="/room" element={<RoomPage />} />
         <Route path="/room/:roomId" element={<RoomPage />} />
         <Route path="/room/setting" element={<RoomSetting />} />
         <Route path="/room/member" element={<RoomMember />} />
         <Route path="/room/challenge" element={<RoomChallenge />} />
         <Route path="/room/category" element={<RoomCategory />} />
+
         <Route path="/write" element={<Write />} />
-        <Route path="/note" element={<Note />} />
+        <Route path="/rooms/:roomId/notes" element={<Note />} />
+        <Route path="/rooms/:roomId/notes/:noteId" element={<Note />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgetPwd" element={<ForgetPwdPage />} />
@@ -42,11 +47,13 @@ function App() {
         <Route path="/reset/pw/:status" element={<ResetPwdPage />} /> 
         <Route path="/oauth" element={<Redirect />} />
         <Route path="/main" element={<Main />} />
+
         <Route path="/myprofile/account" element={<MyProfile/>} />
         <Route path="/myprofile/account/email" element={<MyprofileAccount/>} />
         <Route path="/myprofile/account/pw" element={<MyprofilePw/>} />
         <Route path="/myprofile/bookmark" element={<MyBookmarkPage/>} />
         <Route path="/myprofile/none" element={<MyprofileNone/>} />
+
       </Routes>
     </div>
   );
