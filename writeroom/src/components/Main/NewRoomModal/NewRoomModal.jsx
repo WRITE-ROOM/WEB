@@ -14,9 +14,8 @@ export default function NewRoomModal({ isOpen, onClose }) {
   const [imageName, setImageName] = useState(null);
   const [roomName, setRoomName] = useState("제목 없음");
 
-  // const receivedToken = localStorage.getItem('token')
-  const receivedToken =
-    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo";
+  const receivedToken = localStorage.getItem("token");
+  // const receivedToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo"
 
   let navigate = useNavigate();
   const handleImageChange = (e) => {
