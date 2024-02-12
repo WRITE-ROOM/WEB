@@ -59,9 +59,11 @@ export const BookContainer = styled.div`
 export const BookmarkBox = styled.div`
 	width: 400px;
 	height: 500px;
+	display: flex;
 `
 
 export const Line = styled.div`
+	width: 0px;
 	height: 435px;
 	border: 1px solid rgba(229, 229, 229, 1);
 
@@ -89,17 +91,12 @@ export const PagenationBox = styled.div`
 	}
 
 	ul.pagination li.active a {
-		color: white;
+		color: rgba(181, 169, 148, 1);
 	}
 
-	ul.pagination li.active {
-		background-color: #337ab7;
-	}
-
-	ul.pagination li a:hover,
-	ul.pagination li a.active {
-		color: blue;
-	}
+	ul.pagination li a:hover {
+		color: rgba(181, 169, 148, 1);
+	},
 
 	.page-selection {
 		width: 48px;

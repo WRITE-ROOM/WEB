@@ -47,10 +47,12 @@ export default function NewRoomModal({ isOpen, onClose }) {
     try {
       const res = await axios.post(`/rooms/createRoom`, formData, {
         headers: {
-          Authorization: `Bearer ${receivedToken}`,
-        },
-      });
-      navigate(`/room/${res.data.result.roomId}`);
+
+          'Authorization': `Bearer ${receivedToken}`,
+          },
+       });
+      navigate(`/rooms/${res.data.result.roomId}`);
+
     } catch (error) {
       console.error(error);
     }

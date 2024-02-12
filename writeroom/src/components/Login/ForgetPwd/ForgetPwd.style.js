@@ -10,7 +10,7 @@ export const App = styled.div`
 `;
 
 export const Container = styled.div`
-  margin-top: 100px;
+  margin-top: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,6 +24,7 @@ export const Container = styled.div`
     line-height: 33px;
     letter-spacing: 0em;
     text-align: left;    
+    margin-bottom: 10px;
   }
 
   p {
@@ -32,14 +33,16 @@ export const Container = styled.div`
     font-weight: 500;
     line-height: 14px;
     letter-spacing: 0em;
+    margin-bottom: 10px;
   }
 
   input {
     width: 310px;
     height: 45px;
     border-radius: 5px;
-    border: 1px solid black;
+    border: 1px solid rgba(229, 229, 229, 1);
     padding-left: 10px;
+    margin-bottom: 10px;
   }
   ::placeholder {
     font-family: Noto Sans;
@@ -55,13 +58,18 @@ export const Container = styled.div`
     width: 320px;
     height: 45px;
     border-radius: 5px;
-    border: 1px solid black;
+    border: none;
+    background: rgba(181, 169, 148, 1);
+    color: white;
+    margin-bottom: 10px;
+    cursor: pointer;
   }
 
   h6 {
     width: 320px;
     text-align: left;
     text-decoration: underline;
+    margin-bottom: 10px;
   }
 `;
 
