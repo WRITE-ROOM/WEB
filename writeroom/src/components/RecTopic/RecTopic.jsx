@@ -27,7 +27,7 @@ export default function RecTopic({ onToggle }) {
   const user = useSelector((state) => state.user);
   const bookmark = useSelector(state => state.bookmark);
   const userId = localStorage.getItem('id');
-  const receivedToken = localStorage.getItem('token')
+  const receivedToken = localStorage.getItem('token');
   // const receivedToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo"
 
   let dispatch = useDispatch();
@@ -62,8 +62,8 @@ export default function RecTopic({ onToggle }) {
           },
       })
       console.log('서버 전달이다: ', res.data)
-      const vocas = res.data.result.map(item => item.voca);
-      // const vocas = res.data.result[0].voca.split(', ');
+      // const vocas = res.data.result.map(item => item.voca);
+      const vocas = res.data.result[0].voca.split(', ');
       setTopics(vocas);
 
     } catch (error) {  
@@ -81,8 +81,8 @@ export default function RecTopic({ onToggle }) {
           },
       })
       // console.log(res.data)
-      const vocas = res.data.result.map(item => item.voca);
-      // const vocas = res.data.result[0].voca.split(', ');
+      // const vocas = res.data.result.map(item => item.voca);
+      const vocas = res.data.result[0].voca.split(', ');
       setKeywords(vocas);
     } catch (error) {
       console.log(error)
