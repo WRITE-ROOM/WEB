@@ -11,9 +11,14 @@ export const Container = styled.div`
   display: flex;
 `;
 
+export const TopWrapper = styled.div`
+  padding-bottom: 20px;
+  border-bottom: gainsboro 3px solid;
+`;
+
 export const UserIconWrapper = styled.div`
-  position: absolute;
-  margin-bottom: 120px;
+  /* position: absolute;
+  margin-bottom: 120px; */
 `;
 
 export const ContentsBox = styled.div`
@@ -29,16 +34,14 @@ export const NameBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
   margin-left: ${({ openRoomSNB }) => (openRoomSNB ? "50px" : "50px")};
 `;
 
 export const CategoryWrapper = styled.div`
   color: #b5a995;
   display: flex;
-  position: absolute;
-  margin-bottom: 100px;
   margin-left: 50px;
+  /* padding-bottom: 50px; */
   align-items: center;
   gap: 10px;
   button {
@@ -51,9 +54,7 @@ export const CategoryWrapper = styled.div`
 `;
 
 export const TextBox = styled.div`
-  border-top: gainsboro 3px solid;
   gap: 10px;
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -62,18 +63,20 @@ export const TextBox = styled.div`
   h1 {
     margin-top: 10px;
   }
+
   span {
-    font-weight: bolder;
-    font-size: 16px;
-  }
-  p {
     text-overflow: ellipsis;
     overflow: hidden;
     word-break: break-word;
-    display: -webkit-box;
-    -webkit-line-clamp: 2; // 원하는 라인수
+    /* display: -webkit-box; 이 스타일링 때문에 줄바꿈일어남 근데 2줄만들려면 필요한듯 */
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
+`;
+
+export const SubTitle = styled.span`
+  font-weight: bolder;
+  font-size: 16px;
 `;
 
 export const NoteImg = styled.img`

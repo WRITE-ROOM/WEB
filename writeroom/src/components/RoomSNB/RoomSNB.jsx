@@ -1,3 +1,4 @@
+import axios from "axios";
 import * as S from "./RoomSNB.style";
 import { GoGear } from "react-icons/go";
 import { GoPlusCircle } from "react-icons/go";
@@ -8,12 +9,38 @@ import {
 import { BsPersonCircle } from "react-icons/bs";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import ProgressBar from "../ProgressBar/ProgressBar";
-
+import { useEffect } from "react";
 import { CategoryToggle } from "../CategoryToggle/CategoryToggle";
-
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setRoom } from "../../redux/room";
 const RoomSNB = ({ percent, isOpen, handleRoomSNB }) => {
   const nameArr = ["지환", "수민", "영주"];
+  const dispatch = useDispatch();
+  const params = useParams();
+  const roomId = params.roomId;
 
+  const receivedToken = localStorage.getItem("token");
+  const receivedId = localStorage.getItem("id");
+
+  const getRoomMember = async (roomId) => {
+    try {
+      const response = await axios.get(`/rooms/13/userRoom`, {
+        headers: {
+          Authorization: `Bearer ${receivedToken}`,
+        },
+      });
+      // 500번 에러 발생
+      console.log(response.data);
+      dispatch(setRoom(response.data));
+    } catch (error) {
+      console.error("이건 RoomSNB 에러:", error);
+    }
+  };
+
+  // useEffect(() => {
+  //   getRoomMember(roomId);
+  // }, [roomId]);
   return (
     <div>
       {isOpen ? (

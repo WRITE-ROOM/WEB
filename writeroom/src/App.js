@@ -13,25 +13,23 @@ import Note from "./pages/Note.jsx";
 
 import RoomChallenge from "./pages/RoomChallenge.jsx";
 import RoomCategory from "./pages/RoomCategory.jsx";
-import MyprofileAccount from './pages/MyprofileAccount.jsx'
-import MyProfile from "./pages/Myprofile.jsx"
+import MyprofileAccount from "./pages/MyprofileAccount.jsx";
+import MyProfile from "./pages/Myprofile.jsx";
 import MyprofilePw from "./pages/MyprofilePw.jsx";
 import MyBookmarkPage from "./pages/MyBookmarkPage.jsx";
 import ResetPwdPage from "./pages/ResetPwdPage.jsx";
 import MyprofileNone from "./pages/MyprofileNone.jsx";
-
 
 function App() {
   return (
     <div className="App">
       <Header />
       <Routes>
-        <Route path="/room" element={<RoomPage />} />
-        <Route path="/room/:roomId" element={<RoomPage />} />
-        <Route path="/room/setting" element={<RoomSetting />} />
-        <Route path="/room/member" element={<RoomMember />} />
-        <Route path="/room/challenge" element={<RoomChallenge />} />
-        <Route path="/room/category" element={<RoomCategory />} />
+        <Route path="/rooms/:roomId" element={<RoomPage />} />
+        <Route path="/rooms/setting:roomId" element={<RoomSetting />} />
+        <Route path="/rooms/member:roomId" element={<RoomMember />} />
+        <Route path="/rooms/challenge:roomId" element={<RoomChallenge />} />
+        <Route path="/rooms/category:roomId" element={<RoomCategory />} />
         <Route path="/write" element={<Write />} />
         <Route path="/note" element={<Note />} />
         <Route path="/signup" element={<Signup />} />
@@ -39,14 +37,14 @@ function App() {
         <Route path="/forgetPwd" element={<ForgetPwdPage />} />
         {/* reset/pw/currentEmail : 로그인 시 비밀번호 재설정
         reset/pw/newEmail : 본인이 아닌 경우 비밀번호 재설정  */}
-        <Route path="/reset/pw/:status" element={<ResetPwdPage />} /> 
+        <Route path="/reset/pw/:status" element={<ResetPwdPage />} />
         <Route path="/oauth" element={<Redirect />} />
         <Route path="/main" element={<Main />} />
-        <Route path="/myprofile/account" element={<MyProfile/>} />
-        <Route path="/myprofile/account/email" element={<MyprofileAccount/>} />
-        <Route path="/myprofile/account/pw" element={<MyprofilePw/>} />
-        <Route path="/myprofile/bookmark" element={<MyBookmarkPage/>} />
-        <Route path="/myprofile/none" element={<MyprofileNone/>} />
+        <Route path="/myprofile/account" element={<MyProfile />} />
+        <Route path="/myprofile/account/email" element={<MyprofileAccount />} />
+        <Route path="/myprofile/account/pw" element={<MyprofilePw />} />
+        <Route path="/myprofile/bookmark" element={<MyBookmarkPage />} />
+        <Route path="/myprofile/none" element={<MyprofileNone />} />
       </Routes>
     </div>
   );
