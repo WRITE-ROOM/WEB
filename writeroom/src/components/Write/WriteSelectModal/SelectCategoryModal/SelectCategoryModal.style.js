@@ -16,6 +16,7 @@ export const Back = styled.div`
 export const CategoryContainer = styled.ul`
   width: 100%;
   padding-left: 12px;
+  box-sizing: border-box;
 
   li {
     text-align: left;
@@ -23,4 +24,15 @@ export const CategoryContainer = styled.ul`
     font-size: 14px;
     font-weight: 500;
   }
+`;
+
+export const NewCategory = styled.div`
+  height: 30px;
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  cursor: pointer;
+
+  font-size: 14px;
+  font-weight: 300;
 `;

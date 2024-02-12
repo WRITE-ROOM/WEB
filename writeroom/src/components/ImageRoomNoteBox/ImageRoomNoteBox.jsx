@@ -9,7 +9,7 @@ import { TagContainer, Tag } from "../../pages/Note.style";
 import { useNavigate } from "react-router-dom";
 import { addNote } from "../../redux/note";
 
-const ImageRoomNoteBox = ({ note, roomId }) => {
+const ImageRoomNoteBox = ({ note, roomId, noteCoverImg }) => {
   const navigate = useNavigate();
   const [isClick, setIsClick] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -20,7 +20,7 @@ const ImageRoomNoteBox = ({ note, roomId }) => {
     noteSubtitle,
     noteContent,
     writer,
-    noteImg,
+    // noteImg,
     createdAt,
     tagList,
     userProfileImg,
@@ -87,6 +87,7 @@ const ImageRoomNoteBox = ({ note, roomId }) => {
               note={note}
               roomId={parseInt(roomId)}
               categoryName={note.categoryContent}
+              noteCoverImg={noteCoverImg}
             />
           </S.Right>
         </S.Top>
@@ -102,7 +103,7 @@ const ImageRoomNoteBox = ({ note, roomId }) => {
         </S.TextBox>
       </S.ContentsBox>
 
-      {noteImg && <S.NoteImg src={noteImg}></S.NoteImg>}
+      {noteCoverImg && <S.NoteImg src={noteCoverImg}></S.NoteImg>}
     </S.Container>
   );
 };

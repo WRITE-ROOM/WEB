@@ -13,7 +13,7 @@ import {
 } from "../../../../redux/selectModal";
 import NewRoomModal from "../../../Main/NewRoomModal/NewRoomModal";
 import axios from "axios";
-import { setCategory, createCategory } from "../../../../redux/category";
+import { setCategory } from "../../../../redux/category";
 
 const SelectRoomModal = () => {
   const dispatch = useDispatch();
@@ -81,7 +81,9 @@ const SelectRoomModal = () => {
           {showMoreRoom &&
             rooms.slice(3).map((room, index) => (
               <M.Room key={index} onClick={() => handleSelectedRoom(room)}>
-                {room.roomTitle}
+                {room.roomTitle.length > 18
+                  ? room.roomTitle.slice(0, 18) + "..."
+                  : room.roomTitle}
               </M.Room>
             ))}
         </M.Rooms>

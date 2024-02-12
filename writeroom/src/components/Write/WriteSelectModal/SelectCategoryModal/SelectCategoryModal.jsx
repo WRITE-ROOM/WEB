@@ -8,11 +8,14 @@ import CreateCategory from "../../CreateCategory/CreateCategory";
 import {
   setSelectedCategory,
   setCurrentModal,
+  setSelectedRoom,
 } from "../../../../redux/selectModal";
 import { useDispatch, useSelector } from "react-redux";
 
 const SelectCategoryModal = () => {
   const dispatch = useDispatch();
+
+  const [categoryModal, setCategoryModal] = useState(false);
 
   // 선택한 룸의 카테고리 리스트
   const categories = useSelector((state) => state.category.categoryList);
@@ -30,6 +33,7 @@ const SelectCategoryModal = () => {
         categoryId: category.categoryId,
       })
     );
+    // dispatch(setCurrentModal(null));
   };
 
   return (
@@ -60,8 +64,14 @@ const SelectCategoryModal = () => {
               </li>
             ))}
         </M.CategoryContainer>
+        <M.NewCategory onClick={() => setCategoryModal(true)}>
+          <FiPlus size={18} />
+          <p>카테고리 추가하기</p>
+        </M.NewCategory>
 
-        <CreateCategory />
+        {categoryModal && (
+          <CreateCategory setCategoryModal={setCategoryModal} />
+        )}
       </SimpleContainer>
     </M.Container>
   );

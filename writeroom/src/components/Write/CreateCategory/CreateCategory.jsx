@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { FiPlus } from "react-icons/fi";
+import { IoClose } from "react-icons/io5";
 import * as C from "./CreateCategory.style";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategory } from "../../../redux/category";
+import {
+  setCurrentModal,
+  setSelectedCategoryName,
+} from "../../../redux/selectModal";
 
-const CreateCategory = () => {
+const CreateCategory = ({ setCategoryModal }) => {
   const dispatch = useDispatch();
   const roomId = useSelector((state) => state.selectModal.selectedRoom.roomId);
   const [newCategory, setNewCategory] = useState("");
+  const ca = useSelector((state) => state.category);
+  const categoryList = useSelector((state) => state.category.categoryList);
 
   // const accessToken = localStorage.getItem("token");
   const accessToken =
@@ -26,17 +33,47 @@ const CreateCategory = () => {
         }
       );
       console.log(res.data);
+      dispatch(
+        setCategory([
+          ...categoryList,
+          { categoryName: newCategory, categoryId: null },
+        ])
+      );
+      dispatch(setCurrentModal(null));
+      dispatch(setSelectedCategoryName(newCategory));
     } catch (error) {
       console.log(error);
     }
   };
 
+  const handleCreateCategory = () => {
+    postCategory();
+    setCategoryModal(false);
+  };
+
   return (
-    <C.Container>
-      <FiPlus size={18} />
-      <p onClick={postCategory}>카테고리 추가하기</p>
-      <input type="text" onChange={(e) => setNewCategory(e.target.value)} />
-    </C.Container>
+    <C.Background>
+      <C.Container>
+        <C.Header>
+          <h1>카테고리 추가하기</h1>
+          <IoClose size={20} onClick={() => setCategoryModal(false)} />
+        </C.Header>
+
+        <C.CategoryName>
+          <p>카테고리 이름</p>
+          <input
+            type="text"
+            placeholder="카테고리 이름을 작성해주세요"
+            value={newCategory}
+            onChange={(e) => setNewCategory(e.target.value)}
+          />
+        </C.CategoryName>
+
+        <C.CreateButton onClick={() => handleCreateCategory()}>
+          추가
+        </C.CreateButton>
+      </C.Container>
+    </C.Background>
   );
 };
 

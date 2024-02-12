@@ -4,7 +4,7 @@ import { BiDotsVerticalRounded } from "react-icons/bi";
 import { DropdownContainer } from "../Header/Dropdown.style";
 import * as S from "./Setting.style";
 import DeleteNoteModal from "../DeleteNoteModal/DeleteNoteModal";
-import { addNote } from "../../redux/note";
+import { addNote, setNoteCoverImg } from "../../redux/note";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setTag } from "../../redux/tag";
@@ -14,7 +14,7 @@ import {
   setSelectedCategoryName,
 } from "../../redux/selectModal";
 
-const Setting = ({ type, note, roomId, categoryName }) => {
+const Setting = ({ type, note, roomId, categoryName, noteCoverImg }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showSettingMenu, setShowSettingMenu] = useState(false);
@@ -35,6 +35,9 @@ const Setting = ({ type, note, roomId, categoryName }) => {
   const handleUpdateNote = () => {
     dispatch(addNote(note));
     dispatch(setTag(note.tagList));
+    if (noteCoverImg) {
+      dispatch(setNoteCoverImg(noteCoverImg));
+    }
     dispatch(updateMode());
     dispatch(setSelectedRoomId(roomId));
     dispatch(setSelectedCategoryName(categoryName));
