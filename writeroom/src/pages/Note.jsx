@@ -56,7 +56,7 @@ const Note = () => {
         <N.CoverImage img={note.noteCoverImg} />
 
         <N.Tools>
-          <Bookmark defaultColor="white" />
+          <Bookmark roomId={roomId} noteId={noteId} defaultColor="white" />
           <Setting
             type="config"
             note={note}

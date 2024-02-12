@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaRegBookmark } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa";
 import * as B from "./Bookmark.style";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-const Bookmark = ({ defaultColor }) => {
+const Bookmark = ({ defaultColor, roomId, noteId }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   const handleBookmark = () => {
@@ -16,17 +16,40 @@ const Bookmark = ({ defaultColor }) => {
   };
 
   // const roomId = useSelector((state) => state.room.roomId);
-  const roomId = 8;
+
+  // const roomId = 8;
   // const noteId = useSelector((state) => state.note.noteId);
-  const noteId = 1;
-  // const userId = useSelector((state) => state.user.userId);
-  const userId = 1;
+  // const noteId = 1;
+
+  // const accessToken = localStorage.getItem("token");
+  const accessToken =
+    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo";
+
+  const fetchBookmark = async () => {
+    try {
+      const params = { page: 0 };
+      const res = await axios.get("/notes/bookmark/list", {
+        params,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      console.log("북마크 조회", res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const postBookmark = async () => {
     try {
       const res = await axios.post(
-        `/notes/bookmark/${roomId}/${noteId}/${userId}`,
-        {}
+        `/notes/bookmark/${roomId}/${noteId}`,
+        null,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
       );
 
       console.log(res.data);
@@ -34,6 +57,10 @@ const Bookmark = ({ defaultColor }) => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    fetchBookmark();
+  }, []);
 
   return (
     <B.Container>
