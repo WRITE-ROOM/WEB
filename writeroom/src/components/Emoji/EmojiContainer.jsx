@@ -12,67 +12,115 @@ import Emoji from "./Emoji";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
-const EmojiContainer = ({ noteId }) => {
-  const initialEmojis = [
-    { index: 1, image: Emoji1, count: 0, added: false },
-    { index: 2, image: Emoji2, count: 0, added: false },
-    { index: 3, image: Emoji3, count: 0, added: false },
-    { index: 4, image: Emoji4, count: 0, added: false },
-    { index: 5, image: Emoji5, count: 0, added: false },
-    { index: 6, image: Emoji6, count: 0, added: false },
+const EmojiContainer = ({ emojiCounts }) => {
+  const emojiImage = [
+    { image: Emoji1 },
+    { image: Emoji2 },
+    { image: Emoji3 },
+    { image: Emoji4 },
+    { image: Emoji5 },
+    { image: Emoji6 },
   ];
 
+  console.log("emojiCounts", emojiCounts);
+  // const [emojis, setEmojis] = useState([...emojiCounts]);
+
+  // useEffect(() => {
+  //   setEmojis(emojiCounts);
+  // }, []);
+
   // 이모지 개수 불러오기
-  const emojiCounts = useSelector((state) => state.note.emojiList.emojiCounts);
+  // const emojiCounts = useSelector((state) => state.note.emojiList.emojiCounts);
+  // console.log(emojiCounts);
 
   // 불러온 이모지 개수 업데이트
-  const updatedEmojiList = initialEmojis.map((emoji, index) => ({
-    ...emoji,
-    count: emojiCounts[index] || 0,
-  }));
+  // const updatedEmojiList = initialEmojis.map((emoji, index) => ({
+  //   ...emoji,
+  //   count: emojiCounts[index],
+  // }));
 
-  const [emojis, setEmojis] = useState(updatedEmojiList);
+  // console.log("up", updatedEmojiList);
+
+  // const [emojis, setEmojis] = useState(emojiCounts);
+
+  // console.log("emojis", emojis);
+
   const [showEmojiList, setShowEmojiList] = useState(false);
 
-  const handleAddEmoji = (index) => {
-    setEmojis((prevEmojis) =>
-      prevEmojis.map(
-        (emoji) =>
-          !emoji.added
-            ? emoji.index === index
-              ? { ...emoji, count: emoji.count + 1, added: true } // 이모지 등록
-              : emoji
-            : { ...emoji, count: emoji.count - 1, added: false } // 이모지 등록 취소
-      )
-    );
+  const [addedEmoji, setAddedEmoji] = useState(null);
+
+  const noteId = useSelector((state) => state.note.noteId);
+
+  const handleEmojiClick = async (index) => {
+    if (addedEmoji === index) {
+      await deleteEmoji();
+      setAddedEmoji(null);
+    } else if (addedEmoji === null) {
+      await deleteEmoji();
+      await postEmoji(index);
+      setAddedEmoji(index);
+    } else {
+      await updateEmoji(index);
+      setAddedEmoji(index);
+    }
   };
+
+  console.log("added", addedEmoji);
 
   const accessToken =
     "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo";
 
-  // const noteId = useSelector((state) => state.note.noteId);
-  console.log("noteId ", noteId);
-
   // 이모지 남기기
-  const postEmoji = async () => {
+  const postEmoji = async (index) => {
     try {
-      const params = { emojiNum: 6 };
+      const params = { emojiNum: index };
       const res = await axios.post(`/Emoji/${noteId}`, null, {
+        params,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-        params,
       });
       console.log("Emoji Post ", res.data);
+      // emojiCounts[index]++;
     } catch (error) {
       console.log("post", error);
     }
   };
 
-  useEffect(() => {
-    // fetchEmojiList();
-    // postEmoji();
-  }, []);
+  const updateEmoji = async (index) => {
+    try {
+      const params = { emojiNum: index };
+      const res = await axios.patch(`/Emoji/${noteId}`, null, {
+        params,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      console.log("Emoji update ", res.data);
+      // emojiCounts[index]++;
+
+      // setEmojis((prev) =>
+      //   prev.map((count, i) => (i === index - 1 ? count + 1 : count))
+      // );
+    } catch (error) {
+      console.log("update", error);
+    }
+  };
+
+  const deleteEmoji = async () => {
+    try {
+      const res = await axios.delete(`/Emoji/${noteId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      console.log("delete", res.data);
+
+      // setEmojis([...emojiCounts]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <E.Container>
@@ -89,10 +137,19 @@ const EmojiContainer = ({ noteId }) => {
       {/* 추가된 이모지 */}
       <E.AddedEmoji>
         <ul>
-          {emojis &&
-            emojis
-              .filter((emoji) => emoji.count >= 0)
-              .map((emoji, index) => <Emoji key={index} emoji={emoji} />)}
+          {emojiCounts &&
+            emojiCounts.map((count, index) => {
+              return (
+                count >= 0 && (
+                  <Emoji
+                    key={index}
+                    count={count}
+                    index={index}
+                    image={emojiImage[index].image}
+                  />
+                )
+              );
+            })}
         </ul>
       </E.AddedEmoji>
 
@@ -106,10 +163,13 @@ const EmojiContainer = ({ noteId }) => {
         >
           <p>이모지 종류</p>
           <E.EmojiList>
-            {emojis &&
-              emojis.map((emoji, index) => (
-                <li key={index} onClick={() => handleAddEmoji(emoji.index)}>
-                  <img src={emoji.image} alt={`emoji${emoji.index}`} />
+            {emojiImage &&
+              emojiImage.map((emoji, index) => (
+                <li key={index} onClick={() => handleEmojiClick(index + 1)}>
+                  <img
+                    src={emojiImage[index].image}
+                    alt={`emoji${index + 1}`}
+                  />
                 </li>
               ))}
           </E.EmojiList>

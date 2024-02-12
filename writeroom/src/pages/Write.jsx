@@ -31,7 +31,7 @@ const Write = () => {
   const tags = useSelector((state) => state.tag);
 
   const [title, setTitle] = useState(note.noteTitle);
-  const [subtitle, setSubtitle] = useState(note.noteSubTitle);
+  const [subtitle, setSubtitle] = useState(note.noteSubtitle);
 
   const [content, setContent] = useState(note.noteContent);
   const [image, setImage] = useState(note.noteCoverImg);
@@ -134,13 +134,11 @@ const Write = () => {
       });
 
       // 해당 룸의 카테고리 리스트로 category redux 설정
-      dispatch(setCategory(res.data.result.categoryList));
-
       const categoryList = res.data.result.categoryList;
-      console.log(categoryList);
+      dispatch(setCategory(categoryList));
+      console.log("categoryList", categoryList);
 
       categoryList.forEach((category) => {
-        // !! 룸 노트 목록 조회에서는 categoryId나 categoryName을 안 줘서 못 불러옴
         // !! 카테고리 수정은 불가능??
         if (category.categoryName === selectedCategory.categoryName) {
           dispatch(
@@ -182,9 +180,10 @@ const Write = () => {
     } else {
       formData.append("noteImg", "null");
     }
+
     const requestData = {
       noteTitle: title,
-      noteSubTitle: subtitle,
+      noteSubtitle: subtitle,
       noteContent: content,
       letterCount: count,
       noteTagList: tags.map((tag) => tag.tagName),
@@ -224,7 +223,7 @@ const Write = () => {
 
     const requestData = {
       noteTitle: title,
-      noteSubTitle: subtitle,
+      noteSubtitle: subtitle,
       noteContent: content,
       letterCount: count,
       noteTagList: tags.map((tag) => tag.tagName),
@@ -254,6 +253,10 @@ const Write = () => {
   };
 
   useEffect(() => {
+    dispatch(setCurrentModal(null));
+  }, []);
+
+  useEffect(() => {
     const fetchData = async () => {
       await fetchRoomList();
       if (roomId) {
@@ -262,7 +265,7 @@ const Write = () => {
     };
 
     fetchData();
-  }, [roomId, accessToken]);
+  }, [roomId, currentModal]);
 
   const saveNote = () => {
     postNote();
@@ -272,6 +275,8 @@ const Write = () => {
   const updateNote = () => {
     putNote();
   };
+
+  console.log(note);
 
   return (
     <W.Container>
@@ -284,7 +289,7 @@ const Write = () => {
           <SpellCheck content={content} />
 
           {/* 글자수 */}
-          <Counter content={content} count={count} setCount={setCount} />
+          {/* <Counter content={content} count={count} setCount={setCount} /> */}
         </W.Left>
 
         {/* 룸 */}
