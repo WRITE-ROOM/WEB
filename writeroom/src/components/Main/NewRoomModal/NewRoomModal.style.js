@@ -5,13 +5,13 @@ export const ModalBackground = styled.div`
 	position: fixed;
 	top: 0;
 	left: 0;
-	width: 100%;
-	height: 100%;
+	width: 100vw;
+	height: 100vh;
 	background: rgba(0, 0, 0, 0.5);
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	z-index: 100;
+	z-index: 1000;
 `
 export const Modal = styled.div`
 	width: 380px;
@@ -25,6 +25,8 @@ export const Modal = styled.div`
 	// background: white;
   background-color: ${(props) => props.theme.bgColor};
 	z-index: 101;
+  position:absolute;
+  
 `
 
 export const Top = styled.div`

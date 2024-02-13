@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as D from "../../Header/Dropdown.style";
 import * as C from "./Counter.style";
 
@@ -22,12 +22,14 @@ const Counter = ({ content, count, setCount }) => {
     return doc.body.textContent.replace(/\s/g, "") || "";
   };
 
-  setCount(stripHtmlTags(content).length);
+  useEffect(() => {
+    setCount(stripHtmlTags(content).length);
+  }, [content]);
   const characterCountNoSpace = stripHtmlTagsNoSpace(content).length;
 
   return (
     <C.Counter>
-      <p
+      <div
         onMouseEnter={() => {
           setShowCountDetail(true);
         }}
@@ -48,7 +50,7 @@ const Counter = ({ content, count, setCount }) => {
             </C.CounterDetail>
           </D.SimpleContainer>
         )}
-      </p>
+      </div>
     </C.Counter>
   );
 };

@@ -51,7 +51,7 @@ export default function WordBookMark() {
   };
   const postBookmarkstatus = async(word) => {
     try {
-      const res = await axios.post(`/bookmarks/topics`, {content: word, userId: userId}, 
+      const res = await axios.post(`/bookmarks/topics?content=${word}`, {}, 
       {
         headers: {
           'Authorization': `Bearer ${receivedToken}`,

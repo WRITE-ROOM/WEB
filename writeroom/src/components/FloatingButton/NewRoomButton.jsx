@@ -2,22 +2,42 @@ import React, { useState } from "react";
 import { FloatingButton } from "./FloatingButton.style";
 import NewRoomLogo from "../../assets/NewRoomLogo.png";
 import ToolTip from "../ToolTip/ToolTip";
+import NewRoomModal from "../Main/NewRoomModal/NewRoomModal";
 
-const NewRoomButton = ({onClick}) => {
+const NewRoomButton = () => {
   // 호버 시 ToolTip 열기/닫기
   const [isTooltipVisible, setTooltipVisible] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleButton = ()=>{
+    console.log("clicked");
+    openModal();
+    console.log(isModalOpen);
+  }
 
   return (
-    <FloatingButton
-      $right="130px"
-      onMouseEnter={() => setTooltipVisible(true)}
-      onMouseLeave={() => setTooltipVisible(false)}
-      onClick={onClick}
-    >
-      <img src={NewRoomLogo} alt="NewRoomLogo" />
+    <div>
+      <FloatingButton
+        $right="130px"
+        onMouseEnter={() => setTooltipVisible(true)}
+        onMouseLeave={() => setTooltipVisible(false)}
+        onClick={() => handleButton()}
+      >
+        <img src={NewRoomLogo} alt="NewRoomLogo" />
 
-      {isTooltipVisible && <ToolTip message="룸 생성하기" />}
-    </FloatingButton>
+        {isTooltipVisible && <ToolTip message="룸 생성하기" />}
+      </FloatingButton>
+      {isModalOpen && <NewRoomModal onClose={closeModal}/>}
+        
+    </div> 
   );
 };
 

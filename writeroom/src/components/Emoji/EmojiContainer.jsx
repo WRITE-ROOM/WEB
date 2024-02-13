@@ -22,29 +22,12 @@ const EmojiContainer = ({ emojiCounts }) => {
     { image: Emoji6 },
   ];
 
-  console.log("emojiCounts", emojiCounts);
-  const [emojis, setEmojis] = useState(null);
+  const [emojis, setEmojis] = useState(emojiCounts);
   console.log("emojis ", emojis);
 
   // useEffect(() => {
   //   setEmojis(emojiCounts);
   // }, []);
-
-  // 이모지 개수 불러오기
-  // const emojiCounts = useSelector((state) => state.note.emojiList.emojiCounts);
-  // console.log(emojiCounts);
-
-  // 불러온 이모지 개수 업데이트
-  // const updatedEmojiList = initialEmojis.map((emoji, index) => ({
-  //   ...emoji,
-  //   count: emojiCounts[index],
-  // }));
-
-  // console.log("up", updatedEmojiList);
-
-  // const [emojis, setEmojis] = useState(emojiCounts);
-
-  // console.log("emojis", emojis);
 
   const [showEmojiList, setShowEmojiList] = useState(false);
 
@@ -83,9 +66,11 @@ const EmojiContainer = ({ emojiCounts }) => {
         },
       });
       console.log("Emoji Post ", res.data);
-      setEmojis((prev) =>
-        prev.map((count, i) => (i === index - 1 ? count + 1 : count))
-      );
+      if (emojis) {
+        setEmojis((prev) =>
+          prev.map((count, i) => (i === index - 1 ? count + 1 : count))
+        );
+      }
     } catch (error) {
       console.log("post", error);
     }
@@ -102,12 +87,14 @@ const EmojiContainer = ({ emojiCounts }) => {
       });
       console.log("Emoji update ", res.data);
 
-      setEmojis((prev) =>
-        prev.map((count, i) => (i === addedEmoji ? count - 1 : count))
-      );
-      setEmojis((prev) =>
-        prev.map((count, i) => (i === index - 1 ? count + 1 : count))
-      );
+      if (emojis) {
+        setEmojis((prev) =>
+          prev.map((count, i) => (i === addedEmoji ? count - 1 : count))
+        );
+        setEmojis((prev) =>
+          prev.map((count, i) => (i === index - 1 ? count + 1 : count))
+        );
+      }
     } catch (error) {
       console.log("update ", error);
     }
@@ -120,18 +107,18 @@ const EmojiContainer = ({ emojiCounts }) => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log("delete", res.data);
-      setEmojis((prev) =>
-        prev.map((count, i) => (i === addedEmoji ? count - 1 : count))
-      );
+      console.log("delete ", res.data);
+      setEmojis(emojiCounts);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    setEmojis(emojiCounts);
-  }, []);
+    if (emojiCounts) {
+      setEmojis(emojiCounts);
+    }
+  }, [emojiCounts]);
   return (
     <E.Container>
       {/* 이모지 추가 버튼 */}

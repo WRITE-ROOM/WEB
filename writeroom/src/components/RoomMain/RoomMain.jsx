@@ -42,7 +42,6 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-
   return (
     <S.Container>
       <S.ImgContainer

@@ -60,7 +60,7 @@ export default function NoteBookmark() {
       setTotalPage(data.totalPage); // 총 페이지
 
       console.log(res.data)
-      console.log(bookmarkMaterialList);
+      console.log(bookmarkMaterialList); 
       console.log(isBookmarked);
     } catch (error) {
         console.error(error);
@@ -90,23 +90,23 @@ export default function NoteBookmark() {
                   <S.Date>{bookmark.createdAt.split("T")[0]}</S.Date>
   
                   <TagContainer>
-                    {/* <ul>
-                      {tagList &&
-                        tagList.map((tag, index) => {
+                    <ul>
+                      {bookmark.tagList &&
+                        bookmark.tagList.map((tag, index) => {
                           return <Tag key={index}>{tag.tagName}</Tag>;
                         })}
-                    </ul> */}
+                    </ul>
                   </TagContainer>
                 </S.Info>
               </div>
             </S.Left>
   
             <S.Right>
-              <Bookmark roomId={roomId} noteId={bookmark.noteId} defaultColor="black" myProfile={true}/>
+              <Bookmark roomId={bookmark.roomId} noteId={bookmark.noteId} bookmarkId={bookmark.noteBookmarkId} defaultColor="black" myProfile={true}/>
               <Setting
                 type="dots"
                 note={note}
-                roomId={parseInt(roomId)}
+                roomId={parseInt(bookmark.roomId)}
                 categoryName={note.categoryContent}
               />
             </S.Right>
@@ -115,8 +115,7 @@ export default function NoteBookmark() {
           <S.TextBox>
             <h1>{bookmark.noteTitle}</h1>
             <p>
-              {/* <span>{noteSubtitle}</span> */}
-              <span>{bookmark.noteTitle}</span>
+              <span>{bookmark.noteSubtitle}</span>
               {bookmark.noteContent && bookmark.noteContent.length < maxLength
                 ? stripHtmlTags(index)
                 : stripHtmlTags(index).slice(0, maxLength) + "..."}
@@ -124,8 +123,7 @@ export default function NoteBookmark() {
           </S.TextBox>
         </S.ContentsBox>
   
-        {/* {noteImg && <S.NoteImg src={noteImg}></S.NoteImg>} */}
-        {/* <S.NoteImg src={Naver}/> // 임시이므로 서버 데이터 수정되면 삭제 */}
+        {bookmark.noteImg && <S.NoteImg src={bookmark.noteImg}></S.NoteImg>}
       </S.Container>
       ))}
         <R.PagenationBox>

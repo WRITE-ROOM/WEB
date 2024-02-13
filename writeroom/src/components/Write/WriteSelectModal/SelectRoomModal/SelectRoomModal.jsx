@@ -95,12 +95,10 @@ const SelectRoomModal = () => {
           <FiPlus size={18} />
           <p>룸 추가하기</p>
         </M.CreateRoom>
-
-        <NewRoomModal
-          isOpen={isModalOpen}
+        {isModalOpen && <NewRoomModal
           onClose={closeModal}
           doNotNavigate={true}
-        />
+        />}
       </SimpleContainer>
     </M.Container>
   );
