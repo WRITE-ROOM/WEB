@@ -9,16 +9,20 @@ import { selectRoomInfoState } from "../../redux/roomInfo";
 import { useDispatch, useSelector } from "react-redux";
 
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const RoomMain = ({ openRoomSNB, openSNB }) => {
   const dispatch = useDispatch();
   const receivedToken = localStorage.getItem("token");
   const roomInfoSelector = useSelector(selectRoomInfoState);
 
+  const params = useParams();
+  const roomId = params.roomId;
+
   useEffect(() => {
     const getNoteList = async () => {
       try {
-        const response = await axios.get("/rooms/13/list?page=0", {
+        const response = await axios.get(`/rooms/${roomId}/list?page=0`, {
           headers: {
             Authorization: `Bearer ${receivedToken}`,
           },

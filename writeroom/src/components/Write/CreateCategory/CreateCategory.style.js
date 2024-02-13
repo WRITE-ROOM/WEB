@@ -18,7 +18,8 @@ export const Background = styled.div`
 export const Container = styled.div`
   width: 400px;
   height: 190px;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.bgColor};
+
   border-radius: 10px;
   padding: 16px 20px;
   box-sizing: border-box;
@@ -48,10 +49,15 @@ export const CategoryName = styled.div`
     width: 354px;
     height: 40px;
     border-radius: 10px;
-    border: 1px solid #e5e5e5;
+    border: 1px solid ${(props) => props.theme.borderColor};
     outline: none;
+    background-color: ${(props) => props.theme.bgColor};
+    color: ${(props) => props.theme.textColor};
     padding-left: 16px;
     box-sizing: border-box;
+  }
+  ::placeholder {
+    color: ${(props) => props.theme.textColor};
   }
 `;
 

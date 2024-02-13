@@ -29,7 +29,7 @@ const RoomSNB = ({ percent, isOpen, handleRoomSNB }) => {
   const receivedId = localStorage.getItem("id");
   const getRoomMember = async () => {
     try {
-      const response = await axios.get(`/rooms/updateAt/13?page=0`, {
+      const response = await axios.get(`/rooms/updateAt/${roomId}?page=0`, {
         headers: {
           Authorization: `Bearer ${receivedToken}`,
         },
@@ -42,7 +42,7 @@ const RoomSNB = ({ percent, isOpen, handleRoomSNB }) => {
 
   useEffect(() => {
     getRoomMember();
-  }, [getRoomMember]);
+  }, []);
   console.log(roomInfoSelector);
   return (
     <div>

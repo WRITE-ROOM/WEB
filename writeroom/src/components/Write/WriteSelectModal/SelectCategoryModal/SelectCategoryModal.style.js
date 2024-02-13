@@ -17,12 +17,14 @@ export const CategoryContainer = styled.ul`
   width: 100%;
   padding-left: 12px;
   box-sizing: border-box;
+  
 
   li {
     text-align: left;
     height: 24px;
     font-size: 14px;
     font-weight: 500;
+    color: ${(props) => props.theme.textColor};
   }
 `;
 

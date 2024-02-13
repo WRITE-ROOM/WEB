@@ -10,6 +10,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  background-color: ${(props) => props.theme.SNBBgColor};
 `;
 
 export const TitleBox = styled.div`
@@ -23,7 +24,7 @@ export const TitleBox = styled.div`
 
 export const Line = styled.div`
   width: 100%;
-  border-bottom: gainsboro 2px solid;
+  border-bottom: 2px solid ${(props) => props.theme.borderColor};
 `;
 
 export const MemberProfile = styled.div`
@@ -44,7 +45,7 @@ export const IconsBox = styled.div`
 export const BasicBox = styled.div`
   margin: 20px;
   display: flex;
-  border-bottom: gainsboro 2px solid;
+  border-bottom: 2px solid ${(props) => props.theme.borderColor};
   flex-direction: column;
   padding-bottom: 20px;
   justify-content: flex-start;
