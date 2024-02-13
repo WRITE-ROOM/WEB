@@ -60,7 +60,7 @@ export const IsSignup = styled.div`
     height: 22px;
     border: none;
     background: none;
-    color: black;
+    color: ${(props) => props.theme.textColor};
     cursor: pointer;
     font-family: Pretendard;
     font-size: 18px;
@@ -82,6 +82,8 @@ export const InputInfo = styled.div`
     border-radius: 10px;
     border: 1px solid rgba(229, 229, 229, 1);
     padding-left: 10px;
+    background-color: ${(props) => props.theme.bgColor};
+    color: ${(props) => props.theme.textColor};
   }
   ::placeholder {
     font-family: Pretendard;
