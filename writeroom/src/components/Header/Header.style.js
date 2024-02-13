@@ -46,3 +46,27 @@ export const SearchButton = styled.div`
     color: #939393;
   }
 `;
+
+export const LightDarkToggle = styled.div`
+  width: 64px;
+  height: 32px;
+  background-color: ${(props) =>
+    props.themeMode === "lightTheme" ? "#e5e5e5" : "#504D46"};
+  border-radius: 20px;
+
+  padding: 3px 5px;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: ${(props) =>
+    props.themeMode === "lightTheme" ? "left" : "right"};
+
+  button {
+    width: 25px;
+    height: 25px;
+    background-color: ${(props) =>
+      props.themeMode === "lightMode" ? "#fff" : "#9c9c9c"};
+    border-radius: 20px;
+    border: none;
+  }
+`;
