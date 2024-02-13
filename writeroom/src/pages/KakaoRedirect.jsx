@@ -8,23 +8,18 @@ export default function Redirect() {
 
   let navigate = useNavigate();
 
-  // function saveLocalStorage(token, id) {
-  //   localStorage.setItem('token', token);
-  //   localStorage.setItem('id', id);
-  // }
-  function saveLocalStorage(token) {
+  function saveLocalStorage(token, id) {
     localStorage.setItem('token', token);
+    localStorage.setItem('id', id);
   }
 
   const fetchKakaoData = async () => {
-    console.log(code);
-
     try {
-      const res = await axios.post(`/api/auth/kakao?authCode=${code}`);
+      const res = await axios.post(`/api/auth/kakao?authCode=${code}`, {});
       console.log(res.data);
       const receivedToken = res.data.accessToken;
-      // saveLocalStorage(receivedToken, receivedId);
-      saveLocalStorage(receivedToken);
+      const userId = res.data.userId;
+      saveLocalStorage(receivedToken, userId);
       navigate("/main");
     } catch (error) {
       console.log(error);
