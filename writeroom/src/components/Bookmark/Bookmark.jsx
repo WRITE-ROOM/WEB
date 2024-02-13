@@ -4,7 +4,7 @@ import { FaBookmark } from "react-icons/fa";
 import * as B from "./Bookmark.style";
 import axios from "axios";
 
-const Bookmark = ({ defaultColor, roomId, noteId, myProfile}) => {
+const Bookmark = ({ defaultColor, roomId, noteId, bookmarkId, myProfile}) => {
   const [isBookmarked, setIsBookmarked] = useState(myProfile);
   
   const handleBookmark = () => {
@@ -13,27 +13,10 @@ const Bookmark = ({ defaultColor, roomId, noteId, myProfile}) => {
       postBookmark();
     }
     else
-      deleteBookmark(noteId);
+      deleteBookmark(bookmarkId);
   };
 
   const accessToken = localStorage.getItem("token");
-  // const accessToken =
-  // "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo";
-
-  const fetchBookmark = async () => {
-    try {
-      const params = { page: 0 };
-      const res = await axios.get("/notes/bookmark/list", {
-        params,
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      console.log("북마크 조회", res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const postBookmark = async () => {
     try {
@@ -53,25 +36,24 @@ const Bookmark = ({ defaultColor, roomId, noteId, myProfile}) => {
     }
   };
 
-  const deleteBookmark = async(noteId) => {
-    console.log('클릭한 노트 아이디: ', noteId)
+  const deleteBookmark = async(bookmarkId) => {
+    console.log('클릭한 북마크 아이디: ', bookmarkId)
     try {
-      const res = await axios.delete(`/notes/bookmark/delete/${noteId}`, {
+      const res = await axios.delete(`/notes/bookmark/delete/${bookmarkId}`, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
         }
       });
-      const data = res.data.result;
-      console.log(res.data)
-      window.alert('북마크에서 해제했어요.');
+      if (res.status === 200) {
+        const data = res.data.result;
+        console.log(res.data);
+        window.alert('북마크에서 해제했어요.');
+      }
     } catch (error) {
       console.log(error);
     }
   }
-  
-  useEffect(() => {
-    fetchBookmark();
-  }, []);
+
 
   return (
     <B.Container onClick={(e) => e.stopPropagation()}>
