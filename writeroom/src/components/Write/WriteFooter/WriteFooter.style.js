@@ -3,7 +3,8 @@ import styled from "styled-components";
 export const Container = styled.div`
   width: 100%;
   height: 40px;
-  background-color: #eee;
+  background-color: ${(props) => props.theme.TemplateColor};
+  color: ${(props) => props.theme.textColor};
   padding: 0 24px;
   box-sizing: border-box;
 
@@ -13,7 +14,8 @@ export const Container = styled.div`
 
   input {
     border: none;
-    background-color: #d9d9d9;
+    background-color: ${(props) => props.theme.tagInputColor};
+    color: ${(props) => props.theme.textColor};
     width: 110px;
     height: 24px;
     padding: 0px 10px;
@@ -21,6 +23,10 @@ export const Container = styled.div`
 
     &:focus {
       outline: none;
+    }
+
+    &::placeholder {
+      color: ${(props) => props.theme.textColor};
     }
   }
 `;

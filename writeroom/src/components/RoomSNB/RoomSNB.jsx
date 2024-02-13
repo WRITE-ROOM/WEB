@@ -14,83 +14,42 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import UseToolTip from "../UseToolTip/UseToolTip";
 import { setRoomInfo, resetRoomInfo } from "../../redux/roomInfo";
+import { setRoomMember } from "../../redux/roomInfo";
 import { selectRoomInfoState } from "../../redux/roomInfo";
+import { useEffect } from "react";
 
 const RoomSNB = ({ percent, isOpen, handleRoomSNB }) => {
   const nameArr = ["지환", "수민", "영주"];
   const dispatch = useDispatch();
   const params = useParams();
   const roomId = params.roomId;
+  const roomInfoSelector = useSelector(selectRoomInfoState);
 
   const receivedToken = localStorage.getItem("token");
   const receivedId = localStorage.getItem("id");
-
-  const getRoomName = async () => {
+  const getRoomMember = async () => {
     try {
-      const response = await axios.get("/rooms/13/list?page=0", {
+      const response = await axios.get(`/rooms/updateAt/13?page=0`, {
         headers: {
           Authorization: `Bearer ${receivedToken}`,
         },
       });
-      dispatch(resetRoomInfo());
-      dispatch(
-        setRoomInfo({
-          roomId: response.data.roomId,
-          roomTitle: response.data.roomTitle,
-        })
-      );
+      dispatch(setRoomMember(response.data.result));
     } catch (error) {
-      console.error("룸 메인 에러:", error);
+      console.error("이건 RoomSNB 에러:", error);
     }
   };
 
-  // const getRoomMember = async () => {
-  //   try {
-  //     const response = await axios.get(`/rooms/13/userRoom`, {
-  //       headers: {
-  //         Authorization: `Bearer ${receivedToken}`,
-  //       },
-  //     });
-  //     // console.log(response.data);
-
-  //     dispatch(setRoomInfo({ memberList: response.data.result.memberList }));
-  //   } catch (error) {
-  //     console.error("이건 RoomSNB 에러:", error);
-  //   }
-  // };
-  const getChallenge = async () => {
-    try {
-      const response = await axios.get(`/rooms/challenges/13`, {
-        headers: {
-          Authorization: `Bearer ${receivedToken}`,
-        },
-      });
-      console.log(response.data);
-      dispatch(
-        setRoomInfo({
-          goalsAchieveRate: response.data.goalsAchieveRate,
-          goalsTargetCount: response.data.goalsTargetCount,
-          routineAchieveRate: response.data.routineAchieveRate,
-          routineTargetCount: response.data.routineTargetCount,
-        })
-      );
-    } catch (error) {
-      console.error("이건 get챌린지 에러:", error);
-    }
-  };
-
-  // useEffect(() => {
-  //   getRoomName();
-  //   getChallenge();
-  // }, [roomId]);
-  const roomSelector = useSelector(selectRoomInfoState);
-  console.log(roomSelector.room);
+  useEffect(() => {
+    getRoomMember();
+  }, [getRoomMember]);
+  console.log(roomInfoSelector);
   return (
     <div>
       {isOpen ? (
         <S.Container>
           <S.TitleBox>
-            {roomSelector.room[0] && <h2>{roomSelector.room[0].roomTitle}</h2>}
+            {roomInfoSelector && <h2>{roomInfoSelector.roomTitle}</h2>}
             <S.IconsBox>
               <S.ToolTipWrapper>
                 <UseToolTip message="메뉴 닫기">
@@ -120,13 +79,22 @@ const RoomSNB = ({ percent, isOpen, handleRoomSNB }) => {
                 </S.ToolTipWrapper>
               </S.IconsBox>
             </S.TitleBox>
-            {nameArr.map((name, idx) => (
-              <S.Member key={idx}>
-                <BsPersonCircle size={30} />
-                <h2>{name}</h2>
-                <p>(3시간전)</p>
-              </S.Member>
-            ))}
+            {roomInfoSelector.memberInfo.map(
+              ({ name, userId, profileImg, updateAt }) => (
+                <S.Member key={userId}>
+                  {profileImg ? (
+                    <S.MemberProfile>
+                      <img src={`${profileImg}`} />
+                    </S.MemberProfile>
+                  ) : (
+                    <BsPersonCircle size={30} />
+                  )}
+
+                  <h2>{name}</h2>
+                  <p>(updateAt )</p>
+                </S.Member>
+              )
+            )}
             <S.Plus>
               <GoPlusCircle size={30} />
               <h2>초대하기</h2>

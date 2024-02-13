@@ -7,7 +7,7 @@ export const Container = styled.div`
 export const Header = styled.div`
   width: 100%;
   height: 58px;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.bgColor};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -163,16 +163,19 @@ export const StyledButton = styled.button`
   width: ${(props) => (props.$width ? props.$width : "124px")};
 
   padding: ${(props) => (props.$padding ? props.$padding : "9px 0")};
+  
 
   background-color: ${(props) =>
-    props.$backgroundColor ? props.$backgroundColor : "#f2f2f2"};
+    props.$backgroundColor ? "rgba(181, 169, 148, 1)" : props.theme.TemplateColor };
 
-  color: ${(props) => (props.$color ? props.$color : "black")};
+  color: ${(props) => (props.theme.textColor)};
 
   font-size: ${(props) => (props.fontSize ? props.fontSize : "16px")};
   font-weight: ${(props) => (props.fontWeight ? props.fontWeight : "500")};
 
-  border: ${(props) => (props.$border ? props.$border : "none")};
+  border-width: ${(props) => (props.$borderWidth ? props.$borderWidth : "0px")};
+  border-style: ${(props) => (props.$borderStyle ? props.$borderStyle : "none")};
+  border-color: ${(props) => (props.$borderColor ? "transparent": props.theme.borderColor)};
 
   border-radius: 10px;
 

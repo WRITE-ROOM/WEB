@@ -294,7 +294,8 @@ const Write = () => {
         <W.Center>
           <W.StyledButton
             $width="320px"
-            $border="1px solid #e5e5e5"
+            $borderWidth="1px"
+            $borderStyle="solid"
             onClick={handleCurrentModal}
           >
             {selectedRoom.roomTitle

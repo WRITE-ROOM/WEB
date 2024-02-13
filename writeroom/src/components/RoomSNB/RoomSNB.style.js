@@ -20,9 +20,18 @@ export const TitleBox = styled.div`
   justify-content: space-between; // 주축
   align-items: center; // 교차축
 `;
+
 export const Line = styled.div`
   width: 100%;
   border-bottom: gainsboro 2px solid;
+`;
+
+export const MemberProfile = styled.div`
+  img {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+  }
 `;
 
 export const IconsBox = styled.div`
