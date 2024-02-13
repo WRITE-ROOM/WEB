@@ -9,12 +9,14 @@ import {
 import { BsPersonCircle } from "react-icons/bs";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import { CategoryToggle } from "../CategoryToggle/CategoryToggle";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import UseToolTip from "../UseToolTip/UseToolTip";
-import { setChallengePercent } from "../../redux/roomInfo";
-import { setRoomMember } from "../../redux/roomInfo";
-import { selectRoomInfoState } from "../../redux/roomInfo";
+import {
+  setChallengePercent,
+  selectRoomInfoState,
+  setRoomMember,
+} from "../../redux/roomInfo";
 import InviteModal from "../Main/InviteModal/InviteModal";
 import { useEffect, useState } from "react";
 import { setCategory } from "../../redux/category";
@@ -22,6 +24,7 @@ import { setCategory } from "../../redux/category";
 const RoomSNB = ({ isOpen, handleRoomSNB }) => {
   const dispatch = useDispatch();
   const params = useParams();
+  const navigate = useNavigate();
   const roomId = params.roomId;
   const roomInfoSelector = useSelector(selectRoomInfoState);
   const categoryInfoSelector = useSelector(
@@ -37,7 +40,9 @@ const RoomSNB = ({ isOpen, handleRoomSNB }) => {
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
-
+  const changePage = (page) => {
+    navigate(`/rooms/${page}/${roomId}`);
+  };
   const getRoomMember = async () => {
     try {
       const response = await axios.get(`/rooms/updateAt/${roomId}?page=0`, {
@@ -99,7 +104,7 @@ const RoomSNB = ({ isOpen, handleRoomSNB }) => {
               </S.ToolTipWrapper>
               <S.ToolTipWrapper>
                 <UseToolTip message="룸관리">
-                  <GoGear size={30} />
+                  <GoGear size={30} onClick={() => changePage("setting")} />
                 </UseToolTip>
               </S.ToolTipWrapper>
             </S.IconsBox>
@@ -111,7 +116,11 @@ const RoomSNB = ({ isOpen, handleRoomSNB }) => {
               <S.IconsBox>
                 <S.ToolTipWrapper>
                   <UseToolTip message="멤버 관리">
-                    <GoGear color="" size={30} />
+                    <GoGear
+                      color=""
+                      size={30}
+                      onClick={() => changePage("member")}
+                    />
                   </UseToolTip>
                 </S.ToolTipWrapper>
               </S.IconsBox>
@@ -149,7 +158,7 @@ const RoomSNB = ({ isOpen, handleRoomSNB }) => {
               <S.IconsBox>
                 <S.ToolTipWrapper>
                   <UseToolTip message="챌린지 관리">
-                    <GoGear size={30} />
+                    <GoGear size={30} onClick={() => changePage("challenge")} />
                   </UseToolTip>
                 </S.ToolTipWrapper>
               </S.IconsBox>
@@ -171,7 +180,7 @@ const RoomSNB = ({ isOpen, handleRoomSNB }) => {
               <S.IconsBox>
                 <S.ToolTipWrapper>
                   <UseToolTip message="카테고리 관리">
-                    <GoGear size={30} />
+                    <GoGear size={30} onClick={() => changePage("category")} />
                   </UseToolTip>
                 </S.ToolTipWrapper>
               </S.IconsBox>
