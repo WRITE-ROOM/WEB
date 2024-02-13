@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { FaRegBookmark } from "react-icons/fa";
-import { FaBookmark } from "react-icons/fa";
+import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { IoMdRefresh } from "react-icons/io";
 import { IoSearchOutline } from "react-icons/io5";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
@@ -136,6 +135,7 @@ export default function RecTopic({ onToggle }) {
     };
 
     const postBookmarkstatus = async(word) => {
+      console.log(word) // 잘 뜸
       try {
         const res = await axios.post(`/bookmarks/topics`, {content: word, userId: userId}, 
         {
@@ -153,9 +153,11 @@ export default function RecTopic({ onToggle }) {
         console.log(res.data);  
         window.alert('북마크에 추가했어요.');
       } catch (error) {
+        console.log('content: ', word, ', userId: ', userId)
         console.log(error);
       }
     }
+    
     const DeleteBookmark = async(word) => {
       const existingBookmark = bookmarks.find((bookmark) => bookmark.content === word);
       try {
@@ -179,7 +181,7 @@ export default function RecTopic({ onToggle }) {
         {isBookmarked ? (
           <FaBookmark color="rgba(181, 169, 148, 1)" onClick={toggleDeleteBookmark}/>
         ) : (
-          <FaRegBookmark color="black" onClick={togglePostBookmark} />
+          <S.NotBookMark onClick={togglePostBookmark} />
         )}
       </S.RecWord>
     );
@@ -201,7 +203,7 @@ export default function RecTopic({ onToggle }) {
           <S.Top>
             <S.WordTitle>오늘의 소재</S.WordTitle>
             <button>
-              <IoMdRefresh size="30" onClick={() => {getTopics()}}/>
+              <S.Refresh size="30" onClick={() => {getTopics()}}/>
             </button>
           </S.Top>
           <S.RecBottom>

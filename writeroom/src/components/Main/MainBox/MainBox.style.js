@@ -15,7 +15,6 @@ export const App = styled.div`
 		line-height: 29px;
 		letter-spacing: 0em;
 		text-align: left;
-
 	}
 `
 
@@ -31,16 +30,17 @@ export const Container = styled.div`
 export const Room = styled.div`
 	width: 290px;
 	height: 259px;
-	border: 1px black solid;
+	border-style: solid;
+	border-width: 1px;
+	// border-color: black;
 	border-radius: 10px;
 	margin: 24px;
 	// cursor: pointer;
-	// background-color: whitesmoke;
 `
 export const Picture = styled.div`
 	width: 290px;
 	height: 220px;
-	border-radius : 10px 10px 0 0;
+	border-radius: 10px 10px 0 0;
 	cursor: pointer;
 	img {
 		width: 290px;

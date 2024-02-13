@@ -22,7 +22,8 @@ export const Modal = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	border-radius: 10px;
-	background: white;
+	// background: white;
+  background-color: ${(props) => props.theme.bgColor};
 	z-index: 101;
 `
 
@@ -32,6 +33,7 @@ export const Top = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+  color: ${(props) => props.theme.textColor};
 
 	p {
 		width: 345px;
@@ -42,6 +44,7 @@ export const Top = styled.div`
 		line-height: 24px;
 		letter-spacing: 0em;
 		text-align: left;
+
 	}
 
 	button {
@@ -59,7 +62,8 @@ export const closeBtn = styled(IoClose)`
 export const RoomName = styled.div`
   width: 362px;
   height: 62px;
-  background: white;
+  // background: white;
+  background-color: ${(props) => props.theme.bgColor};
   border: 1px solid rgba(229, 229, 229, 1);
   border-radius: 10px;
   p {
@@ -70,12 +74,15 @@ export const RoomName = styled.div`
     font-size: 14px;
     font-weight: 500;
     text-align: left;
+    color: ${(props) => props.theme.textColor};
   }
   input {
     width: 340px;
     height: 20px;
     margin-left: 13px;
     border: none;
+    color: ${(props) => props.theme.textColor};
+    background-color: ${(props) => props.theme.bgColor};
   }
   ::placeholder {
     font-family: Noto Sans;

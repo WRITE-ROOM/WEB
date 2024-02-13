@@ -10,7 +10,7 @@ export const Modal = styled.div`
 	flex-direction: column;
 	// align-items: center;
 	justify-content: center;
-	background: white;
+	background-color: ${(props) => props.theme.bgColor};
 	border-radius: 10px;
 	border: 1px solid lightgray;
 	z-index: 97;
@@ -25,5 +25,6 @@ export const Modal = styled.div`
 		text-align: start;
 		text-decoration: underline;
 		cursor: pointer;
+		color: ${(props) => props.theme.textColor};
 	}
 `
