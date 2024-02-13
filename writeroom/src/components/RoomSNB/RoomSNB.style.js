@@ -19,7 +19,10 @@ export const TitleBox = styled.div`
   display: flex;
   justify-content: space-between; // 주축
   align-items: center; // 교차축
-  border-bottom: gainsboro 3px solid;
+`;
+export const Line = styled.div`
+  width: 100%;
+  border-bottom: gainsboro 2px solid;
 `;
 
 export const IconsBox = styled.div`
@@ -32,8 +35,9 @@ export const IconsBox = styled.div`
 export const BasicBox = styled.div`
   margin: 20px;
   display: flex;
-  border-bottom: gainsboro 3px solid;
+  border-bottom: gainsboro 2px solid;
   flex-direction: column;
+  padding-bottom: 20px;
   justify-content: flex-start;
   width: 100%;
   height: auto;
@@ -77,5 +81,15 @@ export const Plus = styled.div`
 export const CategoryWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
+`;
+
+export const ToolTipWrapper = styled.div`
+  position: relative;
+  p {
+    font-size: 12px;
+  }
+`;
+export const CursorWrapper = styled.div`
   cursor: pointer;
 `;

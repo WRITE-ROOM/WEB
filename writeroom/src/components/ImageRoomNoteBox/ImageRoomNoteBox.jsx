@@ -50,6 +50,7 @@ const ImageRoomNoteBox = ({ note, roomId, noteCoverImg }) => {
     return textContent;
   };
 
+
   return (
     <S.Container onClick={() => handleSelectNote()}>
       <S.ContentsBox>

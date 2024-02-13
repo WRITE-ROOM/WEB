@@ -17,6 +17,7 @@ export const room = createSlice({
   },
 });
 
+
 const selectRoomState = (state) => state.room;
 export const selectRoomIds = (state) =>
   selectRoomState(state).room.map((room) => room.roomId);
