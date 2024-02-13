@@ -23,11 +23,7 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
             Authorization: `Bearer ${receivedToken}`,
           },
         });
-        console.log(response.data.result.roomId);
-        console.log(response.data.result.roomTitle);
-        dispatch(resetRoomInfo());
         dispatch(setRoomInfo(response.data.result));
-        console.log("roomInfoSelector inside useEffect: ", roomInfoSelector);
       } catch (error) {
         console.error("룸 메인 에러:", error);
       }
