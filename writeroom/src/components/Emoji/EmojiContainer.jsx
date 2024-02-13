@@ -23,7 +23,8 @@ const EmojiContainer = ({ emojiCounts }) => {
   ];
 
   console.log("emojiCounts", emojiCounts);
-  // const [emojis, setEmojis] = useState([...emojiCounts]);
+  const [emojis, setEmojis] = useState(null);
+  console.log("emojis ", emojis);
 
   // useEffect(() => {
   //   setEmojis(emojiCounts);
@@ -82,7 +83,9 @@ const EmojiContainer = ({ emojiCounts }) => {
         },
       });
       console.log("Emoji Post ", res.data);
-      // emojiCounts[index]++;
+      setEmojis((prev) =>
+        prev.map((count, i) => (i === index - 1 ? count + 1 : count))
+      );
     } catch (error) {
       console.log("post", error);
     }
@@ -98,13 +101,15 @@ const EmojiContainer = ({ emojiCounts }) => {
         },
       });
       console.log("Emoji update ", res.data);
-      // emojiCounts[index]++;
 
-      // setEmojis((prev) =>
-      //   prev.map((count, i) => (i === index - 1 ? count + 1 : count))
-      // );
+      setEmojis((prev) =>
+        prev.map((count, i) => (i === addedEmoji ? count - 1 : count))
+      );
+      setEmojis((prev) =>
+        prev.map((count, i) => (i === index - 1 ? count + 1 : count))
+      );
     } catch (error) {
-      console.log("update", error);
+      console.log("update ", error);
     }
   };
 
@@ -116,13 +121,17 @@ const EmojiContainer = ({ emojiCounts }) => {
         },
       });
       console.log("delete", res.data);
-
-      // setEmojis([...emojiCounts]);
+      setEmojis((prev) =>
+        prev.map((count, i) => (i === addedEmoji ? count - 1 : count))
+      );
     } catch (error) {
       console.log(error);
     }
   };
 
+  useEffect(() => {
+    setEmojis(emojiCounts);
+  }, []);
   return (
     <E.Container>
       {/* 이모지 추가 버튼 */}
@@ -138,10 +147,10 @@ const EmojiContainer = ({ emojiCounts }) => {
       {/* 추가된 이모지 */}
       <E.AddedEmoji>
         <ul>
-          {emojiCounts &&
-            emojiCounts.map((count, index) => {
+          {emojis &&
+            emojis.map((count, index) => {
               return (
-                count >= 0 && (
+                count > 0 && (
                   <Emoji
                     key={index}
                     count={count}
