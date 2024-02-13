@@ -43,10 +43,10 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
     setCurrentPage(page);
   };
 
-  const accessToken =
-    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo";
+  const accessToken = localStorage.getItem("token");
+  // const accessToken =
+  // "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo";
 
-  // const roomId = 13;
   const { roomId } = useParams();
 
   const fetchNoteList = async () => {
@@ -92,7 +92,12 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
         </S.TopBox>
 
         {noteList.map((note, index) => (
-          <ImageRoomNoteBox key={index} note={note} roomId={roomId} />
+          <ImageRoomNoteBox
+            key={index}
+            note={note}
+            roomId={roomId}
+            noteCoverImg={note.noteImg}
+          />
         ))}
 
         {/* {currentItems.map((note, index) => (

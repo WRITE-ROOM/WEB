@@ -19,7 +19,7 @@ const noteSlice = createSlice({
     addNote(state, action) {
       const {
         noteTitle,
-        noteSubTitle,
+        noteSubtitle,
         noteId,
         noteCoverImg,
         noteContent,
@@ -32,7 +32,7 @@ const noteSlice = createSlice({
       } = action.payload;
 
       state.noteTitle = noteTitle;
-      state.noteSubTitle = noteSubTitle;
+      state.noteSubtitle = noteSubtitle;
       state.noteId = noteId;
       state.noteCoverImg = noteCoverImg;
       state.noteContent = noteContent;
@@ -45,7 +45,7 @@ const noteSlice = createSlice({
     },
     resetNote(state) {
       state.noteTitle = "";
-      state.noteSubTitle = "";
+      state.noteSubtitle = "";
       state.noteId = null;
       state.noteCoverImg = "";
       state.noteContent = "";
@@ -56,8 +56,12 @@ const noteSlice = createSlice({
       state.categoryName = "";
       state.emojiList = {};
     },
+    setNoteCoverImg(state, action) {
+      state.noteCoverImg = action.payload;
+    },
   },
 });
 
-export const { addNote, resetNote } = noteSlice.actions;
+export const { addNote, resetNote, setNoteCoverImg, setEmojiList } =
+  noteSlice.actions;
 export default noteSlice.reducer;

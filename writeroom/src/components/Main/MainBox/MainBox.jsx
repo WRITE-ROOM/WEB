@@ -19,8 +19,8 @@ export default function MainBox() {
   const roomIdList = useSelector(selectRoomIds);
 
   const user = useSelector((state) => state.user);
-  const userId = user.userId;
-  const receivedToken = user.accessToken;
+  // const userId = user.userId;
+  // const receivedToken = user.accessToken;
   const rooms = useSelector((state) => state.room.room);
 	
 	let navigate = useNavigate();
@@ -81,10 +81,7 @@ export default function MainBox() {
 		console.log(res.data)
 	} catch (error) {
         console.error(error);
-
-    }
-  };
-
+    
   useEffect(() => {
     fetchRoomList();
   }, []);

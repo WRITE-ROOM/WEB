@@ -28,7 +28,7 @@ export const CoverImage = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  background-image: url(${(props) => props.img});
+  background-image: url(${(props) => (props.img ? props.img : null)});
 
   position: absolute;
   z-index: -1;

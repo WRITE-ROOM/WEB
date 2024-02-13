@@ -7,8 +7,6 @@ import axios from "axios";
 const Bookmark = ({ defaultColor, roomId, noteId, myProfile}) => {
   const [isBookmarked, setIsBookmarked] = useState(myProfile);
   
-  const accessToken = localStorage.getItem("token");
-
   const handleBookmark = () => {
     setIsBookmarked(!isBookmarked);
     if (!isBookmarked) {
@@ -17,6 +15,10 @@ const Bookmark = ({ defaultColor, roomId, noteId, myProfile}) => {
     else
       deleteBookmark(noteId);
   };
+
+  const accessToken = localStorage.getItem("token");
+  // const accessToken =
+  // "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo";
 
   const fetchBookmark = async () => {
     try {
@@ -66,13 +68,13 @@ const Bookmark = ({ defaultColor, roomId, noteId, myProfile}) => {
       console.log(error);
     }
   }
-
+  
   useEffect(() => {
     fetchBookmark();
   }, []);
 
   return (
-    <B.Container  onClick={(e) => e.stopPropagation()}>
+    <B.Container onClick={(e) => e.stopPropagation()}>
       {isBookmarked ? (
         <FaBookmark
           size={18}

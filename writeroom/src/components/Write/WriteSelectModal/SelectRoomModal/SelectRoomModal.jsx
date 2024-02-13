@@ -13,7 +13,7 @@ import {
 } from "../../../../redux/selectModal";
 import NewRoomModal from "../../../Main/NewRoomModal/NewRoomModal";
 import axios from "axios";
-import { setCategory, createCategory } from "../../../../redux/category";
+import { setCategory } from "../../../../redux/category";
 
 const SelectRoomModal = () => {
   const dispatch = useDispatch();
@@ -32,7 +32,6 @@ const SelectRoomModal = () => {
 
   // 선택된 룸의 카테고리 리스트들
   const roomId = useSelector((state) => state.selectModal.selectedRoom.roomId);
-  const accessToken = localStorage.getItem("token");
 
   const handleSelectedRoom = (room) => {
     dispatch(
@@ -81,7 +80,9 @@ const SelectRoomModal = () => {
           {showMoreRoom &&
             rooms.slice(3).map((room, index) => (
               <M.Room key={index} onClick={() => handleSelectedRoom(room)}>
-                {room.roomTitle}
+                {room.roomTitle.length > 18
+                  ? room.roomTitle.slice(0, 18) + "..."
+                  : room.roomTitle}
               </M.Room>
             ))}
         </M.Rooms>
@@ -95,7 +96,11 @@ const SelectRoomModal = () => {
           <p>룸 추가하기</p>
         </M.CreateRoom>
 
-        <NewRoomModal isOpen={isModalOpen} onClose={closeModal} />
+        <NewRoomModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          doNotNavigate={true}
+        />
       </SimpleContainer>
     </M.Container>
   );

@@ -11,11 +11,10 @@ import Header from "./components/Header/Header.jsx";
 import Write from "./pages/Write.jsx";
 import Note from "./pages/Note.jsx";
 
-
 import RoomChallenge from "./pages/RoomChallenge.jsx";
 import RoomCategory from "./pages/RoomCategory.jsx";
-import MyprofileAccount from './pages/MyprofileAccount.jsx'
-import MyProfile from "./pages/Myprofile.jsx"
+import MyprofileAccount from "./pages/MyprofileAccount.jsx";
+import MyProfile from "./pages/Myprofile.jsx";
 import MyprofilePw from "./pages/MyprofilePw.jsx";
 import MyBookmarkPage from "./pages/MyBookmarkPage.jsx";
 import ResetPwdPage from "./pages/ResetPwdPage.jsx";
@@ -31,7 +30,6 @@ const GlobalStyle = createGlobalStyle`
     border-color: ${(props) => props.theme.borderColor};
   }  
 `
-
 
 function App() {
   const currentPath = window.location.pathname;
@@ -49,6 +47,7 @@ function App() {
       window.localStorage.setItem("theme", "lightTheme");
     }
   };
+  
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle/>
