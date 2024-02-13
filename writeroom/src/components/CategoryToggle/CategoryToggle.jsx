@@ -1,27 +1,15 @@
 import * as S from "./CategoryToggle.style";
-import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
-import { useState } from "react";
-export const CategoryToggle = ({ name }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleToggle = () => {
-    setIsOpen(!isOpen);
-  };
-
+import { FiPlus } from "react-icons/fi";
+export const CategoryToggle = ({ name, countNote }) => {
   return (
-    <S.CategoryToggle onClick={handleToggle}>
-      <S.ToggleWrapper>
-        {isOpen ? <IoIosArrowDown /> : <IoIosArrowForward />}
-        <h2>{name}</h2>
-        <p>(3시간 전)</p>
-      </S.ToggleWrapper>
-      {isOpen && (
-        <S.ButtonWrapper>
-          <button>하이</button>
-          <button>하이</button>
-          <button>하이</button>
-        </S.ButtonWrapper>
-      )}
+    <S.CategoryToggle>
+      <S.IconWrapper>
+        <S.InfoWrapper>
+          <h2>{name}</h2>
+          <p>({countNote})</p>
+        </S.InfoWrapper>
+        <FiPlus size={30} />
+      </S.IconWrapper>
     </S.CategoryToggle>
   );
 };

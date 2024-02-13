@@ -8,6 +8,7 @@ export const roomInfo = createSlice({
     roomIntroduction: "",
     updatedAt: "",
     roomImg: "",
+    // 이미지 제대로 안불러와짐
     userRoomList: "",
     totalElements: "",
     listSize: "",
@@ -17,6 +18,7 @@ export const roomInfo = createSlice({
     goalsAchieveRate: "",
     goalsTargetCount: "",
     routineTargetCount: "",
+    challengePercent: "",
   },
   reducers: {
     setRoomInfo(state, action) {
@@ -30,10 +32,6 @@ export const roomInfo = createSlice({
         totalElements,
         listSize,
         noteList,
-        routineAchieveRate,
-        goalsAchieveRate,
-        goalsTargetCount,
-        routineTargetCount,
       } = action.payload;
 
       state.roomId = roomId;
@@ -45,14 +43,14 @@ export const roomInfo = createSlice({
       state.totalElements = totalElements;
       state.listSize = listSize;
       state.noteList = noteList;
-      state.routineAchieveRate = routineAchieveRate;
-      state.goalsAchieveRate = goalsAchieveRate;
-      state.goalsTargetCount = goalsTargetCount;
-      state.routineTargetCount = routineTargetCount;
     },
     setRoomMember(state, action) {
       state.memberInfo = action.payload;
     },
+    setChallengePercent(state, action) {
+      state.challengePercent = action.payload;
+    },
+
     resetRoomInfo(state) {
       state.roomId = "";
       state.roomTitle = "";
@@ -68,11 +66,17 @@ export const roomInfo = createSlice({
       state.goalsAchieveRate = "";
       state.goalsTargetCount = "";
       state.routineTargetCount = "";
+      state.challengePercent = "";
     },
   },
 });
 
 export const selectRoomInfoState = (state) => state.roomInfo;
 
-export const { setRoomInfo, resetRoomInfo, setRoomMember } = roomInfo.actions;
+export const {
+  setRoomInfo,
+  resetRoomInfo,
+  setRoomMember,
+  setChallengePercent,
+} = roomInfo.actions;
 export default roomInfo.reducer;
