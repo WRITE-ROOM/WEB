@@ -3,13 +3,15 @@ import * as S from "./NewRoomModal.style";
 import * as R from "./NewRoomImg/NewRoomImg.style";
 import { FiCopy } from "react-icons/fi";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { PiImageSquareLight } from "react-icons/pi";
 
 import WriteRoomImg from "../../../assets/writeRoomImg.png";
+import { setCurrentModal } from "../../../redux/selectModal";
 
-export default function NewRoomModal({ isOpen, onClose }) {
+export default function NewRoomModal({ isOpen, onClose, doNotNavigate }) {
+  const dispatch = useDispatch();
   const [image, setImage] = useState(null);
   const [imageName, setImageName] = useState(null);
   const [roomName, setRoomName] = useState("제목 없음");
@@ -47,12 +49,15 @@ export default function NewRoomModal({ isOpen, onClose }) {
     try {
       const res = await axios.post(`/rooms/createRoom`, formData, {
         headers: {
-
-          'Authorization': `Bearer ${receivedToken}`,
-          },
-       });
-      navigate(`/rooms/${res.data.result.roomId}`);
-
+          Authorization: `Bearer ${receivedToken}`,
+        },
+      });
+      if (doNotNavigate) {
+        onClose();
+        dispatch(setCurrentModal(null));
+      } else {
+        navigate(`/rooms/${res.data.result.roomId}`);
+      }
     } catch (error) {
       console.error(error);
     }
