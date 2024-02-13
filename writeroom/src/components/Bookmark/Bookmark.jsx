@@ -15,15 +15,9 @@ const Bookmark = ({ defaultColor, roomId, noteId }) => {
     }
   };
 
-  // const roomId = useSelector((state) => state.room.roomId);
-
-  // const roomId = 8;
-  // const noteId = useSelector((state) => state.note.noteId);
-  // const noteId = 1;
-
-  // const accessToken = localStorage.getItem("token");
-  const accessToken =
-    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo";
+  const accessToken = localStorage.getItem("token");
+  // const accessToken =
+  // "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo";
 
   const fetchBookmark = async () => {
     try {

@@ -32,7 +32,6 @@ const SelectRoomModal = () => {
 
   // 선택된 룸의 카테고리 리스트들
   const roomId = useSelector((state) => state.selectModal.selectedRoom.roomId);
-  const accessToken = localStorage.getItem("token");
 
   const handleSelectedRoom = (room) => {
     dispatch(
@@ -97,7 +96,11 @@ const SelectRoomModal = () => {
           <p>룸 추가하기</p>
         </M.CreateRoom>
 
-        <NewRoomModal isOpen={isModalOpen} onClose={closeModal} />
+        <NewRoomModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          doNotNavigate={true}
+        />
       </SimpleContainer>
     </M.Container>
   );
