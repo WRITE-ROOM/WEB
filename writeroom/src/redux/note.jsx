@@ -4,7 +4,7 @@ const noteSlice = createSlice({
   name: "note",
   initialState: {
     noteTitle: "",
-    noteSubTitle: "",
+    noteSubtitle: "",
     noteId: null,
     noteCoverImg: "",
     noteContent: "",

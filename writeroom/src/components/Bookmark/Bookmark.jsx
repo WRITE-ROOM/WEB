@@ -1,42 +1,78 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaRegBookmark } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa";
 import * as B from "./Bookmark.style";
 import axios from "axios";
-import { useSelector } from "react-redux";
 
-const Bookmark = ({ defaultColor }) => {
-  const [isBookmarked, setIsBookmarked] = useState(false);
+const Bookmark = ({ defaultColor, roomId, noteId, myProfile}) => {
+  const [isBookmarked, setIsBookmarked] = useState(myProfile);
+  
+  const accessToken = localStorage.getItem("token");
 
   const handleBookmark = () => {
     setIsBookmarked(!isBookmarked);
     if (!isBookmarked) {
       postBookmark();
     }
+    else
+      deleteBookmark(noteId);
   };
 
-  // const roomId = useSelector((state) => state.room.roomId);
-  const roomId = 8;
-  // const noteId = useSelector((state) => state.note.noteId);
-  const noteId = 1;
-  // const userId = useSelector((state) => state.user.userId);
-  const userId = 1;
+  const fetchBookmark = async () => {
+    try {
+      const params = { page: 0 };
+      const res = await axios.get("/notes/bookmark/list", {
+        params,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      console.log("북마크 조회", res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const postBookmark = async () => {
     try {
       const res = await axios.post(
-        `/notes/bookmark/${roomId}/${noteId}/${userId}`,
-        {}
+        `/notes/bookmark/${roomId}/${noteId}`,
+        null,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
       );
-
+      window.alert('북마크에 추가했어요.');
       console.log(res.data);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const deleteBookmark = async(noteId) => {
+    console.log('클릭한 노트 아이디: ', noteId)
+    try {
+      const res = await axios.delete(`/notes/bookmark/delete/${noteId}`, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+        }
+      });
+      const data = res.data.result;
+      console.log(res.data)
+      window.alert('북마크에서 해제했어요.');
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchBookmark();
+  }, []);
+
   return (
-    <B.Container>
+    <B.Container  onClick={(e) => e.stopPropagation()}>
       {isBookmarked ? (
         <FaBookmark
           size={18}

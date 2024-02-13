@@ -18,7 +18,6 @@ const Note = () => {
 
   // note의 정보 조회하는 api 연결 -> addNote
   const note = useSelector((state) => state.note);
-  console.log("note", note);
 
   const [showTags, setShowTags] = useState(false);
 
@@ -28,6 +27,8 @@ const Note = () => {
 
   const noteId = useParams().noteId;
   const roomId = useParams().roomId;
+  const userId = localStorage.getItem("id");
+
 
   const fetchNote = async () => {
     try {
@@ -38,22 +39,25 @@ const Note = () => {
       });
       console.log("note res", res.data.result);
       dispatch(addNote(res.data.result));
+
+      console.log(emojiCounts);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const emojiCounts = useSelector((state) => state.note.emojiList.emojiCounts);
+
   useEffect(() => {
     fetchNote();
-  }, []);
+  }, [roomId, noteId]);
 
   return (
     <N.Container>
       <N.Header>
         <N.CoverImage img={note.noteCoverImg} />
-
         <N.Tools>
-          <Bookmark defaultColor="white" />
+          <Bookmark roomId={roomId} noteId={noteId} defaultColor="white" />
           <Setting
             type="config"
             note={note}
@@ -75,7 +79,7 @@ const Note = () => {
           <N.StyledHr color="white" />
 
           <N.Lower>
-            <p>{note.noteSubTitle}</p>
+            <p>{note.noteSubtitle}</p>
             <N.TagContainer>
               <ul>
                 {note.tagList &&
@@ -118,7 +122,7 @@ const Note = () => {
 
       <N.StyledHr color="#E5E5E5" />
 
-      <EmojiContainer noteId={noteId} />
+      <EmojiContainer emojiCounts={emojiCounts} />
       <NewNoteButton />
     </N.Container>
   );

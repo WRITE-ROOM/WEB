@@ -86,9 +86,9 @@ const Write = () => {
     setImageName(null);
   };
 
-  // const accessToken = localStorage.getItem("token");
-  const accessToken =
-    "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo";
+  const accessToken = localStorage.getItem("token");
+  // const accessToken =
+    // "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo";
 
   const fetchRoomList = async () => {
     try {
@@ -184,7 +184,7 @@ const Write = () => {
     }
     const requestData = {
       noteTitle: title,
-      noteSubTitle: subtitle,
+      noteSubtitle: subtitle,
       noteContent: content,
       letterCount: count,
       noteTagList: tags.map((tag) => tag.tagName),
