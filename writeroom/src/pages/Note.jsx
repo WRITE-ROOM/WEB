@@ -37,8 +37,6 @@ const Note = () => {
       });
       console.log("note res", res.data.result);
       dispatch(addNote(res.data.result));
-
-      console.log(emojiCounts);
     } catch (error) {
       console.log(error);
     }
