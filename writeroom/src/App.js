@@ -19,34 +19,72 @@ import MyprofilePw from "./pages/MyprofilePw.jsx";
 import MyBookmarkPage from "./pages/MyBookmarkPage.jsx";
 import ResetPwdPage from "./pages/ResetPwdPage.jsx";
 import MyprofileNone from "./pages/MyprofileNone.jsx";
+import { ThemeProvider, createGlobalStyle } from "styled-components";
+import { useState } from "react";
+import { darkTheme, lightTheme } from './theme.jsx';
+
+const GlobalStyle = createGlobalStyle`
+  body {        
+    background-color: ${(props) => props.theme.bgColor};
+    color: ${(props) => props.theme.textColor};
+    border-color: ${(props) => props.theme.borderColor};
+  }  
+`
 
 function App() {
+  const currentPath = window.location.pathname;
+
+  const localThemeMode = window.localStorage.getItem("theme" || "lightTheme");
+  const [themeMode, setThemeMode] = useState(localThemeMode);
+  const theme = themeMode === "lightTheme" ? lightTheme : darkTheme;
+
+  const toggleDarkMode = () => {
+    if (themeMode === "lightTheme") {
+      setThemeMode("darkTheme");
+      window.localStorage.setItem("theme", "darkTheme");
+    } else {
+      setThemeMode("lightTheme");
+      window.localStorage.setItem("theme", "lightTheme");
+    }
+  };
+  
   return (
-    <div className="App">
-      <Header />
-      <Routes>
-        <Route path="/rooms/:roomId" element={<RoomPage />} />
-        <Route path="/rooms/setting:roomId" element={<RoomSetting />} />
-        <Route path="/rooms/member:roomId" element={<RoomMember />} />
-        <Route path="/rooms/challenge:roomId" element={<RoomChallenge />} />
-        <Route path="/rooms/category:roomId" element={<RoomCategory />} />
-        <Route path="/write" element={<Write />} />
-        <Route path="/note" element={<Note />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/forgetPwd" element={<ForgetPwdPage />} />
-        {/* reset/pw/currentEmail : 로그인 시 비밀번호 재설정
-        reset/pw/newEmail : 본인이 아닌 경우 비밀번호 재설정  */}
-        <Route path="/reset/pw/:status" element={<ResetPwdPage />} />
-        <Route path="/oauth" element={<Redirect />} />
-        <Route path="/main" element={<Main />} />
-        <Route path="/myprofile/account" element={<MyProfile />} />
-        <Route path="/myprofile/account/email" element={<MyprofileAccount />} />
-        <Route path="/myprofile/account/pw" element={<MyprofilePw />} />
-        <Route path="/myprofile/bookmark" element={<MyBookmarkPage />} />
-        <Route path="/myprofile/none" element={<MyprofileNone />} />
-      </Routes>
-    </div>
+
+    <ThemeProvider theme={theme}>
+      <GlobalStyle/>
+      <div className="App">
+        {currentPath !== '/login' && currentPath !== '/signup' && currentPath !== '/forgetPwd' &&  currentPath !== '/reset/pw/:status' ? (
+          <Header themeMode={themeMode} toggleDarkMode={toggleDarkMode}/>
+        ) : null}
+        <Routes>
+          <Route path="/rooms" element={<RoomPage />} />
+          <Route path="/rooms/:roomId" element={<RoomPage />} />
+          <Route path="/rooms/setting" element={<RoomSetting />} />
+          <Route path="/rooms/member" element={<RoomMember />} />
+          <Route path="/rooms/challenge" element={<RoomChallenge />} />
+          <Route path="/rooms/category" element={<RoomCategory />} />
+
+          <Route path="/write" element={<Write />} />
+          <Route path="/rooms/:roomId/notes" element={<Note />} />
+          <Route path="/rooms/:roomId/notes/:noteId" element={<Note />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/forgetPwd" element={<ForgetPwdPage />} />
+          {/* reset/pw/currentEmail : 로그인 시 비밀번호 재설정
+          reset/pw/newEmail : 본인이 아닌 경우 비밀번호 재설정  */}
+          <Route path="/reset/pw/:status" element={<ResetPwdPage />} /> 
+          <Route path="/oauth" element={<Redirect />} />
+          <Route path="/main" element={<Main />} />
+
+          <Route path="/myprofile/account" element={<MyProfile/>} />
+          <Route path="/myprofile/account/email" element={<MyprofileAccount/>} />
+          <Route path="/myprofile/account/pw" element={<MyprofilePw/>} />
+          <Route path="/myprofile/bookmark" element={<MyBookmarkPage/>} />
+          <Route path="/myprofile/none" element={<MyprofileNone/>} />
+
+        </Routes>
+      </div>
+    </ThemeProvider>
   );
 }
 

@@ -22,7 +22,7 @@ export const ModalBackground = styled.div`
 		line-height: 19px;
 		letter-spacing: 0em;
 		text-align: left;
-		color: red;
+		color: ${(props) => props.theme.accentColor};
 	}
 `
 export const Modal = styled.div`
@@ -34,7 +34,8 @@ export const Modal = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	border-radius: 10px;
-	background: white;
+	// background: white;
+	background-color: ${(props) => props.theme.bgColor};
 	z-index: 101;
 `
 export const Top = styled.div`
@@ -50,16 +51,6 @@ export const Top = styled.div`
 		font-family: Pretendard;
 		font-size: 20px;
 		font-weight: 600;
-		line-height: 24px;
-		letter-spacing: 0em;
-		text-align: left;
-	}
-
-	button {
-		width: 15px;
-		height: 15px;
-		background: red;
-		cursor: pointer;
 	}
 `
 
@@ -69,13 +60,13 @@ export const closeBtn = styled(IoClose)`
 export const RoomName = styled.div`
 	width: 362px;
 	height: 62px;
-	background: white;
+	background-color: ${(props) => props.theme.bgColor};
 	border: 1px solid rgba(229, 229, 229, 1);
 	border-radius: 10px;
 	p {
 		width: 300px;
 		height: 17.57px;
-		margin: 5px 0 0 15px;
+		margin: 2px 0 0 15px;
 		font-family: Noto Sans;
 		font-size: 14px;
 		font-weight: 500;
@@ -84,7 +75,7 @@ export const RoomName = styled.div`
 	h6 {
 		width: 300px;
 		height: 17.57px;
-		margin: 11px 0 0 15px;
+		margin: 7px 0 0 15px;
 		font-family: Pretendard;
 		font-size: 14px;
 		font-weight: 300;

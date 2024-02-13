@@ -2,6 +2,7 @@ import * as S from "./RoomMain.style";
 import TagSearchBox from "../TagSearchBox/TagSearchBox";
 import ImageRoomNoteBox from "../ImageRoomNoteBox/ImageRoomNoteBox";
 import Pagination from "react-js-pagination";
+
 import { useState, useEffect } from "react";
 import { setRoomInfo, resetRoomInfo } from "../../redux/roomInfo";
 import { selectRoomInfoState } from "../../redux/roomInfo";
@@ -51,8 +52,40 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
     setCurrentPage(page);
   };
 
+
   // console.log(roomSelector.room);
   const currentItems = roomInfoSelector?.noteList;
+  const accessToken = localStorage.getItem("token");
+  // const accessToken =
+  // "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo";
+
+  const { roomId } = useParams();
+
+  const fetchNoteList = async () => {
+    try {
+      const params = { page: 0 };
+      const res = await axios.get(`/rooms/${roomId}/list`, {
+        params,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      resetNote();
+      setRoomTitle(res.data.result.roomTitle);
+      setRoomIntro(res.data.result.roomIntroduction);
+      dispatch(setNoteList(res.data.result.noteList));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const noteList = useSelector((state) => state.noteList);
+
+  useEffect(() => {
+    fetchNoteList();
+  }, []);
+  console.log("noteLIST", noteList);
+
   return (
     <S.Container>
       <S.ImgContainer
@@ -81,6 +114,7 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
         </S.NoteList>
       )}
       {/* <S.PaginationBox>
+
         <Pagination
           activePage={currentPage}
           itemsCountPerPage={itemsPerPage}

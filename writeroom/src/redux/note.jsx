@@ -3,16 +3,17 @@ import { createSlice } from "@reduxjs/toolkit";
 const noteSlice = createSlice({
   name: "note",
   initialState: {
-    noteTitle: "제목",
-    noteSubtitle: "부제목",
-    noteId: "",
-    noteImg: "",
+    noteTitle: "",
+    noteSubtitle: "",
+    noteId: null,
+    noteCoverImg: "",
     noteContent: "",
     writer: "",
-    achieve: false,
-    tags: [],
+    tagList: [],
     createdAt: "",
     updatedAt: "",
+    categoryName: "",
+    emojiList: { emojiCounts: [] },
   },
   reducers: {
     addNote(state, action) {
@@ -20,39 +21,47 @@ const noteSlice = createSlice({
         noteTitle,
         noteSubtitle,
         noteId,
-        noteImg,
+        noteCoverImg,
         noteContent,
         writer,
-        achieve,
-        tags,
+        tagList,
         createdAt,
         updatedAt,
+        categoryName,
+        emojiList,
       } = action.payload;
 
       state.noteTitle = noteTitle;
       state.noteSubtitle = noteSubtitle;
       state.noteId = noteId;
-      state.noteImg = noteImg;
+      state.noteCoverImg = noteCoverImg;
       state.noteContent = noteContent;
       state.writer = writer;
-      state.achieve = achieve;
-      state.tags = tags;
+      state.tagList = tagList;
       state.createdAt = createdAt;
       state.updatedAt = updatedAt;
+      state.categoryName = categoryName;
+      state.emojiList = emojiList;
     },
     resetNote(state) {
       state.noteTitle = "";
       state.noteSubtitle = "";
-      state.noteId = "";
-      state.noteImg = "";
+      state.noteId = null;
+      state.noteCoverImg = "";
       state.noteContent = "";
-      state.achieve = "";
-      state.tags = [];
+      state.writer = "";
+      state.tagList = [];
       state.createdAt = "";
       state.updatedAt = "";
+      state.categoryName = "";
+      state.emojiList = {};
+    },
+    setNoteCoverImg(state, action) {
+      state.noteCoverImg = action.payload;
     },
   },
 });
 
-export const { addNote, resetNote } = noteSlice.actions;
+export const { addNote, resetNote, setNoteCoverImg, setEmojiList } =
+  noteSlice.actions;
 export default noteSlice.reducer;

@@ -1,100 +1,139 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaRegBookmark, FaBookmark } from "react-icons/fa";
 import * as S from "./WordBookmark.style.js"
+import * as R from "../MyBookmark.style.js"
+import axios from 'axios';
+import Pagination from 'react-js-pagination';
+import { useDispatch, useSelector } from 'react-redux';
+import { addBookmark, deleteBookmark, resetBookmark } from '../../../../redux/bookmark.jsx';
 
 export default function WordBookMark() {
-    // const [isBookmarked, setIsBookmarked] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState();
+  const [count, setCount] = useState();
+  const [isBookmarked, setIsBookmarked] = useState([]); //isBookmarked
+  const [bookmarkMaterialList, setBookmarkMaterialList] = useState([]); // 북마크한 단어 배열
+  const bookmark = useSelector(state => state.bookmark);
 
+  const userId = localStorage.getItem('id');
+  const receivedToken = localStorage.getItem('token')
 
-    const bookmarkMaterialList = [
+  let dispatch = useDispatch();
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
+  const handleBookmarkChange = (index) => {
+    setIsBookmarked(prevBookmarks => {
+      const updatedBookmarks = [...prevBookmarks];
+      updatedBookmarks[index] = !updatedBookmarks[index];
+      return updatedBookmarks;
+    });
+  };
+  const getWordBookmark = async () => {
+    const receivedToken = localStorage.getItem('token')
+    try {
+      const Page = page;
+      const res = await axios.get(`/bookmarks/topics?page=${page-1}`, { 
+        headers: {
+          'Authorization': `Bearer ${receivedToken}`
+          },
+        });
+      const data = res.data.result;
+      dispatch(resetBookmark());
+      setBookmarkMaterialList(data.bookmarkMaterialList);
+      setIsBookmarked(Array(data.bookmarkMaterialList.length).fill(true));
+      setCount(data.totalElements);
+      setTotalPage(data.totalPage);
+      console.log(res.data);
+    } catch (error) {
+        console.error(error);
+    }
+  };
+  const postBookmarkstatus = async(word) => {
+    try {
+      const res = await axios.post(`/bookmarks/topics`, {content: word, userId: userId}, 
       {
-        "id": 0,
-        "content": "string"
-      },
-      {
-        "id": 1,
-        "content": "첫 눈이 오면"
-      }, 
-      {
-        "id": 2,
-        "content": "아 졸리다"
-      },
-      {
-        "id": 3,
-        "content": "북마크 테스트 중"
-      },
-      {
-        "id": 4,
-        "content": "북마크 테스트 중2"
-      },
-      {
-        "id": 5,
-        "content": "북마크 테스트 중3"
-      },
-      {
-        "id": 6,
-        "content": "북마크 테스트 중4"
-      },
-      {
-        "id": 7,
-        "content": "북마크 테스트 중5"
-      },
-      {
-        "id": 8,
-        "content": "북마크 테스트 중4"
-      },
-      {
-        "id": 9,
-        "content": "북마크 테스트 중5"
-      },
-      {
-        "id": 10,
-        "content": "북마크 테스트 중4"
-      },
-      {
-        "id": 11,
-        "content": "북마크 테스트 중5"
-      },
-      {
-        "id": 12,
-        "content": "북마크 테스트 중4"
-      },
-      {
-        "id": 13,
-        "content": "북마크 테스트 중5"
-      }
-    ]
-
-    const toggleBookmark = (index) => {
-      setBookmarkStates((prevStates) => {
-        const newStates = [...prevStates];
-        newStates[index] = !newStates[index];
-        return newStates;
+        headers: {
+          'Authorization': `Bearer ${receivedToken}`,
+        }
       });
-    };
-    const [bookmarkStates, setBookmarkStates] = useState(Array(bookmarkMaterialList.length).fill(false));
+      const serverBookmarkId = res.data.result.bookmarkId;
+      const newBookmark = {
+        bookmarkId: serverBookmarkId,
+        content: word
+      }
+      dispatch(addBookmark(newBookmark));
+      window.alert('북마크에 추가했어요.');
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const DeleteBookmark = async(word) => {
+    console.log('클릭한 단어: ', word)
+    const clickedBookmark = bookmarkMaterialList.find((bookmark) => bookmark.content === word);
+    const bookmarkId = clickedBookmark.id;
+    console.log('클릭한 단어의 id: ', bookmarkId)
+    try {
+      const res = await axios.delete(`/bookmarks/topics/${bookmarkId}`, {
+        headers: {
+          'Authorization': `Bearer ${receivedToken}`,
+        }
+      });
+      const data = res.data.result;
+      dispatch(deleteBookmark({bookmarkId : data.bookmarkId}));
+      window.alert('북마크에서 해제했어요.');
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-  
-    // const toggleBookmark = () => {
-    //   setIsBookmarked((prev) => !prev);
-    // };
-    return (
-      <S.Container>
-        {bookmarkMaterialList.map((word, index) => (
-          <S.RecWord key={index}>
-            <p>{word.content}</p>
-            {/* {isBookmarked ? (
-              <FaBookmark color="rgba(181, 169, 148, 1)" onClick={toggleBookmark} />
-            ) : (
-              <FaRegBookmark color="black" onClick={toggleBookmark} />
-            )} */}
-            {bookmarkStates[index] ? (
-            <FaBookmark color="rgba(181, 169, 148, 1)" onClick={() => toggleBookmark(index)} />
-          ) : (
-            <FaRegBookmark color="black" onClick={() => toggleBookmark(index)} />
-          )}
-          </S.RecWord>
+  const toggleBookmark = ({index, word}) => {
+    handleBookmarkChange(index);
+    if (isBookmarked[index]) {
+      DeleteBookmark(word);
+    }
+    else {
+      postBookmarkstatus(word);
+    }    
+  };
+
+  useEffect(() => {
+    getWordBookmark();
+  }, [page]) 
+
+  return (
+    <S.Container>
+      <S.BookContainer>
+      {[...Array(3).keys()].map((section, sectionIndex) => (
+        <div key={section} style={{display: 'flex'}}>
+          <S.TopicBox>
+          {bookmarkMaterialList.slice(sectionIndex * 13, (sectionIndex + 1) * 13).map((word, index) => (
+            <S.RecWord key={index}>
+              <p>{word.content}</p> 
+              {isBookmarked[sectionIndex * 13 + index] ? (
+                <FaBookmark color="rgba(181, 169, 148, 1)" onClick={() => toggleBookmark({index: sectionIndex * 13 + index, word: word.content})}/>
+              ) : (
+                <FaRegBookmark color="black" onClick={() => toggleBookmark({index: sectionIndex * 13 + index, word: word.content})}/>
+              )}
+            </S.RecWord>
+          ))}
+          </S.TopicBox>
+          {sectionIndex < 2 && <R.Line />}
+        </div>
         ))}
-      </S.Container>
+      </S.BookContainer>
+      <R.PagenationBox>
+        <Pagination
+          activePage={page}
+          itemsCountPerPage={39}
+          totalItemsCount={count}
+          pageRangeDisplayed={5}
+          prevPageText={"<"}
+          nextPageText={">"}
+          onChange={handlePageChange}
+        />
+      </R.PagenationBox>
+    </S.Container>
     );
   };
+

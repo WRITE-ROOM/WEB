@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialCategory = [
   {
     categoryId: 0,
-    categoryName: "전체 노트",
+    categoryName: "빠른 노트",
     countNote: 0,
   },
 ];
@@ -11,23 +11,22 @@ const initialCategory = [
 const categorySlice = createSlice({
   name: "category",
   initialState: {
-    categoryList: initialCategory,
+    categoryList: [],
   },
   reducers: {
     setCategory(state, action) {
-      state.categoryList = [...initialCategory, ...action.payload];
+      state.categoryList = action.payload;
     },
-    createCategory(state, action) {
-      state.categoryList.push(action.payload);
-    },
-    deleteCategory(state, action) {
-      state.categoryList.splice(action.payload, 1);
-    },
+    // createCategory(state, action) {
+    //   state.categoryList.push(action.payload);
+    // },
+    // deleteCategory(state, action) {
+    //   state.categoryList.splice(action.payload, 1);
+    // },
   },
 });
 
-export const { setCategory, createCategory, deleteCategory } =
-  categorySlice.actions;
+export const { setCategory } = categorySlice.actions;
 export default categorySlice.reducer;
 
 // const initialCategory = [

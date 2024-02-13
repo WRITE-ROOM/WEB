@@ -28,7 +28,7 @@ export const CoverImage = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  background-image: url(${(props) => props.img});
+  background-image: url(${(props) => (props.img ? props.img : null)});
 
   position: absolute;
   z-index: -1;
@@ -133,12 +133,19 @@ export const HiddenTag = styled.ul`
 `;
 
 export const Content = styled.div`
-  height: 400px;
   color: black;
   padding: 24px;
 
   ol {
     padding-left: 24px;
+  }
+  ul {
+    padding-left: 24px;
+    list-style: disc;
+  }
+  a {
+    color: blue;
+    text-decoration: underline;
   }
 `;
 

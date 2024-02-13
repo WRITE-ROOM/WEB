@@ -13,6 +13,8 @@ export default function ResetPwd() {
   const queryParams = new URLSearchParams(location.search);
   const token = queryParams.get('token');
 
+  const currentURL = window.location.pathname;
+
   let userPwd;
 
   let navigate = useNavigate();
@@ -91,7 +93,11 @@ export default function ResetPwd() {
   }
 
   const postNewPwd = async() => {
-    const type = 'pwd'
+    let type;
+    if (currentURL === '/reset/pw/newEmail')
+      type = 'email'
+    else
+      type = 'pwd'
     console.log('post 요청: ', userPwd)
     try {
       const res = await axios.post(`/auth/resetPwd?token=${token}&type=${type}`, {password: userPwd})
@@ -103,7 +109,6 @@ export default function ResetPwd() {
 
   useEffect(() => {
     handleResetPwd();
-    console.log(token)
   }, [])
 
   return (

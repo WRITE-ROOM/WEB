@@ -7,38 +7,9 @@ export const room = createSlice({
   },
   reducers: {
     setRoom(state, action) {
-      const {
-        roomId,
-        roomTitle,
-        roomIntroduction,
-        updatedAt,
-        roomImg,
-        userRoomList,
-        totalElements,
-        listSize,
-        noteList,
-        memberInfo,
-        routineAchieveRate,
-        goalsAchieveRate,
-        goalsTargetCount,
-        routineTargetCount,
-      } = action.payload;
-      state.room.push({
-        roomId,
-        roomTitle,
-        roomIntroduction,
-        updatedAt,
-        roomImg,
-        userRoomList,
-        totalElements,
-        listSize,
-        noteList,
-        memberInfo,
-        routineAchieveRate,
-        goalsAchieveRate,
-        goalsTargetCount,
-        routineTargetCount,
-      });
+      const { roomId, roomTitle, updatedAt, roomImg, userRoomList } =
+        action.payload;
+      state.room.push({ roomId, roomTitle, updatedAt, roomImg, userRoomList }); // 새로운 방 정보를 배열에 추가
     },
     resetRoom(state) {
       state.room = [];
@@ -46,7 +17,8 @@ export const room = createSlice({
   },
 });
 
-export const selectRoomState = (state) => state.room;
+
+const selectRoomState = (state) => state.room;
 export const selectRoomIds = (state) =>
   selectRoomState(state).room.map((room) => room.roomId);
 

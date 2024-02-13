@@ -42,6 +42,20 @@ export default function Account() {
       setIsSecessionModalOpen(false);
   };
 
+  const getLogout = async() => {
+    try {
+      const res = await axios.get(`/auth/logout`);
+      localStorage.clear();
+      navigate(`/login`);
+      // 추후 온보딩 페이지 만들면 온보딩 페이지로 navigate
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
     const reader = new FileReader();
@@ -148,11 +162,11 @@ return (
             <h6>사용자 이름</h6>
             <input 
               placeholder='필수 입력 항목입니다'
-              value={name}
+              value={name ?? ''}
               onChange={(e) => {setName(e.target.value)}}
               >
               </input>
-              <h5>{name.length}/50</h5>
+              <h5>{(name ?? '').length}/50</h5>
             <button onClick={patchUserInfo}>저장하기</button>
             {isSave && <p>저장되었습니다!</p>}
           </S.ProfileRight>
@@ -172,7 +186,7 @@ return (
           </S.LoginInfo>
           <S.Line/>
           <S.Bottom>
-            <button>로그아웃</button>
+            <button onClick={getLogout}>로그아웃</button>
             <p onClick={openSecessionModal}>탈퇴하기</p>
           </S.Bottom>
         </S.Info>
