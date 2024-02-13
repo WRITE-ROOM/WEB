@@ -25,7 +25,7 @@ export default function MainMenuModal({roomIndex}) {
         {isMenuVisible && (
         <S.Modal>
           <button onClick={() => {openModal()}}>초대하기</button>
-          <button onClick={() => navigate('/룸관리URL')}>룸 관리</button>
+          <button onClick={() => navigate('/rooms/setting')}>룸 관리</button>
         </S.Modal>
       )}
 				<InviteModal isOpen={isModalOpen} onClose={closeModal} roomIndex={roomIndex}></InviteModal>

@@ -22,13 +22,12 @@ export default function MainBox() {
   // const userId = user.userId;
   // const receivedToken = user.accessToken;
   const rooms = useSelector((state) => state.room.room);
-
-  let navigate = useNavigate();
-  let dispatch = useDispatch();
-
-  const toggleSNB = () => {
-    setIsSNBOpen((prev) => !prev);
-  };
+	
+	let navigate = useNavigate();
+	let dispatch = useDispatch();
+	const toggleSNB = () => {
+		setIsSNBOpen((prev) => !prev);
+	};
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -38,35 +37,51 @@ export default function MainBox() {
     setIsModalOpen(false);
   };
 
+	// const fetchRoomList = async () => {
+  //   const userId = localStorage.getItem('id');
+	// const receivedToken = localStorage.getItem('token');
+	// 	// const receivedToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo"
+
+	// try {
+	// 	const page = 0;
+	// 	const res = await axios.get(`/rooms/myRoomList?page=${page}`, { 
+	// 		headers: {
+	// 			'Authorization': `Bearer ${receivedToken}`
+	// 		  },
+	// 	 });
+	// 	dispatch(resetRoom())
+	// 	const room = res.data.result;
+	// 	room.forEach(roomData => {
+	// 		const { roomId, roomTitle, updatedAt, roomImg, userRoomList } = roomData;
+	// 		dispatch(setRoom({ roomId, roomTitle, updatedAt, roomImg, userRoomList }));
+	// 	});
+	// 	console.log(res.data)
+	// } catch (error) {
+  //       console.error(error);
+
+  //   }
+  // };
+
   const fetchRoomList = async () => {
-    const userId = localStorage.getItem("id");
-    const receivedToken = localStorage.getItem("token");
-    // const receivedToken =
-    // "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo";
+    const userId = localStorage.getItem('id');
+	  const receivedToken = localStorage.getItem('token');
 
-    try {
-      const page = 0;
-      // console.log(receivedToken)
-      console.log(`/rooms/myRoomList?page=${page}`);
-      const res = await axios.get(`/rooms/myRoomList?page=${page}`, {
-        headers: {
-          Authorization: `Bearer ${receivedToken}`,
-        },
-      });
-      dispatch(resetRoom());
-      const room = res.data.result;
-      room.forEach((roomData) => {
-        const { roomId, roomTitle, updatedAt, roomImg, userRoomList } =
-          roomData;
-        dispatch(
-          setRoom({ roomId, roomTitle, updatedAt, roomImg, userRoomList })
-        );
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+	try {
+		const res = await axios.get(`/rooms/myRoomList/allData`, { 
+			headers: {
+				'Authorization': `Bearer ${receivedToken}`
+			  },
+		 });
+		dispatch(resetRoom())
+		const room = res.data.result;
+		room.forEach(roomData => {
+			const { roomId, roomTitle, updatedAt, roomImg, userRoomList } = roomData;
+			dispatch(setRoom({ roomId, roomTitle, updatedAt, roomImg, userRoomList }));
+		});
+		console.log(res.data)
+	} catch (error) {
+        console.error(error);
+    
   useEffect(() => {
     fetchRoomList();
   }, []);

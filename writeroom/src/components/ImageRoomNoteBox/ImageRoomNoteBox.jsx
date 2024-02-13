@@ -80,7 +80,7 @@ const ImageRoomNoteBox = ({ note, roomId, noteCoverImg }) => {
           </S.Left>
 
           <S.Right>
-            <Bookmark />
+            <Bookmark roomId={roomId} noteId={note.noteId} defaultColor="black"/>
             <Setting
               type="dots"
               note={note}

@@ -42,6 +42,20 @@ export default function Account() {
       setIsSecessionModalOpen(false);
   };
 
+  const getLogout = async() => {
+    try {
+      const res = await axios.get(`/auth/logout`);
+      localStorage.clear();
+      navigate(`/login`);
+      // 추후 온보딩 페이지 만들면 온보딩 페이지로 navigate
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
     const reader = new FileReader();
@@ -172,7 +186,7 @@ return (
           </S.LoginInfo>
           <S.Line/>
           <S.Bottom>
-            <button>로그아웃</button>
+            <button onClick={getLogout}>로그아웃</button>
             <p onClick={openSecessionModal}>탈퇴하기</p>
           </S.Bottom>
         </S.Info>

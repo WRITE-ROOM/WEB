@@ -3,16 +3,17 @@ import { FaRegBookmark } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa";
 import * as B from "./Bookmark.style";
 import axios from "axios";
-import { useSelector } from "react-redux";
 
-const Bookmark = ({ defaultColor, roomId, noteId }) => {
-  const [isBookmarked, setIsBookmarked] = useState(false);
-
+const Bookmark = ({ defaultColor, roomId, noteId, myProfile}) => {
+  const [isBookmarked, setIsBookmarked] = useState(myProfile);
+  
   const handleBookmark = () => {
     setIsBookmarked(!isBookmarked);
     if (!isBookmarked) {
       postBookmark();
     }
+    else
+      deleteBookmark(noteId);
   };
 
   const accessToken = localStorage.getItem("token");
@@ -45,13 +46,29 @@ const Bookmark = ({ defaultColor, roomId, noteId }) => {
           },
         }
       );
-
+      window.alert('북마크에 추가했어요.');
       console.log(res.data);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const deleteBookmark = async(noteId) => {
+    console.log('클릭한 노트 아이디: ', noteId)
+    try {
+      const res = await axios.delete(`/notes/bookmark/delete/${noteId}`, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+        }
+      });
+      const data = res.data.result;
+      console.log(res.data)
+      window.alert('북마크에서 해제했어요.');
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
   useEffect(() => {
     fetchBookmark();
   }, []);

@@ -11,7 +11,6 @@ export default function WordBookMark() {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState();
   const [count, setCount] = useState();
-  const [tmpCount, setTmpCount] = useState();
   const [isBookmarked, setIsBookmarked] = useState([]); //isBookmarked
   const [bookmarkMaterialList, setBookmarkMaterialList] = useState([]); // 북마크한 단어 배열
   const bookmark = useSelector(state => state.bookmark);
@@ -45,8 +44,7 @@ export default function WordBookMark() {
       setIsBookmarked(Array(data.bookmarkMaterialList.length).fill(true));
       setCount(data.totalElements);
       setTotalPage(data.totalPage);
-      console.log(data.listSize)
-      console.log(res.data)
+      console.log(res.data);
     } catch (error) {
         console.error(error);
     }
@@ -127,7 +125,7 @@ export default function WordBookMark() {
       <R.PagenationBox>
         <Pagination
           activePage={page}
-          itemsCountPerPage={30}
+          itemsCountPerPage={39}
           totalItemsCount={count}
           pageRangeDisplayed={5}
           prevPageText={"<"}

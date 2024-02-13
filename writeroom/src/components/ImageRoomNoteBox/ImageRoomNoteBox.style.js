@@ -34,7 +34,6 @@ export const Top = styled.div`
 export const Left = styled.div`
   display: flex;
   align-items: center;
-
   img {
     width: 40px;
     height: 40px;

@@ -27,6 +27,8 @@ const Note = () => {
 
   const noteId = useParams().noteId;
   const roomId = useParams().roomId;
+  const userId = localStorage.getItem("id");
+
 
   const fetchNote = async () => {
     try {
@@ -37,6 +39,8 @@ const Note = () => {
       });
       console.log("note res", res.data.result);
       dispatch(addNote(res.data.result));
+
+      console.log(emojiCounts);
     } catch (error) {
       console.log(error);
     }
@@ -52,7 +56,6 @@ const Note = () => {
     <N.Container>
       <N.Header>
         <N.CoverImage img={note.noteCoverImg} />
-
         <N.Tools>
           <Bookmark roomId={roomId} noteId={noteId} defaultColor="white" />
           <Setting

@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { FaRegBookmark } from "react-icons/fa";
-import { FaBookmark } from "react-icons/fa";
+import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { IoMdRefresh } from "react-icons/io";
 import { IoSearchOutline } from "react-icons/io5";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
@@ -27,7 +26,7 @@ export default function RecTopic({ onToggle }) {
   const user = useSelector((state) => state.user);
   const bookmark = useSelector(state => state.bookmark);
   const userId = localStorage.getItem('id');
-  const receivedToken = localStorage.getItem('token')
+  const receivedToken = localStorage.getItem('token');
   // const receivedToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo"
 
   let dispatch = useDispatch();
@@ -62,8 +61,8 @@ export default function RecTopic({ onToggle }) {
           },
       })
       console.log('서버 전달이다: ', res.data)
-      const vocas = res.data.result.map(item => item.voca);
-      // const vocas = res.data.result[0].voca.split(', ');
+      // const vocas = res.data.result.map(item => item.voca);
+      const vocas = res.data.result[0].voca.split(', ');
       setTopics(vocas);
 
     } catch (error) {  
@@ -81,8 +80,8 @@ export default function RecTopic({ onToggle }) {
           },
       })
       // console.log(res.data)
-      const vocas = res.data.result.map(item => item.voca);
-      // const vocas = res.data.result[0].voca.split(', ');
+      // const vocas = res.data.result.map(item => item.voca);
+      const vocas = res.data.result[0].voca.split(', ');
       setKeywords(vocas);
     } catch (error) {
       console.log(error)
@@ -136,6 +135,7 @@ export default function RecTopic({ onToggle }) {
     };
 
     const postBookmarkstatus = async(word) => {
+      console.log(word) // 잘 뜸
       try {
         const res = await axios.post(`/bookmarks/topics`, {content: word, userId: userId}, 
         {
@@ -153,9 +153,11 @@ export default function RecTopic({ onToggle }) {
         console.log(res.data);  
         window.alert('북마크에 추가했어요.');
       } catch (error) {
+        console.log('content: ', word, ', userId: ', userId)
         console.log(error);
       }
     }
+    
     const DeleteBookmark = async(word) => {
       const existingBookmark = bookmarks.find((bookmark) => bookmark.content === word);
       try {
@@ -179,7 +181,7 @@ export default function RecTopic({ onToggle }) {
         {isBookmarked ? (
           <FaBookmark color="rgba(181, 169, 148, 1)" onClick={toggleDeleteBookmark}/>
         ) : (
-          <FaRegBookmark color="black" onClick={togglePostBookmark} />
+          <S.NotBookMark onClick={togglePostBookmark} />
         )}
       </S.RecWord>
     );
@@ -190,6 +192,7 @@ export default function RecTopic({ onToggle }) {
       <S.Left>
         <button onClick={onToggle}>
           <MdKeyboardDoubleArrowRight
+            style={{cursor: "pointer"}}
             color="rgba(147, 147, 147, 1)"
             size="20"
           />
@@ -200,7 +203,7 @@ export default function RecTopic({ onToggle }) {
           <S.Top>
             <S.WordTitle>오늘의 소재</S.WordTitle>
             <button>
-              <IoMdRefresh size="30" onClick={() => {getTopics()}}/>
+              <S.Refresh size="30" onClick={() => {getTopics()}}/>
             </button>
           </S.Top>
           <S.RecBottom>

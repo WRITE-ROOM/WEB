@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../../../redux/user';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import SignupCheck from '../SignupCheck/SignupCheck';
 
 export default function SignupInput() {
 	const [name, setName] = useState('');
@@ -14,6 +15,8 @@ export default function SignupInput() {
 	const [isNameErr, setNameErr] = useState(true);
 	const [isEmailErr, setEmailErr] = useState(true);
 	const [isPwErr, setPwErr] = useState(true);
+
+  const [isAllCheck, setIsAllCheck] = useState();
 
 	const user = useSelector((state) => state.user);
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/;
@@ -27,10 +30,15 @@ export default function SignupInput() {
   const postUser = async() => {
     try {
       if (nameRegex.test(name) && emailRegex.test(email) && passwordRegex.test(password) && isPwMatch) {
-        const res = await axios.post(`/auth/signUp`, {nickname: name, email: email, password: password});
-        console.log(res.data)
-        window.alert('라이트룸에 오신 것을 환영합니다! 로그인창으로 이동합니다 :)');
-        navigate('/main')
+         if (isAllCheck) {
+           const res = await axios.post(`/auth/signUp`, {nickname: name, email: email, password: password});
+           console.log(res.data)
+           window.alert('라이트룸에 오신 것을 환영합니다! 로그인창으로 이동합니다 :)');
+           navigate('/login')
+         }
+         else {
+          window.alert('모든 이용약관에 동의해주세요.');
+         }
       }
     } catch(error) {
       if (error.response.data.code === "USER4004")
@@ -43,11 +51,6 @@ export default function SignupInput() {
     setNameErr(nameRegex.test(name));
     setEmailErr(emailRegex.test(email));
     setPwErr(passwordRegex.test(password));
-  
-    console.log(isNameErr)
-    console.log(isEmailErr)
-    console.log(isPwErr)
-    console.log(isPwMatch)
     if (isNameErr && isEmailErr && isPwErr && isPwMatch) {
       try {
         dispatch(setUser({
@@ -56,13 +59,14 @@ export default function SignupInput() {
           userPw: password
         }));
         await postUser();
-  
-        // console.log(user);
-        // navigate('/main');
       } catch (error) {
         console.log(error);
       }
     }
+  };
+
+  const handleAllCheckChange = (allCheck) => {
+    setIsAllCheck(allCheck)
   };
   
   return (
@@ -92,9 +96,10 @@ export default function SignupInput() {
 			</S.InputInfo>
 		</S.Container>
 		<S.SignupButton>
-          <button
-          onClick={handleSignupClick}>가입하기</button>
-        </S.SignupButton>
+      <button
+      onClick={handleSignupClick}>가입하기</button>
+    </S.SignupButton>
+    <SignupCheck onAllCheckChange={handleAllCheckChange} />
 	</div>
   )
 }

@@ -9,13 +9,16 @@ import Header from '../../Header/Header'
 export default function SignupBox() {
   let navigate = useNavigate();
 
+  const handleAllCheckChange = (allCheck) => {
+    console.log('allCheck:', allCheck);
+  };
+
   return (
     <div>
     <S.App>
 			<S.Container>
 				<S.Title>회원가입</S.Title>
 				<SignupInput></SignupInput>
-        <SignupCheck></SignupCheck>
         <SignupSocial></SignupSocial>
         <S.SNSInfo>
         SNS 로그인 및 회원가입 시 라이트룸 이용약관과 개인정보 수집 및 이용에 동의한 것으로 간주합니다.
