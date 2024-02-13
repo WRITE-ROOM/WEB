@@ -17,6 +17,7 @@ export default function MainBox() {
   const rooms = useSelector((state) => state.room.room);
 
 
+
   let navigate = useNavigate();
   let dispatch = useDispatch();
   const toggleSNB = () => {
@@ -30,6 +31,7 @@ export default function MainBox() {
   // const closeModal = () => {
   //   setIsModalOpen(false);
   // };
+
 
   // const fetchRoomList = async () => {
   //   const userId = localStorage.getItem('id');
@@ -104,6 +106,7 @@ export default function MainBox() {
           ))}
         </S.Container>
         <NewNoteButton /> <NewRoomButton />
+
 
         {/* <NewRoomModal isOpen={isModalOpen} onClose={closeModal} /> */}
         {isSNBOpen ? (
