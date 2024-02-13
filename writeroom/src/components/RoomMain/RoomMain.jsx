@@ -59,6 +59,7 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
         },
       });
       resetNote();
+      console.log(res.data);
       setRoomTitle(res.data.result.roomTitle);
       setRoomIntro(res.data.result.roomIntroduction);
       dispatch(setNoteList(res.data.result.noteList));

@@ -41,8 +41,7 @@ const Note = () => {
       console.log(error);
     }
   };
-
-  const emojiCounts = useSelector((state) => state.note.emojiList.emojiCounts);
+  const emojiCounts = note.emojiList ? note.emojiList.emojiCounts : 0;
 
   useEffect(() => {
     fetchNote();
