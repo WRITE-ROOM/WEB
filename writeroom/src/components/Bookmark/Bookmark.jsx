@@ -63,7 +63,7 @@ const Bookmark = ({ defaultColor, roomId, noteId }) => {
   }, []);
 
   return (
-    <B.Container>
+    <B.Container onClick={(e) => e.stopPropagation()}>
       {isBookmarked ? (
         <FaBookmark
           size={18}
