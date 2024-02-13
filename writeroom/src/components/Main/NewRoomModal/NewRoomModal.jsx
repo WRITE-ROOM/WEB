@@ -10,14 +10,13 @@ import { PiImageSquareLight } from "react-icons/pi";
 import WriteRoomImg from "../../../assets/writeRoomImg.png";
 import { setCurrentModal } from "../../../redux/selectModal";
 
-export default function NewRoomModal({ isOpen, onClose, doNotNavigate }) {
+export default function NewRoomModal({ onClose, doNotNavigate }) {
   const dispatch = useDispatch();
   const [image, setImage] = useState(null);
   const [imageName, setImageName] = useState(null);
   const [roomName, setRoomName] = useState("제목 없음");
 
   const receivedToken = localStorage.getItem("token");
-  // const receivedToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo"
 
   let navigate = useNavigate();
   const handleImageChange = (e) => {
@@ -68,7 +67,6 @@ export default function NewRoomModal({ isOpen, onClose, doNotNavigate }) {
     return blobImage;
   };
 
-  if (!isOpen) return null;
   return (
     <S.ModalBackground>
       <S.Modal>
@@ -76,7 +74,6 @@ export default function NewRoomModal({ isOpen, onClose, doNotNavigate }) {
           <p>신규 룸 만들기</p>
           <S.closeBtn size="20" onClick={onClose} />
         </S.Top>
-        {/* <NewRoomImg image={image} setImage={setImage} setImageName={setImageName}/> */}
         <R.Container>
           <R.Picture>
             {image ? (

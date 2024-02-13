@@ -5,23 +5,18 @@ import RecTopicClose from "../../RecTopicClose/RecTopicClose";
 import MainInfo from "../MainInfo/MainInfo";
 import NewNoteButton from "../../FloatingButton/NewNoteButton";
 import NewRoomButton from "../../FloatingButton/NewRoomButton";
-import NewRoomModal from "../NewRoomModal/NewRoomModal";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { resetRoom, setRoom } from "../../../redux/room";
-import { store } from "../../../redux/store";
 import { selectRoomIds } from "../../../redux/room";
 
 export default function MainBox() {
   const [isSNBOpen, setIsSNBOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const roomIdList = useSelector(selectRoomIds);
-
-  const user = useSelector((state) => state.user);
-  // const userId = user.userId;
-  // const receivedToken = user.accessToken;
   const rooms = useSelector((state) => state.room.room);
+
+
 
   let navigate = useNavigate();
   let dispatch = useDispatch();
@@ -36,6 +31,7 @@ export default function MainBox() {
   // const closeModal = () => {
   //   setIsModalOpen(false);
   // };
+
 
   // const fetchRoomList = async () => {
   //   const userId = localStorage.getItem('id');
@@ -110,6 +106,8 @@ export default function MainBox() {
           ))}
         </S.Container>
         <NewNoteButton /> <NewRoomButton />
+
+
         {/* <NewRoomModal isOpen={isModalOpen} onClose={closeModal} /> */}
         {isSNBOpen ? (
           <RecTopic onToggle={toggleSNB}></RecTopic>
