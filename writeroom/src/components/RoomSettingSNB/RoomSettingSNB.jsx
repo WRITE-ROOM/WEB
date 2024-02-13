@@ -11,10 +11,30 @@ const RoomSettingSNB = () => {
   };
   return (
     <S.Container>
-      <S.SNBBox onClick={() => changePage("setting")}>룸 관리</S.SNBBox>
-      <S.SNBBox onClick={() => changePage("member")}>멤버 관리</S.SNBBox>
-      <S.SNBBox onClick={() => changePage("challenge")}>챌린지 관리</S.SNBBox>
-      <S.SNBBox onClick={() => changePage("category")}>카테고리 관리</S.SNBBox>
+      <S.SNBBox
+        onClick={() => changePage("setting")}
+        isActive={window.location.pathname.includes("setting")}
+      >
+        룸 관리
+      </S.SNBBox>
+      <S.SNBBox
+        onClick={() => changePage("member")}
+        isActive={window.location.pathname.includes("member")}
+      >
+        멤버 관리
+      </S.SNBBox>
+      <S.SNBBox
+        onClick={() => changePage("challenge")}
+        isActive={window.location.pathname.includes("challenge")}
+      >
+        챌린지 관리
+      </S.SNBBox>
+      <S.SNBBox
+        onClick={() => changePage("category")}
+        isActive={window.location.pathname.includes("category")}
+      >
+        카테고리 관리
+      </S.SNBBox>
     </S.Container>
   );
 };

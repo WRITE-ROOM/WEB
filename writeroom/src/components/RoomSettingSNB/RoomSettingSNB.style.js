@@ -11,6 +11,7 @@ export const Container = styled.div`
   background-color: white;
 `;
 export const SNBBox = styled.div`
+  background-color: ${(props) => (props.isActive ? "gainsboro" : "white")};
   width: 100%;
   height: 80px;
   display: flex;
