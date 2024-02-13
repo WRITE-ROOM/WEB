@@ -66,21 +66,23 @@ export default function MainBox() {
     const userId = localStorage.getItem('id');
 	  const receivedToken = localStorage.getItem('token');
 
-	try {
-		const res = await axios.get(`/rooms/myRoomList/allData`, { 
-			headers: {
-				'Authorization': `Bearer ${receivedToken}`
-			  },
-		 });
-		dispatch(resetRoom())
-		const room = res.data.result;
-		room.forEach(roomData => {
-			const { roomId, roomTitle, updatedAt, roomImg, userRoomList } = roomData;
-			dispatch(setRoom({ roomId, roomTitle, updatedAt, roomImg, userRoomList }));
-		});
-		console.log(res.data)
-	} catch (error) {
-        console.error(error);
+    try {
+      const res = await axios.get(`/rooms/myRoomList/allData`, { 
+        headers: {
+          'Authorization': `Bearer ${receivedToken}`
+          },
+      });
+      dispatch(resetRoom())
+      const room = res.data.result;
+      room.forEach(roomData => {
+        const { roomId, roomTitle, updatedAt, roomImg, userRoomList } = roomData;
+        dispatch(setRoom({ roomId, roomTitle, updatedAt, roomImg, userRoomList }));
+      });
+      console.log(res.data)
+    } catch (error) {
+          console.error(error);
+    }
+  }
     
   useEffect(() => {
     fetchRoomList();
@@ -105,7 +107,7 @@ export default function MainBox() {
           ))}
         </S.Container>
         <NewNoteButton /> <NewRoomButton onClick={openModal} />
-        <NewRoomModal isOpen={isModalOpen} onClose={closeModal} />
+        {/* <NewRoomModal isOpen={isModalOpen} onClose={closeModal} /> */}
         {isSNBOpen ? (
           <RecTopic onToggle={toggleSNB}></RecTopic>
         ) : (
