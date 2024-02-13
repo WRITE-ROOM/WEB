@@ -11,7 +11,7 @@ export const roomInfo = createSlice({
     userRoomList: "",
     totalElements: "",
     listSize: "",
-    noteList: "",
+    noteList: [],
     memberInfo: "",
     routineAchieveRate: "",
     goalsAchieveRate: "",
@@ -61,7 +61,7 @@ export const roomInfo = createSlice({
       state.userRoomList = "";
       state.totalElements = "";
       state.listSize = "";
-      state.noteList = "";
+      state.noteList = [];
       state.memberInfo = "";
       state.routineAchieveRate = "";
       state.goalsAchieveRate = "";
@@ -71,7 +71,7 @@ export const roomInfo = createSlice({
   },
 });
 
-export const selectRoomInfoState = (state) => state;
+export const selectRoomInfoState = (state) => state.roomInfo;
 
 export const { setRoomInfo, resetRoomInfo } = roomInfo.actions;
 export default roomInfo.reducer;

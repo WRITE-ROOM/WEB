@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import UseToolTip from "../UseToolTip/UseToolTip";
 import { setRoomInfo, resetRoomInfo } from "../../redux/roomInfo";
 import { selectRoomInfoState } from "../../redux/roomInfo";
+import { useEffect } from "react";
 
 const RoomSNB = ({ percent, isOpen, handleRoomSNB }) => {
   const nameArr = ["지환", "수민", "영주"];
@@ -79,18 +80,18 @@ const RoomSNB = ({ percent, isOpen, handleRoomSNB }) => {
     }
   };
 
-  // useEffect(() => {
-  //   getRoomName();
-  //   getChallenge();
-  // }, [roomId]);
+  useEffect(() => {
+    getRoomName();
+    getChallenge();
+  }, [roomId]);
   const roomSelector = useSelector(selectRoomInfoState);
-  console.log(roomSelector.room);
+
   return (
     <div>
       {isOpen ? (
         <S.Container>
           <S.TitleBox>
-            {roomSelector.room[0] && <h2>{roomSelector.room[0].roomTitle}</h2>}
+            {/* {roomSelector.room[0] && <h2>{roomSelector.room[0].roomTitle}</h2>} */}
             <S.IconsBox>
               <S.ToolTipWrapper>
                 <UseToolTip message="메뉴 닫기">
