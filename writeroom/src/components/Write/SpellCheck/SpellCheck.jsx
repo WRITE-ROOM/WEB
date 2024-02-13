@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as S from "./SpellCheck.style";
 import SpellCheckResult from "./SpellCheckResult";
 
-const SpellCheck = ({ content }) => {
+const SpellCheck = ({ content, setContent }) => {
   const [showResult, setShowResult] = useState(false);
 
   return (
@@ -12,6 +12,7 @@ const SpellCheck = ({ content }) => {
       </S.SpellCheck>
       <SpellCheckResult
         content={content}
+        setContent={setContent}
         showResult={showResult}
         setShowResult={setShowResult}
       />

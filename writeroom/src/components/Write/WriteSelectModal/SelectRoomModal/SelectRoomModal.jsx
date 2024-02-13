@@ -96,11 +96,7 @@ const SelectRoomModal = () => {
           <p>룸 추가하기</p>
         </M.CreateRoom>
 
-        <NewRoomModal
-          isOpen={isModalOpen}
-          onClose={closeModal}
-          doNotNavigate={true}
-        />
+        <NewRoomModal onClose={closeModal} doNotNavigate={true} />
       </SimpleContainer>
     </M.Container>
   );

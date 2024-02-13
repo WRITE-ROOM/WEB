@@ -276,8 +276,6 @@ const Write = () => {
     putNote();
   };
 
-  console.log(note);
-
   return (
     <W.Container>
       <W.Header>
@@ -286,10 +284,10 @@ const Write = () => {
           <Template content={content} setContent={setContent} />
 
           {/* 맞춤법 검사 */}
-          <SpellCheck content={content} />
+          <SpellCheck content={content} setContent={setContent} />
 
           {/* 글자수 */}
-          {/* <Counter content={content} count={count} setCount={setCount} /> */}
+          <Counter content={content} count={count} setCount={setCount} />
         </W.Left>
 
         {/* 룸 */}

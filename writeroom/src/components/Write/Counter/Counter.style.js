@@ -6,7 +6,7 @@ export const Counter = styled.div`
   justify-content: center;
   align-items: center;
 
-  p {
+  & > div {
     position: relative;
     font-size: 16px;
     font-weight: 300;
