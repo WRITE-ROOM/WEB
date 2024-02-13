@@ -49,6 +49,7 @@ function App() {
   };
   
   return (
+
     <ThemeProvider theme={theme}>
       <GlobalStyle/>
       <div className="App">

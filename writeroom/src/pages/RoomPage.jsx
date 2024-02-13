@@ -8,10 +8,9 @@ import NewRoomButton from "../components/FloatingButton/NewRoomButton.jsx";
 import * as S from "./RoomPage.style.js";
 
 const RoomPage = () => {
-  const [isRoomSNBOpen, setIsRoomSNBOpen] = useState(false);
+  const [isRoomSNBOpen, setIsRoomSNBOpen] = useState(true);
   const [isSNBOpen, setIsSNBOpen] = useState(false);
   const [progress, setProgress] = useState(20);
-
   const handleProgress = () => {
     setProgress(90);
   };

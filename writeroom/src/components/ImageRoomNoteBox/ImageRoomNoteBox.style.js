@@ -10,9 +10,14 @@ export const Container = styled.div`
   display: flex;
 `;
 
+export const TopWrapper = styled.div`
+  padding-bottom: 20px;
+  border-bottom: gainsboro 3px solid;
+`;
+
 export const UserIconWrapper = styled.div`
-  position: absolute;
-  margin-bottom: 120px;
+  /* position: absolute;
+  margin-bottom: 120px; */
 `;
 
 export const ContentsBox = styled.div`
@@ -42,6 +47,7 @@ export const Left = styled.div`
   }
 `;
 
+
 export const Writer = styled.div`
   font-size: 14px;
 `;
@@ -67,9 +73,9 @@ export const Right = styled.div`
 export const TextBox = styled.div`
   display: flex;
   flex-direction: column;
-
   h1 {
     margin-top: 10px;
+
     font-size: 22px;
     line-height: 30px;
   }
@@ -89,6 +95,11 @@ export const TextBox = styled.div`
       border-right: 2px solid black;
     }
   }
+`;
+
+export const SubTitle = styled.span`
+  font-weight: bolder;
+  font-size: 16px;
 `;
 
 export const NoteImg = styled.img`
