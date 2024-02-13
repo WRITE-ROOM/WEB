@@ -4,54 +4,66 @@ import ImageRoomNoteBox from "../ImageRoomNoteBox/ImageRoomNoteBox";
 import Pagination from "react-js-pagination";
 
 import { useState, useEffect } from "react";
-import { setRoomInfo, resetRoomInfo } from "../../redux/roomInfo";
+import { setRoomInfo } from "../../redux/roomInfo";
 import { selectRoomInfoState } from "../../redux/roomInfo";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const RoomMain = ({ openRoomSNB, openSNB }) => {
   const dispatch = useDispatch();
   const receivedToken = localStorage.getItem("token");
   const roomInfoSelector = useSelector(selectRoomInfoState);
+  const params = useParams();
+  const roomId = params.roomId;
+
+  const [page, setPage] = useState(1);
+
+  const [count, setCount] = useState();
+  const [isTagSearchChange, setIsTagSearchChange] = useState(false);
+  const handleTagSearch = () => {
+    setIsTagSearchChange(!isTagSearchChange);
+  };
 
   useEffect(() => {
     const getNoteList = async () => {
       try {
-        const response = await axios.get("/rooms/13/list?page=0", {
+        const response = await axios.get(`/rooms/${roomId}/list?page=0`, {
           headers: {
             Authorization: `Bearer ${receivedToken}`,
           },
         });
         dispatch(setRoomInfo(response.data.result));
+        setCount(response.data.result.totalElements);
       } catch (error) {
-        console.error("룸 메인 에러:", error);
+        console.error("getNoteList 에러:", error);
       }
     };
 
     getNoteList();
   }, []);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-  const totalItems = roomInfoSelector?.listSize;
   const handlePageChange = (page) => {
-    setCurrentPage(page);
+    setPage(page);
   };
+
   return (
     <S.Container>
       <S.ImgContainer
         openRoomSNB={openRoomSNB}
         openSNB={openSNB}
-        src="https://images.unsplash.com/photo-1682687220777-2c60708d6889?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        // 테스트 이미지 링크
+        // src
+        //  이미지 링크 추가할 것
       />
       {roomInfoSelector && (
         <S.NoteList>
           <h2>{roomInfoSelector.roomIntroduction}</h2>
           <S.TopBox openRoomSNB={openRoomSNB} openSNB={openSNB}>
             <h1>{roomInfoSelector.roomTitle}</h1>
-            <TagSearchBox />
+            <TagSearchBox
+              onClick={handleTagSearch}
+              isChange={isTagSearchChange}
+            />
             <p>{roomInfoSelector.totalElements}개의 노트</p>
           </S.TopBox>
           {roomInfoSelector.noteList &&
@@ -65,16 +77,17 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
             ))}
         </S.NoteList>
       )}
-      {/* <S.PaginationBox>
-
+      <S.PaginationBox>
         <Pagination
-          activePage={currentPage}
-          itemsCountPerPage={itemsPerPage}
-          totalItemsCount={totalItems}
+          activePage={page}
+          itemsCountPerPage={10}
+          totalItemsCount={count}
           pageRangeDisplayed={5}
           onChange={handlePageChange}
+          prevPageText={"<"}
+          nextPageText={">"}
         />
-      </S.PaginationBox> */}
+      </S.PaginationBox>
     </S.Container>
   );
 };

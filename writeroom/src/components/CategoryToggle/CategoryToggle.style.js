@@ -5,26 +5,20 @@ export const CategoryToggle = styled.div`
   flex-direction: column;
   cursor: pointer;
 `;
-export const ToggleWrapper = styled.div`
+
+export const IconWrapper = styled.div`
+  width: 93%;
   display: flex;
-  margin-top: 10px;
-  p {
-    margin-top: 10px;
-    font-size: 13px;
-    color: #b5a995;
-  }
+  align-items: center;
+  justify-content: space-between;
 `;
 
-export const ButtonWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 40px);
-  margin-left: 15px;
+export const InfoWrapper = styled.div`
+  display: flex;
   gap: 10px;
-
-  button {
-    width: 40px;
-    border-radius: 15px;
-    background: none;
-    border: gray solid;
+  align-items: center;
+  p {
+    font-size: 20px;
+    color: #b5a995;
   }
 `;

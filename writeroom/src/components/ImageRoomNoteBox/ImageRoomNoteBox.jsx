@@ -50,7 +50,6 @@ const ImageRoomNoteBox = ({ note, roomId, noteCoverImg }) => {
     return textContent;
   };
 
-
   return (
     <S.Container onClick={() => handleSelectNote()}>
       <S.ContentsBox>
@@ -81,7 +80,11 @@ const ImageRoomNoteBox = ({ note, roomId, noteCoverImg }) => {
           </S.Left>
 
           <S.Right>
-            <Bookmark roomId={roomId} noteId={note.noteId} defaultColor="black"/>
+            <Bookmark
+              roomId={roomId}
+              noteId={note.noteId}
+              defaultColor="black"
+            />
             <Setting
               type="dots"
               note={note}

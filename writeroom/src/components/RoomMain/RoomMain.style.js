@@ -113,13 +113,13 @@ export const PaginationBox = styled.div`
     font-size: 1rem;
   }
   ul.pagination li.active a {
-    color: white;
+    color: rgba(181, 169, 148, 1);
   }
+
+  ul.pagination li a:hover {
+    color: rgba(181, 169, 148, 1);
+  }
+
   ul.pagination li.active {
-    background-color: black;
-  }
-  ul.pagination li a:hover,
-  ul.pagination li a.active {
-    color: black;
   }
 `;
