@@ -24,7 +24,6 @@ const ImageRoomNoteBox = ({ openRoomSNB, openSNB, note }) => {
     noteImg,
   } = note;
   const extractedDate = createdAt.substring(0, 10);
-  console.log(tagList[0].tagName);
   return (
     <S.Container openRoomSNB={openRoomSNB} openSNB={openSNB}>
       <S.ContentsBox>

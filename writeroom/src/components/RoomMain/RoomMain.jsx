@@ -1,11 +1,10 @@
-import RoomNoteBox from "../RoomNoteBox/RoomNoteBox";
 import * as S from "./RoomMain.style";
 import TagSearchBox from "../TagSearchBox/TagSearchBox";
 import ImageRoomNoteBox from "../ImageRoomNoteBox/ImageRoomNoteBox";
 import Pagination from "react-js-pagination";
 import { useState, useEffect } from "react";
-import room, { resetRoom, setRoom } from "../../redux/room";
-import { selectRoomState } from "../../redux/room";
+import { setRoomInfo, resetRoomInfo } from "../../redux/roomInfo";
+import { selectRoomInfoState } from "../../redux/roomInfo";
 import { useDispatch, useSelector } from "react-redux";
 
 import axios from "axios";
@@ -20,18 +19,19 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
           Authorization: `Bearer ${receivedToken}`,
         },
       });
-      dispatch(resetRoom());
+      console.log(response.data);
+      dispatch(resetRoomInfo());
       dispatch(
-        setRoom({
-          roomId: response.data.result.roomId,
-          roomTitle: response.data.result.roomTitle,
-          roomIntroduction: response.data.result.roomIntroduction,
-          updatedAt: response.data.result.updatedAt,
-          roomImg: response.data.result.roomImg,
-          userRoomList: response.data.result.userRoomList,
-          totalElements: response.data.result.totalElements,
-          listSize: response.data.result.listSize,
-          noteList: response.data.result.noteList,
+        setRoomInfo({
+          roomId: response.data.roomId,
+          roomTitle: response.data.roomTitle,
+          roomIntroduction: response.data.roomIntroduction,
+          updatedAt: response.data.updatedAt,
+          roomImg: response.data.roomImg,
+          userRoomList: response.data.userRoomList,
+          totalElements: response.data.totalElements,
+          listSize: response.data.listSize,
+          noteList: response.data.noteList,
         })
       );
     } catch (error) {
@@ -39,20 +39,20 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
     }
   };
 
-  const roomSelector = useSelector(selectRoomState);
+  const roomInfoSelector = useSelector(selectRoomInfoState);
+
   useEffect(() => {
     getNoteList();
   }, []);
-
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const itemsPerPage = 10;
-  // const totalItems = roomSelector.room[0].listSize;
-  // const handlePageChange = (page) => {
-  //   setCurrentPage(page);
-  // };
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const totalItems = roomInfoSelector?.listSize;
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   // console.log(roomSelector.room);
-  const currentItems = roomSelector.room[0]?.noteList;
+  const currentItems = roomInfoSelector?.noteList;
   return (
     <S.Container>
       <S.ImgContainer
@@ -61,22 +61,23 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
         src="https://images.unsplash.com/photo-1682687220777-2c60708d6889?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         // 테스트 이미지 링크
       />
-      {roomSelector.room[0] && (
+      {roomInfoSelector && (
         <S.NoteList>
-          <h2>{roomSelector.room[0].roomIntroduction}</h2>
+          <h2>{roomInfoSelector.roomIntroduction}</h2>
           <S.TopBox openRoomSNB={openRoomSNB} openSNB={openSNB}>
-            <h1>{roomSelector.room[0].roomTitle}</h1>
+            <h1>{roomInfoSelector.roomTitle}</h1>
             <TagSearchBox />
-            <p>{roomSelector.room[0].totalElements}개의 노트</p>
+            <p>{roomInfoSelector.totalElements}개의 노트</p>
           </S.TopBox>
-          {currentItems.map((note, index) => (
-            <ImageRoomNoteBox
-              key={index}
-              openRoomSNB={openRoomSNB}
-              openSNB={openSNB}
-              note={note} // 각 노트에 대한 데이터 전달
-            />
-          ))}
+          {currentItems &&
+            currentItems.map((note, index) => (
+              <ImageRoomNoteBox
+                key={index}
+                openRoomSNB={openRoomSNB}
+                openSNB={openSNB}
+                note={note} // 각 노트에 대한 데이터 전달
+              />
+            ))}
         </S.NoteList>
       )}
       {/* <S.PaginationBox>

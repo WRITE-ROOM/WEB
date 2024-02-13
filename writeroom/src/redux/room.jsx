@@ -17,6 +17,11 @@ export const room = createSlice({
         totalElements,
         listSize,
         noteList,
+        memberInfo,
+        routineAchieveRate,
+        goalsAchieveRate,
+        goalsTargetCount,
+        routineTargetCount,
       } = action.payload;
       state.room.push({
         roomId,
@@ -28,6 +33,11 @@ export const room = createSlice({
         totalElements,
         listSize,
         noteList,
+        memberInfo,
+        routineAchieveRate,
+        goalsAchieveRate,
+        goalsTargetCount,
+        routineTargetCount,
       });
     },
     resetRoom(state) {
