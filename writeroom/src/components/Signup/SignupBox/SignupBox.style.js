@@ -39,7 +39,7 @@ export const SNSInfo = styled.p`
 `;
 
 export const IsLogin = styled.div`
-  width: 200px;
+  width: 240px;
   height: 22px;
   margin-top: 70px;
   display: flex;
@@ -47,9 +47,8 @@ export const IsLogin = styled.div`
   align-items: center;
 
   p {
-    width: 138px;
+    width: 150px;
     height: 22px;
-
     font-family: Pretendard;
     font-size: 18px;
     font-weight: 300;
@@ -58,13 +57,12 @@ export const IsLogin = styled.div`
     text-align: left;
   }
 
-
 	button {
 		width: 60px;
 		height: 22px;
 		border: none;
 		background: none;
-		color: black;
+		color: ${(props) => props.theme.textColor};
 		cursor: pointer;
 		font-family: Pretendard;
 		font-size: 18px;
@@ -72,7 +70,6 @@ export const IsLogin = styled.div`
 		line-height: 22px;
 		letter-spacing: 0em;
 		text-align: left;
-		
 	}
 `
 
