@@ -20,8 +20,8 @@ import MyBookmarkPage from "./pages/MyBookmarkPage.jsx";
 import ResetPwdPage from "./pages/ResetPwdPage.jsx";
 import MyprofileNone from "./pages/MyprofileNone.jsx";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
-import { useState } from "react";
-import { darkTheme, lightTheme } from "./theme.jsx";
+import { useEffect, useState } from "react";
+import { darkTheme, lightTheme } from './theme.jsx';
 
 const GlobalStyle = createGlobalStyle`
   body {        
@@ -47,17 +47,17 @@ function App() {
       window.localStorage.setItem("theme", "lightTheme");
     }
   };
+  useEffect(() => {
+    console.log(window.location.pathname);
+  }, [currentPath])
 
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <div className="App">
-        {currentPath !== "/login" &&
-        currentPath !== "/signup" &&
-        currentPath !== "/forgetPwd" &&
-        currentPath !== "/reset/pw/:status" ? (
+      {(currentPath !== '/login' && currentPath !== '/signup' && currentPath !== '/forgetPwd' && currentPath !== '/reset/pw/:status') && (
           <Header themeMode={themeMode} toggleDarkMode={toggleDarkMode} />
-        ) : null}
+        )}
         <Routes>
           <Route path="/rooms" element={<RoomPage />} />
           <Route path="/rooms/:roomId" element={<RoomPage />} />
