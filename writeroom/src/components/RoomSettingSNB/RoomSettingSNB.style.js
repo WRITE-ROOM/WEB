@@ -7,15 +7,16 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-top: 3px solid gainsboro;
+  border-top: 3px solid ${(props) => props.theme.borderColor};
   font-weight: bold;
-  background-color: white;
-`;
+  background-color: ${(props) => props.theme.bgColor};
+`
 export const SNBBox = styled(Link)`
   width: 100%;
   height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 3px solid gainsboro;
+  border-bottom: 3px solid ${(props) => props.theme.borderColor};
+  color: ${(props) => props.theme.textColor};
 `;

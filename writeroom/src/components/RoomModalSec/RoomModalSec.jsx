@@ -22,7 +22,7 @@ const RoomModalSec = ({
         <S.Background>
           <S.Container>
             <S.DeleteWrapper>
-              <IoClose size={30} onClick={handleCloseModal} />
+              <S.CloseBtn size={30} onClick={handleCloseModal} />
             </S.DeleteWrapper>
             <h1>{title1}</h1>
             <h1>{title2}</h1>

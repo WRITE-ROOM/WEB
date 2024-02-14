@@ -42,6 +42,7 @@ export const RoomSetting = () => {
           <RoomModal
             title1="내가 관리하고 있는 룸이에요."
             title2="정말 룸을 삭제하시겠어요?"
+            button2="삭제"
           />
         )}
         <RoomModalSec
