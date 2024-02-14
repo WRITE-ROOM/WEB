@@ -1,8 +1,22 @@
 import React from "react";
 import { DropdownContainer } from "./Dropdown.style";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const MyProfileMenu = () => {
+
+  let navigate = useNavigate();
+
+  const getLogout = async() => {
+    try {
+      const res = await axios.get(`/auth/logout`);
+      localStorage.clear();
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <DropdownContainer>
       <ul>
@@ -13,7 +27,7 @@ const MyProfileMenu = () => {
           <a href="/myprofile/bookmark">북마크</a>
         </li>
         <li>
-          <a href="/">로그아웃</a>
+          <a href="/login" onClick={getLogout}>로그아웃</a>
         </li>
       </ul>
     </DropdownContainer>
