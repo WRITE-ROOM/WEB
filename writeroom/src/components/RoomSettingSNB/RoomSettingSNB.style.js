@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -10,8 +9,10 @@ export const Container = styled.div`
   border-top: 3px solid ${(props) => props.theme.borderColor};
   font-weight: bold;
   background-color: ${(props) => props.theme.bgColor};
-`
-export const SNBBox = styled(Link)`
+`;
+
+export const SNBBox = styled.div`
+  background-color: ${(props) => (props.isActive ? "gainsboro" : "white")};
   width: 100%;
   height: 80px;
   display: flex;
@@ -19,4 +20,5 @@ export const SNBBox = styled(Link)`
   align-items: center;
   border-bottom: 3px solid ${(props) => props.theme.borderColor};
   color: ${(props) => props.theme.textColor};
+  cursor: pointer;
 `;

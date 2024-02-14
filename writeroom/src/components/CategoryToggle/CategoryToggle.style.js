@@ -1,30 +1,30 @@
 import styled from "styled-components";
 
 export const CategoryToggle = styled.div`
+  height: 30px;
   display: flex;
-  flex-direction: column;
   cursor: pointer;
-`;
-export const ToggleWrapper = styled.div`
   display: flex;
-  margin-top: 10px;
-  p {
-    margin-top: 10px;
-    font-size: 13px;
-    color: #b5a995;
-  }
+  justify-content: space-between;
 `;
 
-export const ButtonWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 40px);
-  margin-left: 15px;
-  gap: 10px;
+export const IconWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
-  button {
-    width: 40px;
-    border-radius: 15px;
-    background: none;
-    border: gray solid;
+export const InfoWrapper = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  h2 {
+    font-size: 19px;
+    font-weight: 300;
+  }
+  p {
+    font-size: 14px;
+    font-weight: 300;
+    color: #b5a995;
   }
 `;

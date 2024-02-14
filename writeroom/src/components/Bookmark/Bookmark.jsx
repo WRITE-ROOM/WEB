@@ -4,16 +4,14 @@ import { FaBookmark } from "react-icons/fa";
 import * as B from "./Bookmark.style";
 import axios from "axios";
 
-const Bookmark = ({ defaultColor, roomId, noteId, bookmarkId, myProfile}) => {
+const Bookmark = ({ defaultColor, roomId, noteId, bookmarkId, myProfile }) => {
   const [isBookmarked, setIsBookmarked] = useState(myProfile);
-  
+
   const handleBookmark = () => {
     setIsBookmarked(!isBookmarked);
     if (!isBookmarked) {
       postBookmark();
-    }
-    else
-      deleteBookmark(bookmarkId);
+    } else deleteBookmark(bookmarkId);
   };
 
   const accessToken = localStorage.getItem("token");
@@ -29,31 +27,30 @@ const Bookmark = ({ defaultColor, roomId, noteId, bookmarkId, myProfile}) => {
           },
         }
       );
-      window.alert('북마크에 추가했어요.');
+      window.alert("북마크에 추가했어요.");
       console.log(res.data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const deleteBookmark = async(bookmarkId) => {
-    console.log('클릭한 북마크 아이디: ', bookmarkId)
+  const deleteBookmark = async (bookmarkId) => {
+    console.log("클릭한 북마크 아이디: ", bookmarkId);
     try {
       const res = await axios.delete(`/notes/bookmark/delete/${bookmarkId}`, {
         headers: {
-          'Authorization': `Bearer ${accessToken}`,
-        }
+          Authorization: `Bearer ${accessToken}`,
+        },
       });
       if (res.status === 200) {
         const data = res.data.result;
         console.log(res.data);
-        window.alert('북마크에서 해제했어요.');
+        window.alert("북마크에서 해제했어요.");
       }
     } catch (error) {
       console.log(error);
     }
-  }
-
+  };
 
   return (
     <B.Container onClick={(e) => e.stopPropagation()}>

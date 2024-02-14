@@ -1,27 +1,32 @@
 import * as S from "./CategoryToggle.style";
-import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
-import { useState } from "react";
-export const CategoryToggle = ({ name }) => {
-  const [isOpen, setIsOpen] = useState(false);
+import { FiPlus } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedRoom, setSelectedCategory } from "../../redux/selectModal";
+import { useNavigate } from "react-router-dom";
 
-  const handleToggle = () => {
-    setIsOpen(!isOpen);
+export const CategoryToggle = ({ name, countNote, room, categoryId }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleCategoryClick = () => {
+    dispatch(
+      setSelectedRoom({ roomTitle: room.roomTitle, roomId: room.roomId })
+    );
+    dispatch(
+      setSelectedCategory({ categoryName: name, categoryId: categoryId })
+    );
+
+    navigate("/Write");
   };
-
   return (
-    <S.CategoryToggle onClick={handleToggle}>
-      <S.ToggleWrapper>
-        {isOpen ? <IoIosArrowDown /> : <IoIosArrowForward />}
+    <S.CategoryToggle>
+      <S.InfoWrapper>
         <h2>{name}</h2>
-        <p>(3시간 전)</p>
-      </S.ToggleWrapper>
-      {isOpen && (
-        <S.ButtonWrapper>
-          <button>하이</button>
-          <button>하이</button>
-          <button>하이</button>
-        </S.ButtonWrapper>
-      )}
+        <p>({countNote})</p>
+      </S.InfoWrapper>
+      <S.IconWrapper onClick={handleCategoryClick}>
+        <FiPlus size={20} />
+      </S.IconWrapper>
     </S.CategoryToggle>
   );
 };

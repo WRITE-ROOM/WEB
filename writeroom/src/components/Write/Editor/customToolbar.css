@@ -28,6 +28,18 @@
     font-family: "Pretendard-Regular";
 }
 
+.ql-toolbar span {
+    color: gray;
+}
+
+.ql-snow .ql-stroke {
+    stroke: gray;
+}
+
+.ql-snow .ql-fill {
+    stroke: gray;
+}
+
 
 /* 나눔 명조 폰트 설정 */
 .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="nanum"]::before,

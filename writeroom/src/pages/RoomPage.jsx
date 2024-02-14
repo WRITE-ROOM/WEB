@@ -10,10 +10,6 @@ import * as S from "./RoomPage.style.js";
 const RoomPage = () => {
   const [isRoomSNBOpen, setIsRoomSNBOpen] = useState(true);
   const [isSNBOpen, setIsSNBOpen] = useState(false);
-  const [progress, setProgress] = useState(20);
-  const handleProgress = () => {
-    setProgress(90);
-  };
 
   const toggleSNB = () => {
     setIsSNBOpen((prev) => !prev);
@@ -26,11 +22,7 @@ const RoomPage = () => {
   return (
     <>
       <S.Wrapper>
-        <RoomSNB
-          percent={progress}
-          handleRoomSNB={handleRoomSNB}
-          isOpen={isRoomSNBOpen}
-        />
+        <RoomSNB handleRoomSNB={handleRoomSNB} isOpen={isRoomSNBOpen} />
         <RoomMain openRoomSNB={isRoomSNBOpen} openSNB={isSNBOpen} />
         {isSNBOpen ? (
           <RecTopic onToggle={toggleSNB}></RecTopic>
