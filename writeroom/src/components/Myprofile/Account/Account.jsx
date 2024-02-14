@@ -21,6 +21,7 @@ export default function Account() {
   const userName = user.userName;
   const profileImg = user.profileImg;
   const userEmail = user.userEmail;
+  const joinType = user.joinType;
   
   const [name, setName] = useState(userName);
 
@@ -53,8 +54,6 @@ export default function Account() {
       console.log(error);
     }
   }
-
-
 
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
@@ -122,7 +121,8 @@ export default function Account() {
         userId: data.userId, 
         userName: data.nickName,
         profileImg: data.profileImg,
-        userEmail: data.email
+        userEmail: data.email,
+        joinType: data.joinType,
       }))
       setImage(data.profileImg);
       setName(data.nickName);
@@ -176,12 +176,20 @@ return (
             <S.LoginWrapper>
               <p>이메일</p>
               <p>{userEmail}</p>
-              <button onClick={() => {navigate('/myprofile/account/email')}}>이메일 주소 변경</button>
+              {joinType === "BASIC" && (
+                <button onClick={() => {navigate('/myprofile/account/email')}}>
+                  이메일 주소 변경
+                </button>
+              )}
             </S.LoginWrapper>
             <S.LoginWrapper>
               <p>비밀번호</p>
               <p/>
-              <button onClick={() => {navigate('/myprofile/account/pw')}}>비밀번호 변경</button>
+              {joinType === "BASIC" && (
+                <button onClick={() => {navigate('/myprofile/account/pw')}}>
+                  비밀번호 변경
+                </button>
+              )}
             </S.LoginWrapper>
           </S.LoginInfo>
           <S.Line/>

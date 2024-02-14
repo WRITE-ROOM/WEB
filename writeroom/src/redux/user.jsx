@@ -19,11 +19,12 @@ export const user = createSlice({
 			state.accessToken = accessToken;
 		},
 		setAccount(state, action) { // 계정설정
-			const { userId, userName, profileImg, userEmail} = action.payload;
+			const { userId, userName, profileImg, userEmail, joinType} = action.payload;
 			state.userId = userId;
 			state.userName = userName;
 			state.profileImg = profileImg;
 			state.userEmail = userEmail;
+			state.joinType = joinType;
 		},
 		setUserEmail(state, action) {
 			const {userEmail} = action.payload;
