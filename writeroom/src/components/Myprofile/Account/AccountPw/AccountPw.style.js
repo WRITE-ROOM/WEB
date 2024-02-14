@@ -40,6 +40,8 @@ export const NewPw = styled.div`
         font-family: Pretendard;
         font-size: 20px;
         font-weight: 300;  
+        background-color: ${(props) => props.theme.bgColor};
+        color: ${(props) => props.theme.textColor};
     }
     ::placeholder {
         font-family: Pretendard;
@@ -52,6 +54,8 @@ export const NewPw = styled.div`
         font-weight: 400;
         color: red;
         margin: 5px 0 20px 0;
+        color: ${(props) => props.theme.accentColor};
+
     }
 
     button { 

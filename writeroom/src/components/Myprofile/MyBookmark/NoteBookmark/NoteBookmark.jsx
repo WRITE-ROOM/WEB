@@ -12,6 +12,7 @@ import { TagContainer } from '../../../../pages/Note.style';
 import Tag from '../../../../redux/tag';
 import Setting from '../../../Setting/Setting';
 import Naver from '../../../../assets/naver.png'
+import { useNavigate } from 'react-router-dom';
 
 
 export default function NoteBookmark() {
@@ -24,11 +25,9 @@ export default function NoteBookmark() {
 
   const [maxLength, setMaxLength] = useState(100);
 
-
-  const roomId = 94; //임시
-  
-
   const note = useSelector((state) => state.note);
+
+  let navigate = useNavigate();
   let dispatch = useDispatch();
 
   const handleBookmarkChange = (index) => {
@@ -74,7 +73,7 @@ export default function NoteBookmark() {
   return (
     <S.App>
       {bookmarkMaterialList.map((bookmark, index) => (
-        <S.Container key={index}>
+        <S.Container key={index} onClick={() => navigate(`/rooms/${bookmark.roomId}/notes/${bookmark.noteId}`)}>
         <S.ContentsBox>
           <S.Top>
             <S.Left>

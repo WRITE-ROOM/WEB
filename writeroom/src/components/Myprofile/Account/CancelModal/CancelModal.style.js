@@ -11,6 +11,7 @@ export const ModalBackground = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	z-index: 99;
 `
 export const Modal = styled.div`
 	width: 400px;
@@ -21,8 +22,9 @@ export const Modal = styled.div`
 	align-items: flex-end;
 	justify-content: space-between;
 	border-radius: 10px;
-	background: white;
-	z-index: 99;
+	background-color: ${(props) => props.theme.bgColor};
+    color: ${(props) => props.theme.textColor};
+	z-index: 100;
 `
 export const Top = styled.div`
 	width; 400px;
@@ -89,7 +91,7 @@ export const DeleteBtn = styled.div`
 	align-items: center;
     justify-content: center;
 	border-radius: 10px;
-    background: rgba(229, 229, 229, 1);
+	background-color: ${(props) => props.theme.SNBSearchColor};
 	cursor: pointer;
 
 	p {

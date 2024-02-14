@@ -5,7 +5,7 @@ import * as S from './RecTopicClose.style';
 
 export default function RecTopicClose({onToggle}) {
   return (
-    <div style={{margin: '100px'}}>
+    <div>
 			<S.Container>
 				<MdKeyboardDoubleArrowLeft 
 				style={{cursor: "pointer"}}

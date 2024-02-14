@@ -52,7 +52,7 @@ const Setting = ({ type, note, roomId, categoryName, noteCoverImg }) => {
         {type === "config" ? (
           <BiCog size={22} color="#fff" />
         ) : (
-          <BiDotsVerticalRounded size={22} color="#000" />
+          <S.Menu size={22} />
         )}
       </S.SettingButton>
 

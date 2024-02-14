@@ -113,7 +113,7 @@ export default function WordBookMark() {
               {isBookmarked[sectionIndex * 13 + index] ? (
                 <FaBookmark color="rgba(181, 169, 148, 1)" onClick={() => toggleBookmark({index: sectionIndex * 13 + index, word: word.content})}/>
               ) : (
-                <FaRegBookmark color="black" onClick={() => toggleBookmark({index: sectionIndex * 13 + index, word: word.content})}/>
+                <S.NotBookMark onClick={() => toggleBookmark({index: sectionIndex * 13 + index, word: word.content})}/>
               )}
             </S.RecWord>
           ))}

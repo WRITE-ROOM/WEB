@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     display: flex;
-    // background: pink;
 `
 
 export const SNB = styled.div`
@@ -11,7 +10,7 @@ export const SNB = styled.div`
     // display: flex;
     // flex-direction: column;    
     box-shadow: 3px 0px 4px 0px rgba(0, 0, 0, 0.07);
-    // background: red;
+    background-color: ${(props) => props.theme.bgColor};
     z-index: 99;
 `
 
