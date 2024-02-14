@@ -32,6 +32,7 @@ export const roomInfo = createSlice({
         totalElements,
         listSize,
         noteList,
+
       } = action.payload;
 
       state.roomId = roomId;
@@ -43,10 +44,12 @@ export const roomInfo = createSlice({
       state.totalElements = totalElements;
       state.listSize = listSize;
       state.noteList = noteList;
+
     },
     setRoomMember(state, action) {
       state.memberInfo = action.payload;
     },
+
     setChallengePercent(state, action) {
       state.challengePercent = action.payload;
     },
@@ -56,6 +59,7 @@ export const roomInfo = createSlice({
     setRoomExplain(state, action) {
       state.setRoomExplain = action.payload;
     },
+
     resetRoomInfo(state) {
       state.roomId = "";
       state.roomTitle = "";
@@ -79,6 +83,7 @@ export const roomInfo = createSlice({
 
 export const selectRoomInfoState = (state) => state.roomInfo;
 
+
 export const {
   setRoomInfo,
   resetRoomInfo,
@@ -87,4 +92,5 @@ export const {
   setRoomTitle,
   setRoomExplain,
 } = roomInfo.actions;
+
 export default roomInfo.reducer;

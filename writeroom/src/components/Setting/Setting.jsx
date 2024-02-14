@@ -42,7 +42,7 @@ const Setting = ({ type, note, roomId, categoryName, noteCoverImg }) => {
     dispatch(setSelectedRoomId(roomId));
     dispatch(setSelectedCategoryName(categoryName));
     navigate("/write");
-    console.log(roomId);
+    console.log("roomId", roomId);
     console.log(note);
   };
 

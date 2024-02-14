@@ -9,6 +9,7 @@ import { selectRoomInfoState } from "../../redux/roomInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const RoomMain = ({ openRoomSNB, openSNB }) => {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
     setIsTagSearchChange(!isTagSearchChange);
   };
 
+  const roomId = useParams().roomId;
   useEffect(() => {
     const getNoteList = async () => {
       try {
@@ -38,7 +40,9 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
           },
         });
         dispatch(setRoomInfo(response.data.result));
+
         setCount(response.data.result.totalElements);
+
       } catch (error) {
         console.error("getNoteList 에러:", error);
       }
@@ -48,7 +52,7 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
   }, [page]);
 
   return (
-    <S.Container>
+    <S.Container openRoomSNB={openRoomSNB} openSNB={openSNB}>
       <S.ImgContainer
         openRoomSNB={openRoomSNB}
         openSNB={openSNB}
@@ -65,13 +69,16 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
             />
             <p>{roomInfoSelector.totalElements}개의 노트</p>
           </S.TopBox>
+
           {roomInfoSelector.noteList &&
             roomInfoSelector.noteList.map((note, index) => (
               <ImageRoomNoteBox
                 key={index}
+                note={note}
+                roomId={roomId}
                 openRoomSNB={openRoomSNB}
                 openSNB={openSNB}
-                note={note}
+                noteCoverImg={note.noteImg}
               />
             ))}
         </S.NoteList>

@@ -47,7 +47,6 @@ export const Left = styled.div`
   }
 `;
 
-
 export const Writer = styled.div`
   font-size: 14px;
 `;
