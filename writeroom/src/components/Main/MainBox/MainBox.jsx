@@ -16,8 +16,6 @@ export default function MainBox() {
   const roomIdList = useSelector(selectRoomIds);
   const rooms = useSelector((state) => state.room.room);
 
-
-
   let navigate = useNavigate();
   let dispatch = useDispatch();
   const toggleSNB = () => {
@@ -31,7 +29,6 @@ export default function MainBox() {
   // const closeModal = () => {
   //   setIsModalOpen(false);
   // };
-
 
   // const fetchRoomList = async () => {
   //   const userId = localStorage.getItem('id');
@@ -101,13 +98,11 @@ export default function MainBox() {
               >
                 <img src={room.roomImg} alt="" />
               </S.Picture>
-              <MainInfo room={room} roomIndex={index} />
+              <MainInfo roomId={room.roomId} room={room} roomIndex={index} />
             </S.Room>
           ))}
         </S.Container>
         <NewNoteButton /> <NewRoomButton />
-
-
         {/* <NewRoomModal isOpen={isModalOpen} onClose={closeModal} /> */}
         {isSNBOpen ? (
           <RecTopic onToggle={toggleSNB}></RecTopic>

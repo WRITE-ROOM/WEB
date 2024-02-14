@@ -35,7 +35,7 @@ const SelectCategoryModal = () => {
     );
     // dispatch(setCurrentModal(null));
   };
-
+  console.log(categories);
   return (
     <M.Container>
       <SimpleContainer $width="320px" $top="0" $padding="12px">
@@ -48,7 +48,7 @@ const SelectCategoryModal = () => {
           />
         </M.Back>
         <M.CategoryContainer>
-          {categories &&
+          {categories.length > 0 &&
             categories.map((category, index) => (
               <li
                 key={index}

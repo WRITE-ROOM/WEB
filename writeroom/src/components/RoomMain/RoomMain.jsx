@@ -46,7 +46,7 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
     };
 
     getNoteList();
-  }, [page]);
+  }, []);
 
   return (
     <S.Container openRoomSNB={openRoomSNB} openSNB={openSNB}>
