@@ -3,6 +3,7 @@ import * as S from './ForgetPwd.style'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserEmail } from '../../../redux/user';
+import { useNavigate } from 'react-router-dom';
 
 export default function ForgetPwd() {
   const [email, setEmail] = useState('');
@@ -12,7 +13,7 @@ export default function ForgetPwd() {
   const receivedToken = localStorage.getItem('token');
 
   let dispatch = useDispatch();
-
+  let navigate = useNavigate();
   const postResetMail = async() => {
     console.log(email)
     dispatch(setUserEmail({ email: email }));
@@ -36,7 +37,7 @@ export default function ForgetPwd() {
           placeholder='이메일'
           onChange={(e) => {setEmail(e.target.value)}}/>
         <button onClick={postResetMail}>이메일 보내기</button>
-        <h6> {"< 이전으로"}</h6>
+        <h6 onClick={() => {navigate(-1)}}> {"< 이전으로"}</h6>
         {isExisted === 1 && <h3>인증 메일을 전송했어요!</h3>}
         {isExisted === 2 && <h3>존재하지 않는 이메일이예요.</h3>}
       </S.Container>
