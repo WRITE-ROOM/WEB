@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { IoClose } from "react-icons/io5";
+import e from "cors";
 
 export const Background = styled.div`
   position: fixed;
@@ -14,7 +16,7 @@ export const Container = styled.div`
   position: absolute;
   top: calc(50vh - 100px);
   left: calc(50vw - 200px);
-  background-color: white;
+  background-color: ${(props) => props.theme.bgColor};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -23,8 +25,10 @@ export const Container = styled.div`
   width: 400px;
   gap: 5px;
   height: 250px;
+
   h1 {
     font-size: 20px;
+    color: ${(props) => props.theme.textColor};
   }
   p {
     color: gray;
@@ -68,3 +72,7 @@ export const SecondButton = styled.button`
   border-radius: 10px;
   background-color: #b5a995;
 `;
+
+export const CloseBtn = styled(IoClose)`
+  color: ${(props) => props.theme.textColor};
+`

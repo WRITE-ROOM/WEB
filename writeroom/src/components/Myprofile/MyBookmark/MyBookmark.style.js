@@ -13,7 +13,7 @@ export const WordTab = styled.div`
 	height: 53px;
 	border-radius: 30px 30px 0px 0px;
 	// background: white;
-	background-color: ${props => props.isActive ? 'white' : 'rgba(242, 242, 242, 1)'};
+	background-color: ${props => props.isActive ? props.theme.SNBInfoColor : props.theme.TemplateColor};
 	box-shadow: 0px -4px 7px 0px rgba(0, 0, 0, 0.1);
 	display: flex;
 	align-items: center;
@@ -86,7 +86,7 @@ export const PagenationBox = styled.div`
 
 	ul.pagination li a {
 		text-decoration: none;
-		color: black;
+		color: ${(props) => props.theme.textColor};
 		font-size: 1rem;
 	}
 

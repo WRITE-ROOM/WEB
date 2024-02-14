@@ -22,6 +22,8 @@ export const InputInfo = styled.div`
 		border-radius: 10px;
 		border: 1px solid rgba(229, 229, 229, 1);
 		padding-left: 10px;
+		background-color: ${(props) => props.theme.bgColor};
+		color: ${(props) => props.theme.textColor};
 	}
 	::placeholder {
 		font-family: Pretendard;
@@ -36,8 +38,7 @@ export const InputInfo = styled.div`
 		font-size: 12px;
 		font-weight: 400;
 		line-height: 20px;
-		color: red;
-
+		color: ${(props) => props.theme.accentColor};
 	}
 `
 export const SignupButton = styled.div`

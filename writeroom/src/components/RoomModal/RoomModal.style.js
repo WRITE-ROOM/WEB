@@ -14,7 +14,7 @@ export const Container = styled.div`
   position: absolute;
   top: calc(50vh - 100px);
   left: calc(50vw - 200px);
-  background-color: white;
+  background-color: ${(props) => props.theme.bgColor};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -22,7 +22,7 @@ export const Container = styled.div`
   border-radius: 10px;
   width: 400px;
   height: ${(props) => (props.$height ? props.$height : "300px")};
-  color: #000;
+  color: ${(props) => props.theme.textColor};
   h1 {
     font-size: 20px;
   }
@@ -41,7 +41,8 @@ export const CancelButton = styled.button`
   padding: 12px 70px;
   font-size: 16px;
   border-radius: 10px;
-  background-color: #f2f2f2f2;
+  background-color: ${(props) => props.theme.SNBSearchColor};
+  color: ${(props) => props.theme.textColor};
 `;
 
 export const DeleteButton = styled.button`
@@ -50,5 +51,6 @@ export const DeleteButton = styled.button`
   padding: 12px 70px;
   font-size: 16px;
   border-radius: 10px;
-  background-color: white;
+  background-color: ${(props) => props.theme.SNBBgColor};
+  color: ${(props) => props.theme.textColor};
 `;

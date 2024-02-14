@@ -10,7 +10,7 @@ export const ModalBackground = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	z-index: 100;
+	z-index: 99;
 `
 export const Modal = styled.div`
 	width: 400px;
@@ -19,15 +19,18 @@ export const Modal = styled.div`
 	flex-direction: column;
 	align-items: center;
 	border-radius: 10px;
-	background: white;
-	z-index: 101;
-
+	background-color: ${(props) => props.theme.bgColor};
+    color: ${(props) => props.theme.textColor};
+	z-index: 100;
+	
   button {
     margin-top: 50px;
     width: 350px;
     height: 45px;
     border-radius: 10px;
     border: 1px solid rgba(229, 229, 229, 1);
+	background-color: ${(props) => props.theme.SNBSearchColor};
+	color: ${(props) => props.theme.textColor};
     cursor: pointer;
   }
 `

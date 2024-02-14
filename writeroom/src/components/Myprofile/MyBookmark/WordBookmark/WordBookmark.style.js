@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { FaRegBookmark } from "react-icons/fa";
 
 export const Container = styled.div`
     display: flex;
@@ -26,6 +27,10 @@ export const RecWord = styled.div`
   font-size: 14px;
   font-weight: 300;  
 	text-decoration: underline;
+`
+
+export const NotBookMark = styled(FaRegBookmark) `
+  color: ${(props) => props.theme.textColor};
 `
 
 export const TopicBox = styled.div`

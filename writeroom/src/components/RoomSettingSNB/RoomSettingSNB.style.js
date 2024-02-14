@@ -6,10 +6,11 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-top: 3px solid gainsboro;
+  border-top: 3px solid ${(props) => props.theme.borderColor};
   font-weight: bold;
-  background-color: white;
+  background-color: ${(props) => props.theme.bgColor};
 `;
+
 export const SNBBox = styled.div`
   background-color: ${(props) => (props.isActive ? "gainsboro" : "white")};
   width: 100%;
@@ -17,6 +18,7 @@ export const SNBBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 3px solid gainsboro;
+  border-bottom: 3px solid ${(props) => props.theme.borderColor};
+  color: ${(props) => props.theme.textColor};
   cursor: pointer;
 `;

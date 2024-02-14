@@ -50,7 +50,9 @@ const Template = ({ content, setContent }) => {
 
   return (
     <T.Template>
-      <W.StyledButton $border="1px solid #e5e5e5" onClick={handleTemplateMenu}>
+      <W.StyledButton 
+        $borderWidth="1px"
+        $borderStyle="solid" onClick={handleTemplateMenu}>
         템플릿
       </W.StyledButton>
 

@@ -52,6 +52,8 @@ export const CurrentEmail = styled.div`
         font-family: Pretendard;
         font-size: 20px;
         font-weight: 300;  
+        background-color: ${(props) => props.theme.bgColor};
+        color: ${(props) => props.theme.textColor};
     }
     ::placeholder {
         font-family: Pretendard;
@@ -94,6 +96,8 @@ export const NewEmail = styled.div`
         font-family: Pretendard;
         font-size: 20px;
         font-weight: 300;  
+        background-color: ${(props) => props.theme.bgColor};
+        color: ${(props) => props.theme.textColor};
     }
     ::placeholder {
         font-family: Pretendard;

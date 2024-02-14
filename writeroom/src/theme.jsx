@@ -2,12 +2,16 @@ export const lightTheme = {
     bgColor: 'white',
     textColor: '#222',
     accentColor: 'red',
-    borderColor: 'black',
+    borderColor: 'rgba(229, 229, 229, 1)',
     inputColor: 'black',
     shadowColor: 'rgba(0, 0, 0, 0.07)',
-    SNBBgColor: 'white',
-    SNBInfoColor: 'white',
-    SNBSearchColor: 'rgba(242, 242, 242, 1)',
+    SNBBgColor: 'white', // SNB 배경색
+    SNBInfoColor: 'white', // SNB 소재 배경색
+    SNBSearchColor: 'rgba(242, 242, 242, 1)', // SNB 검색창 배경색
+    TemplateColor: 'rgba(242, 242, 242, 1)', // 템플릿, 룸 설정 버튼 배경색
+    tagInputColor:' rgba(217, 217, 217, 1)', // 태그 입력 테스트
+    tagBgColor: 'white', // 태그 배경
+    tagColor: 'rgba(181, 169, 148, 1)' // 태그 텍스트
   };
   
   export const darkTheme = {
@@ -20,6 +24,10 @@ export const lightTheme = {
     SNBBgColor: 'rgba(79, 77, 70, 1)',
     SNBInfoColor: 'rgba(95, 95, 95, 1)',
     SNBSearchColor: 'rgba(95, 95, 95, 1)',
+    TemplateColor: 'rgba(79, 77, 70, 1)',
+    tagInputColor: 'rgba(95, 95, 95, 1)',
+    tagBgColor: 'rgba(95, 95, 95, 1)',
+    tagColor: 'white'
   };
   
   export const theme = {

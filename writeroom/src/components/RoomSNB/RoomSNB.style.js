@@ -10,7 +10,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  box-sizing: border-box;
+  background-color: ${(props) => props.theme.SNBBgColor};
 `;
 
 export const TitleBox = styled.div`
@@ -33,7 +33,15 @@ export const TitleBox = styled.div`
 
 export const Line = styled.div`
   width: 100%;
-  border-bottom: gainsboro 2px solid;
+  border-bottom: 2px solid ${(props) => props.theme.borderColor};
+`;
+
+export const MemberProfile = styled.div`
+  img {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+  }
 `;
 
 export const MemberProfile = styled.div`
@@ -52,7 +60,7 @@ export const IconsBox = styled.div`
 
 export const BasicBox = styled.div`
   display: flex;
-  border-bottom: gainsboro 2px solid;
+  border-bottom: 2px solid ${(props) => props.theme.borderColor};
   flex-direction: column;
   padding-bottom: 20px;
   justify-content: flex-start;

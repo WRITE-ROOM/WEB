@@ -61,9 +61,9 @@ const Bookmark = ({ defaultColor, roomId, noteId, bookmarkId, myProfile }) => {
           onClick={handleBookmark}
         />
       ) : (
-        <FaRegBookmark
+        <B.NotBookMark
           size={18}
-          color={defaultColor ? defaultColor : "black"}
+          // color={defaultColor ? defaultColor : "black"}
           onClick={handleBookmark}
         />
       )}

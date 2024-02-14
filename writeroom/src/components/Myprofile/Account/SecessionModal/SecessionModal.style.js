@@ -11,6 +11,7 @@ export const ModalBackground = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+    z-index: 100;
 `
 export const Modal = styled.div`
 	width: 476px;
@@ -21,8 +22,9 @@ export const Modal = styled.div`
 	align-items: center;
 	justify-content: space-around;
 	border-radius: 10px;
-	background: white;
-	z-index: 99;
+    background-color: ${(props) => props.theme.bgColor};
+    color: ${(props) => props.theme.textColor};
+	z-index: 200;
 `
 export const Info = styled.div`
     position: relative;
@@ -33,7 +35,7 @@ export const Info = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
+    color: ${(props) => props.theme.textColor};
     h2 { 
         font-family: Pretendard;
         font-size: 20px;
@@ -48,6 +50,7 @@ export const Info = styled.div`
         font-size: 14px;
         font-weight: 300;
         text-align: center;
+        color: ${(props) => props.theme.accentColor};
     }
 `
 
@@ -65,7 +68,7 @@ export const CancelBtn = styled.div`
 	align-items: center;
     justify-content: center;
 	border-radius: 10px;
-    background: rgba(242, 242, 242, 1);
+    background-color: ${(props) => props.theme.SNBSearchColor};
     border: 1px solid rgba(229, 229, 229, 1);
 	cursor: pointer;
 

@@ -10,7 +10,7 @@ export const InputBox = styled.div`
   gap: 10px;
 
   div {
-    border: gainsboro solid 1px;
+    border: 1px solid ${(props) => props.theme.borderColor};
     border-radius: 10px;
     width: 100%;
   }
@@ -19,6 +19,8 @@ export const InputBox = styled.div`
     width: 95%;
     height: 40px;
     padding-left: 10px;
+    background-color: transparent;
+    color: ${(props) => props.theme.textColor};
   }
   span {
     font-weight: 400;

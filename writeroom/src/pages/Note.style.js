@@ -101,11 +101,11 @@ export const Tag = styled.li`
   padding: ${(props) => (props.$X ? "0px 6px 0px 10px" : "0px 10px")};
 
   height: 20px;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.SNBInfoColor};
 
   font-size: 12px;
   font-weight: 500;
-  color: #b5a994;
+  color: ${(props) => props.theme.tagColor};
   border-radius: 30px;
 
   display: flex;
@@ -133,7 +133,7 @@ export const HiddenTag = styled.ul`
 `;
 
 export const Content = styled.div`
-  color: black;
+  color: ${(props) => props.theme.textColor};
   padding: 24px;
 
   ol {

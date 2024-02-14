@@ -43,6 +43,9 @@ export const Container = styled.div`
     border: 1px solid rgba(229, 229, 229, 1);
     padding-left: 10px;
     margin-bottom: 10px;
+    background-color: ${(props) => props.theme.bgColor};
+    color: ${(props) => props.theme.textColor};
+
   }
   ::placeholder {
     font-family: Noto Sans;
@@ -70,6 +73,7 @@ export const Container = styled.div`
     text-align: left;
     text-decoration: underline;
     margin-bottom: 10px;
+    cursor: pointer;
   }
 `;
 

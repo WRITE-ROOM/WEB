@@ -6,7 +6,7 @@ export default function SecessionAlert() {
 	let navigate = useNavigate();
 	useEffect(() => {
     const timeoutId = setTimeout(() => {
-      navigate('/');
+      navigate('/login');
     }, 2000);
 		
     return () => clearTimeout(timeoutId);

@@ -107,6 +107,8 @@ export const ProfileRight = styled.div`
         height: 46px;
         border-radius: 10px;
         border: 1px solid rgba(229, 229, 229, 1);
+        background-color: ${(props) => props.theme.bgColor};
+        color: ${(props) => props.theme.textColor};
     }
     ::placeholder {
         font-family: Pretendard;
@@ -158,6 +160,8 @@ export const LoginWrapper = styled.div`
         border-radius: 5px;
         border: 1px;
         cursor: pointer;
+        background-color: ${(props) => props.theme.borderColor};
+        color: ${(props) => props.theme.textColor};
     }
     p {
         font-family: Pretendard;
@@ -184,8 +188,8 @@ export const Bottom = styled.div`
         height: 46px;
         border: none;
         border-radius: 10px;
-        background: rgba(204, 204, 204, 1);
-        color: white;
+        background-color: ${(props) => props.theme.borderColor};
+        color: ${(props) => props.theme.textColor};
         font-family: Pretendard;
         font-size: 20px;
         font-weight: 400;
