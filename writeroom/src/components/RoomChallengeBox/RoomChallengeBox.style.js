@@ -19,11 +19,11 @@ export const Bar = styled.button`
   width: 33%;
   height: 100%;
   padding: 20px 0px;
-  color: ${({ isSelected }) => (isSelected ? "black" : "gray")};
-  background-color: ${({ isSelected }) => (isSelected ? "white" : "#eaeaea")};
+  color: ${props => props.isSelected ? props.theme.challengeTextColor : props.theme.challengeTextOtherColor};  
+  background-color: ${props => props.isSelected ? props.theme.SNBInfoColor : props.theme.TemplateColor};  
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
-  box-shadow: 0px -5px 10px gainsboro;
+  box-shadow: 0px -5px 10px ${(props) => props.theme.shadowColor};;
   display: flex;
   gap: 10px;
   border: none;
@@ -62,6 +62,6 @@ export const GiveUpButton = styled.button`
   text-decoration: underline;
   border: none;
   background: none;
-  color: red;
+  color: ${(props) => props.theme.accentColor};
   cursor: pointer;
 `;
