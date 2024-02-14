@@ -9,7 +9,6 @@ import { selectRoomInfoState } from "../../redux/roomInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 
 const RoomMain = ({ openRoomSNB, openSNB }) => {
   const dispatch = useDispatch();
@@ -30,7 +29,6 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
     setIsTagSearchChange(!isTagSearchChange);
   };
 
-  const roomId = useParams().roomId;
   useEffect(() => {
     const getNoteList = async () => {
       try {
@@ -42,7 +40,6 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
         dispatch(setRoomInfo(response.data.result));
 
         setCount(response.data.result.totalElements);
-
       } catch (error) {
         console.error("getNoteList 에러:", error);
       }
