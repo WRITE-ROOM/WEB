@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import * as W from "./Write.style";
 import { FiTrash, FiImage } from "react-icons/fi";
 
@@ -21,7 +21,6 @@ import { setNoteCoverImg } from "../redux/note";
 import { setCategory } from "../redux/category";
 import { useNavigate } from "react-router-dom";
 import whiteImg from "../assets/whiteImg.png";
-
 import axios from "axios";
 
 const Write = () => {
@@ -206,7 +205,6 @@ const Write = () => {
     }
   };
 
-  const nullImg = useRef(null);
   const putNote = async () => {
     const formData = new FormData();
 
@@ -246,7 +244,6 @@ const Write = () => {
       });
       navigate(`/rooms/${selectedRoom.roomId}/notes/${note.noteId}`);
       console.log(res.data);
-      console.log("nullImg", nullImg.current);
     } catch (error) {
       console.log(error);
     }

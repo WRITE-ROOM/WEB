@@ -10,16 +10,25 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  box-sizing: border-box;
 `;
 
 export const TitleBox = styled.div`
   width: 100%;
-  height: 30px;
+  height: 50px;
   font-weight: bold;
   display: flex;
   justify-content: space-between; // 주축
   align-items: center; // 교차축
-  margin-bottom: 30px;
+
+  h1 {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  h2 {
+    font-size: 19px;
+    font-weight: 500;
+  }
 `;
 
 export const Line = styled.div`
@@ -30,8 +39,8 @@ export const Line = styled.div`
 export const MemberProfile = styled.div`
   img {
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
   }
 `;
 
@@ -39,11 +48,9 @@ export const IconsBox = styled.div`
   cursor: pointer;
   display: flex;
   gap: 10px;
-  margin-right: 20px;
 `;
 
 export const BasicBox = styled.div`
-  margin: 20px;
   display: flex;
   border-bottom: gainsboro 2px solid;
   flex-direction: column;
@@ -63,12 +70,14 @@ export const Member = styled.div`
 
   h2 {
     font-size: 20px;
+    font-weight: 300;
     padding-left: 20px;
   }
 
   p {
-    font-size: 13px;
+    font-size: 14px;
     color: #b5a995;
+    font-weight: 300;
   }
 `;
 
@@ -86,6 +95,7 @@ export const Plus = styled.div`
 
   h2 {
     font-size: 20px;
+    font-weight: 300;
     color: #b5a995;
     padding-left: 20px;
   }

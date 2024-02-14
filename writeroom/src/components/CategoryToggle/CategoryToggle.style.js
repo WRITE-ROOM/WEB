@@ -1,24 +1,30 @@
 import styled from "styled-components";
 
 export const CategoryToggle = styled.div`
+  height: 30px;
   display: flex;
-  flex-direction: column;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const IconWrapper = styled.div`
-  width: 93%;
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
 `;
 
 export const InfoWrapper = styled.div`
   display: flex;
   gap: 10px;
   align-items: center;
+  h2 {
+    font-size: 19px;
+    font-weight: 300;
+  }
   p {
-    font-size: 20px;
+    font-size: 14px;
+    font-weight: 300;
     color: #b5a995;
   }
 `;
