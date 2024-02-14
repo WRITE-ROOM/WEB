@@ -19,6 +19,7 @@ export const TitleBox = styled.div`
   display: flex;
   justify-content: space-between; // 주축
   align-items: center; // 교차축
+  margin-bottom: 30px;
 `;
 
 export const Line = styled.div`
@@ -69,6 +70,12 @@ export const Member = styled.div`
     font-size: 13px;
     color: #b5a995;
   }
+`;
+
+export const MemberInfoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;
 
 export const Plus = styled.div`

@@ -7,43 +7,95 @@ import {
   MdKeyboardDoubleArrowRight,
 } from "react-icons/md";
 import { BsPersonCircle } from "react-icons/bs";
-import { BiDotsVerticalRounded } from "react-icons/bi";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import { CategoryToggle } from "../CategoryToggle/CategoryToggle";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import UseToolTip from "../UseToolTip/UseToolTip";
-import { setRoomInfo, resetRoomInfo } from "../../redux/roomInfo";
-import { setRoomMember } from "../../redux/roomInfo";
-import { selectRoomInfoState } from "../../redux/roomInfo";
-import { useEffect } from "react";
 
-const RoomSNB = ({ percent, isOpen, handleRoomSNB }) => {
-  const nameArr = ["지환", "수민", "영주"];
+import {
+  setChallengePercent,
+  selectRoomInfoState,
+  setRoomMember,
+} from "../../redux/roomInfo";
+import InviteModal from "../Main/InviteModal/InviteModal";
+import { useEffect, useState } from "react";
+import { setCategory } from "../../redux/category";
+
+
+const RoomSNB = ({ isOpen, handleRoomSNB }) => {
   const dispatch = useDispatch();
   const params = useParams();
+  const navigate = useNavigate();
   const roomId = params.roomId;
   const roomInfoSelector = useSelector(selectRoomInfoState);
 
+  const categoryInfoSelector = useSelector(
+    (state) => state.category.categoryList
+  );
+
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const receivedToken = localStorage.getItem("token");
-  const receivedId = localStorage.getItem("id");
+
+  const receivedId = localStorage.getItem("id"); // userId임
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+  const changePage = (page) => {
+    navigate(`/rooms/${page}/${roomId}`);
+  };
   const getRoomMember = async () => {
     try {
-      const response = await axios.get(`/rooms/updateAt/13?page=0`, {
+      const response = await axios.get(`/rooms/updateAt/${roomId}?page=0`, {
+
         headers: {
           Authorization: `Bearer ${receivedToken}`,
         },
       });
       dispatch(setRoomMember(response.data.result));
     } catch (error) {
-      console.error("이건 RoomSNB 에러:", error);
+
+      console.error("이건 getRoomMember 에러:", error);
+    }
+  };
+  const getChallengePercent = async () => {
+    try {
+      const response = await axios.get(`/rooms/challenges/${roomId}`, {
+        headers: {
+          Authorization: `Bearer ${receivedToken}`,
+        },
+      });
+      dispatch(setChallengePercent(response.data.result));
+    } catch (error) {
+      console.error("이건 getChallenge 에러:", error);
+    }
+  };
+
+  const getNoteCount = async () => {
+    try {
+      const response = await axios.get(`/categorys/category/${roomId}`, {
+        headers: {
+          Authorization: `Bearer ${receivedToken}`,
+        },
+      });
+      dispatch(setCategory(response.data.result));
+    } catch (error) {
+      console.error("이건 getNoteCount 에러:", error);
+
     }
   };
 
   useEffect(() => {
     getRoomMember();
+
+    getChallengePercent();
+    getNoteCount();
   }, []);
-  console.log(roomInfoSelector);
+
   return (
     <div>
       {isOpen ? (
@@ -62,7 +114,7 @@ const RoomSNB = ({ percent, isOpen, handleRoomSNB }) => {
               </S.ToolTipWrapper>
               <S.ToolTipWrapper>
                 <UseToolTip message="룸관리">
-                  <GoGear size={30} />
+                  <GoGear size={30} onClick={() => changePage("setting")} />
                 </UseToolTip>
               </S.ToolTipWrapper>
             </S.IconsBox>
@@ -74,7 +126,11 @@ const RoomSNB = ({ percent, isOpen, handleRoomSNB }) => {
               <S.IconsBox>
                 <S.ToolTipWrapper>
                   <UseToolTip message="멤버 관리">
-                    <GoGear color="" size={30} />
+                    <GoGear
+                      color=""
+                      size={30}
+                      onClick={() => changePage("member")}
+                    />
                   </UseToolTip>
                 </S.ToolTipWrapper>
               </S.IconsBox>
@@ -84,21 +140,29 @@ const RoomSNB = ({ percent, isOpen, handleRoomSNB }) => {
                 <S.Member key={userId}>
                   {profileImg ? (
                     <S.MemberProfile>
-                      <img src={`${profileImg}`} />
+
+                      <img alt={`${name}`} src={`${profileImg}`} />
                     </S.MemberProfile>
                   ) : (
-                    <BsPersonCircle size={30} />
+                    roomInfoSelector.memberInfo && <BsPersonCircle size={30} />
                   )}
+                  <S.MemberInfoWrapper>
+                    <h2>{name}</h2>
+                    <p>{updateAt}</p>
+                  </S.MemberInfoWrapper>
 
-                  <h2>{name}</h2>
-                  <p>(updateAt )</p>
                 </S.Member>
               )
             )}
             <S.Plus>
-              <GoPlusCircle size={30} />
+              <GoPlusCircle size={30} onClick={handleModalOpen} />
               <h2>초대하기</h2>
             </S.Plus>
+            <InviteModal
+              isOpen={isModalOpen}
+              onClose={handleModalClose}
+              roomIndex={roomId}
+            />
           </S.BasicBox>
           <S.BasicBox>
             <S.TitleBox>
@@ -106,21 +170,44 @@ const RoomSNB = ({ percent, isOpen, handleRoomSNB }) => {
               <S.IconsBox>
                 <S.ToolTipWrapper>
                   <UseToolTip message="챌린지 관리">
-                    <GoGear color="" size={30} />
+                    <GoGear size={30} onClick={() => changePage("challenge")} />
                   </UseToolTip>
                 </S.ToolTipWrapper>
               </S.IconsBox>
             </S.TitleBox>
-            <ProgressBar percent={percent} />
+            {roomInfoSelector.challengePercent.goalsId && (
+              <ProgressBar
+                percent={roomInfoSelector.challengePercent.goalsAchieveRate}
+              />
+            )}
+            {roomInfoSelector.challengePercent.routinId && (
+              <ProgressBar
+                percent={roomInfoSelector.challengePercent.routineAchieveRate}
+              />
+            )}
           </S.BasicBox>
           <S.BasicBox>
-            <S.CategoryWrapper>
+            <S.TitleBox>
               <h2>카테고리</h2>
-              <BiDotsVerticalRounded size={20} />
-            </S.CategoryWrapper>
-            {nameArr.map((name, idx) => (
-              <CategoryToggle name={name} key={idx} />
-            ))}
+              <S.IconsBox>
+                <S.ToolTipWrapper>
+                  <UseToolTip message="카테고리 관리">
+                    <GoGear size={30} onClick={() => changePage("category")} />
+                  </UseToolTip>
+                </S.ToolTipWrapper>
+              </S.IconsBox>
+            </S.TitleBox>
+            {categoryInfoSelector.categoryList?.length > 0 // 옵셔널 체이닝 사용
+              ? categoryInfoSelector.categoryList.map(
+                  ({ categoryId, categoryName, countNote }) => (
+                    <CategoryToggle
+                      name={categoryName}
+                      countNote={countNote}
+                      key={categoryId}
+                    />
+                  )
+                )
+              : ""}
           </S.BasicBox>
         </S.Container>
       ) : (

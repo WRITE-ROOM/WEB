@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -11,11 +10,12 @@ export const Container = styled.div`
   font-weight: bold;
   background-color: white;
 `;
-export const SNBBox = styled(Link)`
+export const SNBBox = styled.div`
   width: 100%;
   height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-bottom: 3px solid gainsboro;
+  cursor: pointer;
 `;
