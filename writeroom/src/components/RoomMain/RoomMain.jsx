@@ -9,25 +9,23 @@ import { selectRoomInfoState } from "../../redux/roomInfo";
 import { useDispatch, useSelector } from "react-redux";
 
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const RoomMain = ({ openRoomSNB, openSNB }) => {
   const dispatch = useDispatch();
   const receivedToken = localStorage.getItem("token");
   const roomInfoSelector = useSelector(selectRoomInfoState);
 
+  const roomId = useParams().roomId;
   useEffect(() => {
     const getNoteList = async () => {
       try {
-        const response = await axios.get("/rooms/13/list?page=0", {
+        const response = await axios.get(`/rooms/${roomId}/list?page=0`, {
           headers: {
             Authorization: `Bearer ${receivedToken}`,
           },
         });
-        console.log(response.data.result.roomId);
-        console.log(response.data.result.roomTitle);
-        dispatch(resetRoomInfo());
         dispatch(setRoomInfo(response.data.result));
-        console.log("roomInfoSelector inside useEffect: ", roomInfoSelector);
       } catch (error) {
         console.error("룸 메인 에러:", error);
       }
@@ -43,7 +41,7 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
     setCurrentPage(page);
   };
   return (
-    <S.Container>
+    <S.Container openRoomSNB={openRoomSNB} openSNB={openSNB}>
       <S.ImgContainer
         openRoomSNB={openRoomSNB}
         openSNB={openSNB}
@@ -58,13 +56,16 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
             <TagSearchBox />
             <p>{roomInfoSelector.totalElements}개의 노트</p>
           </S.TopBox>
+
           {roomInfoSelector.noteList &&
             roomInfoSelector.noteList.map((note, index) => (
               <ImageRoomNoteBox
                 key={index}
+                note={note}
+                roomId={roomId}
                 openRoomSNB={openRoomSNB}
                 openSNB={openSNB}
-                note={note}
+                noteCoverImg={note.noteImg}
               />
             ))}
         </S.NoteList>

@@ -12,7 +12,7 @@ export const roomInfo = createSlice({
     totalElements: "",
     listSize: "",
     noteList: [],
-    memberInfo: "",
+    memberInfo: [],
     routineAchieveRate: "",
     goalsAchieveRate: "",
     goalsTargetCount: "",
@@ -30,7 +30,6 @@ export const roomInfo = createSlice({
         totalElements,
         listSize,
         noteList,
-        memberInfo,
         routineAchieveRate,
         goalsAchieveRate,
         goalsTargetCount,
@@ -46,11 +45,13 @@ export const roomInfo = createSlice({
       state.totalElements = totalElements;
       state.listSize = listSize;
       state.noteList = noteList;
-      state.memberInfo = memberInfo;
       state.routineAchieveRate = routineAchieveRate;
       state.goalsAchieveRate = goalsAchieveRate;
       state.goalsTargetCount = goalsTargetCount;
       state.routineTargetCount = routineTargetCount;
+    },
+    setRoomMember(state, action) {
+      state.memberInfo = action.payload;
     },
     resetRoomInfo(state) {
       state.roomId = "";
@@ -62,7 +63,7 @@ export const roomInfo = createSlice({
       state.totalElements = "";
       state.listSize = "";
       state.noteList = [];
-      state.memberInfo = "";
+      state.memberInfo = [];
       state.routineAchieveRate = "";
       state.goalsAchieveRate = "";
       state.goalsTargetCount = "";
@@ -73,5 +74,5 @@ export const roomInfo = createSlice({
 
 export const selectRoomInfoState = (state) => state.roomInfo;
 
-export const { setRoomInfo, resetRoomInfo } = roomInfo.actions;
+export const { setRoomInfo, resetRoomInfo, setRoomMember } = roomInfo.actions;
 export default roomInfo.reducer;
