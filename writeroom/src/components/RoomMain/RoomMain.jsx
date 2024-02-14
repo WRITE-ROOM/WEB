@@ -65,6 +65,7 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
                 openRoomSNB={openRoomSNB}
                 openSNB={openSNB}
                 note={note}
+                roomId={roomId}
               />
             ))}
         </S.NoteList>
