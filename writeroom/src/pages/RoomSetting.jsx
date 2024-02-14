@@ -10,11 +10,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectRoomInfoState, setRoomInfo } from "../redux/roomInfo";
 import { CiImageOn } from "react-icons/ci";
-import { createBrowserHistory } from "history";
+// import { createBrowserHistory } from "history";
 
 import axios from "axios";
 export const RoomSetting = () => {
-  const history = createBrowserHistory();
+  // const history = createBrowserHistory();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const roomInfoSelector = useSelector(selectRoomInfoState);

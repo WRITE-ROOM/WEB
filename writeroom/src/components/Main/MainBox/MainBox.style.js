@@ -2,11 +2,9 @@ import styled from 'styled-components'
 
 export const App = styled.div`
 	width: 100%;
+	height: 900px;
 	display: flex;
 	flex-direction: column;
-	// align-items: center;
-	// justify-content: center;
-
 	h1 {
 		margin-left: 30px;  
 		font-family: Pretendard;
@@ -48,4 +46,9 @@ export const Picture = styled.div`
 		border-radius : 10px 10px 0 0;
 		object-fit: cover;
 	}
+`
+export const Loading = styled.div`
+	width: 100%;
+	height: 30px;
+	background: pink;
 `

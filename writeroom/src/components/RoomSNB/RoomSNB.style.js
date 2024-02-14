@@ -44,14 +44,6 @@ export const MemberProfile = styled.div`
   }
 `;
 
-export const MemberProfile = styled.div`
-  img {
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-  }
-`;
-
 export const IconsBox = styled.div`
   cursor: pointer;
   display: flex;
