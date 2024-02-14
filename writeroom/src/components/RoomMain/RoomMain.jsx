@@ -18,8 +18,12 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
   const roomId = params.roomId;
 
   const [page, setPage] = useState(1);
-
   const [count, setCount] = useState();
+
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
+
   const [isTagSearchChange, setIsTagSearchChange] = useState(false);
   const handleTagSearch = () => {
     setIsTagSearchChange(!isTagSearchChange);
@@ -41,19 +45,14 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
     };
 
     getNoteList();
-  }, []);
-
-  const handlePageChange = (page) => {
-    setPage(page);
-  };
+  }, [page]);
 
   return (
     <S.Container>
       <S.ImgContainer
         openRoomSNB={openRoomSNB}
         openSNB={openSNB}
-        // src
-        //  이미지 링크 추가할 것
+        src={`${roomInfoSelector.roomImg}`}
       />
       {roomInfoSelector && (
         <S.NoteList>
@@ -77,17 +76,21 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
             ))}
         </S.NoteList>
       )}
-      <S.PaginationBox>
-        <Pagination
-          activePage={page}
-          itemsCountPerPage={10}
-          totalItemsCount={count}
-          pageRangeDisplayed={5}
-          onChange={handlePageChange}
-          prevPageText={"<"}
-          nextPageText={">"}
-        />
-      </S.PaginationBox>
+      {roomInfoSelector.totalElements !== 0 ? (
+        <S.PaginationBox>
+          <Pagination
+            activePage={page}
+            itemsCountPerPage={10}
+            totalItemsCount={count}
+            pageRangeDisplayed={5}
+            onChange={handlePageChange}
+            prevPageText={"<"}
+            nextPageText={">"}
+          />
+        </S.PaginationBox>
+      ) : (
+        ""
+      )}
     </S.Container>
   );
 };

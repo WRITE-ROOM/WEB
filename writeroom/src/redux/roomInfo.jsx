@@ -8,7 +8,6 @@ export const roomInfo = createSlice({
     roomIntroduction: "",
     updatedAt: "",
     roomImg: "",
-    // 이미지 제대로 안불러와짐
     userRoomList: "",
     totalElements: "",
     listSize: "",
@@ -19,6 +18,7 @@ export const roomInfo = createSlice({
     goalsTargetCount: "",
     routineTargetCount: "",
     challengePercent: "",
+    roomExplain: "",
   },
   reducers: {
     setRoomInfo(state, action) {
@@ -50,7 +50,12 @@ export const roomInfo = createSlice({
     setChallengePercent(state, action) {
       state.challengePercent = action.payload;
     },
-
+    setRoomTitle(state, action) {
+      state.roomTitle = action.payload;
+    },
+    setRoomExplain(state, action) {
+      state.setRoomExplain = action.payload;
+    },
     resetRoomInfo(state) {
       state.roomId = "";
       state.roomTitle = "";
@@ -67,6 +72,7 @@ export const roomInfo = createSlice({
       state.goalsTargetCount = "";
       state.routineTargetCount = "";
       state.challengePercent = "";
+      state.roomExplain = "";
     },
   },
 });
@@ -78,5 +84,7 @@ export const {
   resetRoomInfo,
   setRoomMember,
   setChallengePercent,
+  setRoomTitle,
+  setRoomExplain,
 } = roomInfo.actions;
 export default roomInfo.reducer;

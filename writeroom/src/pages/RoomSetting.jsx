@@ -1,42 +1,49 @@
 import RoomSettingSNB from "../components/RoomSettingSNB/RoomSettingSNB";
 import RoomSettingNavbar from "../components/RoomSettingNavbar/RoomSettingNavbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RoomInputField from "../components/RoomInputField/RoomInputField";
 import * as S from "./RoomSetting.style";
 import RoomModal from "../components/RoomModal/RoomModal";
 import RoomModalSec from "../components/RoomModalSec/RoomModalSec";
 import { IoClose } from "react-icons/io5";
 import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { selectRoomInfoState } from "../redux/roomInfo";
+import { setRoomExplain, setRoomTitle } from "../redux/roomInfo";
 export const RoomSetting = () => {
   const navigate = useNavigate();
-  const params = useParams();
-  const roomId = params.roomId;
-  const [formName, setFormName] = useState("스포츠에 대한 고찰");
+  const dispatch = useDispatch();
+  const roomInfoSelector = useSelector(selectRoomInfoState);
   const [formIntroduction, setFormIntroduction] = useState("");
+  const [formName, setFormName] = useState(roomInfoSelector.roomTitle);
   const [openModal, setOpenModal] = useState(false);
   const [isChangeImg, setChangeImg] = useState(false);
   const modalHandler = () => {
     setOpenModal(!openModal);
+  };
+  const saveInput = () => {
+    // dispatch(setRoomTitle(formName));
+    // dispatch(setRoomExplain(formIntroduction));
+    console.log(roomInfoSelector);
   };
 
   return (
     <S.Wrapper>
       <RoomSettingSNB />
       <S.Contents>
-        <RoomSettingNavbar title="룸 관리" />
-        <S.ImgBox src="https://images.unsplash.com/photo-1682687220777-2c60708d6889?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"></S.ImgBox>
+        <RoomSettingNavbar title="룸 관리" onSave={saveInput} />
+        <S.ImgBox src={`${roomInfoSelector.roomImg}`}></S.ImgBox>
         <S.DeleteImgButton>
           <IoClose size={30} />
         </S.DeleteImgButton>
-
         <RoomInputField
-          label="폼 이름"
+          label="룸 이름"
           value={formName}
           onChange={setFormName}
           maxLength={50}
         />
         <RoomInputField
-          label="폼 소개"
+          label="룸 소개"
           value={formIntroduction}
           onChange={setFormIntroduction}
           maxLength={160}

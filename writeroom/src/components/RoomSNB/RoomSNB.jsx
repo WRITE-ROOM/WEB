@@ -22,6 +22,8 @@ import { useEffect, useState } from "react";
 import { setCategory } from "../../redux/category";
 
 const RoomSNB = ({ isOpen, handleRoomSNB }) => {
+  const receivedToken = localStorage.getItem("token");
+  const receivedId = localStorage.getItem("id"); // userId임
   const dispatch = useDispatch();
   const params = useParams();
   const navigate = useNavigate();
@@ -32,8 +34,6 @@ const RoomSNB = ({ isOpen, handleRoomSNB }) => {
   );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const receivedToken = localStorage.getItem("token");
-  const receivedId = localStorage.getItem("id"); // userId임
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
@@ -86,6 +86,8 @@ const RoomSNB = ({ isOpen, handleRoomSNB }) => {
     getChallengePercent();
     getNoteCount();
   }, []);
+  roomInfoSelector.memberInfo[0]?.updateAt?.split(", ");
+
   return (
     <div>
       {isOpen ? (
@@ -126,21 +128,26 @@ const RoomSNB = ({ isOpen, handleRoomSNB }) => {
               </S.IconsBox>
             </S.TitleBox>
             {roomInfoSelector.memberInfo.map(
-              ({ name, userId, profileImg, updateAt }) => (
-                <S.Member key={userId}>
-                  {profileImg ? (
-                    <S.MemberProfile>
-                      <img alt={`${name}`} src={`${profileImg}`} />
-                    </S.MemberProfile>
-                  ) : (
-                    roomInfoSelector.memberInfo && <BsPersonCircle size={30} />
-                  )}
-                  <S.MemberInfoWrapper>
-                    <h2>{name}</h2>
-                    <p>{updateAt}</p>
-                  </S.MemberInfoWrapper>
-                </S.Member>
-              )
+              ({ name, userId, profileImg, updateAt }) => {
+                const updateAtArr = updateAt.split(", ");
+                return (
+                  <S.Member key={userId}>
+                    {profileImg ? (
+                      <S.MemberProfile>
+                        <img alt={`${name}`} src={`${profileImg}`} />
+                      </S.MemberProfile>
+                    ) : (
+                      roomInfoSelector.memberInfo && (
+                        <BsPersonCircle size={30} />
+                      )
+                    )}
+                    <S.MemberInfoWrapper>
+                      <h2>{name}</h2>
+                      <p>{updateAtArr.pop()}</p>
+                    </S.MemberInfoWrapper>
+                  </S.Member>
+                );
+              }
             )}
             <S.Plus>
               <GoPlusCircle size={30} onClick={handleModalOpen} />
