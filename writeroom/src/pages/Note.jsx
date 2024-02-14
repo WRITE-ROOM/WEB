@@ -27,8 +27,8 @@ const Note = () => {
 
   const noteId = useParams().noteId;
   const roomId = useParams().roomId;
+  console.log(roomId);
   const userId = localStorage.getItem("id");
-
 
   const fetchNote = async () => {
     try {

@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as W from "./Write.style";
 import { FiTrash, FiImage } from "react-icons/fi";
 
 import Editor from "../components/Write/Editor/Editor";
-import SpellCheck from "../components/Write/SpellCheck/SpellCheck";
 import WriteFooter from "../components/Write/WriteFooter/WriteFooter";
 import SelectRoomModal from "../components/Write/WriteSelectModal/SelectRoomModal/SelectRoomModal";
 import SelectCategoryModal from "../components/Write/WriteSelectModal/SelectCategoryModal/SelectCategoryModal";
@@ -18,8 +17,10 @@ import {
   setSelectedRoom,
 } from "../redux/selectModal";
 import { resetRoom, setRoom } from "../redux/room";
+import { setNoteCoverImg } from "../redux/note";
 import { setCategory } from "../redux/category";
 import { useNavigate } from "react-router-dom";
+import whiteImg from "../assets/whiteImg.png";
 
 import axios from "axios";
 
@@ -83,6 +84,7 @@ const Write = () => {
 
   const handleDeleteImage = () => {
     setImage(null);
+    // console.log(whiteImg);
     setImageName(null);
   };
 
@@ -92,9 +94,7 @@ const Write = () => {
 
   const fetchRoomList = async () => {
     try {
-      const params = { page: 0 };
-      const res = await axios.get("/rooms/myRoomList", {
-        params,
+      const res = await axios.get("/rooms/myRoomList/allData", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -124,6 +124,7 @@ const Write = () => {
   };
 
   const roomId = useSelector((state) => state.selectModal.selectedRoom.roomId);
+  console.log(roomId);
 
   const fetchCategoryList = async () => {
     try {
@@ -205,20 +206,23 @@ const Write = () => {
     }
   };
 
+  const nullImg = useRef(null);
   const putNote = async () => {
-    // formData.delete("noteImg");
     const formData = new FormData();
 
-    if (image && imageChanged) {
-      const decodedImage = await decodeImage(image);
-      const imageExtension = imageName.split(".").pop();
-      const blobImage = new Blob([decodedImage], {
-        type: `image/${imageExtension}`,
-      });
-      formData.append("noteImg", blobImage, imageName);
+    if (image) {
+      if (imageChanged) {
+        console.log("imgae", image);
+        const decodedImage = await decodeImage(image);
+        const imageExtension = imageName.split(".").pop();
+        const blobImage = new Blob([decodedImage], {
+          type: `image/${imageExtension}`,
+        });
+        formData.append("noteImg", blobImage, imageName);
+      }
     } else {
-      console.log("no noteImg");
-      formData.append("noteImg", "null");
+      const defaultImage = await fetch(whiteImg).then((res) => res.blob());
+      formData.append("noteImg", defaultImage, "whiteImg.png");
     }
 
     const requestData = {
@@ -231,6 +235,7 @@ const Write = () => {
     };
 
     formData.append("request", JSON.stringify(requestData));
+    console.log("formData", formData);
 
     try {
       const res = await axios.put(`/notes/${note.noteId}`, formData, {
@@ -240,8 +245,8 @@ const Write = () => {
         },
       });
       navigate(`/rooms/${selectedRoom.roomId}/notes/${note.noteId}`);
-
       console.log(res.data);
+      console.log("nullImg", nullImg.current);
     } catch (error) {
       console.log(error);
     }
@@ -284,7 +289,7 @@ const Write = () => {
           <Template content={content} setContent={setContent} />
 
           {/* 맞춤법 검사 */}
-          <SpellCheck content={content} setContent={setContent} />
+          {/* <SpellCheck content={content} setContent={setContent} /> */}
 
           {/* 글자수 */}
           <Counter content={content} count={count} setCount={setCount} />

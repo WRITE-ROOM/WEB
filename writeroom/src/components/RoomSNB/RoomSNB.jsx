@@ -12,6 +12,7 @@ import { CategoryToggle } from "../CategoryToggle/CategoryToggle";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import UseToolTip from "../UseToolTip/UseToolTip";
+
 import {
   setChallengePercent,
   selectRoomInfoState,
@@ -21,18 +22,22 @@ import InviteModal from "../Main/InviteModal/InviteModal";
 import { useEffect, useState } from "react";
 import { setCategory } from "../../redux/category";
 
+
 const RoomSNB = ({ isOpen, handleRoomSNB }) => {
   const dispatch = useDispatch();
   const params = useParams();
   const navigate = useNavigate();
   const roomId = params.roomId;
   const roomInfoSelector = useSelector(selectRoomInfoState);
+
   const categoryInfoSelector = useSelector(
     (state) => state.category.categoryList
   );
 
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const receivedToken = localStorage.getItem("token");
+
   const receivedId = localStorage.getItem("id"); // userId임
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -46,12 +51,14 @@ const RoomSNB = ({ isOpen, handleRoomSNB }) => {
   const getRoomMember = async () => {
     try {
       const response = await axios.get(`/rooms/updateAt/${roomId}?page=0`, {
+
         headers: {
           Authorization: `Bearer ${receivedToken}`,
         },
       });
       dispatch(setRoomMember(response.data.result));
     } catch (error) {
+
       console.error("이건 getRoomMember 에러:", error);
     }
   };
@@ -78,14 +85,17 @@ const RoomSNB = ({ isOpen, handleRoomSNB }) => {
       dispatch(setCategory(response.data.result));
     } catch (error) {
       console.error("이건 getNoteCount 에러:", error);
+
     }
   };
 
   useEffect(() => {
     getRoomMember();
+
     getChallengePercent();
     getNoteCount();
   }, []);
+
   return (
     <div>
       {isOpen ? (
@@ -130,6 +140,7 @@ const RoomSNB = ({ isOpen, handleRoomSNB }) => {
                 <S.Member key={userId}>
                   {profileImg ? (
                     <S.MemberProfile>
+
                       <img alt={`${name}`} src={`${profileImg}`} />
                     </S.MemberProfile>
                   ) : (
@@ -139,6 +150,7 @@ const RoomSNB = ({ isOpen, handleRoomSNB }) => {
                     <h2>{name}</h2>
                     <p>{updateAt}</p>
                   </S.MemberInfoWrapper>
+
                 </S.Member>
               )
             )}

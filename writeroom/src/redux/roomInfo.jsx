@@ -32,6 +32,7 @@ export const roomInfo = createSlice({
         totalElements,
         listSize,
         noteList,
+
       } = action.payload;
 
       state.roomId = roomId;
@@ -43,12 +44,10 @@ export const roomInfo = createSlice({
       state.totalElements = totalElements;
       state.listSize = listSize;
       state.noteList = noteList;
+
     },
     setRoomMember(state, action) {
       state.memberInfo = action.payload;
-    },
-    setChallengePercent(state, action) {
-      state.challengePercent = action.payload;
     },
 
     resetRoomInfo(state) {
@@ -73,10 +72,12 @@ export const roomInfo = createSlice({
 
 export const selectRoomInfoState = (state) => state.roomInfo;
 
+
 export const {
   setRoomInfo,
   resetRoomInfo,
   setRoomMember,
   setChallengePercent,
 } = roomInfo.actions;
+
 export default roomInfo.reducer;

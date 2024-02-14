@@ -1,13 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialCategory = [
-  {
-    categoryId: 0,
-    categoryName: "빠른 노트",
-    countNote: 0,
-  },
-];
-
 const categorySlice = createSlice({
   name: "category",
   initialState: {
