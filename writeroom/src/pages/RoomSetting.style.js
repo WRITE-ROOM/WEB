@@ -37,3 +37,21 @@ export const DeleteButton = styled.button`
   border: none;
   border-bottom: 3px #b5a995 solid;
 `;
+
+export const StyledFileInput = styled.div`
+  width: 100%;
+  height: 100%;
+  label {
+    width: 100%;
+    height: 100%;
+    background-color: gainsboro;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  input {
+    display: none;
+  }
+`;
