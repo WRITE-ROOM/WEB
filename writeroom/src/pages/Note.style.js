@@ -133,7 +133,7 @@ export const HiddenTag = styled.ul`
 `;
 
 export const Content = styled.div`
-  color: black;
+  color: ${(props) => props.theme.textColor};
   padding: 24px;
 
   ol {
