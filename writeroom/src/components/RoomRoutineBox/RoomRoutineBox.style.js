@@ -36,7 +36,7 @@ export const CountBox = styled.div`
   font-size: 25px;
   font-weight: bold;
   color: #b5a995;
-  box-shadow: 1px 1px 8px 1px gainsboro;
+  box-shadow: 1px 1px 8px 1px ${(props) => props.theme.shadowColor};
 `;
 
 export const CalendarBox = styled.div`
@@ -51,6 +51,7 @@ export const InputBox = styled.div`
   gap: 10px;
   margin-bottom: 10px;
   input {
+    background-color: ${(props) => props.theme.SNBSearchColor};
     font-size: 10px;
     color: #b5a995;
   }

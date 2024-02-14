@@ -56,7 +56,8 @@ export const MemberBox = styled.div`
 
 export const AuthToggle = styled.button`
   position: relative;
-  background-color: white;
+  background-color: ${(props) => props.theme.bgColor};  
+  color: ${(props) => props.theme.textColor};  
   border: 1px solid gray;
   border-radius: 10px;
   display: flex;
@@ -92,7 +93,8 @@ export const ToggleText = styled.div`
   z-index: 10;
   top: 45px;
   right: -20px;
-  background-color: white;
+  background-color: ${(props) => props.theme.bgColor};  
+  color: ${(props) => props.theme.textColor};  
   border: 1px solid gray;
   border-radius: 10px;
   display: flex;
@@ -102,7 +104,7 @@ export const ToggleText = styled.div`
   border: none;
   width: 100px;
   margin-right: 20px;
-  box-shadow: -5px 1px 5px 0 gainsboro, 5px 1px 5px 0 gainsboro;
+  box-shadow: -5px 1px 5px 0 ${(props) => props.theme.shadowColor}, 5px 1px 5px 0 ${(props) => props.theme.shadowColor};
   div {
     display: flex;
     justify-content: flex-start;
