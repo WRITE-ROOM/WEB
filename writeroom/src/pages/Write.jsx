@@ -34,10 +34,13 @@ const Write = () => {
   const [subtitle, setSubtitle] = useState(note.noteSubtitle);
 
   const [content, setContent] = useState(note.noteContent);
+
+  const [count, setCount] = useState(0);
+
   const [image, setImage] = useState(note.noteCoverImg);
   const [imageName, setImageName] = useState(null);
   const [imageChanged, setImageChanged] = useState(false);
-  const [count, setCount] = useState(0);
+  const [imgDelete, setImgDelete] = useState(false);
 
   // 룸, 카테고리 선택
   const currentModal = useSelector((state) => state.selectModal.currentModal);
@@ -72,7 +75,6 @@ const Write = () => {
     const reader = new FileReader();
     reader.onloadend = () => {
       setImage(reader.result);
-      console.log(image);
     };
     if (file) {
       reader.readAsDataURL(file);
@@ -83,8 +85,8 @@ const Write = () => {
 
   const handleDeleteImage = () => {
     setImage(null);
-    // console.log(whiteImg);
     setImageName(null);
+    setImgDelete(true);
   };
 
   const accessToken = localStorage.getItem("token");
@@ -123,7 +125,6 @@ const Write = () => {
   };
 
   const roomId = useSelector((state) => state.selectModal.selectedRoom.roomId);
-  console.log(roomId);
 
   const fetchCategoryList = async () => {
     try {
@@ -153,20 +154,6 @@ const Write = () => {
       console.log(error);
     }
   };
-
-  // const formData = new FormData();
-
-  // // 보낼 데이터
-  // const requestData = {
-  //   noteTitle: title,
-  //   noteSubTitle: subtitle,
-  //   noteContent: content,
-  //   letterCount: count,
-  //   noteTagList: tags.map((tag) => tag.tagName),
-  //   categoryId: selectedCategory.categoryId,
-  // };
-
-  // formData.append("request", JSON.stringify(requestData));
 
   const postNote = async () => {
     const formData = new FormData();
@@ -208,32 +195,44 @@ const Write = () => {
   const putNote = async () => {
     const formData = new FormData();
 
-    if (image) {
-      if (imageChanged) {
-        console.log("imgae", image);
-        const decodedImage = await decodeImage(image);
-        const imageExtension = imageName.split(".").pop();
-        const blobImage = new Blob([decodedImage], {
-          type: `image/${imageExtension}`,
-        });
-        formData.append("noteImg", blobImage, imageName);
-      }
-    } else {
-      const defaultImage = await fetch(whiteImg).then((res) => res.blob());
-      formData.append("noteImg", defaultImage, "whiteImg.png");
+    // if (image) {
+    //   if (imageChanged) {
+    //     const decodedImage = await decodeImage(image);
+    //     const imageExtension = imageName.split(".").pop();
+    //     const blobImage = new Blob([decodedImage], {
+    //       type: `image/${imageExtension}`,
+    //     });
+    //     formData.append("noteImg", blobImage, imageName);
+    //   } else {
+    //     setImageName("lastImage");
+    //     // const imageExtension = imageName.split(".").pop();
+    //     const blobImage = new Blob([image], {
+    //       type: `image/${imageName}`,
+    //     });
+    //     formData.append("noteImg", blobImage, imageName);
+    //   }
+    // }
+
+    if (image && imageChanged) {
+      const decodedImage = await decodeImage(image);
+      const imageExtension = imageName.split(".").pop();
+      const blobImage = new Blob([decodedImage], {
+        type: `image/${imageExtension}`,
+      });
+      formData.append("noteImg", blobImage, imageName);
     }
 
     const requestData = {
       noteTitle: title,
       noteSubtitle: subtitle,
       noteContent: content,
+      imgDelete: imgDelete,
       letterCount: count,
       noteTagList: tags.map((tag) => tag.tagName),
       categoryId: selectedCategory.categoryId,
     };
 
     formData.append("request", JSON.stringify(requestData));
-    console.log("formData", formData);
 
     try {
       const res = await axios.put(`/notes/${note.noteId}`, formData, {

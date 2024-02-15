@@ -11,6 +11,7 @@ import {
   setSelectedRoom,
   resetSelectedRoom,
 } from "../../redux/selectModal";
+import { writeMode } from "../../redux/writeMode";
 
 const NewNoteButton = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const NewNoteButton = () => {
     dispatch(resetTag());
     dispatch(resetSelectedRoom());
     dispatch(resetSelectedCategory());
+    dispatch(writeMode());
     navigate("/write");
   };
 
