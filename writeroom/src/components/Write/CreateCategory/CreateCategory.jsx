@@ -13,8 +13,8 @@ import {
 const CreateCategory = ({ setCategoryModal }) => {
   const dispatch = useDispatch();
   const roomId = useSelector((state) => state.selectModal.selectedRoom.roomId);
+
   const [newCategory, setNewCategory] = useState("");
-  const ca = useSelector((state) => state.category);
   const categoryList = useSelector((state) => state.category.categoryList);
 
   const accessToken = localStorage.getItem("token");
@@ -36,7 +36,7 @@ const CreateCategory = ({ setCategoryModal }) => {
       dispatch(
         setCategory([
           ...categoryList,
-          { categoryName: newCategory, categoryId: null },
+          { categoryName: newCategory, categoryId: null, countNote: 0 },
         ])
       );
       dispatch(setCurrentModal(null));
