@@ -48,7 +48,7 @@ const SelectCategoryModal = () => {
           />
         </M.Back>
         <M.CategoryContainer>
-          {categories &&
+          {categories.length > 0 &&
             categories.map((category, index) => (
               <li
                 key={index}
