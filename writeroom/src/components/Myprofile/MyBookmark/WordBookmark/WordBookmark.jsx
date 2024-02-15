@@ -5,7 +5,7 @@ import * as R from "../MyBookmark.style.js"
 import axios from 'axios';
 import Pagination from 'react-js-pagination';
 import { useDispatch, useSelector } from 'react-redux';
-import { addBookmark, deleteBookmark, resetBookmark } from '../../../../redux/bookmark.jsx';
+import { addWordBookmark, deleteWordBookmark, resetWordBookmark, setWordBookmark } from '../../../../redux/wordBookmark.jsx';
 
 export default function WordBookMark() {
   const [page, setPage] = useState(1);
@@ -13,7 +13,7 @@ export default function WordBookMark() {
   const [count, setCount] = useState();
   const [isBookmarked, setIsBookmarked] = useState([]); //isBookmarked
   const [bookmarkMaterialList, setBookmarkMaterialList] = useState([]); // 북마크한 단어 배열
-  const bookmark = useSelector(state => state.bookmark);
+  const wordBookmark = useSelector((state) => state.wordBookmark);
 
   const userId = localStorage.getItem('id');
   const receivedToken = localStorage.getItem('token')
@@ -32,19 +32,22 @@ export default function WordBookMark() {
   const getWordBookmark = async () => {
     const receivedToken = localStorage.getItem('token')
     try {
-      const Page = page;
       const res = await axios.get(`/bookmarks/topics?page=${page-1}`, { 
         headers: {
           'Authorization': `Bearer ${receivedToken}`
           },
         });
       const data = res.data.result;
-      dispatch(resetBookmark());
+      const topics = res.data.result.bookmarkMaterialList;
+      dispatch(resetWordBookmark());
+      dispatch(setWordBookmark(topics)); 
       setBookmarkMaterialList(data.bookmarkMaterialList);
-      setIsBookmarked(Array(data.bookmarkMaterialList.length).fill(true));
+      setIsBookmarked(Array(topics.length).fill(true));
       setCount(data.totalElements);
-      setTotalPage(data.totalPage);
-      console.log(res.data);
+      setTotalPage(data.totalPage); 
+
+      console.log('현재 북마크된 단어 : ', wordBookmark) 
+      console.log(data);
     } catch (error) {
         console.error(error);
     }
@@ -57,20 +60,27 @@ export default function WordBookMark() {
           'Authorization': `Bearer ${receivedToken}`,
         }
       });
-      const serverBookmarkId = res.data.result.bookmarkId;
-      const newBookmark = {
-        bookmarkId: serverBookmarkId,
-        content: word
+      const isAlreadyBookmarked = wordBookmark.some(bookmark => bookmark.content === word);
+      if (isAlreadyBookmarked) {
+        window.alert('이미 북마크한 단어입니다.');
       }
-      dispatch(addBookmark(newBookmark));
-      window.alert('북마크에 추가했어요.');
+      else {
+        const serverBookmarkId = res.data.result.bookmarkId;
+        const newBookmark = {
+          id: serverBookmarkId,
+          content: word
+        }
+        dispatch(addWordBookmark(newBookmark)); 
+        console.log('북마크에 추가 완료!! : ,', res.data)
+        window.alert('북마크에 추가했어요.');
+      }
     } catch (error) {
       console.log(error);
     }
   }
   const DeleteBookmark = async(word) => {
     console.log('클릭한 단어: ', word)
-    const clickedBookmark = bookmarkMaterialList.find((bookmark) => bookmark.content === word);
+    const clickedBookmark = wordBookmark.find((bookmark) => bookmark.content === word);
     const bookmarkId = clickedBookmark.id;
     console.log('클릭한 단어의 id: ', bookmarkId)
     try {
@@ -80,7 +90,7 @@ export default function WordBookMark() {
         }
       });
       const data = res.data.result;
-      dispatch(deleteBookmark({bookmarkId : data.bookmarkId}));
+      dispatch(deleteWordBookmark({id : data.bookmarkId}));
       window.alert('북마크에서 해제했어요.');
     } catch (error) {
       console.log(error);

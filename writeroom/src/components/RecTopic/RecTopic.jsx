@@ -7,6 +7,7 @@ import * as S from "./RecTopic.style";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addBookmark, deleteBookmark } from "../../redux/bookmark";
+import { addWordBookmark, deleteWordBookmark, resetWordBookmark, setWordBookmark } from "../../redux/wordBookmark";
 
 export default function RecTopic({ onToggle }) {
   const [inputWord, setInputWord] = useState("");
@@ -104,8 +105,9 @@ export default function RecTopic({ onToggle }) {
       console.log(error)
     }
   }
+
   useEffect(() => {
-    getTopics()
+    getTopics();
   }, [])
 
   useEffect(() => {
@@ -122,8 +124,7 @@ export default function RecTopic({ onToggle }) {
 
   const RecWord = ({ word, index, isBookmarked, onBookmarkChange }) => {
     let dispatch = useDispatch();
-    const bookmarks = useSelector((state) => state.bookmark);
-    
+    const wordBookmark = useSelector((state) => state.wordBookmark);
 
     const togglePostBookmark = () => {
       onBookmarkChange(index);
@@ -135,7 +136,6 @@ export default function RecTopic({ onToggle }) {
     };
 
     const postBookmarkstatus = async(word) => {
-      console.log(word) // 잘 뜸
       try {
         const res = await axios.post(`/bookmarks/topics?content=${word}`, {}, 
         {
@@ -145,12 +145,10 @@ export default function RecTopic({ onToggle }) {
         });
         const serverBookmarkId = res.data.result.bookmarkId;
         const newBookmark = {
-          bookmarkId: serverBookmarkId,
+          id: serverBookmarkId,
           content: word
         }
-        dispatch(addBookmark(newBookmark));
-        console.log(bookmark);
-        console.log(res.data);  
+        dispatch(addWordBookmark(newBookmark));
         window.alert('북마크에 추가했어요.');
       } catch (error) {
         console.log('content: ', word, ', userId: ', userId)
@@ -159,16 +157,17 @@ export default function RecTopic({ onToggle }) {
     }
     
     const DeleteBookmark = async(word) => {
-      const existingBookmark = bookmarks.find((bookmark) => bookmark.content === word);
+      const clickedBookmark = wordBookmark.find((bookmark) => bookmark.content === word);
+      const bookmarkId = clickedBookmark.id;
       try {
-        const res = await axios.delete(`/bookmarks/topics/${existingBookmark.bookmarkId}`, {
+        const res = await axios.delete(`/bookmarks/topics/${bookmarkId}`, {
           headers: {
             'Authorization': `Bearer ${receivedToken}`,
           }
         });
         console.log('delete 서버 res: ', res.data);
         const data = res.data.result;
-        dispatch(deleteBookmark({bookmarkId : data.bookmarkId}));
+        dispatch(deleteWordBookmark({id : data.bookmarkId}));
         window.alert('북마크에서 해제했어요.');
       } catch (error) {
         console.log(error);

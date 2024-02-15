@@ -9,6 +9,9 @@ import { bookmark } from "./bookmark";
 import noteListSlice from "./noteList";
 import writeModeSlice from "./writeMode";
 import roomInfoSlice from "./roomInfo";
+import {wordBookmark} from "./wordBookmark";
+import {noteBookmark} from "./noteBookmark";
+
 export const store = configureStore({
   reducer: {
     user: user.reducer,
@@ -18,6 +21,8 @@ export const store = configureStore({
     category: categorySlice,
     note: noteSlice,
     bookmark: bookmark.reducer,
+    wordBookmark: wordBookmark.reducer,
+    noteBookmark: noteBookmark.reducer,
     noteList: noteListSlice,
     writeMode: writeModeSlice,
     roomInfo: roomInfoSlice,
