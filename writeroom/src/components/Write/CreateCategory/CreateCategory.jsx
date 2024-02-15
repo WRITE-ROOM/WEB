@@ -56,7 +56,11 @@ const CreateCategory = ({ setCategoryModal }) => {
       <C.Container>
         <C.Header>
           <h1>카테고리 추가하기</h1>
-          <IoClose size={20} onClick={() => setCategoryModal(false)} />
+          <IoClose
+            size={20}
+            onClick={() => setCategoryModal(false)}
+            style={{ cursor: "pointer" }}
+          />
         </C.Header>
 
         <C.CategoryName>
@@ -70,7 +74,7 @@ const CreateCategory = ({ setCategoryModal }) => {
         </C.CategoryName>
 
         <C.CreateButton onClick={() => handleCreateCategory()}>
-          추가
+          카테고리 만들기
         </C.CreateButton>
       </C.Container>
     </C.Background>
