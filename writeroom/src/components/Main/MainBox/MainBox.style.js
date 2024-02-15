@@ -5,8 +5,10 @@ export const App = styled.div`
 	height: 900px;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	h1 {
-		margin-left: 30px;  
+		position: relative;
+		right: 620px; 
 		font-family: Pretendard;
 		font-size: 24px;
 		font-weight: 200;
