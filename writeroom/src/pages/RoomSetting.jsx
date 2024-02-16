@@ -54,6 +54,7 @@ export const RoomSetting = () => {
     patchRoomInfo();
     getRoomInfo();
     setIsSave(true);
+    navigate(`/rooms/${roomId}`);
     // window.location.reload();
   };
 
@@ -99,16 +100,16 @@ export const RoomSetting = () => {
     }
   };
 
-  const getRoomMemberList = async () => {
+  const deleteRoom = async () => {
     try {
-      const response = await axios.get(`/rooms/${roomId}/userRoom`, {
+      await axios.delete(`/rooms/delete/${roomId}`, {
         headers: {
           Authorization: `Bearer ${receivedToken}`,
         },
       });
-      dispatch(setRoomSettingMember(response.data.result.userRoomLists));
+      navigate("/main");
     } catch (error) {
-      console.error("이건 getRoomMember 에러:", error);
+      console.error("roomDelete 에러:", error);
     }
   };
 
@@ -170,7 +171,6 @@ export const RoomSetting = () => {
 
   useEffect(() => {
     getRoomInfo();
-    getRoomMemberList();
   }, []);
   return (
     <S.Wrapper>
@@ -225,6 +225,7 @@ export const RoomSetting = () => {
             title1="내가 관리하고 있는 룸이에요."
             title2="정말 룸을 삭제하시겠어요?"
             button2="삭제"
+            deletefunction={deleteRoom}
           />
         )}
         {openModal2 && (

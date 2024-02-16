@@ -10,6 +10,7 @@ const RoomModal = ({
   description2,
   button1,
   button2,
+  deletefunction,
 }) => {
   const receivedToken = localStorage.getItem("token");
   const params = useParams();
@@ -19,18 +20,6 @@ const RoomModal = ({
   const [isOpen, setIsOpen] = useState(true);
   const handleCloseModal = () => {
     setIsOpen(false);
-  };
-  const deleteRoom = async () => {
-    try {
-      await axios.delete(`/rooms/delete/${roomId}`, {
-        headers: {
-          Authorization: `Bearer ${receivedToken}`,
-        },
-      });
-      navigate("/main");
-    } catch (error) {
-      console.error("roomDelete 에러:", error);
-    }
   };
 
   return (
@@ -44,7 +33,7 @@ const RoomModal = ({
             <p>{description2}</p>
             <S.ButtonWrapper>
               <S.CancelButton onClick={handleCloseModal}>취소</S.CancelButton>
-              <S.DeleteButton onClick={button2 === "삭제" ? deleteRoom : null}>
+              <S.DeleteButton onClick={() => deletefunction()}>
                 {button2}
               </S.DeleteButton>
             </S.ButtonWrapper>
