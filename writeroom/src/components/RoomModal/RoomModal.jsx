@@ -22,7 +22,7 @@ const RoomModal = ({
   };
   const deleteRoom = async () => {
     try {
-      const response = await axios.delete(`/rooms/delete/${roomId}`, {
+      await axios.delete(`/rooms/delete/${roomId}`, {
         headers: {
           Authorization: `Bearer ${receivedToken}`,
         },
