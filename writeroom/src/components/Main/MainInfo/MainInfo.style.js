@@ -22,8 +22,7 @@ export const Left = styled.div`
 `
 
 export const Right = styled.div`
-    position: relative;
-    width: 70px;
+    // width: 70px;
     height: 32px;
     display: flex;
     flex-direction: column;

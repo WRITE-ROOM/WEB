@@ -12,7 +12,7 @@ export const Modal = styled.div`
 	justify-content: center;
 	background-color: ${(props) => props.theme.bgColor};
 	border-radius: 10px;
-	border: 1px solid lightgray;
+	box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.25);
 	z-index: 97;
 
 	button {

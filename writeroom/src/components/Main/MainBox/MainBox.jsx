@@ -54,7 +54,6 @@ export default function MainBox() {
         dispatch(setRoom({ roomId, roomTitle, updatedAt, roomImg, userRoomList }));
       });
       setCount(room[0].totalElements);
-      console.log(count)
       console.log(res.data);
     } catch (error) { 
       console.error(error);
@@ -90,6 +89,7 @@ export default function MainBox() {
   return (
     <div>
       <S.App>
+        <button onClick={() => {console.log(roomlist)}}>임시버튼</button>
         <h1>나의 룸 목록</h1>
         <S.Container with_SNB={isSNBOpen}>
           {rooms.map((room, index) => (
