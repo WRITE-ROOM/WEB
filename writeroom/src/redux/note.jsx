@@ -59,9 +59,18 @@ const noteSlice = createSlice({
     setNoteCoverImg(state, action) {
       state.noteCoverImg = action.payload;
     },
+
+    setNoteTitle(state, action) {
+      state.noteTitle = action.payload;
+    },
   },
 });
 
-export const { addNote, resetNote, setNoteCoverImg, setEmojiList } =
-  noteSlice.actions;
+export const {
+  addNote,
+  resetNote,
+  setNoteCoverImg,
+  setEmojiList,
+  setNoteTitle,
+} = noteSlice.actions;
 export default noteSlice.reducer;

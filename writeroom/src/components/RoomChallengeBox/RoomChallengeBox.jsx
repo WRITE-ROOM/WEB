@@ -92,6 +92,7 @@ const RoomChallengeBox = () => {
             )}
           </>
         ) : (
+          // 목표량 달성하기
           <>
             <RoomRoutineBox
               text="일주일에 최대 7일을 설정할 수 있어요"

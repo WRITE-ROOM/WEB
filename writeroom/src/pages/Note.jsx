@@ -18,6 +18,7 @@ const Note = () => {
 
   // note의 정보 조회하는 api 연결 -> addNote
   const note = useSelector((state) => state.note);
+  console.log("note!!!!!!!!!", note);
 
   const [showTags, setShowTags] = useState(false);
 

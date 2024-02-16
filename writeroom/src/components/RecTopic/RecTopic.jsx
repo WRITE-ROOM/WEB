@@ -7,13 +7,22 @@ import * as S from "./RecTopic.style";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addBookmark, deleteBookmark } from "../../redux/bookmark";
+import { setNoteTitle } from "../../redux/note";
+import { useNavigate } from "react-router-dom";
 
 export default function RecTopic({ onToggle }) {
+  const navigate = useNavigate();
   const [inputWord, setInputWord] = useState("");
   const [displayKeyword, setDisplayKeyword] = useState(false);
   const [displaySynonym, setDisplaySynonym] = useState(false);
   const [topics, setTopics] = useState([]);
-  const [isBookmarked, setIsBookmarked] = useState([false, false, false, false, false]);
+  const [isBookmarked, setIsBookmarked] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
 
   const [keywords, setKeywords] = useState([]);
   const [searchKeyword, setSearchkeyword] = useState("");
@@ -24,9 +33,9 @@ export default function RecTopic({ onToggle }) {
   const [isSynonymSearchOpen, setIsSynonymSearchOpen] = useState(false);
 
   const user = useSelector((state) => state.user);
-  const bookmark = useSelector(state => state.bookmark);
-  const userId = localStorage.getItem('id');
-  const receivedToken = localStorage.getItem('token');
+  const bookmark = useSelector((state) => state.bookmark);
+  const userId = localStorage.getItem("id");
+  const receivedToken = localStorage.getItem("token");
   // const receivedToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo"
 
   let dispatch = useDispatch();
@@ -46,67 +55,66 @@ export default function RecTopic({ onToggle }) {
   };
 
   const handleBookmarkChange = (index) => {
-    setIsBookmarked(prevBookmarks => {
+    setIsBookmarked((prevBookmarks) => {
       const updatedBookmarks = [...prevBookmarks];
       updatedBookmarks[index] = !updatedBookmarks[index];
       return updatedBookmarks;
     });
   };
 
-  const getTopics = async() => {
+  const getTopics = async () => {
     try {
-      const res = await axios.get(`/search/topics`, { 
+      const res = await axios.get(`/search/topics`, {
         headers: {
-          'Authorization': `Bearer ${receivedToken}`
-          },
-      })
-      console.log('서버 전달이다: ', res.data)
+          Authorization: `Bearer ${receivedToken}`,
+        },
+      });
+      console.log("서버 전달이다: ", res.data);
       // const vocas = res.data.result.map(item => item.voca);
-      const vocas = res.data.result[0].voca.split(', ');
+      const vocas = res.data.result[0].voca.split(", ");
       setTopics(vocas);
-
-    } catch (error) {  
-      console.log(error)
+    } catch (error) {
+      console.log(error);
     }
-  }
-  const getKeyword = async() => {
-    console.log('검색한 단어 axios에서 확인: ', searchKeyword)
+  };
+  const getKeyword = async () => {
+    console.log("검색한 단어 axios에서 확인: ", searchKeyword);
 
     try {
       const Voca = searchKeyword;
-      const res = await axios.get(`/search/similarKeywords?voca=${Voca}`, { 
+      const res = await axios.get(`/search/similarKeywords?voca=${Voca}`, {
         headers: {
-          'Authorization': `Bearer ${receivedToken}`
-          },
-      })
+          Authorization: `Bearer ${receivedToken}`,
+        },
+      });
       // console.log(res.data)
       // const vocas = res.data.result.map(item => item.voca);
-      const vocas = res.data.result[0].voca.split(', ');
+      const vocas = res.data.result[0].voca.split(", ");
       setKeywords(vocas);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-  const getSynonym = async() => {
+  };
+  const getSynonym = async () => {
     try {
       const Voca = searchSynonym;
-      const res = await axios.get(`/search/synonyms?voca=${Voca}`, { 
+      const res = await axios.get(`/search/synonyms?voca=${Voca}`, {
         headers: {
-          'Authorization': `Bearer ${receivedToken}`
-          },
-      })
-      console.log(res.data)
+          Authorization: `Bearer ${receivedToken}`,
+        },
+      });
+      console.log(res.data);
       // const vocas = res.data.result.map(item => item.voca);
-      const vocas = res.data.result[0].voca.split(', ');
-      console.log('vocas: ', vocas)
+      const vocas = res.data.result[0].voca.split(", ");
+      console.log("vocas: ", vocas);
       setSynonyms(vocas);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   useEffect(() => {
-    getTopics()
-  }, [])
+    getTopics();
+  }, []);
 
   useEffect(() => {
     if (isKeywordSearchOpen) {
@@ -123,7 +131,6 @@ export default function RecTopic({ onToggle }) {
   const RecWord = ({ word, index, isBookmarked, onBookmarkChange }) => {
     let dispatch = useDispatch();
     const bookmarks = useSelector((state) => state.bookmark);
-    
 
     const togglePostBookmark = () => {
       onBookmarkChange(index);
@@ -134,52 +141,70 @@ export default function RecTopic({ onToggle }) {
       DeleteBookmark(word);
     };
 
-    const postBookmarkstatus = async(word) => {
-      console.log(word) // 잘 뜸
+    const postBookmarkstatus = async (word) => {
+      console.log(word); // 잘 뜸
       try {
-        const res = await axios.post(`/bookmarks/topics?content=${word}`, {}, 
-        {
-          headers: {
-            'Authorization': `Bearer ${receivedToken}`,
+        const res = await axios.post(
+          `/bookmarks/topics?content=${word}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${receivedToken}`,
+            },
           }
-        });
+        );
         const serverBookmarkId = res.data.result.bookmarkId;
         const newBookmark = {
           bookmarkId: serverBookmarkId,
-          content: word
-        }
+          content: word,
+        };
         dispatch(addBookmark(newBookmark));
         console.log(bookmark);
-        console.log(res.data);  
-        window.alert('북마크에 추가했어요.');
+        console.log(res.data);
+        window.alert("북마크에 추가했어요.");
       } catch (error) {
-        console.log('content: ', word, ', userId: ', userId)
+        console.log("content: ", word, ", userId: ", userId);
         console.log(error);
       }
-    }
-    
-    const DeleteBookmark = async(word) => {
-      const existingBookmark = bookmarks.find((bookmark) => bookmark.content === word);
+    };
+
+    const DeleteBookmark = async (word) => {
+      const existingBookmark = bookmarks.find(
+        (bookmark) => bookmark.content === word
+      );
       try {
-        const res = await axios.delete(`/bookmarks/topics/${existingBookmark.bookmarkId}`, {
-          headers: {
-            'Authorization': `Bearer ${receivedToken}`,
+        const res = await axios.delete(
+          `/bookmarks/topics/${existingBookmark.bookmarkId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${receivedToken}`,
+            },
           }
-        });
-        console.log('delete 서버 res: ', res.data);
+        );
+        console.log("delete 서버 res: ", res.data);
         const data = res.data.result;
-        dispatch(deleteBookmark({bookmarkId : data.bookmarkId}));
-        window.alert('북마크에서 해제했어요.');
+        dispatch(deleteBookmark({ bookmarkId: data.bookmarkId }));
+        window.alert("북마크에서 해제했어요.");
       } catch (error) {
         console.log(error);
       }
-    }
-    
+    };
+
     return (
       <S.RecWord>
-        <p>{word}</p>
+        <p
+          onClick={() => {
+            dispatch(setNoteTitle(word));
+            navigate("/write");
+          }}
+        >
+          {word}
+        </p>
         {isBookmarked ? (
-          <FaBookmark color="rgba(181, 169, 148, 1)" onClick={toggleDeleteBookmark}/>
+          <FaBookmark
+            color="rgba(181, 169, 148, 1)"
+            onClick={toggleDeleteBookmark}
+          />
         ) : (
           <S.NotBookMark onClick={togglePostBookmark} />
         )}
@@ -192,7 +217,7 @@ export default function RecTopic({ onToggle }) {
       <S.Left>
         <button onClick={onToggle}>
           <MdKeyboardDoubleArrowRight
-            style={{cursor: "pointer"}}
+            style={{ cursor: "pointer" }}
             color="rgba(147, 147, 147, 1)"
             size="20"
           />
@@ -203,19 +228,24 @@ export default function RecTopic({ onToggle }) {
           <S.Top>
             <S.WordTitle>오늘의 소재</S.WordTitle>
             <button>
-              <S.Refresh size="30" onClick={() => {getTopics()}}/>
+              <S.Refresh
+                size="30"
+                onClick={() => {
+                  getTopics();
+                }}
+              />
             </button>
           </S.Top>
           <S.RecBottom>
-          {topics.map((word, index) => (
-            <RecWord
-              key={index}
-              word={word}
-              index={index}
-              isBookmarked={isBookmarked[index]}
-              onBookmarkChange={handleBookmarkChange}
-            />
-          ))}
+            {topics.map((word, index) => (
+              <RecWord
+                key={index}
+                word={word}
+                index={index}
+                isBookmarked={isBookmarked[index]}
+                onBookmarkChange={handleBookmarkChange}
+              />
+            ))}
           </S.RecBottom>
         </S.Wrapper>
 

@@ -1,7 +1,11 @@
 import styled from "styled-components";
 
+export const Wrapper = styled.div`
+  display: flex;
+`;
+
 export const Container = styled.div`
-  width: 100%;
+  width: ${(props) => (props.openSNB ? "80vw" : "100%")};
 `;
 
 export const Header = styled.div`

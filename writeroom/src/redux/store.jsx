@@ -9,6 +9,10 @@ import { bookmark } from "./bookmark";
 import noteListSlice from "./noteList";
 import writeModeSlice from "./writeMode";
 import roomInfoSlice from "./roomInfo";
+import userListSlice from "./userList";
+import selectedMemberSlice from "./selectedMember";
+import challengeSlice from "./challenge";
+
 export const store = configureStore({
   reducer: {
     user: user.reducer,
@@ -21,5 +25,8 @@ export const store = configureStore({
     noteList: noteListSlice,
     writeMode: writeModeSlice,
     roomInfo: roomInfoSlice,
+    userList: userListSlice,
+    selectedMember: selectedMemberSlice,
+    challenge: challengeSlice,
   },
 });
