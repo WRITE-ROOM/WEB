@@ -15,7 +15,7 @@ export const DropdownContainer = styled.div`
   border-radius: 10px;
 
   position: absolute;
-  right: 0px;
+  right: ${(props) => (props.$right ? props.$right : "0px")};
   top: ${(props) => (props.$top ? props.$top : "58px")};
 
   z-index: 1000;

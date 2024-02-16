@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as S from "./RoomRoutineBox.style";
 import { SlMinus } from "react-icons/sl";
 import { HiMiniUserCircle } from "react-icons/hi2";
@@ -8,12 +8,19 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/locale";
 import { subDays, addDays } from "date-fns";
 import { LuCalendar } from "react-icons/lu";
+import { useSelector } from "react-redux";
+import AddChallengeMember from "./AddChallengeMember";
+import { useDispatch } from "react-redux";
+import { setChallenge } from "../../redux/challenge";
 
 const RoomRoutineBox = ({ text, description, range, toggle }) => {
+  const dispatch = useDispatch();
   const [count, setCount] = useState(0);
 
   const increaseCount = () => {
-    setCount(count + 1);
+    if (count < 1000) {
+      setCount(count + 1);
+    }
   };
 
   const decreaseCount = () => {
@@ -23,22 +30,48 @@ const RoomRoutineBox = ({ text, description, range, toggle }) => {
   };
   const [useToggle, setUseToggle] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(null);
+  const [endDate, setEndDate] = useState(new Date());
 
-  const [userCircleCount, setUserCircleCount] = useState(2);
-
-  const handlePlusCircleClick = () => {
-    setUserCircleCount((prevCount) => prevCount + 1);
-  };
+  // const handlePlusCircleClick = () => {
+  //   setUserCircleCount((prevCount) => prevCount + 1);
+  // };
   const handleToggle = () => {
     setUseToggle(!useToggle);
   };
+
+  const selectedMember = useSelector((state) => state.selectedMember);
+  console.log("selectedMember ", selectedMember);
+  console.log("start", startDate);
+  console.log("end", endDate);
+
+  const getFormattedDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  const c = useSelector((state) => state.challenge);
+
+  useEffect(() => {
+    dispatch(
+      setChallenge({
+        userList: selectedMember,
+        targetCount: count,
+        startDate: getFormattedDate(startDate),
+        deadline: getFormattedDate(endDate),
+      })
+    );
+    console.log("c!!!!", c);
+  }, [count, startDate, endDate, selectedMember]);
+
   return (
     <S.RoutineBox>
       <div>
         <h1>참여자</h1>
-        <S.People>
-          {[...Array(userCircleCount)].map((_, index) => (
+        <AddChallengeMember></AddChallengeMember>
+        {/* <S.People>
+          {userList.map((_, index) => (
             <HiMiniUserCircle key={index} color="gainsboro" size={40} />
           ))}
 
@@ -47,10 +80,10 @@ const RoomRoutineBox = ({ text, description, range, toggle }) => {
             size={40}
             onClick={handlePlusCircleClick}
           />
-        </S.People>
+        </S.People> */}
       </div>
       <div>
-        <h1>목표 갯수</h1>
+        <h1>목표 개수</h1>
         <S.ExampleText>{text}</S.ExampleText>
         <S.People>
           <SlMinus color="gainsboro" size={35} onClick={decreaseCount} />
@@ -58,6 +91,7 @@ const RoomRoutineBox = ({ text, description, range, toggle }) => {
           <GoPlusCircle color="gainsboro" size={40} onClick={increaseCount} />
         </S.People>
       </div>
+
       <div>
         <S.CalendarBox>
           <h1>목표 기간</h1>
@@ -68,7 +102,7 @@ const RoomRoutineBox = ({ text, description, range, toggle }) => {
           <S.InputBox>
             <DatePicker
               locale={ko}
-              dateFormat="yyyy년.MM월.dd일"
+              dateFormat="yyyy.MM.dd"
               selected={startDate}
               onChange={(date) => setStartDate(date)}
               startDate={startDate}
@@ -78,7 +112,7 @@ const RoomRoutineBox = ({ text, description, range, toggle }) => {
             ~
             <DatePicker
               locale={ko}
-              dateFormat="yyyy년.MM월.dd일"
+              dateFormat="yyyy.MM.dd"
               selected={endDate}
               onChange={(date) => setEndDate(date)}
               startDate={startDate}
@@ -94,6 +128,7 @@ const RoomRoutineBox = ({ text, description, range, toggle }) => {
             />
           </S.InputBox>
         </S.People>
+
         {toggle && (
           <S.ToggleWrapper>
             기간 설정하지 않기
