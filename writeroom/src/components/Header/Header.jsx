@@ -4,9 +4,12 @@ import { BiSearch } from "react-icons/bi";
 import Logo from "../../assets/logo.png";
 import MyProfileImg from "../../assets/myProfile.png";
 import MyProfileMenu from "./MyProfileMenu";
+import { useSelector } from "react-redux";
 
 const Header = ({ themeMode, toggleDarkMode }) => {
   const [isMypageClicked, setMypageClicked] = useState(false);
+  const user = useSelector((state) => state.user);
+  const profileImg = user.profileImg;
 
   return (
     <H.HeaderContainer>
@@ -25,7 +28,7 @@ const Header = ({ themeMode, toggleDarkMode }) => {
         </H.LightDarkToggle>
 
         <H.MyProfile onClick={() => setMypageClicked(!isMypageClicked)}>
-          <img src={MyProfileImg} alt="myProfileImg" />
+          {profileImg === null ? (<img src={MyProfileImg} alt="myProfileImg" />) : (<img src={profileImg} alt="myProfileImg" />)}
         </H.MyProfile>
 
         {isMypageClicked && <MyProfileMenu />}
