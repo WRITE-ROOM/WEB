@@ -97,7 +97,7 @@ const RoomChallengeBox = () => {
               text="일주일에 최대 7일을 설정할 수 있어요"
               range="7"
             />
-            <RoomModalSec
+            {/* <RoomModalSec
               title1="수정 내용을 삭제하겠어요?"
               description="지금 나가시면 수정사항이 모두 삭제됩니다."
               button1="삭제하기"
@@ -109,7 +109,7 @@ const RoomChallengeBox = () => {
               description2="*챌린지 목표는 수정할 수 없어요!"
               button1="삭제하기"
               button2="시작하기"
-            />
+            /> */}
           </>
         ))}
       {isAmount &&
@@ -135,14 +135,14 @@ const RoomChallengeBox = () => {
             <S.GiveUpButton onClick={giveUpHandler}>
               챌린지 포기하기
             </S.GiveUpButton>
-            {isGiveUp && (
+            {/* {isGiveUp && (
               <RoomModal
                 title1="챌린지를 정말 포기하시겠어요?"
                 description="중도 포기하면 챌린지를 더 이어나갈 수 없어요."
                 description2="정말 포기하시겠어요?"
                 button2="포기하기"
               />
-            )}
+            )} */}
           </>
         ) : (
           <>
@@ -152,7 +152,7 @@ const RoomChallengeBox = () => {
               range="30"
               toggle="true"
             />
-            <RoomModalSec
+            {/* <RoomModalSec
               title1="수정 내용을 삭제하겠어요?"
               description="지금 나가시면 수정사항이 모두 삭제됩니다."
               button1="삭제하기"
@@ -164,7 +164,7 @@ const RoomChallengeBox = () => {
               description2="*챌린지 목표는 수정할 수 없어요!"
               button1="삭제하기"
               button2="시작하기"
-            />
+            /> */}
           </>
         ))}
       {isMyChallenge &&
@@ -192,12 +192,12 @@ const RoomChallengeBox = () => {
             <S.GiveUpButton onClick={DeleteHandler}>
               챌린지 삭제하기
             </S.GiveUpButton>
-            {isDelete && (
+            {/* {isDelete && (
               <RoomModal
                 title1="챌린지 내역을 삭제하시겠어요?"
                 button2="삭제"
               />
-            )}
+            )} */}
           </>
         ))}
     </S.Container>

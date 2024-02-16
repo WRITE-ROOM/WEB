@@ -3,6 +3,7 @@ import { IoClose } from "react-icons/io5";
 import { useNavigate, useParams } from "react-router-dom";
 import RoomModal from "../RoomModal/RoomModal";
 import { useState } from "react"; // Import useState hook
+import { set } from "date-fns";
 
 const RoomSettingNavbar = ({ title, onSave, member, myAuth, leaveRoom }) => {
   const handleSave = () => {
@@ -21,7 +22,7 @@ const RoomSettingNavbar = ({ title, onSave, member, myAuth, leaveRoom }) => {
     leaveRoom();
     navigate(`/main`);
   };
-
+  const closeModal = () => setShowModal(false);
   return (
     <S.Container>
       <h1>{title}</h1>
@@ -40,6 +41,7 @@ const RoomSettingNavbar = ({ title, onSave, member, myAuth, leaveRoom }) => {
                     isOpen={showModal}
                     button2="떠나기"
                     deletefunction={handleConfirmLeaveRoom}
+                    closeModal={closeModal}
                   />
                 </div>
               )}

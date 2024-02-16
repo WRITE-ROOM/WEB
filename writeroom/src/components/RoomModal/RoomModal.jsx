@@ -9,12 +9,9 @@ const RoomModal = ({
   button1,
   button2,
   deletefunction,
+  isOpen,
+  closeModal,
 }) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const handleCloseModal = () => {
-    setIsOpen(false);
-  };
-
   return (
     <>
       {isOpen && (
@@ -25,7 +22,7 @@ const RoomModal = ({
             <p>{description}</p>
             <p>{description2}</p>
             <S.ButtonWrapper>
-              <S.CancelButton onClick={handleCloseModal}>취소</S.CancelButton>
+              <S.CancelButton onClick={() => closeModal()}>취소</S.CancelButton>
               <S.DeleteButton onClick={() => deletefunction()}>
                 {button2}
               </S.DeleteButton>
