@@ -1,8 +1,6 @@
 import * as S from "./RoomModal.style";
 import { useState } from "react";
-import axios from "axios";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+
 const RoomModal = ({
   title1,
   title2,
@@ -12,11 +10,6 @@ const RoomModal = ({
   button2,
   deletefunction,
 }) => {
-  const receivedToken = localStorage.getItem("token");
-  const params = useParams();
-  const navigate = useNavigate();
-
-  const roomId = params.roomId;
   const [isOpen, setIsOpen] = useState(true);
   const handleCloseModal = () => {
     setIsOpen(false);
