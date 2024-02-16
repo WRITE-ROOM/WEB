@@ -20,6 +20,7 @@ const RoomMember = () => {
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
+  const [userData, setUserData] = useState("");
 
   const getRoomInfo = async () => {
     try {
@@ -44,6 +45,7 @@ const RoomMember = () => {
       });
       console.log(response.data);
       dispatch(setRoomSettingMember(response.data.result));
+      setUserData(response.data.result.userRoomLists);
     } catch (error) {
       console.error("이건 getRoomMember 에러:", error);
     }
@@ -57,7 +59,7 @@ const RoomMember = () => {
   const memberInfo = useSelector(
     (state) => state.roomSettingInfo?.memberInfo?.userRoomLists
   );
-  console.log(roomInfoSelector);
+  console.log(memberInfo);
   const myName = roomInfoSelector?.memberInfo?.name;
   const myAuth = roomInfoSelector?.memberInfo?.authority;
 
@@ -115,7 +117,12 @@ const RoomMember = () => {
     <S.Wrapper>
       <RoomSettingSNB />
       <S.Contents>
-        <RoomSettingNavbar title="멤버 관리" />
+        <RoomSettingNavbar
+          title="멤버 관리"
+          member={true}
+          myAuth={myAuth}
+          leaveRoom={leaveRoom}
+        />
         <S.AuthBox>
           <h1>
             '{myName}'님의 권한
@@ -130,48 +137,74 @@ const RoomMember = () => {
         <S.MemberContainer>
           <S.MemberBox>
             <h1>멤버 {memberInfo?.length}명</h1>
+            <S.StyledSelect
+              onChange={(e) => {
+                const selectedValue = e.target.value;
+                console.log("Selected value:", selectedValue);
+                if (selectedValue === "ALL") {
+                  console.log("All members selected");
+                  setUserData(memberInfo);
+                } else if (selectedValue === "MANAGER") {
+                  const managers = memberInfo?.filter(
+                    (member) => member.authority === "MANAGER"
+                  );
+                  console.log("Filtered managers:", managers);
+                  setUserData(managers);
+                } else if (selectedValue === "PARTICIPANT") {
+                  const participants = memberInfo?.filter(
+                    (member) => member.authority === "PARTICIPANT"
+                  );
+                  console.log("Filtered participants:", participants);
+                  setUserData(participants);
+                }
+              }}
+            >
+              <S.StyledOption value="ALL">전체</S.StyledOption>
+              <S.StyledOption value="MANAGER">관리자</S.StyledOption>
+              <S.StyledOption value="PARTICIPANT">참여자</S.StyledOption>
+            </S.StyledSelect>
           </S.MemberBox>
-          {memberInfo?.map((member) => (
-            <S.MemberBox key={member?.userId}>
-              <S.ProfileWrapper>
-                {member?.profileImg ? (
-                  <S.ProfileImageWrapper
-                    src={`${member?.profileImg}`}
-                    alt={`${member?.name}`}
-                  />
-                ) : (
-                  <HiMiniUserCircle size={40} />
-                )}
-                <S.TextWrapper>
-                  <p>{member?.name}</p>
-                  {member?.authority === "PARTICIPANT" ? (
-                    <span>참여자</span>
+          {userData.length > 0 &&
+            userData?.map((member) => (
+              <S.MemberBox key={member?.userId}>
+                <S.ProfileWrapper>
+                  {member?.profileImg ? (
+                    <S.ProfileImageWrapper
+                      src={`${member?.profileImg}`}
+                      alt={`${member?.name}`}
+                    />
                   ) : (
-                    <span>관리자</span>
+                    <HiMiniUserCircle size={40} />
                   )}
-                </S.TextWrapper>
-              </S.ProfileWrapper>
-
-              <S.StyledSelect
-                onChange={(e) => {
-                  const selectedValue = e.target.value;
-                  if (
-                    selectedValue === "MANAGER" ||
-                    selectedValue === "PARTICIPANT"
-                  ) {
-                    patchUserAuth(selectedValue, roomId, member?.userId);
-                  } else if (selectedValue === "EXPORT") {
-                    setSelectedUserId(member?.userId);
-                    setOpenModal(true);
-                  }
-                }}
-              >
-                <S.StyledOption value="MANAGER">관리자</S.StyledOption>
-                <S.StyledOption value="PARTICIPANT">참여자</S.StyledOption>
-                <S.StyledOption value="EXPORT">내보내기</S.StyledOption>
-              </S.StyledSelect>
-            </S.MemberBox>
-          ))}
+                  <S.TextWrapper>
+                    <p>{member?.name}</p>
+                    {member?.authority === "PARTICIPANT" ? (
+                      <span>참여자</span>
+                    ) : (
+                      <span>관리자</span>
+                    )}
+                  </S.TextWrapper>
+                </S.ProfileWrapper>
+                <S.StyledSelect
+                  onChange={(e) => {
+                    const selectedValue = e.target.value;
+                    if (
+                      selectedValue === "MANAGER" ||
+                      selectedValue === "PARTICIPANT"
+                    ) {
+                      patchUserAuth(selectedValue, roomId, member?.userId);
+                    } else if (selectedValue === "EXPORT") {
+                      setSelectedUserId(member?.userId);
+                      setOpenModal(true);
+                    }
+                  }}
+                >
+                  <S.StyledOption value="MANAGER">관리자</S.StyledOption>
+                  <S.StyledOption value="PARTICIPANT">참여자</S.StyledOption>
+                  <S.StyledOption value="EXPORT">내보내기</S.StyledOption>
+                </S.StyledSelect>
+              </S.MemberBox>
+            ))}
         </S.MemberContainer>
         {openModal && (
           <RoomModal
