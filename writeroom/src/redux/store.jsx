@@ -12,6 +12,7 @@ import roomInfoSlice from "./roomInfo";
 import userListSlice from "./userList";
 import selectedMemberSlice from "./selectedMember";
 import challengeSlice from "./challenge";
+import roomSettingInfoSlice from "./roomSettingInfo";
 
 export const store = configureStore({
   reducer: {
@@ -28,5 +29,7 @@ export const store = configureStore({
     userList: userListSlice,
     selectedMember: selectedMemberSlice,
     challenge: challengeSlice,
+    roomSettingInfo: roomSettingInfoSlice,
+
   },
 });

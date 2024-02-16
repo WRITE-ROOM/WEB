@@ -4,52 +4,111 @@ import * as S from "./RoomMember.style";
 import { HiMiniUserCircle } from "react-icons/hi2";
 import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
 import RoomModal from "../components/RoomModal/RoomModal";
-import { useState } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
+import { selectRoomSettingInfoState } from "../redux/roomSettingInfo";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import {
+  setRoomSettingMember,
+  setRoomSettingInfo,
+} from "../redux/roomSettingInfo";
+import axios from "axios";
 
 const RoomMember = () => {
-  const test = {
-    id: "제리",
-    auth: "관리자",
-    message: "룸 내 모든 기능을 이용할 수 있어요",
-  };
-  const users = [
-    {
-      id: "제리",
-      auth: "관리자",
-    },
-    {
-      id: "톰",
-      auth: "참여자",
-    },
-    {
-      id: "레이튼",
-      auth: "참여자",
-    },
-    {
-      id: "유켄",
-      auth: "참여자",
-    },
-  ];
-  const toggle1 = [{ data: "전체" }, { data: "관리자" }, { data: "참여자" }];
-  const toggle2 = [
-    { data: "관리자" },
-    { data: "참여자" },
-    { data: "내보내기" },
-  ];
+  const roomInfoSelector = useSelector(selectRoomSettingInfoState);
+  const dispatch = useDispatch();
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [openStates, setOpenStates] = useState(users.map(() => false));
-  const [selectedAuth, setSelectedAuth] = useState("");
-  const handleOpen = () => {
-    setIsOpen(!isOpen);
+  const getRoomInfo = async () => {
+    try {
+      const response = await axios.get(`/rooms/${roomId}/list?page=0`, {
+        headers: {
+          Authorization: `Bearer ${receivedToken}`,
+        },
+      });
+      const data = response.data.result;
+      dispatch(setRoomSettingInfo(data));
+    } catch (error) {
+      console.error("getRoomTitle 에러:", error);
+    }
   };
-  const handleToggle = (index, auth) => {
-    setOpenStates((prevStates) => {
-      const newStates = [...prevStates];
-      newStates[index] = !prevStates[index];
-      return newStates;
-    });
-    setSelectedAuth(auth);
+
+  const getRoomMemberList = async () => {
+    try {
+      const response = await axios.get(`/rooms/${roomId}/userRoom`, {
+        headers: {
+          Authorization: `Bearer ${receivedToken}`,
+        },
+      });
+      console.log(response.data);
+      dispatch(setRoomSettingMember(response.data.result));
+    } catch (error) {
+      console.error("이건 getRoomMember 에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    getRoomInfo();
+    getRoomMemberList();
+  }, []);
+
+  const memberInfo = useSelector(
+    (state) => state.roomSettingInfo?.memberInfo?.userRoomLists
+  );
+  console.log(roomInfoSelector);
+  const myName = roomInfoSelector?.memberInfo?.name;
+  const myAuth = roomInfoSelector?.memberInfo?.authority;
+
+  const message = {
+    master: "룸 내 모든 기능을 이용할 수 있어요",
+  };
+  const params = useParams();
+  const roomId = params.roomId;
+  const receivedToken = localStorage.getItem("token");
+
+  const patchUserAuth = async (authority, roomId, receivedId) => {
+    try {
+      const response = await axios.patch(
+        `/rooms/authority/${roomId}/${receivedId}?authority=${authority}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${receivedToken}`,
+          },
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error("patchUserAuth 에러:", error);
+      console.log(error);
+    }
+  };
+
+  const deleteRoomMember = async (roomId, outUserId) => {
+    try {
+      const response = await axios.delete(`/rooms/${roomId}/${outUserId}`, {
+        headers: {
+          Authorization: `Bearer ${receivedToken}`,
+        },
+      });
+      console.log(response);
+    } catch (error) {
+      console.error("deleteRoomMember 에러:", error);
+    }
+  };
+  const leaveRoom = async (outUserId) => {
+    try {
+      const response = await axios.delete(`/rooms/${roomId}`, {
+        headers: {
+          Authorization: `Bearer ${receivedToken}`,
+        },
+      });
+      console.log(response);
+    } catch (error) {
+      console.error("leaveRoomMember 에러:", error);
+    }
   };
 
   return (
@@ -59,67 +118,69 @@ const RoomMember = () => {
         <RoomSettingNavbar title="멤버 관리" />
         <S.AuthBox>
           <h1>
-            '{test.id}'님의 권한<span> {test.auth}</span>
+            '{myName}'님의 권한
+            {myAuth === "PARTICIPANT" ? (
+              <span>참여자</span>
+            ) : (
+              <span>관리자</span>
+            )}
           </h1>
-          <p>{test.message}</p>
+          <p>{message?.master}</p>
         </S.AuthBox>
         <S.MemberContainer>
           <S.MemberBox>
-            <h1>'멤버 {users.length}명'</h1>
-            <S.AuthToggle onClick={() => handleOpen()}>
-              <p>전체</p>
-              {isOpen && (
-                <S.ToggleText>
-                  {toggle1.map(({ data }, index) => (
-                    <div key={index}>
-                      <p>{data}</p>
-                    </div>
-                  ))}
-                </S.ToggleText>
-              )}
-              {isOpen ? (
-                <TiArrowSortedDown size={20} />
-              ) : (
-                <TiArrowSortedUp size={20} />
-              )}
-            </S.AuthToggle>
+            <h1>멤버 {memberInfo?.length}명</h1>
           </S.MemberBox>
-          {users.map((user, index) => (
-            <S.MemberBox key={index}>
+          {memberInfo?.map((member) => (
+            <S.MemberBox key={member?.userId}>
               <S.ProfileWrapper>
-                <HiMiniUserCircle size={40} />
+                {member?.profileImg ? (
+                  <S.ProfileImageWrapper
+                    src={`${member?.profileImg}`}
+                    alt={`${member?.name}`}
+                  />
+                ) : (
+                  <HiMiniUserCircle size={40} />
+                )}
                 <S.TextWrapper>
-                  <p>{user.id}</p>
-                  <span>{user.auth}</span>
+                  <p>{member?.name}</p>
+                  {member?.authority === "PARTICIPANT" ? (
+                    <span>참여자</span>
+                  ) : (
+                    <span>관리자</span>
+                  )}
                 </S.TextWrapper>
               </S.ProfileWrapper>
-              <S.AuthToggle onClick={() => handleToggle(index, user.auth)}>
-                <p>{user.auth}</p>
-                {openStates[index] && selectedAuth === "참여자" && (
-                  <S.ToggleText>
-                    {toggle2.map(({ data }, index) => (
-                      <div key={index}>
-                        <p>{data}</p>
-                      </div>
-                    ))}
-                  </S.ToggleText>
-                )}
-                {openStates[index] ? (
-                  <TiArrowSortedDown size={20} />
-                ) : (
-                  <TiArrowSortedUp size={20} />
-                )}
-              </S.AuthToggle>
+
+              <S.StyledSelect
+                onChange={(e) => {
+                  const selectedValue = e.target.value;
+                  if (
+                    selectedValue === "MANAGER" ||
+                    selectedValue === "PARTICIPANT"
+                  ) {
+                    patchUserAuth(selectedValue, roomId, member?.userId);
+                  } else if (selectedValue === "EXPORT") {
+                    setSelectedUserId(member?.userId);
+                    setOpenModal(true);
+                  }
+                }}
+              >
+                <S.StyledOption value="MANAGER">관리자</S.StyledOption>
+                <S.StyledOption value="PARTICIPANT">참여자</S.StyledOption>
+                <S.StyledOption value="EXPORT">내보내기</S.StyledOption>
+              </S.StyledSelect>
             </S.MemberBox>
           ))}
         </S.MemberContainer>
+        {openModal && (
+          <RoomModal
+            deletefunction={() => deleteRoomMember(roomId, selectedUserId)}
+            title1="해당 멤버를 정말 내보내시겠어요?"
+            button2="내보내기"
+          />
+        )}
       </S.Contents>
-      <RoomModal
-        title1="나의 권한은 관리자에요"
-        title2="룸을 정말 떠나시겠어요?"
-        button2="떠나기"
-      />
-      <RoomModal title1="해당 멤버를 정말 내보내시겠어요?" button2="떠나기" />
     </S.Wrapper>
   );
 };

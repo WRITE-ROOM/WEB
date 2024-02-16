@@ -8,40 +8,67 @@ import RoomModalSec from "../components/RoomModalSec/RoomModalSec";
 import { IoClose } from "react-icons/io5";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectRoomInfoState, setRoomInfo } from "../redux/roomInfo";
+import {
+  selectRoomSettingInfoState,
+  setRoomSettingInfo,
+  setRoomSettingMember,
+} from "../redux/roomSettingInfo";
 import { CiImageOn } from "react-icons/ci";
-// import { createBrowserHistory } from "history";
+import { createBrowserHistory } from "history";
+import WriteRoomImg from "../assets/writeRoomImg.png";
 
 import axios from "axios";
 export const RoomSetting = () => {
-  // const history = createBrowserHistory();
+  const history = createBrowserHistory();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const roomInfoSelector = useSelector(selectRoomInfoState);
+  const roomSettingInfoSelector = useSelector(selectRoomSettingInfoState);
+
   const [changedRoomIntroduction, setRoomIntroduction] = useState("");
-  const [roomName, setRoomName] = useState(roomInfoSelector.roomTitle);
+  const [roomName, setRoomName] = useState(roomSettingInfoSelector.roomTitle);
   const [image, setImage] = useState(null);
   const [imageName, setImageName] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [openModal2, setOpenModal2] = useState(false);
+  const [isSave, setIsSave] = useState(false);
+  const [imageSrc, setImageSrc] = useState("");
+
   const receivedToken = localStorage.getItem("token");
   const params = useParams();
   const roomId = params.roomId;
-
-  const roomImg = roomInfoSelector.roomImg;
+  const encodeFileToBase64 = (fileBlob) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(fileBlob);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        setImageSrc(reader.result);
+        resolve();
+      };
+    });
+  };
+  const roomImg = roomSettingInfoSelector.roomImg;
   const modalHandler = () => {
     setOpenModal(!openModal);
   };
   const saveInput = () => {
     patchRoomInfo();
-    console.log(roomInfoSelector);
+    getRoomInfo();
+    setIsSave(true);
+    navigate(`/rooms/${roomId}`);
+    // window.location.reload();
   };
 
-  const handleImageChange = (e) => {
+  const saveModalButton = () => {
+    saveInput();
+    navigate(`/rooms/${roomId}`);
+  };
+
+  const handleImageChange = async (e) => {
     const file = e.target.files?.[0];
     const reader = new FileReader();
-    reader.onloadend = () => {
+    reader.onloadend = async () => {
       setImage(reader.result);
+      await encodeFileToBase64(file);
     };
     if (file) {
       reader.readAsDataURL(file);
@@ -65,17 +92,35 @@ export const RoomSetting = () => {
           Authorization: `Bearer ${receivedToken}`,
         },
       });
-      dispatch(setRoomInfo(response.data.result));
-      setImage(response.data.result.roomImg);
+      const data = response.data.result;
+      setImage(data.roomImg);
+      dispatch(setRoomSettingInfo(data));
     } catch (error) {
       console.error("getRoomTitle 에러:", error);
     }
   };
+
+  const deleteRoom = async () => {
+    try {
+      await axios.delete(`/rooms/delete/${roomId}`, {
+        headers: {
+          Authorization: `Bearer ${receivedToken}`,
+        },
+      });
+      navigate("/main");
+    } catch (error) {
+      console.error("roomDelete 에러:", error);
+    }
+  };
+
+  const makeImgNull = () => {
+    setImage(null);
+  };
   const patchRoomInfo = async () => {
     const formData = new FormData();
     if (image === null) {
-      const defaultImage = await fetch(roomImg).then((res) => res.blob());
-      formData.append("roomImg", defaultImage, "roomImg.png");
+      const defaultImage = await fetch(WriteRoomImg).then((res) => res.blob());
+      formData.append("roomImg", defaultImage, "WriteRoomImg.png");
     } else if (image === roomImg) {
       console.log("룸 이미지 안 바꿈");
     } else {
@@ -105,27 +150,46 @@ export const RoomSetting = () => {
           },
         }
       );
+      console.log(response.data);
     } catch (error) {
-      console.error("updateRoom 에러:", error);
+      console.log(error);
     }
   };
+  useEffect(() => {
+    if (!isSave) {
+      history.push(null, null, "");
+
+      window.onpopstate = () => {
+        setOpenModal2(true);
+      };
+    } else {
+      window.onpopstate = () => {
+        // 초기화
+      };
+    }
+  }, [isSave, history]);
 
   useEffect(() => {
     getRoomInfo();
-  });
-
+  }, []);
   return (
     <S.Wrapper>
       <RoomSettingSNB />
       <S.Contents>
         <RoomSettingNavbar title="룸 관리" onSave={saveInput} />
-        {/* onClick 시 이미지 삭제하고 인풋 보여주기 */}
+
         {image ? (
           <>
-            <S.ImgBox src={`${roomInfoSelector.roomImg}`}></S.ImgBox>
-            <S.DeleteImgButton>
-              <IoClose size={30} />
-            </S.DeleteImgButton>
+            {imageSrc ? (
+              <S.ImgBox src={imageSrc} alt="preview-img" />
+            ) : (
+              <>
+                <S.ImgBox src={`${roomSettingInfoSelector.roomImg}`} />
+                <S.DeleteImgButton>
+                  <IoClose size={30} onClick={makeImgNull} />
+                </S.DeleteImgButton>
+              </>
+            )}
           </>
         ) : (
           <S.StyledFileInput>
@@ -161,6 +225,7 @@ export const RoomSetting = () => {
             title1="내가 관리하고 있는 룸이에요."
             title2="정말 룸을 삭제하시겠어요?"
             button2="삭제"
+            deletefunction={deleteRoom}
           />
         )}
         {openModal2 && (
@@ -169,6 +234,8 @@ export const RoomSetting = () => {
             description="지금 나가면 수정사항이 모두 삭제됩니다."
             button1="삭제하기"
             button2="저장하고 나가기"
+            onClick1={() => navigate(`/rooms/${roomId}`)}
+            onClick2={() => saveModalButton()}
           />
         )}
       </S.Contents>
