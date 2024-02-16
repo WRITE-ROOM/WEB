@@ -22,6 +22,7 @@ import MyprofileNone from "./pages/MyprofileNone.jsx";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import { useEffect, useState } from "react";
 import { darkTheme, lightTheme } from './theme.jsx';
+import StartPage from "./pages/StartPage/StartPage.jsx";
 
 const GlobalStyle = createGlobalStyle`
   body {        
@@ -58,11 +59,13 @@ function App() {
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <div className="App">
-      {(currentPath !== '/login' && currentPath !== '/signup' && currentPath !== '/forgetPwd' && currentPath !== '/reset/pw/:status') && (
+      {(currentPath !== '/login' && currentPath !== '/signup' && currentPath !== '/forgetPwd' && currentPath !== '/reset/pw/:status' && currentPath !== '/' ) && (
           <Header themeMode={themeMode} toggleDarkMode={toggleDarkMode} />
         )}
       
         <Routes>
+          <Route path="/" element={<StartPage />} />
+
           <Route path="/rooms" element={<RoomPage />} />
           <Route path="/rooms/:roomId" element={<RoomPage />} />
           <Route path="/rooms/setting/:roomId" element={<RoomSetting />} />
