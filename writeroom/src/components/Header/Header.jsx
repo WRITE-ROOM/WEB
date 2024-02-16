@@ -10,7 +10,7 @@ const Header = ({ themeMode, toggleDarkMode }) => {
   const [isMypageClicked, setMypageClicked] = useState(false);
   const user = useSelector((state) => state.user);
   const profileImg = user.profileImg;
-
+  console.log(profileImg)
   return (
     <H.HeaderContainer>
       <a href="/main">
@@ -28,7 +28,7 @@ const Header = ({ themeMode, toggleDarkMode }) => {
         </H.LightDarkToggle>
 
         <H.MyProfile onClick={() => setMypageClicked(!isMypageClicked)}>
-          {profileImg === null ? (<img src={MyProfileImg} alt="myProfileImg" />) : (<img src={profileImg} alt="myProfileImg" />)}
+          {profileImg ===  null ? (<img src={MyProfileImg} alt="myProfileImg" />) : (<img src={profileImg} alt="myProfileImg" />)}
         </H.MyProfile>
 
         {isMypageClicked && <MyProfileMenu />}

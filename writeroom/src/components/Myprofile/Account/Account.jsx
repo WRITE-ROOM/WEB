@@ -11,12 +11,6 @@ import { setAccount } from '../../../redux/user';
 import myProfile from '../../../assets/myProfile.png'
 
 export default function Account() {
-  const [image, setImage] = useState(null);
-  const [imageName, setImageName] = useState(null);
-  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
-  const [isSecessionModalOpen, setIsSecessionModalOpen] = useState(false);
-  const [isSave, setIsSave] = useState(false);
-  
   const user = useSelector((state) => state.user);
   const userName = user.userName;
   const profileImg = user.profileImg;
@@ -24,6 +18,11 @@ export default function Account() {
   const joinType = user.joinType;
   
   const [name, setName] = useState(userName);
+  const [image, setImage] = useState(profileImg);
+  const [imageName, setImageName] = useState(null);
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const [isSecessionModalOpen, setIsSecessionModalOpen] = useState(false);
+  const [isSave, setIsSave] = useState(false);
 
   const userId = localStorage.getItem('id');
 	const receivedToken = localStorage.getItem('token');
@@ -109,31 +108,6 @@ export default function Account() {
     return blobImage;
   };
 
-  const getUserProfile = async() => {
-    try {
-      const res = await axios.get(`/users/myProfile`, {
-        headers: {
-          'Authorization': `Bearer ${receivedToken}`
-        },
-      });
-      const data = res.data.result;
-      dispatch(setAccount({
-        userId: data.userId, 
-        userName: data.nickName,
-        profileImg: data.profileImg,
-        userEmail: data.email,
-        joinType: data.joinType,
-      }))
-      setImage(data.profileImg);
-      setName(data.nickName);
-      console.log(res.data);
-    } catch (error){
-      console.error(error);
-    }
-   }
-   useEffect(() => {
-    getUserProfile();
-   }, [])
 
 return (
   <div>

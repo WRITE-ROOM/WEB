@@ -13,6 +13,7 @@ import { resetRoom, setRoom } from "../../../redux/room";
 import { selectRoomIds } from "../../../redux/room";
 import InfiniteScroll from "react-infinite-scroll"
 import Pagination from "react-js-pagination";
+import { setAccount } from "../../../redux/user";
 
 
 export default function MainBox() {
@@ -23,9 +24,14 @@ export default function MainBox() {
   const roomIdList = useSelector(selectRoomIds);
   const rooms = useSelector((state) => state.room.room);
 
+  const userId = localStorage.getItem('id');
+  const receivedToken = localStorage.getItem('token');
+
+
   const [roomlist, setRoomList] = useState([]);
 	let navigate = useNavigate();
 	let dispatch = useDispatch();
+
 	const toggleSNB = () => {
 		setIsSNBOpen((prev) => !prev);
 	};
@@ -33,10 +39,31 @@ export default function MainBox() {
     setPage(page);
   };
 
-	const fetchRoomList = async () => {
-    const userId = localStorage.getItem('id');
-    const receivedToken = localStorage.getItem('token');
+  const getUserProfile = async() => {
+    try {
+      const res = await axios.get(`/users/myProfile`, {
+        headers: {
+          'Authorization': `Bearer ${receivedToken}`
+        },
+      });
+      const data = res.data.result;
+      dispatch(setAccount({
+        userId: data.userId, 
+        userName: data.nickName,
+        profileImg: data.profileImg,
+        userEmail: data.email,
+        joinType: data.joinType,
+      }))
+      console.log(res.data);
+    } catch (error){
+      console.error(error);
+    }
+   }
+   useEffect(() => {
+    getUserProfile();
+   }, [])
 
+	const fetchRoomList = async () => {
     try {
       const res = await axios.get(`/rooms/myRoomList?page=${page-1}`, { 
         headers: {
