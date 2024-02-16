@@ -16,6 +16,7 @@ export const DropdownContainer = styled.div`
 
   position: absolute;
   right: 0px;
+  cursor: pointer;
   top: ${(props) => (props.$top ? props.$top : "58px")};
 
   z-index: 1000;

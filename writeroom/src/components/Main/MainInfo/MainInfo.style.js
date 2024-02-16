@@ -10,8 +10,8 @@ export const Container = styled.div`
     justify-content: space-between;
     align-items: center;
 	border-radius : 0 0 10px 10px;
-    // background-color: white;
-`
+    background-color: ${(props) => props.theme.SNBBgColor};
+    `
 
 export const Left = styled.div`
     width: 200px;

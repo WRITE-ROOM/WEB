@@ -32,7 +32,7 @@ export const Room = styled.div`
 	height: 259px;
 	border-style: solid;
 	border-width: 1px;
-	// border-color: black;
+	border-color: rgba(95, 95, 95, 1);
 	border-radius: 10px;
 	margin: 24px;
 	// cursor: pointer;

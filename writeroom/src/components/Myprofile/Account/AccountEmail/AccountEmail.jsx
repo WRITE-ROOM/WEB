@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as S from "../Account.style";
 import * as R from "./AccountEmail.style";
 import MyprofileSNB from '../../MyprofileSNB/MyprofileSNB';
@@ -8,11 +8,10 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 export default function AccountEmail() {
-
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentEmail, setCurrentEmail] = useState('');
   const [newEmail, setNewEmail] = useState('');
   const user = useSelector((state) => state.user);
-  const userEmail = user.userEmail;
   const receivedToken = localStorage.getItem('token')
 
   const openModal = () => {
@@ -38,6 +37,10 @@ export default function AccountEmail() {
     }
   }
 
+  useEffect(() => {
+    setCurrentEmail(user.userEmail);
+  }, [])
+
   return (
     <S.Container>
 			<MyprofileSNB/>
@@ -48,7 +51,7 @@ export default function AccountEmail() {
 					</R.Top>
 					<R.CurrentEmail>
 						<h2>현재 이메일 주소</h2>
-						<p>{userEmail}</p>
+						<p>{user.userEmail}</p>
 					</R.CurrentEmail>
 					<R.NewEmail>
 						<h2>새 이메일 주소</h2>
