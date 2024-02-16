@@ -8,6 +8,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addBookmark, deleteBookmark } from "../../redux/bookmark";
 import { addWordBookmark, deleteWordBookmark, resetWordBookmark, setWordBookmark } from "../../redux/wordBookmark";
+import { FadeLoader } from "react-spinners";
 
 export default function RecTopic({ onToggle }) {
   const [inputWord, setInputWord] = useState("");
@@ -24,13 +25,16 @@ export default function RecTopic({ onToggle }) {
   const [searchSynonym, setSearchSynonym] = useState("");
   const [isSynonymSearchOpen, setIsSynonymSearchOpen] = useState(false);
 
+  const [loading, setLoading] = useState(true);
+  const [keyWordLoading, setKeywordLoading] = useState();
+  const [synonymLoading, setSynonymLoading] = useState();
+
   const user = useSelector((state) => state.user);
   const bookmark = useSelector(state => state.bookmark);
   const userId = localStorage.getItem('id');
   const receivedToken = localStorage.getItem('token');
   // const receivedToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo"
 
-  let dispatch = useDispatch();
 
   const handleKeyPressKeyword = (e) => {
     if (e.key === "Enter") {
@@ -55,24 +59,23 @@ export default function RecTopic({ onToggle }) {
   };
 
   const getTopics = async() => {
+    setLoading(true)
     try {
       const res = await axios.get(`/search/topics`, { 
         headers: {
           'Authorization': `Bearer ${receivedToken}`
           },
       })
-      console.log('서버 전달이다: ', res.data)
-      // const vocas = res.data.result.map(item => item.voca);
       const vocas = res.data.result[0].voca.split(', ');
       setTopics(vocas);
-
+      setLoading(false);
     } catch (error) {  
       console.log(error)
+      setLoading(false);
     }
   }
   const getKeyword = async() => {
-    console.log('검색한 단어 axios에서 확인: ', searchKeyword)
-
+    setKeywordLoading(true);
     try {
       const Voca = searchKeyword;
       const res = await axios.get(`/search/similarKeywords?voca=${Voca}`, { 
@@ -80,15 +83,15 @@ export default function RecTopic({ onToggle }) {
           'Authorization': `Bearer ${receivedToken}`
           },
       })
-      // console.log(res.data)
-      // const vocas = res.data.result.map(item => item.voca);
       const vocas = res.data.result[0].voca.split(', ');
       setKeywords(vocas);
+      setKeywordLoading(false);
     } catch (error) {
       console.log(error)
     }
   }
   const getSynonym = async() => {
+    setSynonymLoading(true);
     try {
       const Voca = searchSynonym;
       const res = await axios.get(`/search/synonyms?voca=${Voca}`, { 
@@ -96,11 +99,9 @@ export default function RecTopic({ onToggle }) {
           'Authorization': `Bearer ${receivedToken}`
           },
       })
-      console.log(res.data)
-      // const vocas = res.data.result.map(item => item.voca);
       const vocas = res.data.result[0].voca.split(', ');
-      console.log('vocas: ', vocas)
       setSynonyms(vocas);
+      setSynonymLoading(false);
     } catch (error) {
       console.log(error)
     }
@@ -206,15 +207,24 @@ export default function RecTopic({ onToggle }) {
             </button>
           </S.Top>
           <S.RecBottom>
-          {topics.map((word, index) => (
-            <RecWord
-              key={index}
-              word={word}
-              index={index}
-              isBookmarked={isBookmarked[index]}
-              onBookmarkChange={handleBookmarkChange}
-            />
-          ))}
+            {loading ? (
+              <div style={{display:'flex', justifyContent:'center', alignItems:'center', margin:'50px 0 0 0'}}>
+                <FadeLoader color="rgba(181, 169, 148, 1)" size={50} />
+              </div> 
+              ) : (
+              <div>
+                {topics.map((word, index) => (
+                  <RecWord
+                    key={index}
+                    word={word}
+                    index={index}
+                    isBookmarked={isBookmarked[index]}
+                    onBookmarkChange={handleBookmarkChange}  
+                  />
+                ))}
+              </div>
+              )
+            }
           </S.RecBottom>
         </S.Wrapper>
 
@@ -232,21 +242,30 @@ export default function RecTopic({ onToggle }) {
               onKeyUp={handleKeyPressKeyword}
             ></input>
           </S.WordSearch>
-          {isKeywordSearchOpen && (
-            <S.WordBottom>
-              <S.BottomWords>
-                <p>{searchKeyword}</p>
-                <p>{keywords[0]}</p>
-                <p>{keywords[1]}</p>
-              </S.BottomWords>
-              <S.BottomLine />
-              <S.BottomWords>
-                <p>{keywords[2]}</p>
-                <p>{keywords[3]}</p>
-                <p>{keywords[4]}</p>
-              </S.BottomWords>
-            </S.WordBottom>
+          {keyWordLoading ? (
+            <div style={{display:'flex', justifyContent:'center', alignItems:'center', margin:'50px 0 0 0'}}>
+            <FadeLoader color="rgba(181, 169, 148, 1)" size={50} />
+          </div> 
+          ) : (
+            <>
+              {isKeywordSearchOpen && (
+                <S.WordBottom>
+                  <S.BottomWords>
+                    <p>{searchKeyword}</p>
+                    <p>{keywords[0]}</p>
+                    <p>{keywords[1]}</p>
+                  </S.BottomWords>
+                  <S.BottomLine />
+                  <S.BottomWords>
+                    <p>{keywords[2]}</p>
+                    <p>{keywords[3]}</p>
+                    <p>{keywords[4]}</p>
+                  </S.BottomWords>
+                </S.WordBottom>
+              )}
+            </>
           )}
+          
         </S.Wrapper>
 
         <S.Wrapper>
@@ -263,20 +282,28 @@ export default function RecTopic({ onToggle }) {
               onKeyUp={handleKeyPressSynonym}
             ></input>
           </S.WordSearch>
-          {isSynonymSearchOpen && (
-            <S.WordBottom>
-              <S.BottomWords>
-                <p>{searchSynonym}</p>
-                <p>{synonyms[0]}</p>
-                <p>{synonyms[1]}</p>
-              </S.BottomWords>
-              <S.BottomLine />
-              <S.BottomWords>
-                <p>{synonyms[2]}</p>
-                <p>{synonyms[3]}</p>
-                <p>{synonyms[4]}</p>
-              </S.BottomWords>
-            </S.WordBottom>
+          {synonymLoading ? (
+            <div style={{display:'flex', justifyContent:'center', alignItems:'center', margin:'50px 0 0 0'}}>
+            <FadeLoader color="rgba(181, 169, 148, 1)" size={50} />
+          </div> 
+          ) : (
+            <>
+            {isSynonymSearchOpen && (
+              <S.WordBottom>
+                <S.BottomWords>
+                  <p>{searchSynonym}</p>
+                  <p>{synonyms[0]}</p>
+                  <p>{synonyms[1]}</p>
+                </S.BottomWords>
+                <S.BottomLine />
+                <S.BottomWords>
+                  <p>{synonyms[2]}</p>
+                  <p>{synonyms[3]}</p>
+                  <p>{synonyms[4]}</p>
+                </S.BottomWords>
+              </S.WordBottom>
+            )}
+            </>
           )}
         </S.Wrapper>
       </S.Right>
