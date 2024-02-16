@@ -152,7 +152,6 @@ export default function RecTopic({ onToggle }) {
         dispatch(addWordBookmark(newBookmark));
         window.alert('북마크에 추가했어요.');
       } catch (error) {
-        console.log('content: ', word, ', userId: ', userId)
         console.log(error);
       }
     }
@@ -166,7 +165,6 @@ export default function RecTopic({ onToggle }) {
             'Authorization': `Bearer ${receivedToken}`,
           }
         });
-        console.log('delete 서버 res: ', res.data);
         const data = res.data.result;
         dispatch(deleteWordBookmark({id : data.bookmarkId}));
         window.alert('북마크에서 해제했어요.');

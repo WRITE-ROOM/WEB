@@ -46,9 +46,8 @@ export default function Account() {
     try {
       const res = await axios.get(`/auth/logout`);
       localStorage.clear();
-      navigate(`/login`);
+      navigate(`/`);
       // 추후 온보딩 페이지 만들면 온보딩 페이지로 navigate
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -78,7 +77,7 @@ export default function Account() {
       formData.append("userImg", defaultImage, "myProfile.png");
     }
     else if (image === profileImg) {
-      console.log('프사 안 바꿈')
+      console.log('.')
     }
     else {
       if (!isImageBlob(image)) {
@@ -89,14 +88,12 @@ export default function Account() {
       }
     }
     formData.append('request', JSON.stringify({nickName: name}));
-    console.log(formData);
     try {
       const res = await axios.patch(`/users/update/myProfile`, formData, { 
         headers: {
           'Authorization': `Bearer ${receivedToken}`,
           },
        });
-      console.log(res.data)
       
     } catch (error) {
       console.error(error);

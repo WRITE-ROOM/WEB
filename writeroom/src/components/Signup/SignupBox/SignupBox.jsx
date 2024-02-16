@@ -9,10 +9,6 @@ import Header from '../../Header/Header'
 export default function SignupBox() {
   let navigate = useNavigate();
 
-  const handleAllCheckChange = (allCheck) => {
-    console.log('allCheck:', allCheck);
-  };
-
   return (
     <div>
     <S.App>

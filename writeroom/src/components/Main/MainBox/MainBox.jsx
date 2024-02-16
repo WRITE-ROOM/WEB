@@ -54,7 +54,6 @@ export default function MainBox() {
         userEmail: data.email,
         joinType: data.joinType,
       }))
-      console.log(res.data);
     } catch (error){
       console.error(error);
     }
@@ -74,14 +73,12 @@ export default function MainBox() {
       setRoomList(prev => [...prev, ...room]);
       setLoading(true);
       
-      console.log(roomlist);
       dispatch(resetRoom())
       room.forEach(roomData => {
         const { roomId, roomTitle, updatedAt, roomImg, userRoomList } = roomData;
         dispatch(setRoom({ roomId, roomTitle, updatedAt, roomImg, userRoomList }));
       });
       setCount(room[0].totalElements);
-      console.log(res.data);
     } catch (error) { 
       console.error(error);
     }
@@ -116,7 +113,6 @@ export default function MainBox() {
   return (
     <div>
       <S.App>
-        <button onClick={() => {console.log(roomlist)}}>임시버튼</button>
         <h1>나의 룸 목록</h1>
         <S.Container with_SNB={isSNBOpen}>
           {rooms.map((room, index) => (
@@ -129,9 +125,7 @@ export default function MainBox() {
             </S.Room>
           ))}
         </S.Container>
-        {/* <S.Loading>로딩 중...</S.Loading> */}
         <NewNoteButton /> <NewRoomButton />
-        {/* <NewRoomModal isOpen={isModalOpen} onClose={closeModal} /> */}
         {isSNBOpen ? (
           <RecTopic onToggle={toggleSNB}></RecTopic>
         ) : (

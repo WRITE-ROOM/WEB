@@ -31,7 +31,6 @@ export default function AccountEmail() {
           'Authorization': `Bearer ${receivedToken}`,
         }
       });
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     }

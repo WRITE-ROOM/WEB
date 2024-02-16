@@ -23,9 +23,8 @@ export default function SecessionModal({isOpen, onClose}) {
           },
       })
       localStorage.clear();
-      navigate(`/login`);
+      navigate(`/`);
       // 추후 온보딩 페이지 만들면 온보딩 페이지로 navigate
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     }

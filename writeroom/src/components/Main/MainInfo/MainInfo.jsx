@@ -24,7 +24,6 @@ export default function MainInfo({ room, roomIndex, roomId }) {
   return (
     <div>
       <S.Container>
-        {/* <button onClick={() => {console.log(userList)}}>dlaasdf</button> */}
         <S.Left>
           <S.RoomName>{truncateTitle(room.roomTitle)}</S.RoomName>
           <S.editTime>{room.updatedAt} 편집</S.editTime>
