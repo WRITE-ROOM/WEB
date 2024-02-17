@@ -49,18 +49,19 @@ const AddChallengeMember = () => {
   };
 
   const [selectedList, setSelectedList] = useState([]);
-  console.log("selectedList", selectedList);
 
   const selectMember = (userId, user) => {
-    console.log(userId);
     dispatch(setSelectedMember(userId));
     setSelectedList([...selectedList, user]);
   };
-  console.log("selectedMember", selectedMember);
 
+
+  useEffect(()=>{
+    dispatch(setSelectedMember(parseInt(userId)));
+  },[])
+  
   useEffect(() => {
     fetchUserList();
-    dispatch(setSelectedMember(parseInt(userId)));
   }, [roomId]);
 
   return (

@@ -20,6 +20,7 @@ const RoomChallengeBox = () => {
 
 
   const isAmounting = useSelector((state) => state.roomSettingInfo.isAmounting);
+  console.log(isAmounting)
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -83,6 +84,24 @@ const RoomChallengeBox = () => {
       title: "나의 챌린지",
     },
   ];
+
+
+  const deleteChallenge = async() => {
+    console.log(data)
+    try {
+      const res = await axios.patch(`/challenge-goals/give-up/${challengeId}`, {}, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      console.log(res.data);
+      setIsGiveUp(false);
+      window.location.reload();
+    } catch(error) {
+      console.log(error);
+    }
+  }
+
   return (
     <S.Container>
       <S.BarContainer>
