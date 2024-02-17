@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 export const DropdownContainer = styled.div`
   width: ${(props) => (props.$width ? props.$width : "100px")};
-  background-color: ${(props) => props.theme.TemplateColor};
+  background-color: ${(props) => props.theme.SNBBgColor};
   padding: ${(props) => (props.$padding ? props.$padding : "16px 4px")};
 
   box-sizing: border-box;
@@ -62,7 +62,7 @@ export const DropdownTitle = styled.div`
 export const SimpleContainer = styled.div`
   width: ${(props) => (props.$width ? props.$width : "100px")};
   height: ${(props) => (props.$height ? props.$height : "")};
-  background-color: ${(props) => props.theme.TemplateColor};
+  background-color: ${(props) => props.theme.SNBBgColor};
 
   padding: ${(props) => (props.$padding ? props.$padding : "16px")};
   box-sizing: border-box;

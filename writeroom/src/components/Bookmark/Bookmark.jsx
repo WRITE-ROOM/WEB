@@ -53,11 +53,12 @@ const Bookmark = ({
       const serverBookmarkId = res.data.result.noteBookmarkId;
       const newBookmark = {
         noteBookmarkId: serverBookmarkId,
-        noteId: noteId,
-      };
-      dispatch(addNoteBookmark(newBookmark));
 
-      window.alert("북마크에 추가했어요.");
+        noteId: noteId
+      }
+      dispatch(addNoteBookmark(newBookmark)); 
+      window.alert('북마크에 추가했어요.');
+
       // window.location.reload();
     } catch (error) {
       if (error.response.data.code === "BOOKMARK4003")
@@ -68,8 +69,7 @@ const Bookmark = ({
 
   const deleteBookmark = async (noteId) => {
     setIsBookmarked(false);
-
-    setNoteBookmarkId(undefined);
+    setNoteBookmarkId(undefined)
     try {
       const res = await axios.delete(`/notes/bookmark/delete/${noteId}`, {
         headers: {
@@ -77,8 +77,7 @@ const Bookmark = ({
         },
       });
       if (res.status === 200) {
-        dispatch(deleteNoteBookmark({ noteId: noteId }));
-
+        dispatch(deleteNoteBookmark({noteId : noteId}));
         window.alert("북마크에서 해제했어요.");
       }
     } catch (error) {
@@ -91,8 +90,10 @@ const Bookmark = ({
   }, [noteBookmarkId]);
   return (
     <B.Container onClick={(e) => e.stopPropagation()}>
-      {/* <button onClick={() => {console.log(isBookmarked)}}>임스버튼</button> */}
-      {isBookmarked === true || noteBookmarkId !== undefined ? (
+
+      {isBookmarked === true
+      || noteBookmarkId !== undefined
+       ? (
         <FaBookmark
           size={18}
           color="rgba(181, 169, 148, 1)"

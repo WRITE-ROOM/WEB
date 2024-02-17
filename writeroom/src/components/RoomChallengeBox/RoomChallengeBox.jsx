@@ -70,6 +70,7 @@ const RoomChallengeBox = () => {
   ];
 
   const deleteChallenge = async () => {
+
     try {
       const res = await axios.patch(
         `/challenge-goals/give-up/${challengeId}`,
