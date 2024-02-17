@@ -66,7 +66,7 @@ const RoomRoutineBox = ({ text, description, range, toggle }) => {
     <S.RoutineBox>
       <div>
         <h1>참여자</h1>
-        <AddChallengeMember></AddChallengeMember>
+        <AddChallengeMember />
         {/* <S.People>
           {userList.map((_, index) => (
             <HiMiniUserCircle key={index} color="gainsboro" size={40} />

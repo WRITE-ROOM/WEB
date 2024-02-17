@@ -4,7 +4,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import RoomModal from "../RoomModal/RoomModal";
 import { useState } from "react"; // Import useState hook
 import RoomModalSec from "../RoomModalSec/RoomModalSec";
-
+import { useDispatch, useSelector } from "react-redux";
+import { setRoomSettingIsAmounting } from "../../redux/roomSettingInfo";
+import { selectRoomInfoState } from "../../redux/roomInfo";
 const RoomSettingNavbar = ({
   title,
   onSave,
@@ -14,18 +16,25 @@ const RoomSettingNavbar = ({
   challenge,
   postChallenge,
 }) => {
+  const dispatch = useDispatch();
   const handleSave = () => {
     onSave();
   };
   const params = useParams();
   const navigate = useNavigate();
   const roomId = params.roomId;
-  const [showModal, setShowModal] = useState(false); // State to control modal visibility
+  const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => {
     setShowModal(true);
   };
 
+  const postChallengeFunction = () => {
+    postChallenge();
+    dispatch(setRoomSettingIsAmounting(true));
+  };
+  const isAmounting = useSelector(selectRoomInfoState);
+  console.log(isAmounting);
   const handleConfirmLeaveRoom = () => {
     leaveRoom();
     navigate(`/main`);
@@ -54,11 +63,11 @@ const RoomSettingNavbar = ({
                     isOpen={true}
                     onClick1={closeModal}
                     closeModal={closeModal}
-                    onClick2={postChallenge}
+                    onClick2={postChallengeFunction}
                   />
                 </div>
               )}
-              <IoClose size={40} onClick={handleShowModal} />
+              {/* <IoClose size={40} onClick={handleShowModal} /> */}
             </>
           )}
           {member && (

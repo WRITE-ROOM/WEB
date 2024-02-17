@@ -27,13 +27,13 @@ export const RoomSetting = () => {
 
   const [changedRoomIntroduction, setRoomIntroduction] = useState("");
 
-  console.log(roomSettingInfoSelector);
   const [image, setImage] = useState(null);
   const [imageName, setImageName] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [openModal2, setOpenModal2] = useState(false);
   const [isSave, setIsSave] = useState(false);
   const [imageSrc, setImageSrc] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   const receivedToken = localStorage.getItem("token");
   const params = useParams();
@@ -227,6 +227,8 @@ export const RoomSetting = () => {
             title1="내가 관리하고 있는 룸이에요."
             title2="정말 룸을 삭제하시겠어요?"
             button2="삭제"
+            isOpen={true}
+            closeModal={() => setShowModal(false)}
             deletefunction={deleteRoom}
           />
         )}

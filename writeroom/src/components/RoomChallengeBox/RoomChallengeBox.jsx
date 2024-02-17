@@ -9,12 +9,15 @@ import RoomModalSec from "../RoomModalSec/RoomModalSec";
 import RoomChallengeWeekBox from "../RoomChallengeWeekBox/RoomChallengeWeekBox";
 import RoomRoutineBox from "../RoomRoutineBox/RoomRoutineBox";
 import RoomMyChallengeBox from "../RoomMyChallengeBox/RoomMyChallengeBox";
+import { useSelector } from "react-redux";
 
 const RoomChallengeBox = () => {
   const [isMakeRoutine, setIsMakeRoutine] = useState(false);
   const [isMaking, setIsMaking] = useState(false);
   const [isAmount, setIsAmount] = useState(false);
-  const [isAmounting, setIsAmounting] = useState(false);
+  // 상단 bar 상태임
+  const isAmounting = useSelector((state) => state.isAmounting);
+  console.log(isAmounting);
   const [isMyChallenge, setIsMyChallenge] = useState(false);
   const [isChallenging, setIsChallenging] = useState(false);
   const [isSelectedIndex, setIsSelectedIndex] = useState(null);
@@ -61,7 +64,8 @@ const RoomChallengeBox = () => {
           </S.Bar>
         ))}
       </S.BarContainer>
-      {isMakeRoutine &&
+      {/* 루틴 내용 */}
+      {/* {isMakeRoutine &&
         (isMaking ? (
           <>
             <RoomChallengeWeekBox
@@ -92,27 +96,26 @@ const RoomChallengeBox = () => {
             )}
           </>
         ) : (
-          // 목표량 달성하기
           <>
             <RoomRoutineBox
               text="일주일에 최대 7일을 설정할 수 있어요"
               range="7"
             />
-            {/* <RoomModalSec
+            <RoomModalSec
               title1="수정 내용을 삭제하겠어요?"
               description="지금 나가시면 수정사항이 모두 삭제됩니다."
               button1="삭제하기"
               button2="저장하고 나가기"
-            /> */}
-            {/* <RoomModalSec
+            />
+            <RoomModalSec
               title1="해당 목표로 챌린지를 시작하시겠어요?"
               description="*최소 200자 이상 작성한 노트만 챌린지로 인정해요"
               description2="*챌린지 목표는 수정할 수 없어요!"
               button1="삭제하기"
               button2="시작하기"
-            /> */}
+            />
           </>
-        ))}
+        ))} */}
       {isAmount &&
         (isAmounting ? (
           <>
@@ -147,6 +150,7 @@ const RoomChallengeBox = () => {
           </>
         ) : (
           <>
+            {/* 목표량 내용 */}
             <RoomRoutineBox
               text="최대 1000개까지 도전할 수 있어요!"
               description="일주일 단위로 최대 한달동안 도전할 수 있어요"
