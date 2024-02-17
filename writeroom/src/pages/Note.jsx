@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MdMoreHoriz } from "react-icons/md";
 import * as N from "./Note.style";
-import * as W from "../components/Myprofile/MyBookmark/WordBookmark/WordBookmark.style"
+import * as W from "../components/Myprofile/MyBookmark/WordBookmark/WordBookmark.style";
 import EmojiContainer from "../components/Emoji/EmojiContainer";
 import Setting from "../components/Setting/Setting";
 import Bookmark from "../components/Bookmark/Bookmark";
@@ -37,10 +37,7 @@ const Note = () => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log("note res", res.data.result);
       dispatch(addNote(res.data.result));
-
-      console.log(emojiCounts);
     } catch (error) {
       console.log(error);
     }
@@ -49,11 +46,14 @@ const Note = () => {
   const emojiCounts = note.emojiList ? note.emojiList.emojiCounts : 0;
 
   const roomInfoSelector = useSelector(selectRoomInfoState);
-  const clickedNote = (roomInfoSelector.noteList.find((room) => room.noteId === noteId)|| noteBookmark.find((room) => room.noteId === noteId))
-  const clickedBookmark = (noteBookmark.find((room) => room.noteId === noteId))
+  const clickedNote =
+    roomInfoSelector.noteList.find((room) => room.noteId === noteId) ||
+    noteBookmark.find((room) => room.noteId === noteId);
+  const clickedBookmark = noteBookmark.find((room) => room.noteId === noteId);
   let isBookmarked = clickedNote ? clickedNote.isbookmarked : null;
-  let noteBookmarkId = clickedBookmark ? clickedBookmark.noteBookmarkId : undefined;
-
+  let noteBookmarkId = clickedBookmark
+    ? clickedBookmark.noteBookmarkId
+    : undefined;
 
   const postBookmark = async () => {
     isBookmarked = true;
@@ -70,23 +70,22 @@ const Note = () => {
       const serverBookmarkId = res.data.result.noteBookmarkId;
       const newBookmark = {
         noteBookmarkId: serverBookmarkId,
-        noteId: noteId
-      }
-      dispatch(addNoteBookmark(newBookmark)); 
+        noteId: noteId,
+      };
+      dispatch(addNoteBookmark(newBookmark));
       noteBookmarkId = serverBookmarkId;
-      console.log('북마크에 추가 완료!! : ,', res.data)
-      window.alert('북마크에 추가했어요.');
+
+      window.alert("북마크에 추가했어요.");
       // window.location.reload();
     } catch (error) {
       if (error.response.data.code === "BOOKMARK4003")
-        window.alert('이미 북마크한 노트입니다.');
+        window.alert("이미 북마크한 노트입니다.");
       console.log(error);
     }
   };
 
-  const deleteBookmark = async(noteId) => {
+  const deleteBookmark = async (noteId) => {
     isBookmarked = false;
-    console.log(noteId);
     noteBookmarkId = undefined;
     try {
       const res = await axios.delete(`/notes/bookmark/delete/${noteId}`, {
@@ -95,16 +94,14 @@ const Note = () => {
         },
       });
       if (res.status === 200) {
-        dispatch(deleteNoteBookmark({noteId : noteId}));
-        console.log(noteBookmark)
-        console.log('노트 북마크 해제 완료!!', res.data);
+        dispatch(deleteNoteBookmark({ noteId: noteId }));
         window.alert("북마크에서 해제했어요.");
       }
-    } catch (error) {  
+    } catch (error) {
       console.log(error);
     }
   };
-  
+
   useEffect(() => {
     fetchNote();
   }, [roomId, noteId]);
@@ -116,10 +113,13 @@ const Note = () => {
         <N.Tools>
           {/* <Bookmark color="white" roomId={roomId} noteId={noteId} bookmarkId={clickedBookmark || undefined} IsNoteBookmark={clickedNote.isbookmarked || undefined} defaultColor="white" /> */}
           {isBookmarked === true || noteBookmarkId !== undefined ? (
-                <W.IsBookMark color="rgba(181, 169, 148, 1)" onClick={() => deleteBookmark(noteId)}/>
-              ) : (
-                <W.NotBookMark onClick={() => postBookmark()}/>
-              )}
+            <W.IsBookMark
+              color="rgba(181, 169, 148, 1)"
+              onClick={() => deleteBookmark(noteId)}
+            />
+          ) : (
+            <W.NotBookMark onClick={() => postBookmark()} />
+          )}
           <Setting
             type="config"
             note={note}

@@ -18,9 +18,7 @@ const RoomChallengeBox = () => {
   const [isAmount, setIsAmount] = useState(false);
   // 상단 bar 상태임
 
-
   const isAmounting = useSelector((state) => state.roomSettingInfo.isAmounting);
-  console.log(isAmounting)
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -56,20 +54,6 @@ const RoomChallengeBox = () => {
 
   const closeGiveUpModal = () => setIsGiveUp(false);
 
-  const deleteChallenge = async() => {
-    console.log(data)
-    try {
-      const res = await axios.patch(`/challenge-goals/give-up/${challengeId}`, {}, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      console.log(res.data);
-    } catch(error) {
-      console.log(error);
-    }
-  }
-
   const today = new Date();
   const barData = [
     {
@@ -85,22 +69,24 @@ const RoomChallengeBox = () => {
     },
   ];
 
-
-  const deleteChallenge = async() => {
-    console.log(data)
+  const deleteChallenge = async () => {
     try {
-      const res = await axios.patch(`/challenge-goals/give-up/${challengeId}`, {}, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      console.log(res.data);
+      const res = await axios.patch(
+        `/challenge-goals/give-up/${challengeId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
       setIsGiveUp(false);
       window.location.reload();
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <S.Container>
