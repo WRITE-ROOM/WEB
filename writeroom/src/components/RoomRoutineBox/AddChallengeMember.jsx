@@ -10,6 +10,8 @@ import { GoPlusCircle } from "react-icons/go";
 import { DropdownContainer } from "../Header/Dropdown.style";
 import * as A from "./AddChallengeMember.style";
 import { setSelectedMember } from "../../redux/selectedMember";
+import MyprofileImg from "../../assets/myProfile.png"
+
 
 const AddChallengeMember = () => {
   const dispatch = useDispatch();
@@ -18,6 +20,7 @@ const AddChallengeMember = () => {
   const accessToken = localStorage.getItem("token");
 
   const userList = useSelector((state) => state.userList);
+  const user = useSelector((state) => state.user);
   console.log("userList ", userList);
 
   const [me, setMe] = useState(null);
@@ -69,7 +72,7 @@ const AddChallengeMember = () => {
       <A.MemberList>
         {me && (
           <A.User>
-            <img className="profileImg" src={me.profileImg} alt="" />
+            <img className="profileImg" src={me.profileImg === null ? MyprofileImg : me.profileImg} alt="" />
             <p>{me.name}</p>
           </A.User>
         )}

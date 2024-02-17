@@ -56,20 +56,6 @@ const RoomChallengeBox = () => {
 
   const closeGiveUpModal = () => setIsGiveUp(false);
 
-  const deleteChallenge = async() => {
-    console.log(data)
-    try {
-      const res = await axios.patch(`/challenge-goals/give-up/${challengeId}`, {}, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      console.log(res.data);
-    } catch(error) {
-      console.log(error);
-    }
-  }
-
   const today = new Date();
   const barData = [
     {
@@ -84,9 +70,8 @@ const RoomChallengeBox = () => {
       title: "나의 챌린지",
     },
   ];
-
-
-  const deleteChallenge = async() => {
+ 
+  const deleteChallenge = async() => {  
     console.log(data)
     try {
       const res = await axios.patch(`/challenge-goals/give-up/${challengeId}`, {}, {

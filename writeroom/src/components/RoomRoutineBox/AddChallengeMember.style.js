@@ -25,6 +25,7 @@ export const User = styled.div`
     width: 38px;
     height: 38px;
     border-radius: 20px;
+    object-fit: cover;
   }
 `;
 
