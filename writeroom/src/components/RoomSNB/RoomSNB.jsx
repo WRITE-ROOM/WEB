@@ -210,18 +210,17 @@ const RoomSNB = ({ isOpen, handleRoomSNB }) => {
                 </S.ToolTipWrapper>
               </S.IconsBox>
             </S.TitleBox>
-            {categoryInfoSelector.categoryList?.length > 0 // 옵셔널 체이닝 사용
-              ? categoryInfoSelector.categoryList.map(
-                  ({ categoryId, categoryName, countNote }) => (
-                    <CategoryToggle
-                      name={categoryName}
-                      countNote={countNote}
-                      key={categoryId}
-                      room={roomInfoSelector}
-                    />
-                  )
+            {categoryInfoSelector.categoryList?.length > 0 &&
+              categoryInfoSelector.categoryList.map(
+                ({ categoryId, categoryName, countNote }) => (
+                  <CategoryToggle
+                    name={categoryName}
+                    countNote={countNote}
+                    key={categoryId}
+                    room={roomInfoSelector}
+                  />
                 )
-              : ""}
+              )}
           </S.BasicBox>
         </S.Container>
       ) : (

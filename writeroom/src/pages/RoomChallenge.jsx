@@ -19,12 +19,16 @@ const RoomChallenge = () => {
   const postChallenge = async () => {
     try {
       const params = { roomId: roomId };
-      const res = await axios.post(`/challenge-goals/create`, challenge, {
-        params,
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      const res = await axios.post(
+        `https://dev.writeroom.shop/challenge-goals/create`,
+        challenge,
+        {
+          params,
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
       dispatch(setRoomSettingIsAmounting(true));
     } catch (error) {
       console.log(error.response.data);
@@ -32,11 +36,14 @@ const RoomChallenge = () => {
   };
   const getChallengeGoals = async () => {
     try {
-      const response = await axios.get(`/challenge-goals/${roomId}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      const response = await axios.get(
+        `https://dev.writeroom.shop/challenge-goals/${roomId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
       const data = response.data.result;
       dispatch(setChallengeData(data));
       dispatch(setRoomSettingIsAmounting(true));
