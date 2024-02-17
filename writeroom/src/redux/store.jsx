@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import  user from "./user";
+import user from "./user";
 import { room } from "./room";
 import tagSlice from "./tag";
 import selectModalSlice from "./selectModal";

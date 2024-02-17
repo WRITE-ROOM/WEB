@@ -3,7 +3,7 @@ import * as C from "./ChallengeAchieved.style";
 import { StyledButton } from "../../../pages/Write.style";
 import { useNavigate } from "react-router-dom";
 
-const ChallengeAchieved = () => {
+const ChallengeAchieved = ({ roomId, noteId }) => {
   const navigate = useNavigate();
   return (
     <C.Background>
@@ -23,7 +23,7 @@ const ChallengeAchieved = () => {
             $backgroundColor="#fff"
             $border="1px solid #e5e5e5"
             fontWeight="300"
-            onClick={() => navigate("/note")}
+            onClick={() => navigate(`/rooms/${roomId}`)}
           >
             괜찮아요
           </StyledButton>
@@ -33,6 +33,7 @@ const ChallengeAchieved = () => {
             $backgroundColor="#B5A994"
             $color="#fff"
             fontWeight="300"
+            onClick={() => navigate(`/rooms/challenge/${roomId}`)}
           >
             보러갈래요
           </StyledButton>

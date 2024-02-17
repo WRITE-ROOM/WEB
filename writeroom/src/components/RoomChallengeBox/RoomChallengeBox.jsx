@@ -18,10 +18,11 @@ const RoomChallengeBox = () => {
   const [isAmount, setIsAmount] = useState(false);
   // 상단 bar 상태임
 
-  // const isAmounting = useSelector((state) => state.roomSettingInfo.isAmounting);
+
   const isAmounting = useSelector((state) => state.roomSettingInfo.isAmounting);
 
   const [openModal, setOpenModal] = useState(false);
+
   const [isMyChallenge, setIsMyChallenge] = useState(false);
   const [isChallenging, setIsChallenging] = useState(false);
   const [isSelectedIndex, setIsSelectedIndex] = useState(null);

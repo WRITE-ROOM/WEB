@@ -4,12 +4,17 @@ import { BiSearch } from "react-icons/bi";
 import Logo from "../../assets/logo.png";
 import MyProfileImg from "../../assets/myProfile.png";
 import MyProfileMenu from "./MyProfileMenu";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setOpenSearchBox } from "../../redux/roomInfo";
 
 const Header = ({ themeMode, toggleDarkMode }) => {
   const [isMypageClicked, setMypageClicked] = useState(false);
   const user = useSelector((state) => state.user);
   const profileImg = user.profileImg;
+  const openSearchBox = useSelector((state) => state.roomInfo.openSearchBox);
+  console.log(openSearchBox);
+  const dispatch = useDispatch();
+  
   return (
     <H.HeaderContainer>
       <a href="/main">
@@ -17,7 +22,7 @@ const Header = ({ themeMode, toggleDarkMode }) => {
       </a>
 
       <H.HeaderRight>
-        <H.SearchButton>
+        <H.SearchButton onClick={() => dispatch(setOpenSearchBox(true))}>
           <BiSearch size={20} style={{ color: "#939393" }} />
           <span>검색</span>
         </H.SearchButton>
@@ -27,7 +32,11 @@ const Header = ({ themeMode, toggleDarkMode }) => {
         </H.LightDarkToggle>
 
         <H.MyProfile onClick={() => setMypageClicked(!isMypageClicked)}>
-          {profileImg ===  null ? (<img src={MyProfileImg} alt="myProfileImg" />) : (<img src={profileImg} alt="myProfileImg" />)}
+          {profileImg === null ? (
+            <img src={MyProfileImg} alt="myProfileImg" />
+          ) : (
+            <img src={profileImg} alt="myProfileImg" />
+          )}
         </H.MyProfile>
 
         {isMypageClicked && <MyProfileMenu />}

@@ -21,14 +21,11 @@ const Note = () => {
 
   // note의 정보 조회하는 api 연결 -> addNote
   const note = useSelector((state) => state.note);
-  console.log("note!!!!!!!!!", note);
   const noteBookmark = useSelector((state) => state.noteBookmark);
 
   const [showTags, setShowTags] = useState(false);
 
   const accessToken = localStorage.getItem("token");
-  // const accessToken =
-  // ("eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo");
 
   const noteId = parseInt(useParams().noteId, 10);
   const roomId = parseInt(useParams().roomId, 10);

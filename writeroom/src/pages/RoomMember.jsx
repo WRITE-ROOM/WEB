@@ -7,8 +7,8 @@ import RoomModal from "../components/RoomModal/RoomModal";
 
 import { useDispatch, useSelector } from "react-redux";
 import { selectRoomSettingInfoState } from "../redux/roomSettingInfo";
-import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   setRoomSettingMember,
   setRoomSettingInfo,
@@ -19,6 +19,12 @@ const RoomMember = () => {
   const roomInfoSelector = useSelector(selectRoomSettingInfoState);
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
+  const [openModal2, setOpenModal2] = useState(false);
+  const navigate = useNavigate();
+
+  const [showModal, setShowModal] = useState(false);
+
+  const closeModal = () => setShowModal(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [userData, setUserData] = useState("");
 
@@ -69,7 +75,10 @@ const RoomMember = () => {
   const params = useParams();
   const roomId = params.roomId;
   const receivedToken = localStorage.getItem("token");
-
+  const handleConfirmLeaveRoom = () => {
+    leaveRoom();
+    navigate(`/main`);
+  };
   const patchUserAuth = async (authority, roomId, receivedId) => {
     try {
       const response = await axios.patch(
@@ -100,7 +109,7 @@ const RoomMember = () => {
       console.error("deleteRoomMember 에러:", error);
     }
   };
-  const leaveRoom = async (outUserId) => {
+  const leaveRoom = async () => {
     try {
       const response = await axios.delete(`/rooms/${roomId}`, {
         headers: {
@@ -196,21 +205,41 @@ const RoomMember = () => {
                     } else if (selectedValue === "EXPORT") {
                       setSelectedUserId(member?.userId);
                       setOpenModal(true);
+                    } else if (selectedValue === "LEAVE") {
+                      setOpenModal2(true);
                     }
                   }}
                 >
                   <S.StyledOption value="MANAGER">관리자</S.StyledOption>
                   <S.StyledOption value="PARTICIPANT">참여자</S.StyledOption>
-                  <S.StyledOption value="EXPORT">내보내기</S.StyledOption>
+                  {myAuth === "MANAGER" ? (
+                    <S.StyledOption value="LEAVE">떠나기</S.StyledOption>
+                  ) : (
+                    <S.StyledOption value="EXPORT">내보내기</S.StyledOption>
+                  )}
                 </S.StyledSelect>
               </S.MemberBox>
             ))}
         </S.MemberContainer>
         {openModal && (
           <RoomModal
+            isOpen={true}
+            closeModal={() => setOpenModal(false)}
             deletefunction={() => deleteRoomMember(roomId, selectedUserId)}
             title1="해당 멤버를 정말 내보내시겠어요?"
             button2="내보내기"
+          />
+        )}
+        {openModal2 && (
+          <RoomModal
+            title1={`나의 권한은 ${
+              myAuth === "PARTICIPANT" ? "참여자" : "관리자"
+            }에요`}
+            title2="룸을 정말 떠나시겠어요?"
+            button2="떠나기"
+            isOpen={true}
+            closeModal={() => setOpenModal2(false)}
+            deletefunction={handleConfirmLeaveRoom}
           />
         )}
       </S.Contents>

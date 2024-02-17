@@ -21,7 +21,7 @@ export const AddEmojiButton = styled.div`
 
 export const EmojiList = styled.ul`
   display: flex;
-  gap: 4px;
+  gap: 6px;
   margin-top: 8px;
 
   li {

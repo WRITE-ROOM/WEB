@@ -1,22 +1,53 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as S from "./SearchBox.style";
 import { IoSearchOutline } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
 import { BsPersonFill } from "react-icons/bs";
+import { useSelector } from "react-redux";
 import { HiOutlineAdjustments } from "react-icons/hi";
 import SearchToggle from "../SearchToggle/SearchToggle";
 import SearchResult from "../SearchResult/SearchResult";
-import InfiniteScroll from "react-infinite-scroll"
+import InfiniteScroll from "react-infinite-scroll";
+import { setOpenSearchBox } from "../../redux/roomInfo";
+import axios from "axios";
+import { useDispatch } from "react-redux";
 const SearchBox = () => {
   const [isMemberToggleOpen, setIsMemberToggleOpen] = useState(false);
   const [isRangeToggleOpen, setIsRangeToggleOpen] = useState(false);
   const [search, setSearch] = useState("");
-  const [isData, setData] = useState([
-    "초기 데이터 1",
-    "초기 데이터 2",
-    "초기 데이터 3",
-    // 추가적인 초기 데이터를 필요한 만큼 추가할 수 있습니다.
-  ]);
+  const [isSearchType, setIsSearchType] = useState("title");
+  const dispatch = useDispatch();
+  const receivedToken = localStorage.getItem("token");
+
+  const openSearchBox = useSelector((state) => state.roomInfo.openSearchBox);
+
+  useEffect(() => {
+    const delayDebounceTimer = setTimeout(async () => {
+      try {
+        await getSearchData(search, isSearchType);
+      } catch (error) {
+        console.log(error);
+      }
+    }, 1000);
+
+    return () => clearTimeout(delayDebounceTimer);
+  }, [search, isSearchType]);
+
+  const getSearchData = async (searchWord, searchType) => {
+    try {
+      const response = await axios.get(
+        `/search/?searchWord=${searchWord}&${searchType}`,
+        {
+          headers: {
+            Authorization: `Bearer ${receivedToken}`,
+          },
+        }
+      );
+      console.log(response.data.result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const testMemberArray = [
     "박지환",
@@ -31,10 +62,6 @@ const SearchBox = () => {
   ];
   const searchRange = ["제목", "내용", "태그"];
 
-  const onChange = (event) => {
-    setSearch(event.target.value);
-  };
-
   const handleMemberToggle = () => {
     setIsMemberToggleOpen(!isMemberToggleOpen);
   };
@@ -42,80 +69,79 @@ const SearchBox = () => {
   const handleRangeToggle = () => {
     setIsRangeToggleOpen(!isRangeToggleOpen);
   };
-  const fetchMoreData = async () => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      const additionalData = ["새로운 제목1", "새로운 제목2"];
-      setData((prevData) => [...prevData, ...additionalData]);
-    } catch (error) {
-      console.error("error 났다!:", error);
-    }
+  const onChange = (e) => {
+    setSearch(e.target.value);
   };
 
   return (
-    <S.Background>
-      <S.Container>
-        <S.InputWrapper>
-          <S.IconWrapper>
-            <IoSearchOutline size="30" color="grey" />
-          </S.IconWrapper>
-          <input
-            type="text"
-            value={search}
-            onChange={onChange}
-            placeholder="태그나 노트를 검색해보세요"
-          />
-          <S.IconWrapper>
-            <IoClose size="30" color="grey" />
-          </S.IconWrapper>
-        </S.InputWrapper>
-        <S.Line />
-        <S.FilterWrapper>
-          <p>결과 0건</p>
-          <S.ButtonWrapper>
-            <SearchToggle
-              icon={<BsPersonFill />}
-              label="멤버"
-              onClick={handleMemberToggle}
-              isOpen={isMemberToggleOpen}
-              content={
-                <S.MemberBox>
-                  {testMemberArray.map((member, index) => (
-                    <div key={index}>{member}</div>
-                  ))}
-                </S.MemberBox>
-              }
+    openSearchBox && (
+      <S.Background>
+        <S.Container>
+          <S.InputWrapper>
+            <S.IconWrapper>
+              <IoSearchOutline size="30" color="grey" />
+            </S.IconWrapper>
+            <input
+              type="text"
+              value={search}
+              onChange={onChange}
+              placeholder="태그나 노트를 검색해보세요"
             />
-            <SearchToggle
-              icon={<HiOutlineAdjustments />}
-              label="검색범위"
-              onClick={handleRangeToggle}
-              isOpen={isRangeToggleOpen}
-              content={
-                <S.MemberBox>
-                  {searchRange.map((Range, index) => (
-                    <div key={index}>{Range}</div>
-                  ))}
-                </S.MemberBox>
-              }
-            />
-          </S.ButtonWrapper>
-        </S.FilterWrapper>
-        <S.ResultBox id="infiniteScrollTarget">
-
-          <InfiniteScroll
-            dataLength={isData.length}
-            next={fetchMoreData}
-            hasMore={true}
-            scrollableTarget="infiniteScrollTarget"
-          >
-            {isData.map((text, index) => (
-              <SearchResult text={text} key={index} />
-            ))}
-          </InfiniteScroll>
-        </S.ResultBox>
-      </S.Container>
-    </S.Background>
+            <S.IconWrapper>
+              <IoClose
+                size="30"
+                color="grey"
+                onClick={() => dispatch(setOpenSearchBox(false))}
+              />
+            </S.IconWrapper>
+          </S.InputWrapper>
+          <S.Line />
+          <S.FilterWrapper>
+            <p>결과 0건</p>
+            <S.ButtonWrapper>
+              <SearchToggle
+                icon={<BsPersonFill />}
+                label="멤버"
+                onClick={handleMemberToggle}
+                isOpen={isMemberToggleOpen}
+                content={
+                  <S.MemberBox>
+                    {testMemberArray.map((member, index) => (
+                      <div key={index}>{member}</div>
+                    ))}
+                  </S.MemberBox>
+                }
+              />
+              <SearchToggle
+                icon={<HiOutlineAdjustments />}
+                label="검색범위"
+                onClick={handleRangeToggle}
+                isOpen={isRangeToggleOpen}
+                content={
+                  <S.MemberBox>
+                    {searchRange.map((Range, index) => (
+                      <div key={index}>{Range}</div>
+                    ))}
+                  </S.MemberBox>
+                }
+              />
+            </S.ButtonWrapper>
+          </S.FilterWrapper>
+          <S.ResultBox id="infiniteScrollTarget">
+            {/* <InfiniteScroll
+              dataLength={isData.length}
+              next={fetchMoreData}
+              hasMore={true}
+              scrollableTarget="infiniteScrollTarget"
+            >
+              {isData.map((text, index) => (
+                <SearchResult text={text} key={index} />
+              ))}
+            </InfiniteScroll> */}
+          </S.ResultBox>
+        </S.Container>
+      </S.Background>
+    )
   );
 };
 
