@@ -19,6 +19,7 @@ export const roomInfo = createSlice({
     routineTargetCount: "",
     challengePercent: "",
     roomExplain: "",
+    isBookmarked: false,
     openSearchBox: false,
   },
   reducers: {
@@ -33,6 +34,7 @@ export const roomInfo = createSlice({
         totalElements,
         listSize,
         noteList,
+        isBookmarked
       } = action.payload;
 
       state.roomId = roomId;
@@ -44,6 +46,8 @@ export const roomInfo = createSlice({
       state.totalElements = totalElements;
       state.listSize = listSize;
       state.noteList = noteList;
+      state.isBookmarked = isBookmarked;
+
     },
     setRoomMember(state, action) {
       state.memberInfo = action.payload;
@@ -79,6 +83,7 @@ export const roomInfo = createSlice({
       state.routineTargetCount = "";
       state.challengePercent = "";
       state.roomExplain = "";
+      state.isBookmarked = false;
     },
   },
 });

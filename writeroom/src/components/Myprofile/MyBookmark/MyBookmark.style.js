@@ -70,6 +70,7 @@ export const Line = styled.div`
 `
 
 export const PagenationBox = styled.div`
+	margin-top: 10px;
 	.pagination {
 		width: 200px;
 		height: 30px;

@@ -3,20 +3,30 @@ import { FaRegBookmark } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa";
 import * as B from "./Bookmark.style";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { addNoteBookmark, deleteNoteBookmark, resetNoteBookmark, setNoteBookmark } from "../../redux/noteBookmark";
+import { useNavigate } from "react-router-dom";
 
-const Bookmark = ({ defaultColor, roomId, noteId, bookmarkId, myProfile }) => {
-  const [isBookmarked, setIsBookmarked] = useState(myProfile);
+const Bookmark = ({ defaultColor, roomId, noteId, bookmarkId, myProfile, IsNoteBookmark }) => {
 
-  const handleBookmark = () => {
-    setIsBookmarked(!isBookmarked);
-    if (!isBookmarked) {
+  const [isBookmarked, setIsBookmarked] = useState(IsNoteBookmark || myProfile); // 마이프로필에서 노트북마크 확인
+  const [noteBookmarkId, setNoteBookmarkId] = useState(bookmarkId)
+  const noteBookmark = useSelector((state) => state.noteBookmark); // 노트북마크 리덕스
+  const clickedBookmark = (noteBookmark.find((bookmark) => bookmark.noteId === noteId))
+
+  let dispatch = useDispatch();
+  let navigate = useNavigate();
+
+  const handleBookmark = () => { // 북마크 추가 / 삭제
+    if (isBookmarked === true|| noteBookmarkId !== undefined)
       postBookmark();
-    } else deleteBookmark(bookmarkId);
+    else deleteBookmark(noteId);
   };
 
   const accessToken = localStorage.getItem("token");
 
   const postBookmark = async () => {
+    setIsBookmarked(true);
     try {
       const res = await axios.post(
         `/notes/bookmark/${roomId}/${noteId}`,
@@ -27,44 +37,62 @@ const Bookmark = ({ defaultColor, roomId, noteId, bookmarkId, myProfile }) => {
           },
         }
       );
-      window.alert("북마크에 추가했어요.");
-      console.log(res.data);
+      const serverBookmarkId = res.data.result.noteBookmarkId;
+      const newBookmark = {
+        noteBookmarkId: serverBookmarkId,
+        noteId: noteId
+      }
+      dispatch(addNoteBookmark(newBookmark)); 
+      console.log('북마크에 추가 완료!! : ,', res.data)
+      window.alert('북마크에 추가했어요.');
+      // window.location.reload();
     } catch (error) {
+      if (error.response.data.code === "BOOKMARK4003")
+        window.alert('이미 북마크한 노트입니다.');
       console.log(error);
     }
   };
 
-  const deleteBookmark = async (bookmarkId) => {
-    console.log("클릭한 북마크 아이디: ", bookmarkId);
+  const deleteBookmark = async(noteId) => {
+    setIsBookmarked(false);
+    console.log(noteId);
+    setNoteBookmarkId(undefined)
     try {
-      const res = await axios.delete(`/notes/bookmark/delete/${bookmarkId}`, {
+      const res = await axios.delete(`/notes/bookmark/delete/${noteId}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
       if (res.status === 200) {
-        const data = res.data.result;
-        console.log(res.data);
+        dispatch(deleteNoteBookmark({noteId : noteId}));
+        console.log(noteBookmark)
+        console.log('노트 북마크 해제 완료!!', res.data);
         window.alert("북마크에서 해제했어요.");
       }
-    } catch (error) {
+    } catch (error) {  
       console.log(error);
     }
   };
 
-  return (
+  useEffect(() => {
+    setNoteBookmarkId(bookmarkId)
+  }, [noteBookmarkId])
+  return ( 
     <B.Container onClick={(e) => e.stopPropagation()}>
-      {isBookmarked ? (
+      {/* <button onClick={() => {console.log(isBookmarked)}}>임스버튼</button> */}
+      {isBookmarked === true
+      || noteBookmarkId !== undefined
+       ? (
         <FaBookmark
           size={18}
           color="rgba(181, 169, 148, 1)"
-          onClick={handleBookmark}
+          onClick={() => {deleteBookmark(noteId)}}
         />
       ) : (
         <B.NotBookMark
           size={18}
           // color={defaultColor ? defaultColor : "black"}
-          onClick={handleBookmark}
+          onClick={() => postBookmark()}
         />
       )}
     </B.Container>

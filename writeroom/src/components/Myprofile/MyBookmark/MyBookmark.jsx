@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import MyprofileSNB from '../MyprofileSNB/MyprofileSNB'
 import { useNavigate } from 'react-router-dom'
 import * as S from "../Account/Account.style"
@@ -7,7 +7,8 @@ import WordBookMark from './WordBookmark/WordBookmark'
 import NoteBookmark from './NoteBookmark/NoteBookmark'
 
 export default function MyBookmark() {
-  const [index, setIndex] = useState(0);
+  const localIndex = localStorage.getItem('tab')
+  const [index, setIndex] = useState(localIndex);
 
 	const tabArray=[
 	{
@@ -30,6 +31,16 @@ export default function MyBookmark() {
 	}
 ];
 	let navigate = useNavigate();
+
+
+  const ClickTab = (tabId) => {
+    setIndex(tabId);
+    window.localStorage.setItem("tab", tabId);
+  }
+
+  useEffect(() => {
+    setIndex(localIndex);
+  }, []);
   return (
     <div>
       <S.Container>
@@ -48,7 +59,7 @@ export default function MyBookmark() {
             {tabArray.map((item) => (
               <R.WordTab
                 key={item.tabId}
-                onClick={() => setIndex(item.tabId)}
+                onClick={() => ClickTab(item.tabId)}
                 isActive={index === item.tabId}
               >
                 {item.tabTitle}
