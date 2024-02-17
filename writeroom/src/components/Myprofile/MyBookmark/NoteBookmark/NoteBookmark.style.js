@@ -68,7 +68,7 @@ export const Date = styled.div`
 
 export const Right = styled.div`
   display: flex;
-  gap: 10px;
+  // gap: 10px;
   align-items: center;
 `;
 

@@ -42,7 +42,7 @@ const reducers = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["user", "noteBookmark"],
+  whitelist: ["user", "noteBookmark", "roomInfo"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

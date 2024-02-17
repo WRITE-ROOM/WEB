@@ -14,8 +14,7 @@ const Header = ({ themeMode, toggleDarkMode }) => {
   const openSearchBox = useSelector((state) => state.roomInfo.openSearchBox);
   console.log(openSearchBox);
   const dispatch = useDispatch();
-
-  console.log(profileImg);
+  
   return (
     <H.HeaderContainer>
       <a href="/main">
