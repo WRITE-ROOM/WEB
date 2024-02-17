@@ -59,7 +59,6 @@ const RoomRoutineBox = ({ text, description, range, toggle }) => {
         deadline: getFormattedDate(endDate),
       })
     );
-    console.log("c!!!!", c);
   }, [count, startDate, endDate, selectedMember]);
 
   return (

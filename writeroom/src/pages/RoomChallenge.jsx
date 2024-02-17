@@ -41,9 +41,11 @@ const RoomChallenge = () => {
       });
       const data = response.data.result;
       dispatch(setChallengeData(data));
-      console.log(response.data);
+      console.log("challengeGoal", response.data);
+      dispatch(setRoomSettingIsAmounting(true));
     } catch (error) {
       console.log(error);
+      dispatch(setRoomSettingIsAmounting(false));
     }
   };
   useEffect(() => {

@@ -18,7 +18,7 @@ const AddChallengeMember = () => {
   const accessToken = localStorage.getItem("token");
 
   const userList = useSelector((state) => state.userList);
-  console.log("i u ", userList);
+  console.log("userList ", userList);
 
   const [me, setMe] = useState(null);
   console.log("me", me);
@@ -49,14 +49,14 @@ const AddChallengeMember = () => {
   };
 
   const [selectedList, setSelectedList] = useState([]);
-  console.log(selectedList);
+  console.log("selectedList", selectedList);
 
   const selectMember = (userId, user) => {
     console.log(userId);
     dispatch(setSelectedMember(userId));
     setSelectedList([...selectedList, user]);
   };
-  console.log(selectedMember);
+  console.log("selectedMember", selectedMember);
 
   useEffect(() => {
     fetchUserList();
@@ -95,11 +95,15 @@ const AddChallengeMember = () => {
         {showUser && (
           <DropdownContainer $right="-70px">
             <ul>
-              {userList.map((user, index) => (
-                <li key={index} onClick={() => selectMember(user.userId, user)}>
-                  <p>{user.name}</p>
-                </li>
-              ))}
+              {userList &&
+                userList.map((user, index) => (
+                  <li
+                    key={index}
+                    onClick={() => selectMember(user.userId, user)}
+                  >
+                    <p>{user.name}</p>
+                  </li>
+                ))}
             </ul>
           </DropdownContainer>
         )}
