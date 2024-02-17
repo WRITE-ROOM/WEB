@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import  user from "./user";
+import user from "./user";
 import { room } from "./room";
 import tagSlice from "./tag";
 import selectModalSlice from "./selectModal";
@@ -34,6 +34,9 @@ const reducers = combineReducers({
   writeMode: writeModeSlice,
   roomInfo: roomInfoSlice,
   roomSettingInfo: roomSettingInfoSlice,
+  selectedMember: selectedMemberSlice,
+  userList: userListSlice,
+  challenge: challengeSlice,
 });
 
 const persistConfig = {

@@ -10,6 +10,7 @@ export const Background = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 100;
 `;
 
 export const Container = styled.div`
@@ -43,7 +44,6 @@ export const InputWrapper = styled.div`
 export const Line = styled.div`
   border-top: 1px solid;
   width: 100%;
-
 `;
 
 export const ResultBox = styled.div`
@@ -57,7 +57,6 @@ export const ResultBox = styled.div`
   padding-left: 60px;
   overflow-y: auto;
   max-height: 100%;
-
 `;
 export const FilterWrapper = styled.div`
   margin-top: 20px;
