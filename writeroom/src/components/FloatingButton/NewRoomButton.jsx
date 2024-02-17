@@ -17,11 +17,9 @@ const NewRoomButton = () => {
     setIsModalOpen(false);
   };
 
-  const handleButton = ()=>{
-    console.log("clicked");
+  const handleButton = () => {
     openModal();
-    console.log(isModalOpen);
-  }
+  };
 
   return (
     <div>
@@ -35,9 +33,8 @@ const NewRoomButton = () => {
 
         {isTooltipVisible && <ToolTip message="룸 생성하기" />}
       </FloatingButton>
-      {isModalOpen && <NewRoomModal onClose={closeModal}/>}
-        
-    </div> 
+      {isModalOpen && <NewRoomModal onClose={closeModal} />}
+    </div>
   );
 };
 

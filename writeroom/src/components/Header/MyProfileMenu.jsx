@@ -4,10 +4,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const MyProfileMenu = () => {
-
   let navigate = useNavigate();
 
-  const getLogout = async() => {
+  const getLogout = async () => {
     try {
       const res = await axios.get(`/auth/logout`);
       localStorage.clear();
@@ -15,7 +14,7 @@ const MyProfileMenu = () => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <DropdownContainer>

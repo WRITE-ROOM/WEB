@@ -127,8 +127,6 @@ const Write = () => {
           dispatch(setSelectedRoom({ roomTitle, roomId }));
         }
       });
-
-      console.log("룸 목록", rooms);
     } catch (error) {
       console.error(error);
     }
@@ -147,7 +145,6 @@ const Write = () => {
       // 해당 룸의 카테고리 리스트로 category redux 설정
       const categoryList = res.data.result.categoryList;
       dispatch(setCategory(categoryList));
-      console.log("categoryList", categoryList);
 
       categoryList.forEach((category) => {
         // !! 카테고리 수정은 불가능??
@@ -201,8 +198,6 @@ const Write = () => {
       } else {
         navigate(`/rooms/${selectedRoom.roomId}`);
       }
-
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -242,7 +237,6 @@ const Write = () => {
         },
       });
       navigate(`/rooms/${selectedRoom.roomId}/notes/${note.noteId}`);
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -255,7 +249,7 @@ const Write = () => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log(res.data);
+
       dispatch(setRoomSettingIsAmounting(true));
     } catch (error) {
       console.log(error);

@@ -27,7 +27,7 @@ export const RoomSetting = () => {
 
   const [changedRoomIntroduction, setRoomIntroduction] = useState("");
   const myAuth = roomSettingInfoSelector?.memberInfo?.authority;
-  console.log(myAuth);
+
   const [image, setImage] = useState(null);
   const [imageName, setImageName] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -109,7 +109,6 @@ export const RoomSetting = () => {
           Authorization: `Bearer ${receivedToken}`,
         },
       });
-      console.log(response.data.result);
       dispatch(setRoomSettingMember(response.data.result));
     } catch (error) {
       console.error("이건 getRoomMember 에러:", error);
@@ -139,7 +138,6 @@ export const RoomSetting = () => {
       const defaultImage = await fetch(WriteRoomImg).then((res) => res.blob());
       formData.append("roomImg", defaultImage, "WriteRoomImg.png");
     } else if (image === roomImg) {
-      console.log("룸 이미지 안 바꿈");
     } else {
       if (!isImageBlob(image)) {
         const decodedImage = await decodeImage(image);
@@ -167,7 +165,6 @@ export const RoomSetting = () => {
           },
         }
       );
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }

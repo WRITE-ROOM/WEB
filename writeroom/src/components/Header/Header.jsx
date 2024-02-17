@@ -12,8 +12,9 @@ const Header = ({ themeMode, toggleDarkMode }) => {
   const user = useSelector((state) => state.user);
   const profileImg = user.profileImg;
   const openSearchBox = useSelector((state) => state.roomInfo.openSearchBox);
+
   const dispatch = useDispatch();
-  
+
   return (
     <H.HeaderContainer>
       <a href="/main">

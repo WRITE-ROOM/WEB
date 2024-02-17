@@ -20,7 +20,6 @@ const RoomPage = () => {
     setIsRoomSNBOpen((prev) => !prev);
   };
 
-  
   return (
     <>
       <S.Wrapper>
@@ -34,7 +33,7 @@ const RoomPage = () => {
           <RecTopicClose onToggle={toggleSNB}> </RecTopicClose>
         )}
       </S.Wrapper>
-\      <NewNoteButton />
+      \ <NewNoteButton />
     </>
   );
 };

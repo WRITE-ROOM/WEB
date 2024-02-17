@@ -61,8 +61,6 @@ const EmojiContainer = ({ emojiCounts }) => {
     }
   };
 
-  console.log("added", addedEmoji);
-
   const accessToken = localStorage.getItem("token");
 
   const fetchEmoji = async () => {
@@ -73,7 +71,6 @@ const EmojiContainer = ({ emojiCounts }) => {
         },
       });
 
-      console.log("fetch", res.data);
       setAddedEmoji(res.data.result.emojiNum);
     } catch (error) {
       console.log(error);
@@ -91,9 +88,8 @@ const EmojiContainer = ({ emojiCounts }) => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log("Emoji Post ", res.data);
     } catch (error) {
-      console.log("post", error);
+      console.log(error);
     }
   };
 
@@ -106,9 +102,8 @@ const EmojiContainer = ({ emojiCounts }) => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log("Emoji update ", res.data);
     } catch (error) {
-      console.log("update ", error);
+      console.log(error);
     }
   };
 
@@ -119,7 +114,6 @@ const EmojiContainer = ({ emojiCounts }) => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log("delete ", res.data);
     } catch (error) {
       console.log(error);
     }

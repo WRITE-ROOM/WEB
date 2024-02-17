@@ -39,26 +39,9 @@ const SelectRoomModal = () => {
     );
     dispatch(resetSelectedCategory());
     dispatch(setCurrentModal("Category"));
-    // fetchCategoryList();
+
   };
 
-  // const fetchCategoryList = async () => {
-  //   try {
-  //     const res = await axios.get(`/categorys/category/${roomId}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${accessToken}`,
-  //       },
-  //     });
-
-  //     // 해당 룸의 카테고리 리스트로 category redux 설정
-  //     dispatch(setCategory(res.data.result.categoryList));
-
-  //     console.log(roomId);
-  //     console.log(res.data.result.categoryList);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const categoryList = useSelector((state) => state.category.categoryList);
 
