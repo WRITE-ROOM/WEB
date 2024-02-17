@@ -19,6 +19,7 @@ const initialState = {
   roomExplain: "",
   name: "",
   authority: "",
+  isAmounting: false,
 };
 
 export const roomSettingInfo = createSlice({
@@ -78,7 +79,9 @@ export const roomSettingInfo = createSlice({
     setRoomSettingExplain(state, action) {
       state.roomExplain = action.payload;
     },
-
+    setRoomSettingIsAmounting(state, action) {
+      state.isAmounting = action.payload;
+    },
     resetRoomSettingInfo() {
       return initialState;
     },
@@ -94,6 +97,7 @@ export const {
   setSettingChallengePercent,
   setRoomSettingTitle,
   setRoomSettingExplain,
+  setRoomSettingIsAmounting,
 } = roomSettingInfo.actions;
 
 export default roomSettingInfo.reducer;

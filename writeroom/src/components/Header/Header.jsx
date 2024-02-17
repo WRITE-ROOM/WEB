@@ -10,7 +10,6 @@ const Header = ({ themeMode, toggleDarkMode }) => {
   const [isMypageClicked, setMypageClicked] = useState(false);
   const user = useSelector((state) => state.user);
   const profileImg = user.profileImg;
-  console.log(profileImg)
   return (
     <H.HeaderContainer>
       <a href="/main">

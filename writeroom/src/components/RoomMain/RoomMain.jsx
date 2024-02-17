@@ -36,15 +36,15 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
           headers: {
             Authorization: `Bearer ${receivedToken}`,
           },
-        });
+        }); 
         dispatch(setRoomInfo(response.data.result));
-
         setCount(response.data.result.totalElements);
+        console.log(response.data)
       } catch (error) {
         console.error("getNoteList 에러:", error);
       }
     };
-
+ 
     getNoteList();
   }, []);
 

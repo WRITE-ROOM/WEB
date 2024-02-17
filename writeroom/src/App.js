@@ -49,17 +49,12 @@ function App() {
       window.localStorage.setItem("theme", "lightTheme");
     }
   };
-  
-  const isHeaderVisible = (path) => {
-    // /login 또는 /signup 경로인 경우에는 헤더를 숨깁니다.
-    return !['/login', '/signup'].includes(path);
-  };
 
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <div className="App">
-      {(currentPath !== '/login' && currentPath !== '/signup' && currentPath !== '/forgetPwd' && currentPath !== '/reset/pw/:status' && currentPath !== '/' ) && (
+      {(currentPath !== '/login' && currentPath !== '/signup' && currentPath !== '/forgetPwd' && currentPath !== '/reset/pw/:status' && currentPath !== '/' && currentPath !== '/oauth') && (
           <Header themeMode={themeMode} toggleDarkMode={toggleDarkMode} />
         )}
       

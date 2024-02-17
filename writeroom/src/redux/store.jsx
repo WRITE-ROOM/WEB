@@ -34,12 +34,15 @@ const reducers = combineReducers({
   writeMode: writeModeSlice,
   roomInfo: roomInfoSlice,
   roomSettingInfo: roomSettingInfoSlice,
+  selectedMember: selectedMemberSlice,
+  userList: userListSlice,
+  challenge: challengeSlice,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["user", "noteBookmark"],
+  whitelist: ["user", "noteBookmark", "roomInfo"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
