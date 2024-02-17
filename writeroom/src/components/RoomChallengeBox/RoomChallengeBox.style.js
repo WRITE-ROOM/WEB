@@ -19,11 +19,15 @@ export const Bar = styled.button`
   width: 33%;
   height: 100%;
   padding: 20px 0px;
-  color: ${props => props.isSelected ? props.theme.challengeTextColor : props.theme.challengeTextOtherColor};  
-  background-color: ${props => props.isSelected ? props.theme.SNBInfoColor : props.theme.TemplateColor};  
+  color: ${(props) =>
+    props.isSelected
+      ? props.theme.challengeTextColor
+      : props.theme.challengeTextOtherColor};
+  background-color: ${(props) =>
+    props.isSelected ? props.theme.SNBInfoColor : props.theme.TemplateColor};
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
-  box-shadow: 0px -5px 10px ${(props) => props.theme.shadowColor};;
+  box-shadow: 0px -5px 10px ${(props) => props.theme.shadowColor};
   display: flex;
   gap: 10px;
   border: none;
@@ -36,7 +40,7 @@ export const Bar = styled.button`
   }
 `;
 
-export const People = styled.div`
+export const UserWrapper = styled.div`
   padding-top: 10px;
   display: flex;
   gap: 10px;
@@ -64,4 +68,21 @@ export const GiveUpButton = styled.button`
   background: none;
   color: ${(props) => props.theme.accentColor};
   cursor: pointer;
+`;
+
+export const UserIcons = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  p {
+    font-size: 15px;
+  }
 `;

@@ -32,9 +32,6 @@ const RoomRoutineBox = ({ text, description, range, toggle }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
-  // const handlePlusCircleClick = () => {
-  //   setUserCircleCount((prevCount) => prevCount + 1);
-  // };
   const handleToggle = () => {
     setUseToggle(!useToggle);
   };
@@ -69,7 +66,7 @@ const RoomRoutineBox = ({ text, description, range, toggle }) => {
     <S.RoutineBox>
       <div>
         <h1>참여자</h1>
-        <AddChallengeMember></AddChallengeMember>
+        <AddChallengeMember />
         {/* <S.People>
           {userList.map((_, index) => (
             <HiMiniUserCircle key={index} color="gainsboro" size={40} />
@@ -122,7 +119,7 @@ const RoomRoutineBox = ({ text, description, range, toggle }) => {
               includeDateIntervals={[
                 {
                   start: subDays(startDate, 0),
-                  end: addDays(startDate, Number(range)),
+                  end: addDays(startDate, 6),
                 },
               ]}
             />
