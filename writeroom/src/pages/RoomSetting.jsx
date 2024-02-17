@@ -135,7 +135,10 @@ export const RoomSetting = () => {
   };
   const patchRoomInfo = async () => {
     const formData = new FormData();
+    console.log(image);
     if (image === null) {
+      // null인 경우에 기본 이미지 넣음
+      // 근데 텍스트만 수정한 경우에 이미지가 안들어감
       const defaultImage = await fetch(WriteRoomImg).then((res) => res.blob());
       formData.append("roomImg", defaultImage, "WriteRoomImg.png");
     } else if (image === roomImg) {
