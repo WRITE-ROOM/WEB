@@ -12,6 +12,7 @@ import {
   selectRoomSettingInfoState,
   setRoomSettingInfo,
   setRoomSettingMember,
+  setRoomSettingTitle,
 } from "../redux/roomSettingInfo";
 import { CiImageOn } from "react-icons/ci";
 import { createBrowserHistory } from "history";
@@ -25,7 +26,8 @@ export const RoomSetting = () => {
   const roomSettingInfoSelector = useSelector(selectRoomSettingInfoState);
 
   const [changedRoomIntroduction, setRoomIntroduction] = useState("");
-  const [roomName, setRoomName] = useState(roomSettingInfoSelector.roomTitle);
+
+  console.log(roomSettingInfoSelector);
   const [image, setImage] = useState(null);
   const [imageName, setImageName] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -50,9 +52,9 @@ export const RoomSetting = () => {
   const modalHandler = () => {
     setOpenModal(!openModal);
   };
-  const saveInput = () => {
-    patchRoomInfo();
-    getRoomInfo();
+  const saveInput = async () => {
+    await patchRoomInfo();
+    await getRoomInfo();
     setIsSave(true);
     navigate(`/rooms/${roomId}`);
     // window.location.reload();
@@ -136,7 +138,7 @@ export const RoomSetting = () => {
     formData.append(
       "request",
       JSON.stringify({
-        roomTitle: roomName,
+        roomTitle: roomSettingInfoSelector.roomTitle,
         roomIntroduction: changedRoomIntroduction,
       })
     );
@@ -207,8 +209,8 @@ export const RoomSetting = () => {
         {
           <RoomInputField
             label="룸 이름"
-            value={roomName}
-            onChange={setRoomName}
+            value={roomSettingInfoSelector.roomTitle}
+            onChange={(title) => dispatch(setRoomSettingTitle(title))}
             maxLength={50}
           />
         }

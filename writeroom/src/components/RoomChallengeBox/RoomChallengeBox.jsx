@@ -103,8 +103,8 @@ const RoomChallengeBox = () => {
               description="지금 나가시면 수정사항이 모두 삭제됩니다."
               button1="삭제하기"
               button2="저장하고 나가기"
-            />
-            <RoomModalSec
+            /> */}
+            {/* <RoomModalSec
               title1="해당 목표로 챌린지를 시작하시겠어요?"
               description="*최소 200자 이상 작성한 노트만 챌린지로 인정해요"
               description2="*챌린지 목표는 수정할 수 없어요!"

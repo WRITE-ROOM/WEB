@@ -3,9 +3,17 @@ import { IoClose } from "react-icons/io5";
 import { useNavigate, useParams } from "react-router-dom";
 import RoomModal from "../RoomModal/RoomModal";
 import { useState } from "react"; // Import useState hook
-import { set } from "date-fns";
+import RoomModalSec from "../RoomModalSec/RoomModalSec";
 
-const RoomSettingNavbar = ({ title, onSave, member, myAuth, leaveRoom }) => {
+const RoomSettingNavbar = ({
+  title,
+  onSave,
+  member,
+  myAuth,
+  leaveRoom,
+  challenge,
+  postChallenge,
+}) => {
   const handleSave = () => {
     onSave();
   };
@@ -14,7 +22,7 @@ const RoomSettingNavbar = ({ title, onSave, member, myAuth, leaveRoom }) => {
   const roomId = params.roomId;
   const [showModal, setShowModal] = useState(false); // State to control modal visibility
 
-  const handleLeaveRoom = () => {
+  const handleShowModal = () => {
     setShowModal(true);
   };
 
@@ -27,9 +35,33 @@ const RoomSettingNavbar = ({ title, onSave, member, myAuth, leaveRoom }) => {
     <S.Container>
       <h1>{title}</h1>
       <S.ButtonWrapper>
-        <S.SaveButton onClick={handleSave}>저장하기</S.SaveButton>
+        {challenge ? (
+          <S.SaveButton onClick={handleShowModal}>저장하기</S.SaveButton>
+        ) : (
+          <S.SaveButton onClick={handleSave}>저장하기</S.SaveButton>
+        )}
         <S.IconWrapper>
-          {member ? (
+          {challenge && (
+            <>
+              {showModal && (
+                <div>
+                  <RoomModalSec
+                    title1="해당 목표로 챌린지를 시작하시겠어요?"
+                    description="*최소 200자 이상 작성한 노트만 챌린지로 인정해요"
+                    description2="*챌린지 목표는 수정할 수 없어요!"
+                    button1="삭제하기"
+                    button2="시작하기"
+                    isOpen={true}
+                    onClick1={closeModal}
+                    closeModal={closeModal}
+                    onClick2={postChallenge}
+                  />
+                </div>
+              )}
+              <IoClose size={40} onClick={handleShowModal} />
+            </>
+          )}
+          {member && (
             <>
               {showModal && (
                 <div>
@@ -45,9 +77,10 @@ const RoomSettingNavbar = ({ title, onSave, member, myAuth, leaveRoom }) => {
                   />
                 </div>
               )}
-              <IoClose size={40} onClick={handleLeaveRoom} />
+              <IoClose size={40} onClick={handleShowModal} />
             </>
-          ) : (
+          )}
+          {!challenge && !member && (
             <IoClose
               size={40}
               onClick={() => {
