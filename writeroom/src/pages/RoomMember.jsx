@@ -100,7 +100,7 @@ const RoomMember = () => {
       console.error("deleteRoomMember 에러:", error);
     }
   };
-  const leaveRoom = async (outUserId) => {
+  const leaveRoom = async () => {
     try {
       const response = await axios.delete(`/rooms/${roomId}`, {
         headers: {

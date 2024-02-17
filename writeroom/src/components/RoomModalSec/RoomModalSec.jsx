@@ -1,5 +1,4 @@
 import * as S from "./RoomModalSec.style";
-import { useState } from "react";
 
 const RoomModalSec = ({
   title1,
