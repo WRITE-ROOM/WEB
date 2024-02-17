@@ -33,6 +33,8 @@ const RoomSNB = ({ isOpen, handleRoomSNB }) => {
     (state) => state.category.categoryList
   );
 
+  const [allNoteCount, setAllNoteCount] = useState();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -76,6 +78,7 @@ const RoomSNB = ({ isOpen, handleRoomSNB }) => {
         },
       });
       dispatch(setCategory(response.data.result));
+      setAllNoteCount(response.data.result.allCountNote)
     } catch (error) {
       console.error("이건 getNoteCount 에러:", error);
     }
@@ -156,7 +159,7 @@ const RoomSNB = ({ isOpen, handleRoomSNB }) => {
             <InviteModal
               isOpen={isModalOpen}
               onClose={handleModalClose}
-              roomIndex={roomId}
+              roomId={roomId}
             />
           </S.BasicBox>
           <S.BasicBox>
@@ -183,7 +186,7 @@ const RoomSNB = ({ isOpen, handleRoomSNB }) => {
           </S.BasicBox>
           <S.BasicBox>
             <S.TitleBox>
-              <h2>카테고리</h2>
+              <h2>카테고리({allNoteCount})</h2>
               <S.IconsBox>
                 <S.ToolTipWrapper>
                   <UseToolTip message="카테고리 관리">

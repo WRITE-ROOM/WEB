@@ -42,7 +42,7 @@ function App() {
   const location = useLocation(); // useLocation 훅을 사용하여 현재 경로를 동적으로 감지
   const currentPath = location.pathname;
 
-  const localThemeMode = window.localStorage.getItem("theme" || "lightTheme");
+  const localThemeMode = window.localStorage.getItem("theme") || "lightTheme";
   const [themeMode, setThemeMode] = useState(localThemeMode);
   const theme = themeMode === "lightTheme" ? lightTheme : darkTheme;
 

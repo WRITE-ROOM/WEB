@@ -44,7 +44,6 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
 
         dispatch(setRoomInfo(response.data.result));
         setCount(response.data.result.totalElements);
-        console.log(response.data)
       } catch (error) {
         console.error("getNoteList 에러:", error);
       }
