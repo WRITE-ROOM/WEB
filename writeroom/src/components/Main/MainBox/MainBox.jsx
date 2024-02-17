@@ -107,6 +107,7 @@ export default function MainBox() {
   // }
     
   useEffect(() => {
+    window.scroll(0,0)
     fetchRoomList();
   }, [page]);
 
@@ -125,7 +126,7 @@ export default function MainBox() {
             </S.Room>
           ))}
         </S.Container>
-        <NewNoteButton /> <NewRoomButton />
+        <NewNoteButton /><NewRoomButton />
         {isSNBOpen ? (
           <RecTopic onToggle={toggleSNB}></RecTopic>
         ) : (

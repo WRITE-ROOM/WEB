@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   width: 34px;
   height: 20px;
-  padding: 4px;
+  padding: 4px 6px;
 
   background-color: #f2f2f2;
   border-radius: 10px;
@@ -21,8 +21,5 @@ export const Container = styled.div`
 
   p {
     margin: none;
-  }
-
-  &.added {
   }
 `;

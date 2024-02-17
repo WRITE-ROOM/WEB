@@ -33,16 +33,6 @@ export const Template = styled.div`
   position: relative;
 `;
 
-export const SpellCheck = styled.div`
-  font-weight: 300;
-  display: flex;
-  align-items: center;
-
-  p {
-    cursor: pointer;
-    text-decoration: underline;
-  }
-`;
 
 export const Center = styled.div`
   width: 33%;
@@ -173,7 +163,7 @@ export const StyledButton = styled.button`
       ? "rgba(181, 169, 148, 1)"
       : props.theme.TemplateColor};
 
-  color: ${(props) => props.theme.textColor};
+  color: ${(props) => props.$color ? "white" : props.theme.textColor};
 
   font-size: ${(props) => (props.fontSize ? props.fontSize : "16px")};
   font-weight: ${(props) => (props.fontWeight ? props.fontWeight : "500")};

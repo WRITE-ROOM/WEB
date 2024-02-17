@@ -14,6 +14,9 @@ const RoomSettingNavbar = ({
   challenge,
   postChallenge,
 }) => {
+
+
+
   const handleSave = () => {
     onSave();
   };
@@ -30,7 +33,9 @@ const RoomSettingNavbar = ({
   };
 
   const postChallengeFunction = () => {
+    closeModal();
     postChallenge();
+    window.location.reload();
   };
   const handleConfirmLeaveRoom = () => {
     leaveRoom();

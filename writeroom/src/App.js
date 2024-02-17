@@ -56,16 +56,12 @@ function App() {
     }
   };
 
-  const isHeaderVisible = (path) => {
-    // /login 또는 /signup 경로인 경우에는 헤더를 숨깁니다.
-    return !["/login", "/signup"].includes(path);
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
 
       <div className="App">
+
         {currentPath === "/rooms" && <SearchBox />}
         {currentPath !== "/login" &&
           currentPath !== "/signup" &&

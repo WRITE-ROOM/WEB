@@ -32,6 +32,7 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
   useEffect(() => {
     const getNoteList = async () => {
       try {
+
         const response = await axios.get(
           `/rooms/${roomId}/list?page=${page - 1}`,
           {
@@ -40,14 +41,15 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
             },
           }
         );
-        dispatch(setRoomInfo(response.data.result));
 
+        dispatch(setRoomInfo(response.data.result));
         setCount(response.data.result.totalElements);
+        console.log(response.data)
       } catch (error) {
         console.error("getNoteList 에러:", error);
       }
     };
-
+ 
     getNoteList();
   }, [page]);
 

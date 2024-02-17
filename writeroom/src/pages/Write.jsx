@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useInsertionEffect } from "react";
 import * as W from "./Write.style";
 import { FiTrash, FiImage } from "react-icons/fi";
 
@@ -22,8 +22,11 @@ import { resetRoom, setRoom } from "../redux/room";
 import { setNoteCoverImg } from "../redux/note";
 import { setCategory } from "../redux/category";
 import { useNavigate } from "react-router-dom";
-import whiteImg from "../assets/whiteImg.png";
 import axios from "axios";
+import { writeMode } from "../redux/writeMode.jsx";
+import userEvent from "@testing-library/user-event";
+import { setRoomSettingIsAmounting } from "../redux/roomSettingInfo.jsx";
+import { IoMdSkipForward } from "react-icons/io";
 
 const Write = () => {
   const dispatch = useDispatch();
@@ -63,6 +66,7 @@ const Write = () => {
 
   // 챌린지 팝업
   const [challengeAchieved, setChallengeAchieved] = useState(false);
+  const isAmounting = useSelector((state) => state.roomSettingInfo.isAmounting);
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -98,8 +102,6 @@ const Write = () => {
   };
 
   const accessToken = localStorage.getItem("token");
-  // const accessToken =
-  // "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo";
 
   const fetchRoomList = async () => {
     try {
@@ -125,8 +127,6 @@ const Write = () => {
           dispatch(setSelectedRoom({ roomTitle, roomId }));
         }
       });
-
-      console.log("룸 목록", rooms);
     } catch (error) {
       console.error(error);
     }
@@ -145,7 +145,6 @@ const Write = () => {
       // 해당 룸의 카테고리 리스트로 category redux 설정
       const categoryList = res.data.result.categoryList;
       dispatch(setCategory(categoryList));
-      console.log("categoryList", categoryList);
 
       categoryList.forEach((category) => {
         // !! 카테고리 수정은 불가능??
@@ -193,33 +192,21 @@ const Write = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      navigate(`/rooms/${selectedRoom.roomId}`);
-      console.log(res.data);
+
+      if (count > 200 && isAmounting) {
+        setChallengeAchieved(true);
+      } else {
+        navigate(`/rooms/${selectedRoom.roomId}`);
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
+  // 챌린지 ㅇ/ 달성 ㄴ
+
   const putNote = async () => {
     const formData = new FormData();
-
-    // if (image) {
-    //   if (imageChanged) {
-    //     const decodedImage = await decodeImage(image);
-    //     const imageExtension = imageName.split(".").pop();
-    //     const blobImage = new Blob([decodedImage], {
-    //       type: `image/${imageExtension}`,
-    //     });
-    //     formData.append("noteImg", blobImage, imageName);
-    //   } else {
-    //     setImageName("lastImage");
-    //     // const imageExtension = imageName.split(".").pop();
-    //     const blobImage = new Blob([image], {
-    //       type: `image/${imageName}`,
-    //     });
-    //     formData.append("noteImg", blobImage, imageName);
-    //   }
-    // }
 
     if (image && imageChanged) {
       const decodedImage = await decodeImage(image);
@@ -250,7 +237,20 @@ const Write = () => {
         },
       });
       navigate(`/rooms/${selectedRoom.roomId}/notes/${note.noteId}`);
-      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchChallenge = async () => {
+    try {
+      const res = await axios.get(`/challenge-goals/${roomId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      dispatch(setRoomSettingIsAmounting(true));
     } catch (error) {
       console.log(error);
     }
@@ -263,6 +263,7 @@ const Write = () => {
 
   useEffect(() => {
     dispatch(setCurrentModal(null));
+    dispatch(setRoomSettingIsAmounting(false));
   }, []);
 
   useEffect(() => {
@@ -276,9 +277,14 @@ const Write = () => {
     fetchData();
   }, [roomId, currentModal]);
 
+  useEffect(() => {
+    if (roomId) {
+      fetchChallenge();
+    }
+  }, [roomId]);
+
   const saveNote = () => {
     postNote();
-    // setChallengeAchieved(true);
   };
 
   const updateNote = () => {
@@ -401,7 +407,9 @@ const Write = () => {
 
         <WriteFooter />
 
-        {challengeAchieved && <ChallengeAchieved />}
+        {challengeAchieved && isAmounting && (
+          <ChallengeAchieved roomId={roomId} />
+        )}
       </W.Container>
 
       {isSNBOpen ? (

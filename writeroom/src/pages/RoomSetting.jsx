@@ -27,6 +27,7 @@ export const RoomSetting = () => {
 
   const [changedRoomIntroduction, setRoomIntroduction] = useState("");
   const myAuth = roomSettingInfoSelector?.memberInfo?.authority;
+  
   const [image, setImage] = useState(null);
   const [imageName, setImageName] = useState(null);
   const [openModal, setOpenModal] = useState(false);

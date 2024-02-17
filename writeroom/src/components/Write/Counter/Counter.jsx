@@ -9,11 +9,6 @@ const Counter = ({ content, count, setCount }) => {
     const doc = new DOMParser().parseFromString(html, "text/html");
     const textContent = doc.body.textContent || "";
 
-    // 줄바꿈
-    // const doc = html.replace(/<\/[^>]+>/g, "\n");
-    // const text = new DOMParser().parseFromString(doc, "text/html");
-    // const textContent = text.body.textContent || "";
-
     return textContent;
   };
 

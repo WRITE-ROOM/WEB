@@ -10,6 +10,8 @@ import { GoPlusCircle } from "react-icons/go";
 import { DropdownContainer } from "../Header/Dropdown.style";
 import * as A from "./AddChallengeMember.style";
 import { setSelectedMember } from "../../redux/selectedMember";
+import MyprofileImg from "../../assets/myProfile.png"
+
 
 const AddChallengeMember = () => {
   const dispatch = useDispatch();
@@ -18,6 +20,10 @@ const AddChallengeMember = () => {
   const accessToken = localStorage.getItem("token");
 
   const userList = useSelector((state) => state.userList);
+
+
+  const user = useSelector((state) => state.user);
+
 
   const [me, setMe] = useState(null);
 
@@ -33,6 +39,7 @@ const AddChallengeMember = () => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
+
       dispatch(setUserList(res.data.result.userRoomLists));
       setMe(
         res.data.result.userRoomLists.find(
@@ -52,8 +59,11 @@ const AddChallengeMember = () => {
   };
 
   useEffect(() => {
-    fetchUserList();
     dispatch(setSelectedMember(parseInt(userId)));
+  }, []);
+
+  useEffect(() => {
+    fetchUserList();
   }, [roomId]);
 
   return (
@@ -61,7 +71,7 @@ const AddChallengeMember = () => {
       <A.MemberList>
         {me && (
           <A.User>
-            <img className="profileImg" src={me.profileImg} alt="" />
+            <img className="profileImg" src={me.profileImg === null ? MyprofileImg : me.profileImg} alt="" />
             <p>{me.name}</p>
           </A.User>
         )}
@@ -88,11 +98,15 @@ const AddChallengeMember = () => {
         {showUser && (
           <DropdownContainer $right="-70px">
             <ul>
-              {userList.map((user, index) => (
-                <li key={index} onClick={() => selectMember(user.userId, user)}>
-                  <p>{user.name}</p>
-                </li>
-              ))}
+              {userList &&
+                userList.map((user, index) => (
+                  <li
+                    key={index}
+                    onClick={() => selectMember(user.userId, user)}
+                  >
+                    <p>{user.name}</p>
+                  </li>
+                ))}
             </ul>
           </DropdownContainer>
         )}
