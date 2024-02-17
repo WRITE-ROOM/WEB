@@ -26,14 +26,14 @@ export const RoomSetting = () => {
   const roomSettingInfoSelector = useSelector(selectRoomSettingInfoState);
 
   const [changedRoomIntroduction, setRoomIntroduction] = useState("");
-
+  const myAuth = roomSettingInfoSelector?.memberInfo?.authority;
+  console.log(myAuth);
   const [image, setImage] = useState(null);
   const [imageName, setImageName] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [openModal2, setOpenModal2] = useState(false);
   const [isSave, setIsSave] = useState(false);
   const [imageSrc, setImageSrc] = useState("");
-  const [showModal, setShowModal] = useState(false);
 
   const receivedToken = localStorage.getItem("token");
   const params = useParams();
@@ -50,7 +50,7 @@ export const RoomSetting = () => {
   };
   const roomImg = roomSettingInfoSelector.roomImg;
   const modalHandler = () => {
-    setOpenModal(!openModal);
+    setOpenModal(true);
   };
   const saveInput = async () => {
     await patchRoomInfo();
@@ -102,6 +102,20 @@ export const RoomSetting = () => {
     }
   };
 
+  const getRoomMemberList = async () => {
+    try {
+      const response = await axios.get(`/rooms/${roomId}/userRoom`, {
+        headers: {
+          Authorization: `Bearer ${receivedToken}`,
+        },
+      });
+      console.log(response.data.result);
+      dispatch(setRoomSettingMember(response.data.result));
+    } catch (error) {
+      console.error("이건 getRoomMember 에러:", error);
+    }
+  };
+
   const deleteRoom = async () => {
     try {
       await axios.delete(`/rooms/delete/${roomId}`, {
@@ -112,6 +126,7 @@ export const RoomSetting = () => {
       navigate("/main");
     } catch (error) {
       console.error("roomDelete 에러:", error);
+      console.log(error);
     }
   };
 
@@ -173,6 +188,7 @@ export const RoomSetting = () => {
 
   useEffect(() => {
     getRoomInfo();
+    getRoomMemberList();
   }, []);
   return (
     <S.Wrapper>
@@ -221,14 +237,16 @@ export const RoomSetting = () => {
           maxLength={160}
           placeholder="룸 설명을 입력해주세요"
         />
-        <S.DeleteButton onClick={modalHandler}>룸 삭제</S.DeleteButton>
+        {myAuth === "MANAGER" && (
+          <S.DeleteButton onClick={modalHandler}>룸 삭제</S.DeleteButton>
+        )}
         {openModal && (
           <RoomModal
             title1="내가 관리하고 있는 룸이에요."
             title2="정말 룸을 삭제하시겠어요?"
             button2="삭제"
             isOpen={true}
-            closeModal={() => setShowModal(false)}
+            closeModal={() => setOpenModal(false)}
             deletefunction={deleteRoom}
           />
         )}
@@ -238,6 +256,7 @@ export const RoomSetting = () => {
             description="지금 나가면 수정사항이 모두 삭제됩니다."
             button1="삭제하기"
             button2="저장하고 나가기"
+            isOpen={true}
             onClick1={() => navigate(`/rooms/${roomId}`)}
             onClick2={() => saveModalButton()}
           />

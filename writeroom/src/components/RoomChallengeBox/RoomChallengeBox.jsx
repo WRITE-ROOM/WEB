@@ -16,7 +16,7 @@ const RoomChallengeBox = () => {
   const [isMaking, setIsMaking] = useState(false);
   const [isAmount, setIsAmount] = useState(false);
   // 상단 bar 상태임
-  const isAmounting = useSelector((state) => state.isAmounting);
+  const isAmounting = useSelector((state) => state.roomSettingInfo.isAmounting);
   console.log(isAmounting);
   const [isMyChallenge, setIsMyChallenge] = useState(false);
   const [isChallenging, setIsChallenging] = useState(false);
