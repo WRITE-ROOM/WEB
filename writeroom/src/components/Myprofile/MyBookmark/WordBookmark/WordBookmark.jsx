@@ -46,8 +46,6 @@ export default function WordBookMark() {
       setCount(data.totalElements);
       setTotalPage(data.totalPage); 
 
-      console.log('현재 북마크된 단어 : ', wordBookmark) 
-      console.log(data);
     } catch (error) {
         console.error(error);
     }
@@ -71,7 +69,6 @@ export default function WordBookMark() {
           content: word
         }
         dispatch(addWordBookmark(newBookmark)); 
-        console.log('북마크에 추가 완료!! : ,', res.data)
         window.alert('북마크에 추가했어요.');
       }
     } catch (error) {
@@ -79,10 +76,8 @@ export default function WordBookMark() {
     }
   }
   const DeleteBookmark = async(word) => {
-    console.log('클릭한 단어: ', word)
     const clickedBookmark = wordBookmark.find((bookmark) => bookmark.content === word);
     const bookmarkId = clickedBookmark.id;
-    console.log('클릭한 단어의 id: ', bookmarkId)
     try {
       const res = await axios.delete(`/bookmarks/topics/${bookmarkId}`, {
         headers: {

@@ -15,15 +15,15 @@ export default function LoginSocial() {
 
   return (
 		<S.Container>
-			<button> 
+			{/* <button> 
 				<S.SocialImg src={Google} alt="google"/>
-			</button>
+			</button> */}
 			<button onClick={handleKakaoLogin}>
 				<S.SocialImg src={Kakao} alt="kakao"/>
 			</button>
-			<button>
+			{/* <button>
 				<S.SocialImg src={Naver} alt="naver"/>
-			</button>
+			</button> */}
 		</S.Container>
 	)
 }

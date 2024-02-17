@@ -43,7 +43,6 @@ const Bookmark = ({ defaultColor, roomId, noteId, bookmarkId, myProfile, IsNoteB
         noteId: noteId
       }
       dispatch(addNoteBookmark(newBookmark)); 
-      console.log('북마크에 추가 완료!! : ,', res.data)
       window.alert('북마크에 추가했어요.');
       // window.location.reload();
     } catch (error) {
@@ -55,7 +54,6 @@ const Bookmark = ({ defaultColor, roomId, noteId, bookmarkId, myProfile, IsNoteB
 
   const deleteBookmark = async(noteId) => {
     setIsBookmarked(false);
-    console.log(noteId);
     setNoteBookmarkId(undefined)
     try {
       const res = await axios.delete(`/notes/bookmark/delete/${noteId}`, {
@@ -65,8 +63,6 @@ const Bookmark = ({ defaultColor, roomId, noteId, bookmarkId, myProfile, IsNoteB
       });
       if (res.status === 200) {
         dispatch(deleteNoteBookmark({noteId : noteId}));
-        console.log(noteBookmark)
-        console.log('노트 북마크 해제 완료!!', res.data);
         window.alert("북마크에서 해제했어요.");
       }
     } catch (error) {  
@@ -79,7 +75,6 @@ const Bookmark = ({ defaultColor, roomId, noteId, bookmarkId, myProfile, IsNoteB
   }, [noteBookmarkId])
   return ( 
     <B.Container onClick={(e) => e.stopPropagation()}>
-      {/* <button onClick={() => {console.log(isBookmarked)}}>임스버튼</button> */}
       {isBookmarked === true
       || noteBookmarkId !== undefined
        ? (
