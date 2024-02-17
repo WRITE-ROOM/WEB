@@ -168,12 +168,12 @@ export default function NoteBookmark() {
               ) : (
                 <W.NotBookMark onClick={() => {toggleBookmark({index: index, roomId: bookmark.roomId, noteId: bookmark.noteId})}}/>
               )}
-              <Setting
+              {/* <Setting
                 type="dots"
                 note={note}
                 roomId={parseInt(bookmark.roomId)}
                 categoryName={note.categoryContent}
-              />
+              /> */}
             </S.Right>
           </S.Top>
   

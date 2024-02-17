@@ -19,10 +19,18 @@ export const CategoryToggle = ({ name, countNote, room, categoryId }) => {
     dispatch(writeMode());
     navigate("/Write");
   };
+
+  const truncateName= (name) => {
+    const maxLength = 10;
+    return name.length > maxLength
+      ? name.substring(0, maxLength) + "..."
+      : name;
+  };
+
   return (
     <S.CategoryToggle>
       <S.InfoWrapper>
-        <h2>{name}</h2>
+        <h2>{truncateName(name)}</h2>
         <p>({countNote})</p>
       </S.InfoWrapper>
       <S.IconWrapper onClick={handleCategoryClick}>
