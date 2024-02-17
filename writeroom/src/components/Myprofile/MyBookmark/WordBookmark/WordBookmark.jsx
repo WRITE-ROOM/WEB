@@ -121,7 +121,7 @@ export default function WordBookMark() {
             <S.RecWord key={index}>
               <p>{word.content}</p> 
               {isBookmarked[sectionIndex * 13 + index] ? (
-                <FaBookmark color="rgba(181, 169, 148, 1)" onClick={() => toggleBookmark({index: sectionIndex * 13 + index, word: word.content})}/>
+                <S.IsBookMark onClick={() => toggleBookmark({index: sectionIndex * 13 + index, word: word.content})}/>
               ) : (
                 <S.NotBookMark onClick={() => toggleBookmark({index: sectionIndex * 13 + index, word: word.content})}/>
               )}

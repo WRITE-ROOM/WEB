@@ -84,7 +84,8 @@ const ImageRoomNoteBox = ({
             <Bookmark
               roomId={roomId}
               noteId={note.noteId}
-              defaultColor="black"
+              IsNoteBookmark={note.isbookmarked}
+              // defaultColor="black"
             />
             <Setting
               type="dots"
