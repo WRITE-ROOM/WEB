@@ -19,7 +19,7 @@ import {
   setSelectedRoom,
 } from "../redux/selectModal";
 import { resetRoom, setRoom } from "../redux/room";
-import { setNoteCoverImg } from "../redux/note";
+import { setNoteCoverImg, setNoteTitle } from "../redux/note";
 import { setCategory } from "../redux/category";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -413,7 +413,7 @@ const Write = () => {
       </W.Container>
 
       {isSNBOpen ? (
-        <RecTopic onToggle={toggleSNB}></RecTopic>
+        <RecTopic onToggle={toggleSNB} setTitle={setTitle}></RecTopic>
       ) : (
         <RecTopicClose onToggle={toggleSNB}> </RecTopicClose>
       )}
