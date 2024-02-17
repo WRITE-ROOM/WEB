@@ -1,4 +1,9 @@
-import { Routes, Route, unstable_HistoryRouter, useLocation } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  unstable_HistoryRouter,
+  useLocation,
+} from "react-router-dom";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import ForgetPwdPage from "./pages/ForgetPwdPage.jsx";
@@ -20,9 +25,10 @@ import MyBookmarkPage from "./pages/MyBookmarkPage.jsx";
 import ResetPwdPage from "./pages/ResetPwdPage.jsx";
 import MyprofileNone from "./pages/MyprofileNone.jsx";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
-import { useEffect, useState } from "react";
-import { darkTheme, lightTheme } from './theme.jsx';
+import { useState } from "react";
+import { darkTheme, lightTheme } from "./theme.jsx";
 import StartPage from "./pages/StartPage/StartPage.jsx";
+import SearchBox from "./components/SearchBox/SearchBox.jsx";
 
 const GlobalStyle = createGlobalStyle`
   body {        
@@ -49,20 +55,24 @@ function App() {
       window.localStorage.setItem("theme", "lightTheme");
     }
   };
-  
+
   const isHeaderVisible = (path) => {
     // /login 또는 /signup 경로인 경우에는 헤더를 숨깁니다.
-    return !['/login', '/signup'].includes(path);
+    return !["/login", "/signup"].includes(path);
   };
 
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
+      <SearchBox />
       <div className="App">
-      {(currentPath !== '/login' && currentPath !== '/signup' && currentPath !== '/forgetPwd' && currentPath !== '/reset/pw/:status' && currentPath !== '/' ) && (
-          <Header themeMode={themeMode} toggleDarkMode={toggleDarkMode} />
-        )}
-      
+        {currentPath !== "/login" &&
+          currentPath !== "/signup" &&
+          currentPath !== "/forgetPwd" &&
+          currentPath !== "/reset/pw/:status" &&
+          currentPath !== "/" && (
+            <Header themeMode={themeMode} toggleDarkMode={toggleDarkMode} />
+          )}
         <Routes>
           <Route path="/" element={<StartPage />} />
 

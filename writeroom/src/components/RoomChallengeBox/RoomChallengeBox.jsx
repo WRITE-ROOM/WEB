@@ -20,7 +20,6 @@ const RoomChallengeBox = () => {
   // const isAmounting = useSelector((state) => state.roomSettingInfo.isAmounting);
   const isAmounting = true; // 테스트용임
 
-  const [openModal, setOpenModal] = useState(false);
   const [isMyChallenge, setIsMyChallenge] = useState(false);
   const [isChallenging, setIsChallenging] = useState(false);
   const [isSelectedIndex, setIsSelectedIndex] = useState(null);

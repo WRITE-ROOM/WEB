@@ -19,6 +19,7 @@ export const roomInfo = createSlice({
     routineTargetCount: "",
     challengePercent: "",
     roomExplain: "",
+    openSearchBox: false,
   },
   reducers: {
     setRoomInfo(state, action) {
@@ -32,7 +33,6 @@ export const roomInfo = createSlice({
         totalElements,
         listSize,
         noteList,
-
       } = action.payload;
 
       state.roomId = roomId;
@@ -44,7 +44,6 @@ export const roomInfo = createSlice({
       state.totalElements = totalElements;
       state.listSize = listSize;
       state.noteList = noteList;
-
     },
     setRoomMember(state, action) {
       state.memberInfo = action.payload;
@@ -58,6 +57,9 @@ export const roomInfo = createSlice({
     },
     setRoomExplain(state, action) {
       state.setRoomExplain = action.payload;
+    },
+    setOpenSearchBox(state, acton) {
+      state.openSearchBox = acton.payload;
     },
 
     resetRoomInfo(state) {
@@ -83,7 +85,6 @@ export const roomInfo = createSlice({
 
 export const selectRoomInfoState = (state) => state.roomInfo;
 
-
 export const {
   setRoomInfo,
   resetRoomInfo,
@@ -91,6 +92,7 @@ export const {
   setChallengePercent,
   setRoomTitle,
   setRoomExplain,
+  setOpenSearchBox,
 } = roomInfo.actions;
 
 export default roomInfo.reducer;
