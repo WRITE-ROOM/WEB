@@ -59,11 +59,17 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <SearchBox />
+
       <div className="App">
-      {(currentPath !== '/login' && currentPath !== '/signup' && currentPath !== '/forgetPwd' && currentPath !== '/reset/pw/:status' && currentPath !== '/' && currentPath !== '/oauth') && (
-          <Header themeMode={themeMode} toggleDarkMode={toggleDarkMode} />
-        )}
+
+        {currentPath === "/rooms" && <SearchBox />}
+        {currentPath !== "/login" &&
+          currentPath !== "/signup" &&
+          currentPath !== "/forgetPwd" &&
+          currentPath !== "/reset/pw/:status" &&
+          currentPath !== "/" && (
+            <Header themeMode={themeMode} toggleDarkMode={toggleDarkMode} />
+          )}
         <Routes>
           <Route path="/" element={<StartPage />} />
 

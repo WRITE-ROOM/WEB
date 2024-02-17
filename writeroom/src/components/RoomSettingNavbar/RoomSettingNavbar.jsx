@@ -45,10 +45,14 @@ const RoomSettingNavbar = ({
     <S.Container>
       <h1>{title}</h1>
       <S.ButtonWrapper>
-        {challenge ? (
-          <S.SaveButton onClick={handleShowModal}>저장하기</S.SaveButton>
-        ) : (
-          <S.SaveButton onClick={handleSave}>저장하기</S.SaveButton>
+        {!member && (
+          <>
+            {challenge ? (
+              <S.SaveButton onClick={handleShowModal}>저장하기</S.SaveButton>
+            ) : (
+              <S.SaveButton onClick={handleSave}>저장하기</S.SaveButton>
+            )}
+          </>
         )}
         <S.IconWrapper>
           {challenge && (

@@ -17,5 +17,5 @@ export const StyledButton = styled.button`
 
 export const EditDropdownContainer = styled.div`
   position: absolute;
-  margin-top: 130px;
+  top: 14px;
 `;

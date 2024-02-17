@@ -1,20 +1,18 @@
 import { useState, useEffect } from "react";
 import * as S from "./SearchBox.style";
-import { IoSearchOutline } from "react-icons/io5";
-import { IoClose } from "react-icons/io5";
+import { IoSearchOutline, IoClose } from "react-icons/io5";
 import { BsPersonFill } from "react-icons/bs";
-import { useSelector } from "react-redux";
 import { HiOutlineAdjustments } from "react-icons/hi";
 import SearchToggle from "../SearchToggle/SearchToggle";
-import SearchResult from "../SearchResult/SearchResult";
-import InfiniteScroll from "react-infinite-scroll";
-import { setOpenSearchBox } from "../../redux/roomInfo";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setOpenSearchBox } from "../../redux/roomInfo";
+
 const SearchBox = () => {
   const [isMemberToggleOpen, setIsMemberToggleOpen] = useState(false);
   const [isRangeToggleOpen, setIsRangeToggleOpen] = useState(false);
   const [search, setSearch] = useState("");
+  const [isResult, setIsResult] = useState("");
   const [isSearchType, setIsSearchType] = useState("title");
   const dispatch = useDispatch();
   const receivedToken = localStorage.getItem("token");
@@ -43,23 +41,12 @@ const SearchBox = () => {
           },
         }
       );
-      console.log(response.data.result);
+      setIsResult(response);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const testMemberArray = [
-    "박지환",
-    "홍수민",
-    "장영주",
-    "박지환",
-    "홍수민",
-    "장영주",
-    "박지환",
-    "홍수민",
-    "장영주",
-  ];
   const searchRange = ["제목", "내용", "태그"];
 
   const handleMemberToggle = () => {
@@ -69,12 +56,15 @@ const SearchBox = () => {
   const handleRangeToggle = () => {
     setIsRangeToggleOpen(!isRangeToggleOpen);
   };
+
   const onChange = (e) => {
     setSearch(e.target.value);
   };
 
+  const openSearchBox1 = false;
+  // 일단 검색 미구현 ㅠㅠ
   return (
-    openSearchBox && (
+    openSearchBox1 && (
       <S.Background>
         <S.Container>
           <S.InputWrapper>
@@ -104,13 +94,13 @@ const SearchBox = () => {
                 label="멤버"
                 onClick={handleMemberToggle}
                 isOpen={isMemberToggleOpen}
-                content={
-                  <S.MemberBox>
-                    {testMemberArray.map((member, index) => (
-                      <div key={index}>{member}</div>
-                    ))}
-                  </S.MemberBox>
-                }
+                // content={
+                //   <S.MemberBox>
+                //     {testMemberArray.map((member, index) => (
+                //       <div key={index}>{member}</div>
+                //     ))}
+                //   </S.MemberBox>
+                // }
               />
               <SearchToggle
                 icon={<HiOutlineAdjustments />}

@@ -96,7 +96,6 @@ const RoomCategory = () => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log("del", res.data);
     } catch (error) {
       console.log(error);
     }

@@ -39,8 +39,8 @@ const RoomChallenge = () => {
       });
       const data = response.data.result;
       dispatch(setChallengeData(data));
-
       dispatch(setRoomSettingIsAmounting(true));
+
     } catch (error) {
       console.log(error);
       dispatch(setRoomSettingIsAmounting(false));

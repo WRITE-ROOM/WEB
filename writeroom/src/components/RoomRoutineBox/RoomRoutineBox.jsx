@@ -46,8 +46,6 @@ const RoomRoutineBox = ({ text, description, range, toggle }) => {
     return `${year}-${month}-${day}`;
   };
 
-  const c = useSelector((state) => state.challenge);
-
   useEffect(() => {
     dispatch(
       setChallenge({

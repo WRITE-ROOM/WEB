@@ -49,7 +49,6 @@ const RoomMember = () => {
           Authorization: `Bearer ${receivedToken}`,
         },
       });
-      console.log(response.data);
       dispatch(setRoomSettingMember(response.data.result));
       setUserData(response.data.result.userRoomLists);
     } catch (error) {
@@ -90,7 +89,6 @@ const RoomMember = () => {
           },
         }
       );
-      console.log(response.data);
     } catch (error) {
       console.error("patchUserAuth 에러:", error);
       console.log(error);
@@ -104,7 +102,6 @@ const RoomMember = () => {
           Authorization: `Bearer ${receivedToken}`,
         },
       });
-      console.log(response);
     } catch (error) {
       console.error("deleteRoomMember 에러:", error);
     }
@@ -116,7 +113,6 @@ const RoomMember = () => {
           Authorization: `Bearer ${receivedToken}`,
         },
       });
-      console.log(response);
     } catch (error) {
       console.error("leaveRoomMember 에러:", error);
     }
@@ -149,21 +145,18 @@ const RoomMember = () => {
             <S.StyledSelect
               onChange={(e) => {
                 const selectedValue = e.target.value;
-                console.log("Selected value:", selectedValue);
                 if (selectedValue === "ALL") {
-                  console.log("All members selected");
                   setUserData(memberInfo);
                 } else if (selectedValue === "MANAGER") {
                   const managers = memberInfo?.filter(
                     (member) => member.authority === "MANAGER"
                   );
-                  console.log("Filtered managers:", managers);
+
                   setUserData(managers);
                 } else if (selectedValue === "PARTICIPANT") {
                   const participants = memberInfo?.filter(
                     (member) => member.authority === "PARTICIPANT"
                   );
-                  console.log("Filtered participants:", participants);
                   setUserData(participants);
                 }
               }}
