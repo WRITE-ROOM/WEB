@@ -26,8 +26,6 @@ const RoomChallenge = () => {
         },
       });
       dispatch(setRoomSettingIsAmounting(true));
-      console.log(res.data);
-      console.log(isAmounting);
     } catch (error) {
       console.log(error.response.data);
     }
@@ -41,7 +39,6 @@ const RoomChallenge = () => {
       });
       const data = response.data.result;
       dispatch(setChallengeData(data));
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }

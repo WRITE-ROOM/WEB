@@ -18,10 +18,8 @@ const AddChallengeMember = () => {
   const accessToken = localStorage.getItem("token");
 
   const userList = useSelector((state) => state.userList);
-  console.log("i u ", userList);
 
   const [me, setMe] = useState(null);
-  console.log("me", me);
 
   const roomId = useParams().roomId;
 
@@ -35,8 +33,6 @@ const AddChallengeMember = () => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log("res.data", res.data);
-      console.log(res.data.result.userRoomLists);
       dispatch(setUserList(res.data.result.userRoomLists));
       setMe(
         res.data.result.userRoomLists.find(
@@ -49,14 +45,11 @@ const AddChallengeMember = () => {
   };
 
   const [selectedList, setSelectedList] = useState([]);
-  console.log(selectedList);
 
   const selectMember = (userId, user) => {
-    console.log(userId);
     dispatch(setSelectedMember(userId));
     setSelectedList([...selectedList, user]);
   };
-  console.log(selectedMember);
 
   useEffect(() => {
     fetchUserList();

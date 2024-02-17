@@ -60,7 +60,7 @@ const SearchBox = () => {
   const onChange = (e) => {
     setSearch(e.target.value);
   };
-  console.log(isResult);
+
   const openSearchBox1 = false;
   // 일단 검색 미구현 ㅠㅠ
   return (

@@ -37,9 +37,6 @@ const RoomRoutineBox = ({ text, description, range, toggle }) => {
   };
 
   const selectedMember = useSelector((state) => state.selectedMember);
-  console.log("selectedMember ", selectedMember);
-  console.log("start", startDate);
-  console.log("end", endDate);
 
   const getFormattedDate = (date) => {
     const year = date.getFullYear();
@@ -47,8 +44,6 @@ const RoomRoutineBox = ({ text, description, range, toggle }) => {
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
-
-  const c = useSelector((state) => state.challenge);
 
   useEffect(() => {
     dispatch(
@@ -59,7 +54,6 @@ const RoomRoutineBox = ({ text, description, range, toggle }) => {
         deadline: getFormattedDate(endDate),
       })
     );
-    console.log("c!!!!", c);
   }, [count, startDate, endDate, selectedMember]);
 
   return (
