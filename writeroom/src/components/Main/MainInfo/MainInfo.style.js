@@ -10,8 +10,8 @@ export const Container = styled.div`
     justify-content: space-between;
     align-items: center;
 	border-radius : 0 0 10px 10px;
-    // background-color: white;
-`
+    background-color: ${(props) => props.theme.SNBBgColor};
+    `
 
 export const Left = styled.div`
     width: 200px;
@@ -22,8 +22,7 @@ export const Left = styled.div`
 `
 
 export const Right = styled.div`
-    position: relative;
-    width: 70px;
+    // width: 70px;
     height: 32px;
     display: flex;
     flex-direction: column;

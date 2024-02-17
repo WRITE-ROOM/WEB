@@ -20,9 +20,6 @@ export default function InviteModal({isOpen, onClose, roomIndex}) {
 		}
 	}
 
-useEffect(() => {
-	console.log(roomIndex);
-}, [])
 if (!isOpen) return null;
 return (
 	<S.ModalBackground>

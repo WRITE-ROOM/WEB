@@ -25,7 +25,6 @@ export default function AccountPw() {
             'Authorization': `Bearer ${receivedToken}`
           },
         })
-        console.log(res.data);
         window.alert('비밀번호가 변경되었습니다!');
         navigate('/myprofile/account')
       } catch(error) {

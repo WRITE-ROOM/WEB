@@ -147,14 +147,12 @@ export const LoginInfo = styled.div`
 `
 
 export const LoginWrapper = styled.div`
-    position: relative;
     width: 1120px;
     height: 50px;
     display: flex;
-    // flex-direction: column;
-    justify-content: space-between;
 
     button {
+        margin-left: 330px;
         width: 150px;
         height: 40px;
         border-radius: 5px;
@@ -164,6 +162,8 @@ export const LoginWrapper = styled.div`
         color: ${(props) => props.theme.textColor};
     }
     p {
+        width: 244px;
+        margin-right: 50px;
         font-family: Pretendard;
         font-size: 20px;
         font-weight: 300;        

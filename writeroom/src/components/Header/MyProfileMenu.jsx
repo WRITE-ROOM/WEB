@@ -11,6 +11,7 @@ const MyProfileMenu = () => {
     try {
       const res = await axios.get(`/auth/logout`);
       localStorage.clear();
+      navigate(`/login`);
       console.log(res.data);
     } catch (error) {
       console.log(error);
@@ -26,8 +27,8 @@ const MyProfileMenu = () => {
         <li>
           <a href="/myprofile/bookmark">북마크</a>
         </li>
-        <li>
-          <a href="/login" onClick={getLogout}>로그아웃</a>
+        <li onClick={getLogout}>
+          <a>로그아웃</a>
         </li>
       </ul>
     </DropdownContainer>

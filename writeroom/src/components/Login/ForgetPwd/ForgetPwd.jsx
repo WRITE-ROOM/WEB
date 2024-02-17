@@ -15,9 +15,7 @@ export default function ForgetPwd() {
   let dispatch = useDispatch();
   let navigate = useNavigate();
   const postResetMail = async() => {
-    console.log(email)
     dispatch(setUserEmail({ email: email }));
-    console.log(userEmail)
     try {
       const res = await axios.post(`/auth/sendResetPwdEmail`, {email: email})
       if (res.data.code === "COMMON200")

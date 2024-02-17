@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, unstable_HistoryRouter, useLocation } from "react-router-dom";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import ForgetPwdPage from "./pages/ForgetPwdPage.jsx";
@@ -22,6 +22,7 @@ import MyprofileNone from "./pages/MyprofileNone.jsx";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import { useEffect, useState } from "react";
 import { darkTheme, lightTheme } from './theme.jsx';
+import StartPage from "./pages/StartPage/StartPage.jsx";
 
 const GlobalStyle = createGlobalStyle`
   body {        
@@ -32,7 +33,8 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
-  const currentPath = window.location.pathname;
+  const location = useLocation(); // useLocation 훅을 사용하여 현재 경로를 동적으로 감지
+  const currentPath = location.pathname;
 
   const localThemeMode = window.localStorage.getItem("theme" || "lightTheme");
   const [themeMode, setThemeMode] = useState(localThemeMode);
@@ -47,18 +49,23 @@ function App() {
       window.localStorage.setItem("theme", "lightTheme");
     }
   };
-  useEffect(() => {
-    console.log(window.location.pathname);
-  }, [currentPath])
+  
+  const isHeaderVisible = (path) => {
+    // /login 또는 /signup 경로인 경우에는 헤더를 숨깁니다.
+    return !['/login', '/signup'].includes(path);
+  };
 
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <div className="App">
-      {(currentPath !== '/login' && currentPath !== '/signup' && currentPath !== '/forgetPwd' && currentPath !== '/reset/pw/:status') && (
+      {(currentPath !== '/login' && currentPath !== '/signup' && currentPath !== '/forgetPwd' && currentPath !== '/reset/pw/:status' && currentPath !== '/' ) && (
           <Header themeMode={themeMode} toggleDarkMode={toggleDarkMode} />
         )}
+      
         <Routes>
+          <Route path="/" element={<StartPage />} />
+
           <Route path="/rooms" element={<RoomPage />} />
           <Route path="/rooms/:roomId" element={<RoomPage />} />
           <Route path="/rooms/setting/:roomId" element={<RoomSetting />} />

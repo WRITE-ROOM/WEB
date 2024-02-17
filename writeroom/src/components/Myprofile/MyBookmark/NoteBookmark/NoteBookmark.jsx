@@ -19,11 +19,11 @@ export default function NoteBookmark() {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState();
   const [count, setCount] = useState();
-  const receivedToken = localStorage.getItem('token')
   const [isBookmarked, setIsBookmarked] = useState([]); //isBookmarked
   const [bookmarkMaterialList, setBookmarkMaterialList] = useState([]); // 북마크한 단어 배열
-
   const [maxLength, setMaxLength] = useState(100);
+  
+  const receivedToken = localStorage.getItem('token')
 
   const note = useSelector((state) => state.note);
 
@@ -43,9 +43,9 @@ export default function NoteBookmark() {
     const textContent = doc.body.textContent || "";
     return textContent;
   };
+
   const fetchBookmark = async () => {
     try {
-      const Page = page;
       const res = await axios.get(`/notes/bookmark/list?page=${page-1}`, { 
         headers: {
           'Authorization': `Bearer ${receivedToken}`

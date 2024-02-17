@@ -11,18 +11,18 @@ import { setAccount } from '../../../redux/user';
 import myProfile from '../../../assets/myProfile.png'
 
 export default function Account() {
-  const [image, setImage] = useState(null);
-  const [imageName, setImageName] = useState(null);
-  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
-  const [isSecessionModalOpen, setIsSecessionModalOpen] = useState(false);
-  const [isSave, setIsSave] = useState(false);
-  
   const user = useSelector((state) => state.user);
   const userName = user.userName;
   const profileImg = user.profileImg;
   const userEmail = user.userEmail;
+  const joinType = user.joinType;
   
   const [name, setName] = useState(userName);
+  const [image, setImage] = useState(profileImg);
+  const [imageName, setImageName] = useState(null);
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const [isSecessionModalOpen, setIsSecessionModalOpen] = useState(false);
+  const [isSave, setIsSave] = useState(false);
 
   const userId = localStorage.getItem('id');
 	const receivedToken = localStorage.getItem('token');
@@ -46,15 +46,12 @@ export default function Account() {
     try {
       const res = await axios.get(`/auth/logout`);
       localStorage.clear();
-      navigate(`/login`);
+      navigate(`/`);
       // 추후 온보딩 페이지 만들면 온보딩 페이지로 navigate
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     }
   }
-
-
 
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
@@ -80,7 +77,7 @@ export default function Account() {
       formData.append("userImg", defaultImage, "myProfile.png");
     }
     else if (image === profileImg) {
-      console.log('프사 안 바꿈')
+      console.log('.')
     }
     else {
       if (!isImageBlob(image)) {
@@ -91,14 +88,12 @@ export default function Account() {
       }
     }
     formData.append('request', JSON.stringify({nickName: name}));
-    console.log(formData);
     try {
       const res = await axios.patch(`/users/update/myProfile`, formData, { 
         headers: {
           'Authorization': `Bearer ${receivedToken}`,
           },
        });
-      console.log(res.data)
       
     } catch (error) {
       console.error(error);
@@ -110,30 +105,6 @@ export default function Account() {
     return blobImage;
   };
 
-  const getUserProfile = async() => {
-    try {
-      const res = await axios.get(`/users/myProfile`, {
-        headers: {
-          'Authorization': `Bearer ${receivedToken}`
-        },
-      });
-      const data = res.data.result;
-      dispatch(setAccount({
-        userId: data.userId, 
-        userName: data.nickName,
-        profileImg: data.profileImg,
-        userEmail: data.email
-      }))
-      setImage(data.profileImg);
-      setName(data.nickName);
-      console.log(res.data);
-    } catch (error){
-      console.error(error);
-    }
-   }
-   useEffect(() => {
-    getUserProfile();
-   }, [])
 
 return (
   <div>
@@ -176,12 +147,20 @@ return (
             <S.LoginWrapper>
               <p>이메일</p>
               <p>{userEmail}</p>
-              <button onClick={() => {navigate('/myprofile/account/email')}}>이메일 주소 변경</button>
+              {joinType === "BASIC" && (
+                <button onClick={() => {navigate('/myprofile/account/email')}}>
+                  이메일 주소 변경
+                </button>
+              )}
             </S.LoginWrapper>
             <S.LoginWrapper>
               <p>비밀번호</p>
               <p/>
-              <button onClick={() => {navigate('/myprofile/account/pw')}}>비밀번호 변경</button>
+              {joinType === "BASIC" && (
+                <button onClick={() => {navigate('/myprofile/account/pw')}}>
+                  비밀번호 변경
+                </button>
+              )}
             </S.LoginWrapper>
           </S.LoginInfo>
           <S.Line/>

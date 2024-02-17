@@ -55,12 +55,22 @@ export default function LoginBox() {
         <S.Title>로그인</S.Title>
         <S.InputInfo>
           <input placeholder='이메일'
-          onChange={(e) => {setEmail(e.target.value)}}></input>
+          onChange={(e) => {setEmail(e.target.value)}}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              postUser();
+            }
+          }}></input>
         </S.InputInfo>
         <S.InputInfo>
           <input placeholder='비밀번호'
           type='password'
-          onChange={(e) => {setPw(e.target.value)}}></input>
+          onChange={(e) => {setPw(e.target.value)}}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              postUser();
+            }
+          }}></input>
         </S.InputInfo>
         <S.LoginButton>
           <button

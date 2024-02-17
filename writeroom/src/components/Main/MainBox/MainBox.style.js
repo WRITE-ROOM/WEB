@@ -5,8 +5,10 @@ export const App = styled.div`
 	height: 900px;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	h1 {
-		margin-left: 30px;  
+		position: relative;
+		right: 620px; 
 		font-family: Pretendard;
 		font-size: 24px;
 		font-weight: 200;
@@ -30,7 +32,7 @@ export const Room = styled.div`
 	height: 259px;
 	border-style: solid;
 	border-width: 1px;
-	// border-color: black;
+	border-color: rgba(95, 95, 95, 1);
 	border-radius: 10px;
 	margin: 24px;
 	// cursor: pointer;

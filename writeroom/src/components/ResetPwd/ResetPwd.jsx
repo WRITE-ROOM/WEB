@@ -71,7 +71,6 @@ export default function ResetPwd() {
           },
         }).then((result2) => {
           if (result2.isConfirmed) {
-            console.log(userPw);
             Swal.fire({
               title: "비밀번호 변경 완료",
               text: "새 비밀번호로 로그인이 가능합니다.",
@@ -98,10 +97,8 @@ export default function ResetPwd() {
       type = 'email'
     else
       type = 'pwd'
-    console.log('post 요청: ', userPwd)
     try {
       const res = await axios.post(`/auth/resetPwd?token=${token}&type=${type}`, {password: userPwd})
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     }

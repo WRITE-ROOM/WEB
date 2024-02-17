@@ -10,7 +10,7 @@ export const SNB = styled.div`
     // display: flex;
     // flex-direction: column;    
     box-shadow: 3px 0px 4px 0px rgba(0, 0, 0, 0.07);
-    background-color: ${(props) => props.theme.bgColor};
+    background-color: ${(props) => props.theme.SNBBgColor};
     z-index: 99;
 `
 
@@ -27,5 +27,8 @@ export const Box = styled.div`
         font-size: 12px;
         font-weight: 500;
     }
+    &:hover {
+        background: lightgray;
+      }
     
 `
