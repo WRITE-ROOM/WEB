@@ -64,8 +64,9 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <SearchBox />
+
       <div className="App">
+        {currentPath === "/rooms" && <SearchBox />}
         {currentPath !== "/login" &&
           currentPath !== "/signup" &&
           currentPath !== "/forgetPwd" &&

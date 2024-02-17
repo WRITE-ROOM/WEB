@@ -16,6 +16,7 @@ const SearchBox = () => {
   const [isRangeToggleOpen, setIsRangeToggleOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [isSearchType, setIsSearchType] = useState("title");
+  const [isData, setIsData] = useState("");
   const dispatch = useDispatch();
   const receivedToken = localStorage.getItem("token");
 
@@ -30,36 +31,26 @@ const SearchBox = () => {
       }
     }, 1000);
 
+    const getSearchData = async (searchWord, searchType) => {
+      try {
+        const response = await axios.get(
+          `/search/?searchWord=${searchWord}&${searchType}`,
+          {
+            headers: {
+              Authorization: `Bearer ${receivedToken}`,
+            },
+          }
+        );
+        console.log(response.data.result);
+        setIsData(response.data.result);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     return () => clearTimeout(delayDebounceTimer);
   }, [search, isSearchType]);
 
-  const getSearchData = async (searchWord, searchType) => {
-    try {
-      const response = await axios.get(
-        `/search/?searchWord=${searchWord}&${searchType}`,
-        {
-          headers: {
-            Authorization: `Bearer ${receivedToken}`,
-          },
-        }
-      );
-      console.log(response.data.result);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const testMemberArray = [
-    "박지환",
-    "홍수민",
-    "장영주",
-    "박지환",
-    "홍수민",
-    "장영주",
-    "박지환",
-    "홍수민",
-    "장영주",
-  ];
   const searchRange = ["제목", "내용", "태그"];
 
   const handleMemberToggle = () => {
@@ -72,6 +63,7 @@ const SearchBox = () => {
   const onChange = (e) => {
     setSearch(e.target.value);
   };
+  const { noteList, writerList } = isData;
 
   return (
     openSearchBox && (
@@ -97,7 +89,7 @@ const SearchBox = () => {
           </S.InputWrapper>
           <S.Line />
           <S.FilterWrapper>
-            <p>결과 0건</p>
+            <p>결과 {noteList?.length}건</p>
             <S.ButtonWrapper>
               <SearchToggle
                 icon={<BsPersonFill />}
@@ -106,8 +98,8 @@ const SearchBox = () => {
                 isOpen={isMemberToggleOpen}
                 content={
                   <S.MemberBox>
-                    {testMemberArray.map((member, index) => (
-                      <div key={index}>{member}</div>
+                    {writerList?.map((writer, index) => (
+                      <div key={index}>{writer}</div>
                     ))}
                   </S.MemberBox>
                 }

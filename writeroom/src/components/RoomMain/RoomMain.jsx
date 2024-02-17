@@ -32,11 +32,14 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
   useEffect(() => {
     const getNoteList = async () => {
       try {
-        const response = await axios.get(`/rooms/${roomId}/list?page=0`, {
-          headers: {
-            Authorization: `Bearer ${receivedToken}`,
-          },
-        });
+        const response = await axios.get(
+          `/rooms/${roomId}/list?page=${page - 1}`,
+          {
+            headers: {
+              Authorization: `Bearer ${receivedToken}`,
+            },
+          }
+        );
         dispatch(setRoomInfo(response.data.result));
 
         setCount(response.data.result.totalElements);
@@ -46,7 +49,7 @@ const RoomMain = ({ openRoomSNB, openSNB }) => {
     };
 
     getNoteList();
-  }, []);
+  }, [page]);
 
   return (
     <S.Container openRoomSNB={openRoomSNB} openSNB={openSNB}>
