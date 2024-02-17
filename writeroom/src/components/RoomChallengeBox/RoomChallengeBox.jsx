@@ -16,14 +16,27 @@ const RoomChallengeBox = () => {
   const [isMaking, setIsMaking] = useState(false);
   const [isAmount, setIsAmount] = useState(false);
   // 상단 bar 상태임
-  const isAmounting = useSelector((state) => state.roomSettingInfo.isAmounting);
-  console.log(isAmounting);
+
+  // const isAmounting = useSelector((state) => state.roomSettingInfo.isAmounting);
+  const isAmounting = true; // 테스트용임
+
+  const [openModal, setOpenModal] = useState(false);
   const [isMyChallenge, setIsMyChallenge] = useState(false);
   const [isChallenging, setIsChallenging] = useState(false);
   const [isSelectedIndex, setIsSelectedIndex] = useState(null);
   const [isGiveUp, setIsGiveUp] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
 
+  const data = useSelector((state) => state.challenge);
+  const {
+    achieveCount,
+    challengeId,
+    deadline,
+    startDate,
+    targetCount,
+    userList,
+  } = data;
+  const progressPercents = parseInt((achieveCount / targetCount) * 100);
   const giveUpHandler = () => {
     setIsGiveUp(!isGiveUp);
   };
@@ -37,6 +50,8 @@ const RoomChallengeBox = () => {
     setIsMyChallenge(index === 2);
   };
 
+  const closeGiveUpModal = () => setIsGiveUp(false);
+  const today = new Date();
   const barData = [
     {
       title: "루틴 만들기",
@@ -120,33 +135,41 @@ const RoomChallengeBox = () => {
         (isAmounting ? (
           <>
             <RoomChallengeWeekBox
-              state="도전중"
+              state={progressPercents === 100 ? "완료" : "도전중"}
               title="목표량"
-              percent="70"
-              progress="true"
-              progressText="40개 중 20개 완료"
+              percent={`${progressPercents}`}
+              progress={today > deadline ? false : true}
+              progressText={`${targetCount}개 중 ${achieveCount}개 완료`}
             />
             <S.LittleContainer>
               <h1>참여자</h1>
-              <S.People>
-                <HiMiniUserCircle color="gainsboro" size={40} />
-                <HiMiniUserCircle color="gainsboro" size={40} />
-              </S.People>
+              <S.UserWrapper>
+                {userList.map(({ userId, profileImage, userName }) => (
+                  <S.UserIcons key={userId}>
+                    <img src={profileImage} alt={userName} />
+                    <p>{userName}</p>
+                  </S.UserIcons>
+                ))}
+              </S.UserWrapper>
               <h1>목표</h1>
-              <p>기간:2024.01.07~2024.02.06</p>
-              <p>갯수: 40개</p>
+              <p>
+                기간:{startDate}~{deadline}
+              </p>
+              <p>갯수:{targetCount}개</p>
             </S.LittleContainer>
             <S.GiveUpButton onClick={giveUpHandler}>
               챌린지 포기하기
             </S.GiveUpButton>
-            {/* {isGiveUp && (
+            {isGiveUp && (
               <RoomModal
                 title1="챌린지를 정말 포기하시겠어요?"
                 description="중도 포기하면 챌린지를 더 이어나갈 수 없어요."
                 description2="정말 포기하시겠어요?"
                 button2="포기하기"
+                isOpen={true}
+                closeModal={closeGiveUpModal}
               />
-            )} */}
+            )}
           </>
         ) : (
           <>
@@ -186,13 +209,15 @@ const RoomChallengeBox = () => {
             />
             <S.LittleContainer>
               <h1>참여자</h1>
-              <S.People>
+              <S.UserWrapper>
                 <HiMiniUserCircle color="gainsboro" size={40} />
                 <HiMiniUserCircle color="gainsboro" size={40} />
-              </S.People>
+              </S.UserWrapper>
               <h1>목표</h1>
-              <p>기간:2024.01.07~2024.02.06</p>
-              <p>갯수: 40개</p>
+              <p>
+                기간:{startDate}~{deadline}
+              </p>
+              <p>갯수: {targetCount}개</p>
             </S.LittleContainer>
             <S.GiveUpButton onClick={DeleteHandler}>
               챌린지 삭제하기

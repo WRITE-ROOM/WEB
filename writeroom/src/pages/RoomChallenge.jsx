@@ -6,7 +6,8 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { setRoomSettingIsAmounting } from "../redux/roomSettingInfo";
-import { selectRoomInfoState } from "../redux/roomInfo";
+import { useEffect } from "react";
+import { setChallengeData } from "../redux/challenge";
 
 const RoomChallenge = () => {
   const challenge = useSelector((state) => state.challenge);
@@ -31,7 +32,23 @@ const RoomChallenge = () => {
       console.log(error.response.data);
     }
   };
-
+  const getChallengeGoals = async () => {
+    try {
+      const response = await axios.get(`/challenge-goals/${roomId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      const data = response.data.result;
+      dispatch(setChallengeData(data));
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getChallengeGoals(); // Call the getChallengeGoals function
+  }, []);
   return (
     <S.Wrapper>
       <RoomSettingSNB />
