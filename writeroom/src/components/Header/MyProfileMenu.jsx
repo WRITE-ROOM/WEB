@@ -12,7 +12,6 @@ const MyProfileMenu = () => {
       const res = await axios.get(`/auth/logout`);
       localStorage.clear();
       navigate(`/login`);
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     }

@@ -79,7 +79,6 @@ export default function NoteBookmark() {
       setCount(data.totalElements); // 총 리스트 개수
       setTotalPage(data.totalPage); // 총 페이지
 
-      console.log(res.data)
     } catch (error) {
         console.error(error);
     }
@@ -87,8 +86,6 @@ export default function NoteBookmark() {
   
   const postBookmark = async (roomId, noteId) => {
     try {
-      console.log('클릭한 noteId: ', noteId);
-      console.log(noteBookmark)
       const clickedBookmark = noteBookmark.find((bookmark) => bookmark.noteId === noteId)
       const res = await axios.post(
         `/notes/bookmark/${roomId}/${noteId}`,
@@ -105,7 +102,6 @@ export default function NoteBookmark() {
         noteId: noteId
       }
       dispatch(addNoteBookmark(newBookmark)); 
-      console.log('북마크에 추가 완료!! : ,', res.data)
       window.alert('북마크에 추가했어요.');
       
     } catch (error) {
@@ -116,7 +112,6 @@ export default function NoteBookmark() {
   };
 
   const deleteBookmark = async (noteId) => {
-    console.log('클릭한 noteId: ', noteId);
     try {
       const res = await axios.delete(`/notes/bookmark/delete/${noteId}`, {
         headers: {
@@ -125,7 +120,6 @@ export default function NoteBookmark() {
       });
       if (res.status === 200) {
         dispatch(deleteNoteBookmark({noteId : noteId}));
-        console.log('노트 북마크 해제 완료!!', res.data);
         window.alert("북마크에서 해제했어요.");
       }
     } catch (error) {
@@ -139,7 +133,6 @@ export default function NoteBookmark() {
 
   return (
     <S.App>
-      <button onClick={() => {console.log(noteBookmark)}}>임시버튼</button>
       {bookmarkMaterialList.map((bookmark, index) => (
         <S.Container key={index}>
         <S.ContentsBox>

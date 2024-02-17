@@ -116,10 +116,10 @@ const Note = () => {
         <N.Tools>
           {/* <Bookmark color="white" roomId={roomId} noteId={noteId} bookmarkId={clickedBookmark || undefined} IsNoteBookmark={clickedNote.isbookmarked || undefined} defaultColor="white" /> */}
           {isBookmarked === true || noteBookmarkId !== undefined ? (
-                <W.IsBookMark color="rgba(181, 169, 148, 1)" onClick={() => deleteBookmark(noteId)}/>
-              ) : (
-                <W.NotBookMark onClick={() => postBookmark()}/>
-              )}
+            <W.IsBookMark style={{marginTop: '4px'}} color="rgba(181, 169, 148, 1)" onClick={() => deleteBookmark(noteId)}/>
+          ) : (
+            <W.NotBookMark style={{marginTop: '4px'}} color="white" onClick={() => postBookmark()}/>
+          )}
           <Setting
             type="config"
             note={note}
