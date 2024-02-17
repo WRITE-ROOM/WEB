@@ -20,6 +20,7 @@ import {
 import InviteModal from "../Main/InviteModal/InviteModal";
 import { useEffect, useState } from "react";
 import { setCategory } from "../../redux/category";
+import { setChallengeData } from "../../redux/challenge";
 
 const RoomSNB = ({ isOpen, handleRoomSNB }) => {
   const receivedToken = localStorage.getItem("token");
@@ -78,19 +79,33 @@ const RoomSNB = ({ isOpen, handleRoomSNB }) => {
         },
       });
       dispatch(setCategory(response.data.result));
-      setAllNoteCount(response.data.result.allCountNote)
+      setAllNoteCount(response.data.result.allCountNote);
     } catch (error) {
       console.error("이건 getNoteCount 에러:", error);
     }
   };
+  const getChallengeGoals = async () => {
+    try {
+      const response = await axios.get(`/challenge-goals/${roomId}`, {
+        headers: {
+          Authorization: `Bearer ${receivedToken}`,
+        },
+      });
+      const data = response.data.result;
+      console.log(data);
+      dispatch(setChallengeData(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
+    getChallengeGoals();
     getRoomMember();
     getChallengePercent();
     getNoteCount();
   }, []);
   roomInfoSelector.memberInfo[0]?.updateAt?.split(", ");
-
   return (
     <div>
       {isOpen ? (
