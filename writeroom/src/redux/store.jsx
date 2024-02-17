@@ -10,11 +10,15 @@ import noteListSlice from "./noteList";
 import writeModeSlice from "./writeMode";
 import roomInfoSlice from "./roomInfo";
 import { combineReducers } from "@reduxjs/toolkit";
-// import roomSettingInfoSlice from "./roomSettingInfo";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import noteBookmark from "./noteBookmark";
 import wordBookmark from "./wordBookmark";
+
+import userListSlice from "./userList";
+import selectedMemberSlice from "./selectedMember";
+import challengeSlice from "./challenge";
+import roomSettingInfoSlice from "./roomSettingInfo";
 
 const reducers = combineReducers({
   user: user,
@@ -29,7 +33,7 @@ const reducers = combineReducers({
   noteList: noteListSlice,
   writeMode: writeModeSlice,
   roomInfo: roomInfoSlice,
-  // roomSettingInfo: roomSettingInfoSlice,
+  roomSettingInfo: roomSettingInfoSlice,
 });
 
 const persistConfig = {
@@ -42,19 +46,3 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 export const store = configureStore({
   reducer: persistedReducer,
 });
-
-// export const store = configureStore({
-//   reducer: {
-//     user: user.reducer,
-//     room: room.reducer,
-//     tag: tagSlice,
-//     selectModal: selectModalSlice,
-//     category: categorySlice,
-//     note: noteSlice,
-//     bookmark: bookmark.reducer,
-//     noteList: noteListSlice,
-//     writeMode: writeModeSlice,
-//     roomInfo: roomInfoSlice,
-//     roomSettingInfo: roomSettingInfoSlice,
-//   },
-// });

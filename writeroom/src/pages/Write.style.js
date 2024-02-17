@@ -1,7 +1,11 @@
 import styled from "styled-components";
 
+export const Wrapper = styled.div`
+  display: flex;
+`;
+
 export const Container = styled.div`
-  width: 100%;
+  width: ${(props) => (props.openSNB ? "80vw" : "100%")};
 `;
 
 export const Header = styled.div`
@@ -163,19 +167,22 @@ export const StyledButton = styled.button`
   width: ${(props) => (props.$width ? props.$width : "124px")};
 
   padding: ${(props) => (props.$padding ? props.$padding : "9px 0")};
-  
 
   background-color: ${(props) =>
-    props.$backgroundColor ? "rgba(181, 169, 148, 1)" : props.theme.TemplateColor };
+    props.$backgroundColor
+      ? "rgba(181, 169, 148, 1)"
+      : props.theme.TemplateColor};
 
-  color: ${(props) => (props.theme.textColor)};
+  color: ${(props) => props.theme.textColor};
 
   font-size: ${(props) => (props.fontSize ? props.fontSize : "16px")};
   font-weight: ${(props) => (props.fontWeight ? props.fontWeight : "500")};
 
   border-width: ${(props) => (props.$borderWidth ? props.$borderWidth : "0px")};
-  border-style: ${(props) => (props.$borderStyle ? props.$borderStyle : "none")};
-  border-color: ${(props) => (props.$borderColor ? "transparent": props.theme.borderColor)};
+  border-style: ${(props) =>
+    props.$borderStyle ? props.$borderStyle : "none"};
+  border-color: ${(props) =>
+    props.$borderColor ? "transparent" : props.theme.borderColor};
 
   border-radius: 10px;
 

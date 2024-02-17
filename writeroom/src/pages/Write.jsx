@@ -9,6 +9,8 @@ import SelectCategoryModal from "../components/Write/WriteSelectModal/SelectCate
 import ChallengeAchieved from "../components/Write/ChallengeAchieved/ChallengeAchieved";
 import Template from "../components/Write/Template/Template";
 import Counter from "../components/Write/Counter/Counter";
+import RecTopic from "../components/RecTopic/RecTopic.jsx";
+import RecTopicClose from "../components/RecTopicClose/RecTopicClose.jsx";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -27,6 +29,12 @@ const Write = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [isSNBOpen, setIsSNBOpen] = useState(false);
+
+  const toggleSNB = () => {
+    setIsSNBOpen((prev) => !prev);
+  };
+
   const note = useSelector((state) => state.note);
   const tags = useSelector((state) => state.tag);
 
@@ -34,10 +42,13 @@ const Write = () => {
   const [subtitle, setSubtitle] = useState(note.noteSubtitle);
 
   const [content, setContent] = useState(note.noteContent);
+
+  const [count, setCount] = useState(0);
+
   const [image, setImage] = useState(note.noteCoverImg);
   const [imageName, setImageName] = useState(null);
   const [imageChanged, setImageChanged] = useState(false);
-  const [count, setCount] = useState(0);
+  const [imgDelete, setImgDelete] = useState(false);
 
   // 룸, 카테고리 선택
   const currentModal = useSelector((state) => state.selectModal.currentModal);
@@ -72,7 +83,6 @@ const Write = () => {
     const reader = new FileReader();
     reader.onloadend = () => {
       setImage(reader.result);
-      console.log(image);
     };
     if (file) {
       reader.readAsDataURL(file);
@@ -83,8 +93,8 @@ const Write = () => {
 
   const handleDeleteImage = () => {
     setImage(null);
-    // console.log(whiteImg);
     setImageName(null);
+    setImgDelete(true);
   };
 
   const accessToken = localStorage.getItem("token");
@@ -123,7 +133,6 @@ const Write = () => {
   };
 
   const roomId = useSelector((state) => state.selectModal.selectedRoom.roomId);
-  console.log(roomId);
 
   const fetchCategoryList = async () => {
     try {
@@ -153,20 +162,6 @@ const Write = () => {
       console.log(error);
     }
   };
-
-  // const formData = new FormData();
-
-  // // 보낼 데이터
-  // const requestData = {
-  //   noteTitle: title,
-  //   noteSubTitle: subtitle,
-  //   noteContent: content,
-  //   letterCount: count,
-  //   noteTagList: tags.map((tag) => tag.tagName),
-  //   categoryId: selectedCategory.categoryId,
-  // };
-
-  // formData.append("request", JSON.stringify(requestData));
 
   const postNote = async () => {
     const formData = new FormData();
@@ -208,32 +203,44 @@ const Write = () => {
   const putNote = async () => {
     const formData = new FormData();
 
-    if (image) {
-      if (imageChanged) {
-        console.log("imgae", image);
-        const decodedImage = await decodeImage(image);
-        const imageExtension = imageName.split(".").pop();
-        const blobImage = new Blob([decodedImage], {
-          type: `image/${imageExtension}`,
-        });
-        formData.append("noteImg", blobImage, imageName);
-      }
-    } else {
-      const defaultImage = await fetch(whiteImg).then((res) => res.blob());
-      formData.append("noteImg", defaultImage, "whiteImg.png");
+    // if (image) {
+    //   if (imageChanged) {
+    //     const decodedImage = await decodeImage(image);
+    //     const imageExtension = imageName.split(".").pop();
+    //     const blobImage = new Blob([decodedImage], {
+    //       type: `image/${imageExtension}`,
+    //     });
+    //     formData.append("noteImg", blobImage, imageName);
+    //   } else {
+    //     setImageName("lastImage");
+    //     // const imageExtension = imageName.split(".").pop();
+    //     const blobImage = new Blob([image], {
+    //       type: `image/${imageName}`,
+    //     });
+    //     formData.append("noteImg", blobImage, imageName);
+    //   }
+    // }
+
+    if (image && imageChanged) {
+      const decodedImage = await decodeImage(image);
+      const imageExtension = imageName.split(".").pop();
+      const blobImage = new Blob([decodedImage], {
+        type: `image/${imageExtension}`,
+      });
+      formData.append("noteImg", blobImage, imageName);
     }
 
     const requestData = {
       noteTitle: title,
       noteSubtitle: subtitle,
       noteContent: content,
+      imgDelete: imgDelete,
       letterCount: count,
       noteTagList: tags.map((tag) => tag.tagName),
       categoryId: selectedCategory.categoryId,
     };
 
     formData.append("request", JSON.stringify(requestData));
-    console.log("formData", formData);
 
     try {
       const res = await axios.put(`/notes/${note.noteId}`, formData, {
@@ -279,121 +286,130 @@ const Write = () => {
   };
 
   return (
-    <W.Container>
-      <W.Header>
-        <W.Left>
-          {/* 템플릿 */}
-          <Template content={content} setContent={setContent} />
+    <W.Wrapper>
+      <W.Container openSNB={isSNBOpen}>
+        <W.Header>
+          <W.Left>
+            {/* 템플릿 */}
+            <Template content={content} setContent={setContent} />
 
-          {/* 맞춤법 검사 */}
-          {/* <SpellCheck content={content} setContent={setContent} /> */}
+            {/* 글자수 */}
+            <Counter content={content} count={count} setCount={setCount} />
+          </W.Left>
 
-          {/* 글자수 */}
-          <Counter content={content} count={count} setCount={setCount} />
-        </W.Left>
-
-        {/* 룸 */}
-        <W.Center>
-          <W.StyledButton
-            $width="320px"
-            $borderWidth="1px"
-            $borderStyle="solid"
-            onClick={handleCurrentModal}
-          >
-            {selectedRoom.roomTitle
-              ? selectedRoom.roomTitle
-              : "룸을 선택해주세요"}
-            <span>
-              {selectedCategory.categoryName
-                ? ` - ` + selectedCategory.categoryName
-                : ""}
-            </span>
-          </W.StyledButton>
-
-          {currentModal === "Room" && <SelectRoomModal />}
-          {currentModal === "Category" && <SelectCategoryModal />}
-        </W.Center>
-
-        {/* 저장 */}
-        <W.Right>
-          {mode === "write" ? (
+          {/* 룸 */}
+          <W.Center>
             <W.StyledButton
-              onClick={saveNote}
-              $backgroundColor="#B5A994"
-              $color="white"
+              $width="320px"
+              $borderWidth="1px"
+              $borderStyle="solid"
+              onClick={handleCurrentModal}
             >
-              저장
+              {selectedRoom.roomTitle
+                ? selectedRoom.roomTitle
+                : "룸을 선택해주세요"}
+              <span>
+                {selectedCategory.categoryName
+                  ? ` - ` + selectedCategory.categoryName
+                  : ""}
+              </span>
             </W.StyledButton>
-          ) : (
-            <W.StyledButton
-              onClick={updateNote}
-              $backgroundColor="#B5A994"
-              $color="white"
-            >
-              저장
-            </W.StyledButton>
-          )}
-        </W.Right>
-      </W.Header>
 
-      <W.Top>
-        {/* 대표 이미지 */}
-        <W.CoverImage img={image} />
+            {currentModal === "Room" && <SelectRoomModal />}
+            {currentModal === "Category" && <SelectCategoryModal />}
+          </W.Center>
 
-        {/* 이미지 업로드/삭제 */}
-        <W.ImageControl>
-          <W.HandleCoverImg>
-            <label htmlFor="input-img">
-              <input type="file" id="input-img" onChange={handleImageChange} />
-              <FiImage size={22} />
-            </label>
-          </W.HandleCoverImg>
+          {/* 저장 */}
+          <W.Right>
+            {mode === "write" ? (
+              <W.StyledButton
+                onClick={saveNote}
+                $backgroundColor="#B5A994"
+                $color="white"
+              >
+                저장
+              </W.StyledButton>
+            ) : (
+              <W.StyledButton
+                onClick={updateNote}
+                $backgroundColor="#B5A994"
+                $color="white"
+              >
+                저장
+              </W.StyledButton>
+            )}
+          </W.Right>
+        </W.Header>
 
-          <W.HandleCoverImg>
-            <label htmlFor="delete-img">
+        <W.Top>
+          {/* 대표 이미지 */}
+          <W.CoverImage img={image} />
+
+          {/* 이미지 업로드/삭제 */}
+          <W.ImageControl>
+            <W.HandleCoverImg>
+              <label htmlFor="input-img">
+                <input
+                  type="file"
+                  id="input-img"
+                  onChange={handleImageChange}
+                />
+                <FiImage size={22} />
+              </label>
+            </W.HandleCoverImg>
+
+            <W.HandleCoverImg>
+              <label htmlFor="delete-img">
+                <input
+                  type="button"
+                  id="delete-img"
+                  onClick={handleDeleteImage}
+                />
+                <FiTrash size={22} />
+              </label>
+            </W.HandleCoverImg>
+          </W.ImageControl>
+
+          {/* 제목 설정 영역 */}
+          <W.TitleContainer>
+            <label htmlFor="titleInput">
               <input
-                type="button"
-                id="delete-img"
-                onClick={handleDeleteImage}
+                type="text"
+                id="titleInput"
+                placeholder="제목을 입력하세요"
+                value={title}
+                onChange={handleTitleChange}
               />
-              <FiTrash size={22} />
             </label>
-          </W.HandleCoverImg>
-        </W.ImageControl>
 
-        {/* 제목 설정 영역 */}
-        <W.TitleContainer>
-          <label htmlFor="titleInput">
-            <input
-              type="text"
-              id="titleInput"
-              placeholder="제목을 입력하세요"
-              value={title}
-              onChange={handleTitleChange}
-            />
-          </label>
+            <W.StyledHr />
 
-          <W.StyledHr />
+            <label htmlFor="subtitleInput">
+              <input
+                type="text"
+                id="subtitleInput"
+                placeholder="부제목을 입력하세요"
+                value={subtitle}
+                onChange={handleSubtitleChange}
+              />
+            </label>
+          </W.TitleContainer>
+        </W.Top>
 
-          <label htmlFor="subtitleInput">
-            <input
-              type="text"
-              id="subtitleInput"
-              placeholder="부제목을 입력하세요"
-              value={subtitle}
-              onChange={handleSubtitleChange}
-            />
-          </label>
-        </W.TitleContainer>
-      </W.Top>
+        {/* 글 작성 영역 */}
+        <Editor content={content} setContent={setContent} />
 
-      {/* 글 작성 영역 */}
-      <Editor content={content} setContent={setContent} />
+        <WriteFooter />
 
-      <WriteFooter />
+        {challengeAchieved && <ChallengeAchieved />}
+      </W.Container>
 
-      {challengeAchieved && <ChallengeAchieved />}
-    </W.Container>
+      {isSNBOpen ? (
+        <RecTopic onToggle={toggleSNB}></RecTopic>
+      ) : (
+        <RecTopicClose onToggle={toggleSNB}> </RecTopicClose>
+      )}
+    </W.Wrapper>
   );
 };
 

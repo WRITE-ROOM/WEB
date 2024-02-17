@@ -27,3 +27,7 @@ export const SaveButton = styled.button`
   border-radius: 10px;
   padding: 4px 19px;
 `;
+
+export const IconWrapper = styled.div`
+  cursor: pointer;
+`;

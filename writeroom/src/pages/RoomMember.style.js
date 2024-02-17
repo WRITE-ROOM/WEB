@@ -56,8 +56,8 @@ export const MemberBox = styled.div`
 
 export const AuthToggle = styled.button`
   position: relative;
-  background-color: ${(props) => props.theme.bgColor};  
-  color: ${(props) => props.theme.textColor};  
+  background-color: ${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.textColor};
   border: 1px solid gray;
   border-radius: 10px;
   display: flex;
@@ -74,6 +74,13 @@ export const AuthToggle = styled.button`
 export const ProfileWrapper = styled.div`
   display: flex;
   gap: 10px;
+`;
+
+export const ProfileImageWrapper = styled.img`
+  border-radius: 50%;
+  border: none;
+  width: 40px;
+  height: 40px;
 `;
 
 export const TextWrapper = styled.div`
@@ -93,8 +100,8 @@ export const ToggleText = styled.div`
   z-index: 10;
   top: 45px;
   right: -20px;
-  background-color: ${(props) => props.theme.bgColor};  
-  color: ${(props) => props.theme.textColor};  
+  background-color: ${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.textColor};
   border: 1px solid gray;
   border-radius: 10px;
   display: flex;
@@ -104,7 +111,8 @@ export const ToggleText = styled.div`
   border: none;
   width: 100px;
   margin-right: 20px;
-  box-shadow: -5px 1px 5px 0 ${(props) => props.theme.shadowColor}, 5px 1px 5px 0 ${(props) => props.theme.shadowColor};
+  box-shadow: -5px 1px 5px 0 ${(props) => props.theme.shadowColor},
+    5px 1px 5px 0 ${(props) => props.theme.shadowColor};
   div {
     display: flex;
     justify-content: flex-start;
@@ -121,4 +129,21 @@ export const ToggleText = styled.div`
   div:hover {
     background-color: #eaeaea;
   }
+`;
+
+export const StyledSelect = styled.select`
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  position: relative;
+`;
+
+export const StyledOption = styled.option`
+  font-size: 14px;
+  background-color: #fff;
+  color: #333;
+  position: absolute;
+  margin-top: 20px;
 `;

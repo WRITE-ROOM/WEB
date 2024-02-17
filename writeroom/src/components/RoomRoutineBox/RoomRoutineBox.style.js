@@ -50,16 +50,22 @@ export const InputBox = styled.div`
   align-items: center;
   gap: 10px;
   margin-bottom: 10px;
+
   input {
     background-color: ${(props) => props.theme.SNBSearchColor};
-    font-size: 10px;
+    font-size: 14px;
     color: #b5a995;
+    width: 120px;
+    height: 30px;
+    border-radius: 30px;
+    text-align: center;
   }
 `;
 
 export const ExampleText = styled.p`
   font-size: larger;
   color: gainsboro;
+  line-height: 36px;
 `;
 
 export const ToggleWrapper = styled.div`

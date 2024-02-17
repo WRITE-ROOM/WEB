@@ -3,6 +3,7 @@ import { FiPlus } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedRoom, setSelectedCategory } from "../../redux/selectModal";
 import { useNavigate } from "react-router-dom";
+import { writeMode } from "../../redux/writeMode";
 
 export const CategoryToggle = ({ name, countNote, room, categoryId }) => {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ export const CategoryToggle = ({ name, countNote, room, categoryId }) => {
     dispatch(
       setSelectedCategory({ categoryName: name, categoryId: categoryId })
     );
-
+    dispatch(writeMode());
     navigate("/Write");
   };
   return (

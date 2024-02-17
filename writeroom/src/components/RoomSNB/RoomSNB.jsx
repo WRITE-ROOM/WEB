@@ -199,6 +199,7 @@ const RoomSNB = ({ isOpen, handleRoomSNB }) => {
                       name={categoryName}
                       countNote={countNote}
                       key={categoryId}
+                      room={roomInfoSelector}
                     />
                   )
                 )

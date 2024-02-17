@@ -9,13 +9,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { addBookmark, deleteBookmark } from "../../redux/bookmark";
 import { addWordBookmark, deleteWordBookmark, resetWordBookmark, setWordBookmark } from "../../redux/wordBookmark";
 import { FadeLoader } from "react-spinners";
+import { setNoteTitle } from "../../redux/note";
+import { useNavigate } from "react-router-dom";
 
 export default function RecTopic({ onToggle }) {
+  const navigate = useNavigate();
   const [inputWord, setInputWord] = useState("");
   const [displayKeyword, setDisplayKeyword] = useState(false);
   const [displaySynonym, setDisplaySynonym] = useState(false);
   const [topics, setTopics] = useState([]);
-  const [isBookmarked, setIsBookmarked] = useState([false, false, false, false, false]);
+  const [isBookmarked, setIsBookmarked] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
 
   const [keywords, setKeywords] = useState([]);
   const [searchKeyword, setSearchkeyword] = useState("");
@@ -30,9 +39,9 @@ export default function RecTopic({ onToggle }) {
   const [synonymLoading, setSynonymLoading] = useState();
 
   const user = useSelector((state) => state.user);
-  const bookmark = useSelector(state => state.bookmark);
-  const userId = localStorage.getItem('id');
-  const receivedToken = localStorage.getItem('token');
+  const bookmark = useSelector((state) => state.bookmark);
+  const userId = localStorage.getItem("id");
+  const receivedToken = localStorage.getItem("token");
   // const receivedToken = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjksImVtYWlsIjoidGVzdFVzZXJAbmF2ZXIuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MDcxNTEwNDQsImV4cCI6MTc5MzU1MTA0NH0.Dsm7MWG8y-zUQnhRTe5P0ndFCjbhVU1z8mYwj1hqASo"
 
 
@@ -51,7 +60,7 @@ export default function RecTopic({ onToggle }) {
   };
 
   const handleBookmarkChange = (index) => {
-    setIsBookmarked(prevBookmarks => {
+    setIsBookmarked((prevBookmarks) => {
       const updatedBookmarks = [...prevBookmarks];
       updatedBookmarks[index] = !updatedBookmarks[index];
       return updatedBookmarks;
@@ -61,7 +70,7 @@ export default function RecTopic({ onToggle }) {
   const getTopics = async() => {
     setLoading(true)
     try {
-      const res = await axios.get(`/search/topics`, { 
+      const res = await axios.get(`/search/topics`, {
         headers: {
           'Authorization': `Bearer ${receivedToken}`
           },
@@ -78,7 +87,7 @@ export default function RecTopic({ onToggle }) {
     setKeywordLoading(true);
     try {
       const Voca = searchKeyword;
-      const res = await axios.get(`/search/similarKeywords?voca=${Voca}`, { 
+      const res = await axios.get(`/search/similarKeywords?voca=${Voca}`, {
         headers: {
           'Authorization': `Bearer ${receivedToken}`
           },
@@ -87,14 +96,14 @@ export default function RecTopic({ onToggle }) {
       setKeywords(vocas);
       setKeywordLoading(false);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
   const getSynonym = async() => {
     setSynonymLoading(true);
     try {
       const Voca = searchSynonym;
-      const res = await axios.get(`/search/synonyms?voca=${Voca}`, { 
+      const res = await axios.get(`/search/synonyms?voca=${Voca}`, {
         headers: {
           'Authorization': `Bearer ${receivedToken}`
           },
@@ -103,7 +112,7 @@ export default function RecTopic({ onToggle }) {
       setSynonyms(vocas);
       setSynonymLoading(false);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
@@ -138,12 +147,15 @@ export default function RecTopic({ onToggle }) {
 
     const postBookmarkstatus = async(word) => {
       try {
-        const res = await axios.post(`/bookmarks/topics?content=${word}`, {}, 
-        {
-          headers: {
-            'Authorization': `Bearer ${receivedToken}`,
+        const res = await axios.post(
+          `/bookmarks/topics?content=${word}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${receivedToken}`,
+            },
           }
-        });
+        );
         const serverBookmarkId = res.data.result.bookmarkId;
         const newBookmark = {
           id: serverBookmarkId,
@@ -171,13 +183,23 @@ export default function RecTopic({ onToggle }) {
       } catch (error) {
         console.log(error);
       }
-    }
-    
+    };
+
     return (
       <S.RecWord>
-        <p>{word}</p>
+        <p
+          onClick={() => {
+            dispatch(setNoteTitle(word));
+            navigate("/write");
+          }}
+        >
+          {word}
+        </p>
         {isBookmarked ? (
-          <FaBookmark color="rgba(181, 169, 148, 1)" onClick={toggleDeleteBookmark}/>
+          <FaBookmark
+            color="rgba(181, 169, 148, 1)"
+            onClick={toggleDeleteBookmark}
+          />
         ) : (
           <S.NotBookMark onClick={togglePostBookmark} />
         )}
@@ -190,7 +212,7 @@ export default function RecTopic({ onToggle }) {
       <S.Left>
         <button onClick={onToggle}>
           <MdKeyboardDoubleArrowRight
-            style={{cursor: "pointer"}}
+            style={{ cursor: "pointer" }}
             color="rgba(147, 147, 147, 1)"
             size="20"
           />
@@ -201,7 +223,12 @@ export default function RecTopic({ onToggle }) {
           <S.Top>
             <S.WordTitle>오늘의 소재</S.WordTitle>
             <button>
-              <S.Refresh size="30" onClick={() => {getTopics()}}/>
+              <S.Refresh
+                size="30"
+                onClick={() => {
+                  getTopics();
+                }}
+              />
             </button>
           </S.Top>
           <S.RecBottom>

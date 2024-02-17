@@ -13,8 +13,8 @@ import {
 const CreateCategory = ({ setCategoryModal }) => {
   const dispatch = useDispatch();
   const roomId = useSelector((state) => state.selectModal.selectedRoom.roomId);
+
   const [newCategory, setNewCategory] = useState("");
-  const ca = useSelector((state) => state.category);
   const categoryList = useSelector((state) => state.category.categoryList);
 
   const accessToken = localStorage.getItem("token");
@@ -36,7 +36,7 @@ const CreateCategory = ({ setCategoryModal }) => {
       dispatch(
         setCategory([
           ...categoryList,
-          { categoryName: newCategory, categoryId: null },
+          { categoryName: newCategory, categoryId: null, countNote: 0 },
         ])
       );
       dispatch(setCurrentModal(null));
@@ -56,7 +56,11 @@ const CreateCategory = ({ setCategoryModal }) => {
       <C.Container>
         <C.Header>
           <h1>카테고리 추가하기</h1>
-          <IoClose size={20} onClick={() => setCategoryModal(false)} />
+          <IoClose
+            size={20}
+            onClick={() => setCategoryModal(false)}
+            style={{ cursor: "pointer" }}
+          />
         </C.Header>
 
         <C.CategoryName>
@@ -70,7 +74,7 @@ const CreateCategory = ({ setCategoryModal }) => {
         </C.CategoryName>
 
         <C.CreateButton onClick={() => handleCreateCategory()}>
-          추가
+          카테고리 만들기
         </C.CreateButton>
       </C.Container>
     </C.Background>
