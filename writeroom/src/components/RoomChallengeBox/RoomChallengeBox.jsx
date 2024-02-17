@@ -10,6 +10,8 @@ import RoomChallengeWeekBox from "../RoomChallengeWeekBox/RoomChallengeWeekBox";
 import RoomRoutineBox from "../RoomRoutineBox/RoomRoutineBox";
 import RoomMyChallengeBox from "../RoomMyChallengeBox/RoomMyChallengeBox";
 import { useSelector } from "react-redux";
+import axios from "axios";
+
 
 const RoomChallengeBox = () => {
   const [isMakeRoutine, setIsMakeRoutine] = useState(false);
@@ -18,12 +20,14 @@ const RoomChallengeBox = () => {
   // 상단 bar 상태임
 
   const isAmounting = useSelector((state) => state.roomSettingInfo.isAmounting);
+  console.log(isAmounting)
 
   const [isMyChallenge, setIsMyChallenge] = useState(false);
   const [isChallenging, setIsChallenging] = useState(false);
   const [isSelectedIndex, setIsSelectedIndex] = useState(null);
   const [isGiveUp, setIsGiveUp] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
+  const accessToken = localStorage.getItem("token");
 
   const data = useSelector((state) => state.challenge);
   const {
@@ -63,6 +67,24 @@ const RoomChallengeBox = () => {
       title: "나의 챌린지",
     },
   ];
+
+
+  const deleteChallenge = async() => {
+    console.log(data)
+    try {
+      const res = await axios.patch(`/challenge-goals/give-up/${challengeId}`, {}, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      console.log(res.data);
+      setIsGiveUp(false);
+      window.location.reload();
+    } catch(error) {
+      console.log(error);
+    }
+  }
+
   return (
     <S.Container>
       <S.BarContainer>
@@ -166,6 +188,7 @@ const RoomChallengeBox = () => {
                 button2="포기하기"
                 isOpen={true}
                 closeModal={closeGiveUpModal}
+                deletefunction={deleteChallenge}
               />
             )}
           </>

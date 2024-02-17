@@ -37,9 +37,7 @@ const RoomRoutineBox = ({ text, description, range, toggle }) => {
   };
 
   const selectedMember = useSelector((state) => state.selectedMember);
-  console.log("selectedMember ", selectedMember);
-  console.log("start", startDate);
-  console.log("end", endDate);
+
 
   const getFormattedDate = (date) => {
     const year = date.getFullYear();
