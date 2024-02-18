@@ -22,6 +22,7 @@ export const Container = styled.div`
     openSNB &&
     `
        width: 60vw;
+
     `}
   color: #fff;
 `;
