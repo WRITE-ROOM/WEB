@@ -28,6 +28,7 @@ const Header = ({ themeMode, toggleDarkMode }) => {
   };
   const dispatch = useDispatch();
   return (
+    // <H.Wrapper>
     <H.HeaderContainer>
       <a href="/main">
         <H.HeaderLogo src={Logo} alt="logo"></H.HeaderLogo>
@@ -54,6 +55,7 @@ const Header = ({ themeMode, toggleDarkMode }) => {
         {isMypageClicked && <MyProfileMenu />}
       </H.HeaderRight>
     </H.HeaderContainer>
+    // </H.Wrapper>
   );
 };
 

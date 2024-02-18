@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+export const Wrapper = styled.div``;
+
 export const HeaderContainer = styled.nav`
   display: flex;
   width: 100%;
@@ -8,6 +10,11 @@ export const HeaderContainer = styled.nav`
   padding: 12px 24px;
   justify-content: space-between;
   align-items: center;
+  background-color: ${(props) => props.theme.bgColor};
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 900;
 `;
 
 export const HeaderLogo = styled.img`
