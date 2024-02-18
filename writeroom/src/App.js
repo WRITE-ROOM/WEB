@@ -29,6 +29,9 @@ import { useState } from "react";
 import { darkTheme, lightTheme } from "./theme.jsx";
 import StartPage from "./pages/StartPage/StartPage.jsx";
 import SearchBox from "./components/SearchBox/SearchBox.jsx";
+import ParticipatePage from "./pages/ParticipatePage.jsx";
+import { useSelector } from "react-redux";
+import { selectRoomIds } from "./redux/room.jsx";
 
 const GlobalStyle = createGlobalStyle`
   body {        
@@ -55,6 +58,7 @@ function App() {
       window.localStorage.setItem("theme", "lightTheme");
     }
   };
+  const roomIdList = useSelector(selectRoomIds);
 
   return (
     <ThemeProvider theme={theme}>
@@ -81,7 +85,7 @@ function App() {
           <Route path="/rooms/member/:roomId" element={<RoomMember />} />
           <Route path="/rooms/challenge/:roomId" element={<RoomChallenge />} />
           <Route path="/rooms/category/:roomId" element={<RoomCategory />} />
-
+          <Route path="/rooms/invite/:roomId" element={<ParticipatePage />} />
           <Route path="/write" element={<Write />} />
           <Route path="/rooms/:roomId/notes" element={<Note />} />
           <Route path="/rooms/:roomId/notes/:noteId" element={<Note />} />
