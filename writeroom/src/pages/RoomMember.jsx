@@ -72,12 +72,12 @@ const RoomMember = () => {
   const memberInfo = useSelector(
     (state) => state.roomSettingInfo?.memberInfo?.userRoomLists
   );
-  console.log(memberInfo);
   const myName = roomInfoSelector?.memberInfo?.name;
   const myAuth = roomInfoSelector?.memberInfo?.authority;
 
   const message = {
-    master: "룸 내 모든 기능을 이용할 수 있어요",
+    manager: "룸 내 모든 기능을 이용할 수 있어요",
+    participants: "제한적으로 기능을 이용할 수 있어요",
   };
   const params = useParams();
   const roomId = params.roomId;
@@ -154,7 +154,11 @@ const RoomMember = () => {
               <span>관리자</span>
             )}
           </h1>
-          <p>{message?.master}</p>
+          {myAuth === "PARTICIPANT" ? (
+            <p>{message?.participants}</p>
+          ) : (
+            <p>{message?.manager}</p>
+          )}
         </S.AuthBox>
         <S.MemberContainer>
           <S.MemberBox>
@@ -204,30 +208,39 @@ const RoomMember = () => {
                     )}
                   </S.TextWrapper>
                 </S.ProfileWrapper>
-                <S.StyledSelect
-                  onChange={(e) => {
-                    const selectedValue = e.target.value;
-                    if (
-                      selectedValue === "MANAGER" ||
-                      selectedValue === "PARTICIPANT"
-                    ) {
-                      patchUserAuth(selectedValue, roomId, member?.userId);
-                    } else if (selectedValue === "EXPORT") {
-                      setSelectedUserId(member?.userId);
-                      setOpenModal(true);
-                    } else if (selectedValue === "LEAVE") {
-                      setOpenModal2(true);
-                    }
-                  }}
-                >
-                  <S.StyledOption value="MANAGER">관리자</S.StyledOption>
-                  <S.StyledOption value="PARTICIPANT">참여자</S.StyledOption>
-                  {myAuth === "MANAGER" ? (
-                    <S.StyledOption value="LEAVE">떠나기</S.StyledOption>
-                  ) : (
-                    <S.StyledOption value="EXPORT">내보내기</S.StyledOption>
-                  )}
-                </S.StyledSelect>
+                {(myAuth === "MANAGER" || member?.authority === "MANAGER") && (
+                  <S.StyledSelect
+                    onChange={(e) => {
+                      const selectedValue = e.target.value;
+                      if (
+                        selectedValue === "MANAGER" ||
+                        selectedValue === "PARTICIPANT"
+                      ) {
+                        patchUserAuth(selectedValue, roomId, member?.userId);
+                      } else if (selectedValue === "EXPORT") {
+                        setSelectedUserId(member?.userId);
+                        setOpenModal(true);
+                      } else if (selectedValue === "LEAVE") {
+                        setOpenModal2(true);
+                      }
+                    }}
+                  >
+                    {myAuth === "MANAGER" || member?.authority === "MANAGER" ? (
+                      <>
+                        <S.StyledOption value="MANAGER">관리자</S.StyledOption>
+                        <S.StyledOption value="LEAVE">떠나기</S.StyledOption>
+                        <S.StyledOption value="EXPORT">내보내기</S.StyledOption>
+                      </>
+                    ) : (
+                      <>
+                        <S.StyledOption value="PARTICIPANT">
+                          참여자
+                        </S.StyledOption>
+                        <S.StyledOption value="LEAVE">떠나기</S.StyledOption>
+                      </>
+                    )}
+                  </S.StyledSelect>
+                )}
               </S.MemberBox>
             ))}
         </S.MemberContainer>
