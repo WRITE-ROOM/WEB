@@ -8,8 +8,9 @@ import RoomModalSec from "../components/RoomModalSec/RoomModalSec";
 import { IoClose } from "react-icons/io5";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
+import roomSettingInfo, {
   selectRoomSettingInfoState,
+  setRoomSettingIntoroduction,
   setRoomSettingInfo,
   setRoomSettingMember,
   setRoomSettingTitle,
@@ -25,9 +26,8 @@ export const RoomSetting = () => {
   const dispatch = useDispatch();
   const roomSettingInfoSelector = useSelector(selectRoomSettingInfoState);
 
-  const [changedRoomIntroduction, setRoomIntroduction] = useState("");
   const myAuth = roomSettingInfoSelector?.memberInfo?.authority;
-  
+
   const [image, setImage] = useState(null);
   const [imageName, setImageName] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -57,7 +57,6 @@ export const RoomSetting = () => {
     await getRoomInfo();
     setIsSave(true);
     navigate(`/rooms/${roomId}`);
-    // window.location.reload();
   };
 
   const saveModalButton = () => {
@@ -154,7 +153,7 @@ export const RoomSetting = () => {
       "request",
       JSON.stringify({
         roomTitle: roomSettingInfoSelector.roomTitle,
-        roomIntroduction: changedRoomIntroduction,
+        roomIntroduction: roomSettingInfoSelector.roomIntroduction,
       })
     );
     try {
@@ -189,6 +188,7 @@ export const RoomSetting = () => {
     getRoomInfo();
     getRoomMemberList();
   }, []);
+
   return (
     <S.Wrapper>
       <RoomSettingSNB />
@@ -231,10 +231,11 @@ export const RoomSetting = () => {
         }
         <RoomInputField
           label="룸 소개"
-          value={changedRoomIntroduction}
-          onChange={setRoomIntroduction}
+          value={roomSettingInfoSelector.roomIntroduction}
+          onChange={(introduction) =>
+            dispatch(setRoomSettingIntoroduction(introduction))
+          }
           maxLength={160}
-          placeholder="룸 설명을 입력해주세요"
         />
         {myAuth === "MANAGER" && (
           <S.DeleteButton onClick={modalHandler}>룸 삭제</S.DeleteButton>

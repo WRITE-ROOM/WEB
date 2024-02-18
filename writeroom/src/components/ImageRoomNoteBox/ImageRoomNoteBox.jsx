@@ -1,15 +1,12 @@
 import * as S from "./ImageRoomNoteBox.style";
 import Bookmark from "../Bookmark/Bookmark";
 import { HiMiniUserCircle } from "react-icons/hi2";
-import { BiDotsVerticalRounded } from "react-icons/bi";
 import { useState } from "react";
-import RoomModal from "../RoomModal/RoomModal";
 import Setting from "../Setting/Setting";
 import { TagContainer, Tag } from "../../pages/Note.style";
 import { useNavigate } from "react-router-dom";
 import { addNote } from "../../redux/note";
-import { useSelector } from "react-redux";
-import { selectRoomInfoState } from "../../redux/roomInfo";
+
 const ImageRoomNoteBox = ({
   note,
   roomId,
