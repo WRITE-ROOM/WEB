@@ -203,7 +203,7 @@ const RoomMember = () => {
                     )}
                   </S.TextWrapper>
                 </S.ProfileWrapper>
-                {myAuth === "MANAGER" && (
+                {(myAuth === "MANAGER" || member?.authority === "MANAGER") && (
                   <S.StyledSelect
                     onChange={(e) => {
                       const selectedValue = e.target.value;
@@ -220,17 +220,18 @@ const RoomMember = () => {
                       }
                     }}
                   >
-                    {member?.authority === "MANAGER" ? (
+                    {myAuth === "MANAGER" || member?.authority === "MANAGER" ? (
                       <>
                         <S.StyledOption value="MANAGER">관리자</S.StyledOption>
                         <S.StyledOption value="LEAVE">떠나기</S.StyledOption>
+                        <S.StyledOption value="EXPORT">내보내기</S.StyledOption>
                       </>
                     ) : (
                       <>
                         <S.StyledOption value="PARTICIPANT">
                           참여자
                         </S.StyledOption>
-                        <S.StyledOption value="EXPORT">내보내기</S.StyledOption>
+                        <S.StyledOption value="LEAVE">떠나기</S.StyledOption>
                       </>
                     )}
                   </S.StyledSelect>
