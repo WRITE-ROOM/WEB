@@ -1,29 +1,25 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 90%;
+  width: 70%;
   height: 100%;
-  margin: 10px;
+  margin-top: 3%;
+  margin-left: 15%;
 `;
 export const Title = styled.div`
   display: flex;
-  gap: 20px;
-  align-items: center;
-  width: 100%;
-  height: 50px;
   font-size: 20px;
+  margin-bottom: 1%;
 `;
 
 export const Contents = styled.div`
   width: 100%;
   height: 150px;
   border: grey solid 1px;
-  margin-top: 10px;
   border-radius: 15px;
 `;
 export const Wrapper = styled.div`
   display: flex;
-  padding: 0px 20px;
   align-items: center;
   justify-content: space-between;
   width: 100%;
@@ -39,9 +35,9 @@ export const PathButton = styled.button`
   color: white;
   border-radius: 1rem;
   border: none;
+  margin-right: 5%;
   background-color: #b5a995;
   padding: 7px 10px;
-  margin-right: 20px;
 `;
 
 export const InnerWrapper = styled.div`
@@ -73,7 +69,7 @@ export const TextBox = styled.div`
 
 export const TextWrapper = styled.div`
   padding: 0px 10px;
-  width: 800px;
+
   display: flex;
   margin-bottom: 10px;
   gap: 10px;
@@ -84,7 +80,6 @@ export const TextWrapper = styled.div`
   }
 
   span {
-    width: 600px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

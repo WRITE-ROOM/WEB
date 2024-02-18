@@ -1,5 +1,4 @@
 import styled from "styled-components";
-
 export const Background = styled.div`
   top: 0;
   left: 0;
@@ -48,15 +47,15 @@ export const Line = styled.div`
 
 export const ResultBox = styled.div`
   height: 100%;
-  width: 100%;
+  width: 90%;
+  display: flex;
+  align-items: center;
   border-bottom-right-radius: 14px;
   border-bottom-left-radius: 14px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-left: 60px;
-  overflow-y: auto;
-  max-height: 100%;
+  overflow-x: auto;
 `;
 export const FilterWrapper = styled.div`
   margin-top: 20px;
@@ -67,7 +66,6 @@ export const FilterWrapper = styled.div`
 
   width: 95%;
   height: 5%;
-  margin-left: 50px;
 `;
 export const ButtonWrapper = styled.div`
   display: flex;
@@ -81,6 +79,10 @@ export const MemberBox = styled.div`
   border-radius: 10px;
   height: auto;
   margin-top: 10px;
+  background: white;
+  :hover {
+    background-color: #eaeaea;
+  }
 
   div {
     border-bottom: 1px solid;
