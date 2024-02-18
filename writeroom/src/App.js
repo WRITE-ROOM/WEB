@@ -61,7 +61,10 @@ function App() {
       <GlobalStyle />
 
       <div className="App">
-        {currentPath === "/rooms" && <SearchBox />}
+        {currentPath !== "/login" &&
+          currentPath !== "/signup" &&
+          currentPath !== "/forgetPwd" &&
+          currentPath !== "/reset/pw/:status" && <SearchBox />}
         {currentPath !== "/login" &&
           currentPath !== "/signup" &&
           currentPath !== "/forgetPwd" &&

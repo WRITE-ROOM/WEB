@@ -5,49 +5,82 @@ import { BsPersonFill } from "react-icons/bs";
 import { HiOutlineAdjustments } from "react-icons/hi";
 import SearchToggle from "../SearchToggle/SearchToggle";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import InfiniteScroll from "react-infinite-scroll-component";
+import SearchResult from "../SearchResult/SearchResult";
 import { setOpenSearchBox } from "../../redux/roomInfo";
+import useDebounce from "../../hooks/useDebounce";
 
 const SearchBox = () => {
+  const receivedToken = localStorage.getItem("token");
   const [isMemberToggleOpen, setIsMemberToggleOpen] = useState(false);
   const [isRangeToggleOpen, setIsRangeToggleOpen] = useState(false);
-  const [search, setSearch] = useState("");
-  const [isResult, setIsResult] = useState("");
-  const [isSearchType, setIsSearchType] = useState("title");
-  const dispatch = useDispatch();
-  const receivedToken = localStorage.getItem("token");
-
+  const [keyword, setKeyword] = useState("");
   const openSearchBox = useSelector((state) => state.roomInfo.openSearchBox);
+  const [isSearchType, setIsSearchType] = useState("title");
+  const [result, setResult] = useState([]);
+  const [nickName, setNickName] = useState("");
+  const dispatch = useDispatch();
+  const debounceValue = useDebounce(keyword);
+  const onChange = (e) => {
+    setKeyword(e.target.value);
+  };
+  const searchRange = ["제목", "내용", "태그"];
 
-  useEffect(() => {
-    const delayDebounceTimer = setTimeout(async () => {
-      try {
-        await getSearchData(search, isSearchType);
-      } catch (error) {
-        console.log(error);
-      }
-    }, 1000);
+  const handleSearchType = (range) => {
+    switch (range) {
+      case "제목":
+        setIsSearchType("title");
+        break;
+      case "내용":
+        setIsSearchType("content");
+        break;
+      case "태그":
+        setIsSearchType("tag");
+        break;
+      default:
+        setIsSearchType("");
+    }
+  };
 
-    return () => clearTimeout(delayDebounceTimer);
-  }, [search, isSearchType]);
-
-  const getSearchData = async (searchWord, searchType) => {
+  const getSearchMemberFilter = async () => {
     try {
       const response = await axios.get(
-        `/search/?searchWord=${searchWord}&${searchType}`,
+        `/search/withMember/?searchWord=${debounceValue}&${nickName}&${isSearchType}`,
         {
           headers: {
             Authorization: `Bearer ${receivedToken}`,
           },
         }
       );
-      setIsResult(response);
+      const newData = response.data.result;
+      setResult(newData);
     } catch (error) {
       console.log(error);
     }
   };
+  useEffect(() => {
+    getSearchMemberFilter();
+    getSearchNote();
+  }, [debounceValue]);
 
-  const searchRange = ["제목", "내용", "태그"];
+  const getSearchNote = async () => {
+    try {
+      const response = await axios.get(
+        `/search/?searchWord=${debounceValue}&${isSearchType}`,
+        {
+          headers: {
+            Authorization: `Bearer ${receivedToken}`,
+          },
+        }
+      );
+      const newData = response.data.result;
+      setResult(newData);
+      setNickName(newData.writeList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleMemberToggle = () => {
     setIsMemberToggleOpen(!isMemberToggleOpen);
@@ -56,13 +89,11 @@ const SearchBox = () => {
   const handleRangeToggle = () => {
     setIsRangeToggleOpen(!isRangeToggleOpen);
   };
-
-  const onChange = (e) => {
-    setSearch(e.target.value);
-  };
+  const { noteList } = result;
 
   const openSearchBox1 = false;
-  // 일단 검색 미구현 ㅠㅠ
+  // 응답값 이상하게 나옴
+  // 멤버가 눌렸을 떄 getSearchMember만 호출 어떻게 할지 로직 수정 필요함
   return (
     openSearchBox1 && (
       <S.Background>
@@ -73,9 +104,9 @@ const SearchBox = () => {
             </S.IconWrapper>
             <input
               type="text"
-              value={search}
+              value={keyword}
               onChange={onChange}
-              placeholder="태그나 노트를 검색해보세요"
+              placeholder="노트나 태그를 검색해보세요"
             />
             <S.IconWrapper>
               <IoClose
@@ -87,20 +118,31 @@ const SearchBox = () => {
           </S.InputWrapper>
           <S.Line />
           <S.FilterWrapper>
-            <p>결과 0건</p>
+            <p>결과 {noteList?.length}건</p>
             <S.ButtonWrapper>
               <SearchToggle
                 icon={<BsPersonFill />}
                 label="멤버"
                 onClick={handleMemberToggle}
                 isOpen={isMemberToggleOpen}
-                // content={
-                //   <S.MemberBox>
-                //     {testMemberArray.map((member, index) => (
-                //       <div key={index}>{member}</div>
-                //     ))}
-                //   </S.MemberBox>
-                // }
+                content={
+                  <S.MemberBox>
+                    {noteList?.map((note, index) => (
+                      <div
+                        key={index}
+                        onClick={() =>
+                          getSearchMemberFilter(
+                            debounceValue,
+                            nickName,
+                            isSearchType
+                          )
+                        }
+                      >
+                        {note.writer}
+                      </div>
+                    ))}
+                  </S.MemberBox>
+                }
               />
               <SearchToggle
                 icon={<HiOutlineAdjustments />}
@@ -110,7 +152,9 @@ const SearchBox = () => {
                 content={
                   <S.MemberBox>
                     {searchRange.map((Range, index) => (
-                      <div key={index}>{Range}</div>
+                      <div key={index} onClick={() => handleSearchType(Range)}>
+                        {Range}
+                      </div>
                     ))}
                   </S.MemberBox>
                 }
@@ -118,16 +162,19 @@ const SearchBox = () => {
             </S.ButtonWrapper>
           </S.FilterWrapper>
           <S.ResultBox id="infiniteScrollTarget">
-            {/* <InfiniteScroll
-              dataLength={isData.length}
-              next={fetchMoreData}
+            <InfiniteScroll
+              dataLength={4}
+              next={() => getSearchNote(debounceValue, isSearchType)}
               hasMore={true}
               scrollableTarget="infiniteScrollTarget"
+              style={{
+                width: "900px",
+              }}
             >
-              {isData.map((text, index) => (
-                <SearchResult text={text} key={index} />
+              {noteList?.map((note) => (
+                <SearchResult note={note} key={note?.noteId} />
               ))}
-            </InfiniteScroll> */}
+            </InfiniteScroll>
           </S.ResultBox>
         </S.Container>
       </S.Background>
