@@ -17,10 +17,11 @@ const DeleteNoteModal = ({ noteId, roomId, setOpenModal }) => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log(res.data);
+
       setOpenModal(false);
       navigate(`/rooms/${roomId}`);
       window.location.reload();
+      alert("노트가 삭제되었어요");
     } catch (error) {
       console.log(error);
     }

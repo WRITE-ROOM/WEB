@@ -193,7 +193,7 @@ export const RoomSetting = () => {
     <S.Wrapper>
       <RoomSettingSNB />
       <S.Contents>
-        <RoomSettingNavbar title="룸 관리" onSave={saveInput} />
+        <RoomSettingNavbar setting={true} title="룸 관리" onSave={saveInput} />
 
         {image ? (
           <>
