@@ -2,7 +2,7 @@ import * as S from "./RoomSettingNavbar.style";
 import { IoClose } from "react-icons/io5";
 import { useNavigate, useParams } from "react-router-dom";
 import RoomModal from "../RoomModal/RoomModal";
-import { useState } from "react"; // Import useState hook
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectRoomSettingInfoState } from "../../redux/roomSettingInfo";
 import RoomModalSec from "../RoomModalSec/RoomModalSec";
@@ -15,12 +15,15 @@ const RoomSettingNavbar = ({
   member,
   myAuth,
   leaveRoom,
+  hideSaveButton,
   challenge,
   postChallenge,
   setting,
 }) => {
   const handleSave = () => {
-    onSave();
+    if (onSave) {
+      onSave();
+    }
   };
   const roomSettingInfoSelector = useSelector(selectRoomSettingInfoState);
   const params = useParams();
@@ -108,7 +111,7 @@ const RoomSettingNavbar = ({
     <S.Container>
       <h1>{title}</h1>
       <S.ButtonWrapper>
-        {!member && (
+        {!hideSaveButton && (
           <>
             {challenge ? (
               <S.SaveButton onClick={handleShowModal}>저장하기</S.SaveButton>
@@ -135,7 +138,7 @@ const RoomSettingNavbar = ({
                   />
                 </div>
               )}
-              <IoClose size={40} onClick={handleShowModal} />
+              {/* <IoClose size={40} onClick={handleShowModal} /> */}
             </>
           )}
           {member && (
@@ -154,7 +157,7 @@ const RoomSettingNavbar = ({
                   />
                 </div>
               )}
-              <IoClose size={40} onClick={handleShowModal} />
+              {/* <IoClose size={40} onClick={handleShowModal} /> */}
             </>
           )}
           {setting && (
@@ -169,12 +172,19 @@ const RoomSettingNavbar = ({
                     isOpen={true}
                     onClick1={() => navigate(`/rooms/${roomId}`)}
                     onClick2={() => saveModalButton()}
+                    closeModal={closeModal}
                   />
                 </div>
               )}
-              <IoClose size={40} onClick={handleShowModal} />
+              {/* <IoClose size={40} onClick={handleShowModal} /> */}
             </>
           )}
+          <IoClose
+            size={40}
+            onClick={() => {
+              navigate(`/rooms/${roomId}`);
+            }}
+          />
         </S.IconWrapper>
       </S.ButtonWrapper>
     </S.Container>
