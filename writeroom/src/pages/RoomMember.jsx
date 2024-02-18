@@ -31,7 +31,8 @@ const RoomMember = () => {
   const getRoomInfo = async () => {
     try {
       const response = await axios.get(
-        `https://dev.writeroom.shop/rooms/${roomId}/list?page=0`,
+        `/rooms/${roomId}/list?page=0`,
+        // `https://dev.writeroom.shop/rooms/${roomId}/list?page=0`,
         {
           headers: {
             Authorization: `Bearer ${receivedToken}`,
@@ -48,7 +49,8 @@ const RoomMember = () => {
   const getRoomMemberList = async () => {
     try {
       const response = await axios.get(
-        `https://dev.writeroom.shop/rooms/${roomId}/userRoom`,
+        `/rooms/${roomId}/userRoom`,
+        // `https://dev.writeroom.shop/rooms/${roomId}/userRoom`,
         {
           headers: {
             Authorization: `Bearer ${receivedToken}`,
@@ -87,7 +89,8 @@ const RoomMember = () => {
   const patchUserAuth = async (authority, roomId, receivedId) => {
     try {
       const response = await axios.patch(
-        `https://dev.writeroom.shop/rooms/authority/${roomId}/${receivedId}?authority=${authority}`,
+        `/rooms/authority/${roomId}/${receivedId}?authority=${authority}`,
+        // `https://dev.writeroom.shop/rooms/authority/${roomId}/${receivedId}?authority=${authority}`,
         {},
         {
           headers: {
@@ -104,7 +107,8 @@ const RoomMember = () => {
   const deleteRoomMember = async (roomId, outUserId) => {
     try {
       const response = await axios.delete(
-        `https://dev.writeroom.shop/rooms/${roomId}/${outUserId}`,
+        `/rooms/${roomId}/${outUserId}`,
+        // `https://dev.writeroom.shop/rooms/${roomId}/${outUserId}`,
         {
           headers: {
             Authorization: `Bearer ${receivedToken}`,
@@ -118,7 +122,8 @@ const RoomMember = () => {
   const leaveRoom = async () => {
     try {
       const response = await axios.delete(
-        `https://dev.writeroom.shop/rooms/${roomId}`,
+        `/rooms/${roomId}`,
+        // `https://dev.writeroom.shop/rooms/${roomId}`,
         {
           headers: {
             Authorization: `Bearer ${receivedToken}`,
