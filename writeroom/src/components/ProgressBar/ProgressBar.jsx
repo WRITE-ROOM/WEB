@@ -14,7 +14,8 @@ const ProgressBar = ({ percent }) => {
   const getMyChallengeGoals = async (challengeId) => {
     try {
       const response = await axios.get(
-        `https://dev.writeroom.shop/my-challenges/challenge-goals/${challengeId}`,
+        `/challenge-goals/${challengeId}`,
+        // `https://dev.writeroom.shop/my-challenges/challenge-goals/${challengeId}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
