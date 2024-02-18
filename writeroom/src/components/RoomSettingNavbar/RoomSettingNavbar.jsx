@@ -9,13 +9,16 @@ const RoomSettingNavbar = ({
   title,
   onSave,
   member,
+  hideSaveButton,
   myAuth,
   leaveRoom,
   challenge,
   postChallenge,
 }) => {
   const handleSave = () => {
-    onSave();
+    if (onSave) {
+      onSave();
+    }
   };
 
   const params = useParams();
@@ -42,7 +45,7 @@ const RoomSettingNavbar = ({
     <S.Container>
       <h1>{title}</h1>
       <S.ButtonWrapper>
-        {!member && (
+        {!hideSaveButton && (
           <>
             {challenge ? (
               <S.SaveButton onClick={handleShowModal}>저장하기</S.SaveButton>
@@ -88,17 +91,15 @@ const RoomSettingNavbar = ({
                   />
                 </div>
               )}
-              <IoClose size={40} onClick={handleShowModal} />
             </>
           )}
-          {!challenge && !member && (
-            <IoClose
-              size={40}
-              onClick={() => {
-                <IoClose size={40} onClick={handleShowModal} />;
-              }}
-            />
-          )}
+
+          <IoClose
+            size={40}
+            onClick={() => {
+              navigate(`/rooms/${roomId}`);
+            }}
+          />
         </S.IconWrapper>
       </S.ButtonWrapper>
     </S.Container>
