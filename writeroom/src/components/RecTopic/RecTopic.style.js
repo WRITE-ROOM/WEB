@@ -4,7 +4,7 @@ import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 
 export const Container = styled.div`
   position: absolute;
-  left: 80.18%;
+  left: 78%;
   display: flex;
   width: 314px;
   height: 774px;
