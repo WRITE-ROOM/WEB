@@ -30,7 +30,7 @@ const DeleteNoteModal = ({ noteId, roomId, setOpenModal }) => {
     <R.Background>
       <R.Container $height="240px">
         <h1>노트를 정말 삭제하시겠어요?</h1>
-
+        <h2>노트를 삭제하면 다시 열람할 수 없어요</h2>
         <R.ButtonWrapper>
           <R.CancelButton onClick={() => setOpenModal(false)}>
             취소

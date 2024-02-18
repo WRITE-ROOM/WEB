@@ -70,7 +70,6 @@ const RoomMember = () => {
   const memberInfo = useSelector(
     (state) => state.roomSettingInfo?.memberInfo?.userRoomLists
   );
-  console.log(memberInfo);
   const myName = roomInfoSelector?.memberInfo?.name;
   const myAuth = roomInfoSelector?.memberInfo?.authority;
 
